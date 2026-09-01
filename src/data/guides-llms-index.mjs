@@ -184,11 +184,6 @@ export const guideSections = [
         desc: 'Deep dives into ClaudeKit commands, skills, and practical workflows.',
       },
       {
-        title: 'UI Review Gate',
-        path: '/guides/ui-review-gate',
-        desc: 'Review agent plans and diffs in the browser (ClaudeKit-oriented).',
-      },
-      {
         title: 'Finding Your Unknowns',
         path: '/guides/finding-unknowns',
         desc: 'A prompting method for surfacing what you do not know you do not know.',
@@ -236,12 +231,17 @@ export const guideSections = [
     ],
   },
   {
-    heading: 'Visualization Skills',
+    heading: 'Visualization Tools',
     links: [
       {
         title: 'System Diagramming',
         path: '/guides/archify',
         desc: 'Compile a narrow technical question into a validated architecture, workflow, sequence, data-flow, or lifecycle diagram. JSON source, atomic deliver, AgentKit placement.',
+      },
+      {
+        title: 'UI Review Gate',
+        path: '/guides/ui-review-gate',
+        desc: 'Review agent plans and diffs in the browser with Plannotator.',
       },
     ],
   },

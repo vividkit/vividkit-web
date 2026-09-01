@@ -159,18 +159,18 @@ const authoringSteps = isVi
 
 const modeCards = isVi
   ? [
-      { type: 'Architecture', answers: 'Hệ thống có gì, nối thế nào, ranh giới nào?', not: 'Thứ tự gọi chính xác.' },
-      { type: 'Workflow', answers: 'Công việc đi qua actor nào, có quyết định, duyệt, retry không?', not: 'State bền vững của một object.' },
-      { type: 'Sequence', answers: 'Trong một interaction, ai gọi ai trước, trả gì?', not: 'Ownership của topic/queue.' },
-      { type: 'Dataflow', answers: 'Data/event đến từ đâu, biến đổi thế nào, ai dùng?', not: 'Timeline hay người chịu trách nhiệm từng task.' },
-      { type: 'Lifecycle', answers: 'Object có state nào, chuyển tiếp và kết thúc ra sao?', not: 'Các bước thực thi `download → scan → package` nếu chưa có state được lưu.' },
+      { type: 'Architecture', answers: 'Hệ thống có gì, nối thế nào, ranh giới nào?', not: 'cần đúng thứ tự gọi — dùng Sequence.' },
+      { type: 'Workflow', answers: 'Công việc đi qua actor nào, có quyết định, duyệt, retry không?', not: 'cần state được lưu của một object — dùng Lifecycle.' },
+      { type: 'Sequence', answers: 'Trong một lần gọi, ai gọi ai trước, trả gì?', not: 'cần map topic/queue — dùng Dataflow.' },
+      { type: 'Dataflow', answers: 'Data đi từ đâu, biến đổi thế nào, ai dùng?', not: 'cần timeline hoặc ai làm từng task.' },
+      { type: 'Lifecycle', answers: 'Object có state nào, chuyển tiếp và kết thúc ra sao?', not: 'chỉ có bước chạy, chưa lưu state — dùng Workflow.' },
     ]
   : [
-      { type: 'Architecture', answers: 'What exists, how it connects, which boundaries matter?', not: 'Exact call order.' },
-      { type: 'Workflow', answers: 'Which actors/lanes, decisions, approvals, retries?', not: 'Durable states of one object.' },
-      { type: 'Sequence', answers: 'In one interaction, who calls whom first, and what returns?', not: 'Topic or queue ownership.' },
-      { type: 'Dataflow', answers: 'Where data/events come from, how they change, who consumes them?', not: 'A timeline or who owns each task.' },
-      { type: 'Lifecycle', answers: 'Which states exist, how they transition, how they end?', not: 'Execution steps like download → scan → package unless state is stored.' },
+      { type: 'Architecture', answers: 'What exists, how it connects, which boundaries matter?', not: 'you need exact call order — use Sequence.' },
+      { type: 'Workflow', answers: 'Which actors, decisions, approvals, retries?', not: 'you need stored states of one object — use Lifecycle.' },
+      { type: 'Sequence', answers: 'In one call, who calls whom first, and what returns?', not: 'you need a topic/queue map — use Dataflow.' },
+      { type: 'Dataflow', answers: 'Where data comes from, how it changes, who uses it?', not: 'you need a timeline or who owns each task.' },
+      { type: 'Lifecycle', answers: 'Which states exist, how they transition, how they end?', not: 'you only have running steps, no stored state — use Workflow.' },
     ];
 
 const officialGalleryRecipes = [
@@ -319,16 +319,31 @@ const officialGalleryRecipes = [
   },
 ];
 
-const recipeTypeFilters = isVi
-  ? ['Kiến trúc', 'Quy trình', 'Luồng gọi', 'Luồng dữ liệu', 'Vòng đời']
-  : ['Architecture', 'Workflow', 'Sequence', 'Dataflow', 'Lifecycle'];
+const galleryEmbeds: Record<string, { file: string; view: string }> = {
+  'web-app': { file: 'gallery/artifacts/web-app.architecture.html', view: 'request-path' },
+  'deployment-ownership': { file: 'gallery/artifacts/production-deployment.architecture.html', view: 'request-boundary' },
+  'agent-tool-call': { file: 'gallery/artifacts/agent-tool-call.workflow.html', view: 'happy-path' },
+  'delivery-workflow': { file: 'gallery/artifacts/release-delivery.workflow.html', view: 'approval-to-production' },
+  'incident-runbook': { file: 'gallery/artifacts/incident-response.workflow.html', view: 'mitigate-and-verify' },
+  'cache-miss': { file: 'gallery/artifacts/cache-miss.sequence.html', view: 'cache-fallback' },
+  'async-roundtrip': { file: 'gallery/artifacts/async-job-roundtrip.sequence.html', view: 'work-and-retry' },
+  'product-analytics': { file: 'gallery/artifacts/product-analytics.dataflow.html', view: 'consent-boundary' },
+  'event-stream': { file: 'gallery/artifacts/event-stream.dataflow.html', view: 'order-transit' },
+  'agent-run': { file: 'gallery/artifacts/agent-run.lifecycle.html', view: 'main-lifecycle' },
+  'deployment-lifecycle': { file: 'gallery/artifacts/deployment-release.lifecycle.html', view: 'rollback-outcomes' },
+};
 
-const officialRecipes = officialGalleryRecipes.map((recipe) => ({
-  ...recipe,
-  typeLabel: isVi ? recipe.viType : recipe.enType,
-  previewDark: `/guides/archify/gallery/${recipe.id}-dark.webp`,
-  previewLight: `/guides/archify/gallery/${recipe.id}-light.webp`,
-}));
+const officialRecipes = officialGalleryRecipes.map((recipe) => {
+  const embed = galleryEmbeds[recipe.id];
+  const liveUrl = `https://tt-a1i.github.io/archify/${embed.file}#view=${embed.view}`;
+  return {
+    ...recipe,
+    typeLabel: isVi ? recipe.viType : recipe.enType,
+    previewDark: `/guides/archify/gallery/${recipe.id}-dark.webp`,
+    previewLight: `/guides/archify/gallery/${recipe.id}-light.webp`,
+    liveUrl,
+  };
+});
 
 const recipeGroupDescriptions = isVi
   ? [
@@ -345,6 +360,10 @@ const recipeGroupDescriptions = isVi
       'Where data and events travel, PII, failure paths.',
       'Stored states, transitions, retry/cancel/fail, terminal outcomes.',
     ];
+
+const recipeTypeFilters = isVi
+  ? ['Kiến trúc', 'Quy trình', 'Luồng gọi', 'Luồng dữ liệu', 'Vòng đời']
+  : ['Architecture', 'Workflow', 'Sequence', 'Dataflow', 'Lifecycle'];
 
 const recipeGroups = recipeTypeFilters.map((type, index) => ({
   type,
@@ -812,12 +831,12 @@ const heroCtaClass =
   <section id="recipes" class="space-y-5" data-archify-recipes-root>
     <div class="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
       <div>
-        <p class="text-[11px] font-bold uppercase tracking-[0.18em] text-cyan-600 dark:text-cyan-400">{isVi ? 'Question-first' : 'Question-first'}</p>
-        <h2 class="mt-2 text-3xl font-black tracking-tight text-slate-900 dark:text-white">{isVi ? '11 recipe — mỗi cái trả lời một câu hỏi' : '11 recipes — each answers one question'}</h2>
+        <p class="text-[11px] font-bold uppercase tracking-[0.18em] text-cyan-600 dark:text-cyan-400">{isVi ? 'Bắt đầu từ câu hỏi' : 'Start from the question'}</p>
+        <h2 class="mt-2 text-3xl font-black tracking-tight text-slate-900 dark:text-white">{isVi ? '11 mẫu sơ đồ theo việc cần hiểu' : '11 diagram samples by what you need to understand'}</h2>
         <p class="mt-2 max-w-2xl text-sm leading-relaxed text-slate-600 dark:text-slate-400">
           {isVi
-            ? 'Chọn từ câu hỏi, không từ tên loại sơ đồ. Ảnh là mẫu gallery chính thức — prompt thì author từ evidence của bạn, không copy topology mẫu.'
-            : 'Pick from the question, not the diagram type. Previews are official gallery samples — the prompt authors from your evidence, not from that topology.'}
+            ? 'Hỏi bạn cần hiểu gì, rồi chọn mẫu. Ảnh chỉ để xem output. Prompt viết từ code của bạn — đừng copy layout mẫu.'
+            : 'Ask what you need to understand, then pick a sample. Pictures show the output. Write the prompt from your code — do not copy the sample layout.'}
         </p>
       </div>
       <a href="https://tt-a1i.github.io/archify/gallery.html" rel="noreferrer" target="_blank" class="inline-flex min-h-10 shrink-0 items-center justify-center whitespace-nowrap rounded-xl border border-cyan-200 bg-cyan-50 px-3.5 text-sm font-bold text-cyan-800 transition hover:-translate-y-0.5 hover:bg-cyan-100 dark:border-cyan-500/25 dark:bg-cyan-500/10 dark:text-cyan-300 dark:hover:border-cyan-400/40 dark:hover:bg-cyan-500/20 dark:hover:text-cyan-100">
@@ -855,14 +874,10 @@ const heroCtaClass =
             </div>
             <p class="mt-2 max-w-2xl text-sm leading-relaxed text-slate-600 dark:text-slate-400">{group.description}</p>
           </div>
-          <div class="grid gap-3 p-4 md:grid-cols-2">
+          <div class="space-y-3 p-4">
             {group.recipes.map((recipe) => (
-              <article data-archify-recipe-card data-recipe-type={recipe.typeLabel} class="flex min-h-full flex-col overflow-hidden rounded-2xl border border-slate-200/80 bg-white shadow-sm dark:border-slate-800 dark:bg-slate-950/55">
-                <div class="border-b border-slate-200 bg-slate-50 p-2 dark:border-slate-800 dark:bg-slate-950">
-                  <img src={recipe.previewLight} alt={`${recipe.title} light preview`} class="aspect-[16/10] w-full rounded-xl border border-slate-200 bg-white object-contain dark:hidden" loading="lazy" />
-                  <img src={recipe.previewDark} alt={`${recipe.title} dark preview`} class="hidden aspect-[16/10] w-full rounded-xl border border-slate-700 bg-slate-950 object-contain dark:block" loading="lazy" />
-                </div>
-                <div class="flex flex-1 flex-col p-4">
+              <article data-archify-recipe-card data-recipe-type={recipe.typeLabel} class="overflow-hidden rounded-2xl border border-slate-200/80 bg-white shadow-sm dark:border-slate-800 dark:bg-slate-950/55">
+                <div class="flex flex-col p-4 md:p-5">
                   <div class="flex items-start justify-between gap-3">
                     <h4 class="text-base font-black text-slate-900 dark:text-white">{recipe.title}</h4>
                     <span class="shrink-0 rounded-full bg-violet-100 px-2 py-0.5 font-mono text-[10px] font-bold uppercase tracking-[0.1em] text-violet-700 dark:bg-violet-500/15 dark:text-violet-300">{recipe.typeLabel}</span>
@@ -872,13 +887,20 @@ const heroCtaClass =
                     <p class="rounded-xl border border-emerald-200 bg-emerald-50 p-2 text-emerald-900 dark:border-emerald-500/25 dark:bg-emerald-950/20 dark:text-emerald-100"><span class="font-bold">{isVi ? 'Dùng khi' : 'Use when'}</span> {recipe.when}</p>
                     <p class="rounded-xl border border-amber-200 bg-amber-50 p-2 text-amber-950 dark:border-amber-500/25 dark:bg-amber-950/20 dark:text-amber-100"><span class="font-bold">{isVi ? 'Không dùng khi' : 'Don’t use when'}</span> {recipe.notWhen}</p>
                   </div>
-                  <div class="relative mt-4 flex-1 rounded-2xl border border-slate-200 bg-slate-100 p-4 dark:border-slate-700 dark:bg-slate-800/90">
+                  <div class="relative mt-4 rounded-2xl border border-slate-200 bg-slate-100 p-4 dark:border-slate-700 dark:bg-slate-800/90">
                     <p class="mb-3 pr-24 text-[11px] font-bold uppercase tracking-[0.14em] text-purple-600 dark:text-purple-400">{isVi ? 'Prompt — chỉnh theo repo' : 'Prompt — edit for your repo'}</p>
                     <button type="button" data-archify-copy={recipe.prompt} aria-label={isVi ? 'Sao chép prompt' : 'Copy prompt'} class="absolute right-3 top-3 inline-flex items-center gap-1.5 rounded-lg border border-slate-200 bg-white/90 px-2.5 py-1.5 text-xs font-bold text-slate-600 shadow-sm dark:border-slate-600 dark:bg-slate-900/90 dark:text-slate-300">
                       <span>{isVi ? 'Sao chép' : 'Copy'}</span>
                     </button>
                     <code class="block whitespace-pre-wrap break-words font-mono text-xs leading-relaxed text-slate-700 dark:text-slate-200">{recipe.prompt}</code>
                   </div>
+                </div>
+                <div class="px-4 pb-4 md:px-5 md:pb-5">
+                  <img src={recipe.previewLight} alt={`${recipe.title} light preview`} class="h-auto w-full rounded-xl border border-slate-200 bg-white object-contain dark:hidden" loading="lazy" />
+                  <img src={recipe.previewDark} alt={`${recipe.title} dark preview`} class="hidden h-auto w-full rounded-xl border border-slate-700 bg-slate-950 object-contain dark:block" loading="lazy" />
+                  <a href={recipe.liveUrl} target="_blank" rel="noreferrer" class="mt-2 inline-flex items-center text-xs font-semibold text-cyan-700 underline decoration-cyan-400/50 underline-offset-2 hover:text-cyan-800 dark:text-cyan-300 dark:hover:text-cyan-200">
+                    {isVi ? 'Mở sơ đồ gốc để hover / trace' : 'Open the live diagram to hover / trace'}
+                  </a>
                 </div>
               </article>
             ))}
@@ -1111,7 +1133,9 @@ const heroCtaClass =
     });
   };
 
+
   document.querySelectorAll<HTMLElement>('[data-archify-install-root]').forEach(initArchifyInstallFilters);
   document.querySelectorAll<HTMLElement>('[data-archify-recipes-root]').forEach(initArchifyRecipeFilters);
   initArchifyCopyButtons();
+
 </script>

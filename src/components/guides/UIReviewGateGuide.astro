@@ -8,7 +8,6 @@ import UIReviewGateUsage from './ui-review-gate/ui-review-gate-usage.astro';
 import UIReviewGateMobile from './ui-review-gate/ui-review-gate-mobile.astro';
 import UIReviewGateFit from './ui-review-gate/ui-review-gate-fit.astro';
 import UIReviewGateReferences from './ui-review-gate/ui-review-gate-references.astro';
-import CkSetupNotice from '@/components/guides/CkSetupNotice.astro';
 
 interface Props {
   lang?: Language;
@@ -19,9 +18,7 @@ const currentLang = lang || getLangFromUrl(Astro.url);
 ---
 
 <div class="mt-6 space-y-6">
-  
-  <CkSetupNotice lang={currentLang} />
-<UIReviewGateHero lang={currentLang} />
+  <UIReviewGateHero lang={currentLang} />
   <UIReviewGateWhy lang={currentLang} />
   <UIReviewGateMechanism lang={currentLang} />
   <UIReviewGateHooks lang={currentLang} />

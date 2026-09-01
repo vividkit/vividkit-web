@@ -11,7 +11,7 @@ export const guides = {
   'guides.sections.configuration': 'Cấu Hình & Mở Rộng',
   'guides.sections.deep_dives': 'Đào Sâu',
   'guides.sections.multi_provider': 'Công Cụ AI & Runtime',
-  'guides.sections.visualization': 'Visualization Skills',
+  'guides.sections.visualization': 'Công cụ trực quan',
   'guides.sections.session_management': 'Session',
   'guides.sections.optimization': 'Tối Ưu',
   'guides.sections.troubleshooting': 'Debug, Khôi Phục & Polish',
@@ -289,7 +289,7 @@ export const guides = {
   // Pathway: New to Claude
   'guides.home.pathway_new.title': 'Bắt Đầu Tại Đây',
   'guides.home.pathway_new.desc': 'Nắm mental model cơ bản trước khi đi vào commands',
-  'guides.home.pathway_visualization.desc': 'Tool và skill trực quan để biến architecture, workflow, data path thành artifact dễ review.',
+  'guides.home.pathway_visualization.desc': 'Công cụ trực quan cho sơ đồ và review trên browser — architecture, workflow, và checkpoint UI.',
   'guides.home.pathway_new.link_what': 'ClaudeKit là gì?',
   'guides.home.pathway_new.link_how': 'Cách Hoạt Động',
   'guides.home.pathway_new.link_install': 'Cài Đặt Nhanh',
