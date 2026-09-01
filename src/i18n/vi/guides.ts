@@ -190,7 +190,7 @@ export const guides = {
   'guides.ccs.title': 'Chuyển Đổi Tài Khoản',
   'guides.ccs.description': 'Tiết kiệm chi phí với CCS',
   'guides.archify.title': 'Sơ đồ hệ thống',
-  'guides.archify.description': 'Tạo sơ đồ kiến trúc, workflow, data flow để review cùng agent',
+  'guides.archify.description': 'Sơ đồ kiến trúc theo câu hỏi, để review cùng agent',
   'guides.happy_ccs.title': 'Mobile Coding',
   'guides.happy_ccs.description': 'Code từ điện thoại với CCS providers',
   'guides.codex_app.title': 'Codex App',

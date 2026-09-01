@@ -241,7 +241,7 @@ export const guideSections = [
       {
         title: 'System Diagramming',
         path: '/guides/archify',
-        desc: 'Create validated architecture, workflow, request-flow, dataflow, and lifecycle maps for agent review using Archify as a companion tool.',
+        desc: 'Compile a narrow technical question into a validated architecture, workflow, sequence, data-flow, or lifecycle diagram. JSON source, atomic deliver, AgentKit placement.',
       },
     ],
   },

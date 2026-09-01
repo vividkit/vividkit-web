@@ -82,257 +82,516 @@ const allInstallTargets = [...installTargets, ...secondaryInstallTargets];
 const selectedInstallTarget = installTargets[0];
 
 const manualCliCode = isVi
-  ? `# Chỉ dùng CLI thủ công khi bạn biết tạo hoặc kiểm tra JSON IR\ngit clone https://github.com/tt-a1i/archify\ncd archify/archify\nnode bin/archify.mjs doctor\nnode bin/archify.mjs deliver architecture examples/web-app.architecture.json web-app.html --quality showcase --json`
-  : `# Use the manual CLI only when you can author or inspect JSON IR\ngit clone https://github.com/tt-a1i/archify\ncd archify/archify\nnode bin/archify.mjs doctor\nnode bin/archify.mjs deliver architecture examples/web-app.architecture.json web-app.html --quality showcase --json`;
+  ? `# Chỉ dùng CLI thủ công khi bạn tự author hoặc kiểm JSON\ngit clone https://github.com/tt-a1i/archify\ncd archify/archify\nnode bin/archify.mjs doctor\nnode bin/archify.mjs validate architecture examples/web-app.architecture.json --quality showcase --json\nnode bin/archify.mjs deliver architecture examples/web-app.architecture.json web-app.html --quality showcase --json\nnode bin/archify.mjs visual-check web-app.html --json`
+  : `# Use the manual CLI only when you can author or inspect JSON\ngit clone https://github.com/tt-a1i/archify\ncd archify/archify\nnode bin/archify.mjs doctor\nnode bin/archify.mjs validate architecture examples/web-app.architecture.json --quality showcase --json\nnode bin/archify.mjs deliver architecture examples/web-app.architecture.json web-app.html --quality showcase --json\nnode bin/archify.mjs visual-check web-app.html --json`;
 
-const diagrams = [
-  {
-    id: 'architecture',
-    title: isVi ? 'Kiến trúc' : 'Architecture',
-    image: '/guides/archify/architecture.png',
-    desc: isVi ? 'Component, phụ thuộc, dịch vụ ngoài, ranh giới tin cậy.' : 'Components, dependencies, external services, trust boundaries.',
-    prompt: isVi ? 'Dùng Archify vẽ bản đồ kiến trúc cho repo này với 8-12 component chính và một luồng request chính.' : 'Draw an architecture map for this repo with 8-12 core components and one main request path.',
-  },
-  {
-    id: 'workflow',
-    title: isVi ? 'Quy trình' : 'Workflow',
-    image: '/guides/archify/workflow.png',
-    desc: isVi ? 'CI/CD, cổng phê duyệt, triển khai, rollback, bàn giao.' : 'CI/CD, approval gates, deploy, rollback, handoffs.',
-    prompt: isVi ? 'Dùng Archify vẽ quy trình release: plan -> build -> test -> approve -> deploy -> rollback.' : 'Draw the release workflow: plan -> build -> test -> approve -> deploy -> rollback.',
-  },
-  {
-    id: 'sequence',
-    title: isVi ? 'Luồng gọi' : 'Sequence',
-    image: '/guides/archify/sequence.png',
-    desc: isVi ? 'Request, xác thực, cache miss, thử lại, webhook.' : 'Requests, auth, cache misses, retries, webhooks.',
-    prompt: isVi ? 'Dùng Archify vẽ luồng gọi cho một API request có Redis cache miss rồi fallback về PostgreSQL.' : 'Draw a sequence for an API request with Redis cache miss and PostgreSQL fallback.',
-  },
-  {
-    id: 'dataflow',
-    title: isVi ? 'Luồng dữ liệu' : 'Dataflow',
-    image: '/guides/archify/dataflow.png',
-    desc: isVi ? 'ETL, phân tích, ranh giới PII, nơi data đi qua.' : 'ETL, analytics, PII boundaries, where data travels.',
-    prompt: isVi ? 'Dùng Archify vẽ luồng dữ liệu cho event tracking, đánh dấu ranh giới PII và nơi data rời hệ thống.' : 'Draw a dataflow for event tracking, marking PII boundaries and where data leaves the system.',
-  },
-  {
-    id: 'lifecycle',
-    title: isVi ? 'Vòng đời' : 'Lifecycle',
-    image: '/guides/archify/lifecycle.png',
-    desc: isVi ? 'State của đơn hàng, job, session, thử lại/hủy/lỗi.' : 'Order, job, session states, retry/cancel/fail paths.',
-    prompt: isVi ? 'Dùng Archify vẽ vòng đời cho background job: queued, running, retrying, failed, cancelled, completed.' : 'Draw a lifecycle for a background job: queued, running, retrying, failed, cancelled, completed.',
-  },
-];
+const promptFooterEn = `Inspect the current commit. Cite a file and line range only after you open it. Author typed JSON first: 8–12 primary nodes, one main path, short side branches. Do not copy gallery topology. Validate after every edit. Deliver only after validate passes. Then visual-check; screenshots are evidence, not a passed visual review. Disclose unknowns.`;
+const promptFooterVi = `Đọc commit hiện tại. Chỉ ghi file và line range sau khi đã mở. Author JSON trước: 8–12 node chính, một main path, nhánh phụ ngắn. Không copy topology từ gallery. Validate sau mỗi lần sửa. Deliver chỉ khi validate pass. Rồi visual-check; ảnh là evidence, không phải human review đã pass. Ghi rõ phần chưa chắc.`;
 
-const workflowChains = isVi
+const compilerSteps = isVi
+  ? ['Hỏi', 'Đọc code', 'Viết JSON', 'Mở HTML']
+  : ['Ask', 'Read code', 'Write JSON', 'Open HTML'];
+
+
+const problemCards = isVi
   ? [
-      {
-        title: 'Feature / refactor lớn',
-        bestFor: 'Khi team cần hiểu architecture hiện tại trước khi đổi code.',
-        trigger: 'Trigger `archify` ngay sau `/ak:scout`, rồi trigger lại sau `/ak:plan` nếu plan đổi luồng hệ thống.',
-        apply: 'Dùng sơ đồ đầu để cả team thống nhất “hệ thống hiện đang chạy thế nào”. Dùng sơ đồ sau plan để review phần thay đổi trước khi bắt đầu sửa code.',
-        steps: ['/ak:scout', 'archify', '/ak:brainstorm', '/ak:plan', 'archify', '/ak:cook'],
-        artifact: 'Tạo sơ đồ: kiến trúc hiện tại trước plan; quy trình mới sau plan.',
-        prompt: 'Dùng Archify tạo sơ đồ architecture cho phạm vi vừa scout. Giới hạn 8-12 component chính, external services, trust boundaries và một luồng request chính. Xuất HTML/SVG có validation receipt để team review trước khi plan/cook.',
-      },
-      {
-        title: 'Auth, payment, data, security-sensitive change',
-        bestFor: 'Khi thay đổi chạm data flow, trust boundary, webhook, token hoặc quyền truy cập.',
-        trigger: 'Trigger `archify` sau `/ak:brainstorm` để vẽ dataflow/sequence trước khi chốt plan.',
-        apply: 'Đưa sơ đồ vào plan/review để kiểm tra token, webhook, dữ liệu nhạy cảm và service ngoài. Nếu sơ đồ không rõ ranh giới, chưa nên cook.',
-        steps: ['/ak:scout', '/ak:brainstorm', 'archify', '/ak:plan', '/ak:code-review'],
-        artifact: 'Tạo sơ đồ: luồng dữ liệu, luồng gọi, ranh giới tin cậy và điểm dữ liệu rời hệ thống.',
-        prompt: 'Dùng Archify vẽ dataflow và luồng gọi cho thay đổi auth/payment/data này. Đánh dấu token, webhook, PII boundary, external provider và nơi data rời hệ thống. Nếu có giả định chưa chắc, ghi rõ trong artifact.',
-      },
-      {
-        title: 'Bug khó / incident / background job',
-        bestFor: 'Khi nguyên nhân nằm trong retry, queue, async state hoặc nhiều service nối nhau.',
-        trigger: 'Trigger `archify` sau `/ak:debug` hoặc `/ak:fix` diagnosis, trước khi chọn hướng sửa.',
-        apply: 'Dùng sơ đồ để tách luồng happy path, retry path và failing path. Nó giúp tránh sửa nhầm symptom khi lỗi thật nằm ở queue/state/webhook.',
-        steps: ['/ak:debug', 'archify', '/ak:fix', '/ak:test', '/ak:code-review'],
-        artifact: 'Tạo sơ đồ: vòng đời object/job và luồng gọi của luồng đang lỗi.',
-        prompt: 'Dùng Archify vẽ lifecycle/sequence cho failing path vừa debug. Tách happy path, retry path, timeout/cancel/fail state và service nào sở hữu từng bước. Mục tiêu là giúp chọn hướng fix đúng trước khi sửa code.',
-      },
-      {
-        title: 'PR / release cần giải thích blast radius',
-        bestFor: 'Khi reviewer hoặc stakeholder cần nhìn thay đổi hệ thống thay vì đọc diff dài.',
-        trigger: 'Trigger `archify` sau `/ak:code-review`, trước `/ak:ship`, để gắn artifact vào PR/release note.',
-        apply: 'Dùng artifact như phần giải thích cho reviewer/stakeholder: thay đổi chạm đâu, rollback đi đường nào, và phần nào cần monitor sau deploy.',
-        steps: ['/ak:test', '/ak:code-review', 'archify', '/ak:ship'],
-        artifact: 'Tạo sơ đồ: delta kiến trúc trong PR và quy trình release/rollback.',
-        prompt: 'Dùng Archify tạo sơ đồ giải thích PR/release này cho reviewer. Thể hiện phần thay đổi, service bị ảnh hưởng, rollback path, monitor point sau deploy và câu hỏi còn mở. Xuất artifact để attach vào PR hoặc release note.',
-      },
+      { n: '01', title: 'Trông ổn, nối sai', body: 'AI thêm service, mũi tên, fallback không có trong code.', fix: 'Archify chỉ vẽ node và mối nối đã viết trong JSON.' },
+      { n: '02', title: 'Không review được', body: 'Chỉ còn PNG/SVG — không có nguồn để đọc hay diff.', fix: 'JSON là bản gốc. HTML chỉ là bản xem.' },
+      { n: '03', title: 'Lần sau ra hình khác', body: 'Cùng một prompt, layout và chữ đổi mỗi lần.', fix: 'Cùng JSON thì luôn ra cùng sơ đồ.' },
     ]
   : [
-      {
-        title: 'Feature / large refactor',
-        bestFor: 'When the team needs to understand current architecture before changing code.',
-        trigger: 'Trigger `archify` right after `/ak:scout`, then trigger it again after `/ak:plan` if the plan changes system flow.',
-        apply: 'Use the first map to align the team on how the system works today. Use the post-plan map to review changed flow before editing code.',
-        steps: ['/ak:scout', 'archify', '/ak:brainstorm', '/ak:plan', 'archify', '/ak:cook'],
-        artifact: 'Create: current architecture before planning; new workflow after planning.',
-        prompt: 'Use Archify to create an architecture map for the scouted scope. Limit it to 8-12 core components, external services, trust boundaries, and one main request path. Export validated HTML/SVG for team review before planning/cooking.',
-      },
-      {
-        title: 'Auth, payment, data, security-sensitive change',
-        bestFor: 'When the change touches data flow, trust boundaries, webhooks, tokens, or access control.',
-        trigger: 'Trigger `archify` after `/ak:brainstorm` to draw dataflow/sequence before locking the plan.',
-        apply: 'Attach the map to the plan/review to inspect tokens, webhooks, sensitive data, and external services. If boundaries are unclear, do not cook yet.',
-        steps: ['/ak:scout', '/ak:brainstorm', 'archify', '/ak:plan', '/ak:code-review'],
-        artifact: 'Create: dataflow, sequence, trust boundaries, and where data leaves the system.',
-        prompt: 'Use Archify to draw dataflow and request flow for this auth/payment/data change. Mark tokens, webhooks, PII boundaries, external providers, and where data leaves the system. Call out uncertain assumptions in the artifact.',
-      },
-      {
-        title: 'Hard bug / incident / background job',
-        bestFor: 'When the root cause lives in retry, queue, async state, or several connected services.',
-        trigger: 'Trigger `archify` after `/ak:debug` or `/ak:fix` diagnosis, before choosing the fix.',
-        apply: 'Use the map to separate happy path, retry path, and failing path. This helps avoid fixing symptoms when the real issue sits in queue/state/webhook behavior.',
-        steps: ['/ak:debug', 'archify', '/ak:fix', '/ak:test', '/ak:code-review'],
-        artifact: 'Create: object/job lifecycle and the sequence for the failing path.',
-        prompt: 'Use Archify to draw the lifecycle/sequence for the failing path from the debug findings. Separate happy path, retry path, timeout/cancel/fail states, and which service owns each step. The goal is to choose the fix before editing code.',
-      },
-      {
-        title: 'PR / release blast-radius explanation',
-        bestFor: 'When reviewers or stakeholders need to see system impact instead of reading a long diff.',
-        trigger: 'Trigger `archify` after `/ak:code-review`, before `/ak:ship`, to attach the artifact to the PR/release note.',
-        apply: 'Use the artifact as reviewer/stakeholder explanation: what changed, where rollback goes, and what should be monitored after deploy.',
-        steps: ['/ak:test', '/ak:code-review', 'archify', '/ak:ship'],
-        artifact: 'Create: PR architecture delta and release/rollback workflow.',
-        prompt: 'Use Archify to create a PR/release explanation diagram for reviewers. Show what changed, affected services, rollback path, monitoring points after deploy, and open questions. Export an artifact that can be attached to the PR or release note.',
-      },
+      { n: '01', title: 'Looks fine, wired wrong', body: 'AI adds services, edges, or fallbacks that are not in the code.', fix: 'Archify draws only nodes and links written in the JSON.' },
+      { n: '02', title: 'Cannot be reviewed', body: 'You get a PNG or SVG — nothing to read or diff.', fix: 'JSON is the source. HTML is just the viewer.' },
+      { n: '03', title: 'Different every run', body: 'The same prompt yields a new layout and wording.', fix: 'The same JSON always yields the same diagram.' },
     ];
+
+const otherToolsLead = isVi
+  ? 'Mermaid, Excalidraw, tech-graph — và hầu hết prompt "vẽ sơ đồ" — ra một tấm hình. Archify bắt agent viết JSON có kiểu, rồi compile thành HTML. Khác chỗ: có nguồn để review, có kiểm, không tự bịa thêm box.'
+  : 'Mermaid, Excalidraw, tech-graph — and most "draw a diagram" prompts — produce a picture. Archify makes the agent write typed JSON, then compiles HTML. The difference: a source you can review, checks, and no invented boxes.';
+
+
+
+const pipelineSteps = isVi
+  ? [
+      { title: 'Câu hỏi cần trả lời', hint: 'Người xem sơ đồ — maintainer, reviewer — cần hiểu gì?' },
+      { title: 'Evidence trong repo', hint: 'Chỉ fact đã mở, đã khoanh phạm vi.' },
+      { title: 'JSON nguồn', hint: 'Bản gốc có kiểu — đây là source of truth.' },
+      { title: 'Validate', hint: 'Kiểm JSON và hình học. Sai thì sửa đúng chỗ đó.' },
+      { title: 'Deliver atomic', hint: 'Ghi HTML một lần. Fail thì file cũ vẫn còn.' },
+      { title: 'Ảnh + người review', hint: 'Screenshot là evidence, chưa phải pass.' },
+      { title: 'HTML cho docs, PR, presentation', hint: 'File mở trên trình duyệt để share.' },
+    ]
+  : [
+      { title: 'Question to answer', hint: 'What should someone looking at the diagram understand?' },
+      { title: 'Repo evidence', hint: 'Only facts you opened, with a bounded scope.' },
+      { title: 'JSON source', hint: 'Typed source of truth.' },
+      { title: 'Validate', hint: 'Check the JSON and the geometry. Fix only the failing piece.' },
+      { title: 'Atomic deliver', hint: 'Write the HTML once. On failure the previous file stays.' },
+      { title: 'Screenshots + human review', hint: 'Captures are evidence, not a pass.' },
+      { title: 'HTML for docs, PRs, presentation', hint: 'The file you open in a browser to share.' },
+    ];
+
+const handoffLayers = isVi
+  ? [
+      { layer: 'JSON', role: 'Bản gốc của sơ đồ — để đọc, sửa, diff trong git.', commit: 'Luôn lưu git' },
+      { layer: 'HTML', role: 'File mở trên trình duyệt — gửi docs, PR, slide.', commit: 'Lưu khi cần share' },
+      { layer: 'Receipt', role: 'Biên nhận đã kiểm — validate, hash, ảnh chụp.', commit: 'Giữ khi cần chứng minh' },
+    ]
+  : [
+      { layer: 'JSON', role: 'The diagram source — read, edit, and diff in git.', commit: 'Always keep in git' },
+      { layer: 'HTML', role: 'The file you open in a browser — docs, PRs, slides.', commit: 'Commit when sharing' },
+      { layer: 'Receipt', role: 'Proof the checks ran — status, hashes, screenshots.', commit: 'Keep when you need proof' },
+    ];
+
+const authoringSteps = isVi
+  ? [
+      { n: '01', title: 'Hỏi một câu', body: 'Người xem sơ đồ cần hiểu gì? Một phạm vi, một câu chuyện.' },
+      { n: '02', title: 'Viết JSON trước', body: '8–12 box, một đường chính. Chỉ lấy file đã mở. Chưa chắc mode thì bảo agent chạy `archify guide`.' },
+      { n: '03', title: 'Kiểm rồi mới ghi HTML', body: 'Sửa đúng chỗ đang lỗi. Fail thì file cũ vẫn còn — đừng tưởng bản mới đã pass.' },
+      { n: '04', title: 'Bạn vẫn phải nhìn', body: 'Ảnh chụp không phải đã duyệt. Main path có thấy ngay không?' },
+    ]
+  : [
+      { n: '01', title: 'Ask one question', body: 'What should someone looking at the diagram understand? One scope, one story.' },
+      { n: '02', title: 'Write JSON first', body: '8–12 boxes, one main path. Only files you opened. If the mode is unclear, ask the agent to run `archify guide`.' },
+      { n: '03', title: 'Check, then write HTML', body: 'Fix the failing piece. On failure the old file may still be there — do not treat it as a pass.' },
+      { n: '04', title: 'You still have to look', body: 'Screenshots are not a review. Can you see the main path in a few seconds?' },
+    ];
+
+const modeCards = isVi
+  ? [
+      { type: 'Architecture', answers: 'Hệ thống có gì, nối thế nào, ranh giới nào?', not: 'Thứ tự gọi chính xác.' },
+      { type: 'Workflow', answers: 'Công việc đi qua actor nào, có quyết định, duyệt, retry không?', not: 'State bền vững của một object.' },
+      { type: 'Sequence', answers: 'Trong một interaction, ai gọi ai trước, trả gì?', not: 'Ownership của topic/queue.' },
+      { type: 'Dataflow', answers: 'Data/event đến từ đâu, biến đổi thế nào, ai dùng?', not: 'Timeline hay người chịu trách nhiệm từng task.' },
+      { type: 'Lifecycle', answers: 'Object có state nào, chuyển tiếp và kết thúc ra sao?', not: 'Các bước thực thi `download → scan → package` nếu chưa có state được lưu.' },
+    ]
+  : [
+      { type: 'Architecture', answers: 'What exists, how it connects, which boundaries matter?', not: 'Exact call order.' },
+      { type: 'Workflow', answers: 'Which actors/lanes, decisions, approvals, retries?', not: 'Durable states of one object.' },
+      { type: 'Sequence', answers: 'In one interaction, who calls whom first, and what returns?', not: 'Topic or queue ownership.' },
+      { type: 'Dataflow', answers: 'Where data/events come from, how they change, who consumes them?', not: 'A timeline or who owns each task.' },
+      { type: 'Lifecycle', answers: 'Which states exist, how they transition, how they end?', not: 'Execution steps like download → scan → package unless state is stored.' },
+    ];
+
+const officialGalleryRecipes = [
+  {
+    id: 'web-app',
+    type: 'architecture',
+    viType: 'Kiến trúc',
+    enType: 'Architecture',
+    title: isVi ? 'Tổng quan hệ thống' : 'System overview',
+    question: isVi ? 'Hệ thống có những thành phần nào, và chúng nối với nhau ra sao?' : 'What exists in the system, and how does it connect?',
+    when: isVi ? 'Nhận repo mới, onboarding, design review.' : 'New-repo intake, onboarding, design review.',
+    notWhen: isVi ? 'Cần đúng thứ tự gọi.' : 'You need exact call order.',
+    prompt: isVi
+      ? `Dùng Archify trong repo này để trả lời: một maintainer mới cần thấy input đi qua những runtime component nào, dependency nào nằm ngoài process, và đâu là primary path?\n\n${promptFooterVi}`
+      : `Use Archify in this repo to answer: a new maintainer needs to see which runtime components an input passes through, which dependencies sit outside the process, and what the primary path is.\n\n${promptFooterEn}`,
+  },
+  {
+    id: 'deployment-ownership',
+    type: 'architecture',
+    viType: 'Kiến trúc',
+    enType: 'Architecture',
+    title: isVi ? 'Ownership khi deploy' : 'Deployment ownership',
+    question: isVi ? 'Workload chạy ở đâu, ai sở hữu, cơ chế vượt ranh giới là gì?' : 'Where do workloads run, who owns them, and what crosses the boundary?',
+    when: isVi ? 'Sẵn sàng production, bàn giao infra — khi đã có owner, region, phạm vi private và crossing mechanism.' : 'Production readiness or infra handoff — only when owner, region, private scope, and crossing mechanism are known.',
+    notWhen: isVi ? 'Local CLI, hoặc thiếu fact deploy. Profile này fail nếu thiếu fact — không bịa region/security-group.' : 'Local CLI, or deployment facts are missing. This profile fails closed — do not invent regions or security groups.',
+    prompt: isVi
+      ? `Dùng Archify Architecture với deployment ownership chỉ khi code/infra đã có owner, region, phạm vi private và crossing mechanism.\n\nCâu hỏi: workload chạy ở đâu, ai sở hữu, vượt ranh giới bằng gì?\n\nNếu thiếu fact, dừng và báo — đừng bịa. ${promptFooterVi}`
+      : `Use Archify Architecture with deployment ownership only when owner, region, private scope, and crossing mechanism are known facts.\n\nQuestion: where do workloads run, who owns them, and what is the crossing mechanism?\n\nIf facts are missing, stop and report — do not invent them. ${promptFooterEn}`,
+  },
+  {
+    id: 'agent-tool-call',
+    type: 'workflow',
+    viType: 'Quy trình',
+    enType: 'Workflow',
+    title: isVi ? 'Vòng gọi tool của agent' : 'Agent tool-call loop',
+    question: isVi ? 'Agent lập plan, xin quyền, gọi tool và recover thế nào?' : 'How does the agent plan, ask for permission, call tools, and recover?',
+    when: isVi ? 'Agent runtime, MCP, chính sách duyệt.' : 'Agent runtime, MCP, approval policy.',
+    notWhen: isVi ? 'Chỉ cần map component tĩnh.' : 'You only need a static component map.',
+    prompt: isVi
+      ? `Dùng Archify Workflow để trả lời: agent lập plan, xin quyền, gọi tool và recover thế nào?\n\nLanes theo trách nhiệm. Một main path. Retry và lỗi đi ngoài corridor chính.\n\n${promptFooterVi}`
+      : `Use Archify Workflow to answer: how does the agent plan, ask for permission, call tools, and recover?\n\nLanes by responsibility. One main path. Retries and errors leave the main corridor.\n\n${promptFooterEn}`,
+  },
+  {
+    id: 'delivery-workflow',
+    type: 'workflow',
+    viType: 'Quy trình',
+    enType: 'Workflow',
+    title: isVi ? 'Quy trình giao hàng' : 'Delivery workflow',
+    question: isVi ? 'Một change đi từ commit tới production thế nào?' : 'How does a change go from commit to production?',
+    when: isVi ? 'Thiết kế CI/CD, review release.' : 'CI/CD design, release review.',
+    notWhen: isVi ? 'Câu hỏi là state của release object — dùng Lifecycle.' : 'The question is the state of a release object — use Lifecycle.',
+    prompt: isVi
+      ? `Dùng Archify Workflow để trả lời: một change đi từ commit tới production qua build, cổng chặn, duyệt, verify, communicate và rollback thế nào?\n\n${promptFooterVi}`
+      : `Use Archify Workflow to answer: how does a change move from commit to production through build, blocking gates, approval, verify, communicate, and rollback?\n\n${promptFooterEn}`,
+  },
+  {
+    id: 'incident-runbook',
+    type: 'workflow',
+    viType: 'Quy trình',
+    enType: 'Workflow',
+    title: isVi ? 'Runbook sự cố' : 'Incident runbook',
+    question: isVi ? 'Detect, triage, mitigate, communicate và verify thế nào?' : 'How do we detect, triage, mitigate, communicate, and verify?',
+    when: isVi ? 'Bàn giao on-call, tabletop.' : 'On-call handoff, tabletop exercise.',
+    notWhen: isVi ? 'Cần dashboard monitoring live.' : 'You need a live monitoring dashboard.',
+    prompt: isVi
+      ? `Dùng Archify Workflow để trả lời: detect, triage, mitigate, communicate và verify một sự cố thế nào?\n\n${promptFooterVi}`
+      : `Use Archify Workflow to answer: how do we detect, triage, mitigate, communicate, and verify an incident?\n\n${promptFooterEn}`,
+  },
+  {
+    id: 'cache-miss',
+    type: 'sequence',
+    viType: 'Luồng gọi',
+    enType: 'Sequence',
+    title: isVi ? 'Chuỗi gọi API' : 'API request chain',
+    question: isVi ? 'Ai gọi ai, thứ tự nào, trả về gì?' : 'Who calls whom, in what order, and what returns?',
+    when: isVi ? 'API docs, debug auth/cache.' : 'API docs, auth or cache debugging.',
+    notWhen: isVi ? 'Thứ tự không quan trọng.' : 'Order does not matter.',
+    prompt: isVi
+      ? `Dùng Archify Sequence để trả lời: trong một request, participant nào gọi participant nào trước, và trả gì?\n\nMột interaction. Không biến thành map component.\n\n${promptFooterVi}`
+      : `Use Archify Sequence to answer: in one request, which participant calls which participant first, and what returns?\n\nOne interaction. Do not turn this into a component map.\n\n${promptFooterEn}`,
+  },
+  {
+    id: 'async-roundtrip',
+    type: 'sequence',
+    viType: 'Luồng gọi',
+    enType: 'Sequence',
+    title: isVi ? 'Vòng async sau ACK' : 'Async roundtrip',
+    question: isVi ? 'Sau ACK ban đầu còn những bước nào?' : 'After the initial ACK, which steps still run?',
+    when: isVi ? 'Job, webhook, callback, eventual consistency.' : 'Jobs, webhooks, callbacks, eventual consistency.',
+    notWhen: isVi ? 'Cần map topic/consumer — dùng Dataflow.' : 'You need a topic/consumer map — use Dataflow.',
+    prompt: isVi
+      ? `Dùng Archify Sequence để trả lời: sau ACK ban đầu, queue, worker, retry, webhook và polling còn chạy thế nào?\n\n${promptFooterVi}`
+      : `Use Archify Sequence to answer: after the initial ACK, how do queueing, workers, retry, webhooks, and polling still run?\n\n${promptFooterEn}`,
+  },
+  {
+    id: 'product-analytics',
+    type: 'dataflow',
+    viType: 'Luồng dữ liệu',
+    enType: 'Dataflow',
+    title: isVi ? 'Nguồn gốc dữ liệu' : 'Data lineage',
+    question: isVi ? 'Data đến từ đâu, biến đổi thế nào, ai dùng?' : 'Where does data come from, how is it transformed, and who consumes it?',
+    when: isVi ? 'ETL, analytics, PII, feature model.' : 'ETL, analytics, PII, model features.',
+    notWhen: isVi ? 'Cần ownership task hoặc timeline.' : 'You need task ownership or a timeline.',
+    prompt: isVi
+      ? `Dùng Archify Dataflow để trả lời: data đến từ đâu, biến đổi thế nào, lưu ở đâu, ai consume, PII đi qua boundary nào?\n\n${promptFooterVi}`
+      : `Use Archify Dataflow to answer: where does data come from, how is it transformed, where is it stored, who consumes it, and which PII boundaries does it cross?\n\n${promptFooterEn}`,
+  },
+  {
+    id: 'event-stream',
+    type: 'dataflow',
+    viType: 'Luồng dữ liệu',
+    enType: 'Dataflow',
+    title: isVi ? 'Topology event stream' : 'Event-stream topology',
+    question: isVi ? 'Event đi qua topic, consumer group, replay và DLQ nào?' : 'Which topics, consumer groups, replay paths, and DLQs do events pass through?',
+    when: isVi ? 'Review nền tảng Kafka/event, semantics đã xác minh.' : 'Kafka/event platform review, with verified delivery semantics.',
+    notWhen: isVi ? 'Chưa xác minh at-least-once / exactly-once / replay.' : 'Delivery semantics are unverified.',
+    prompt: isVi
+      ? `Dùng Archify Dataflow để trả lời: event đi qua producer, topic, consumer group, replay và DLQ nào? Chỉ ghi semantics đã xác minh.\n\n${promptFooterVi}`
+      : `Use Archify Dataflow to answer: which producers, topics, consumer groups, replay paths, and DLQs do events pass through? Record only verified semantics.\n\n${promptFooterEn}`,
+  },
+  {
+    id: 'agent-run',
+    type: 'lifecycle',
+    viType: 'Vòng đời',
+    enType: 'Lifecycle',
+    title: isVi ? 'Vòng đời object' : 'Object lifecycle',
+    question: isVi ? 'Object có những state nào, và kết thúc ra sao?' : 'What states does the object have, and how does it end?',
+    when: isVi ? 'Order, ticket, job, agent run — khi state được lưu.' : 'Order, ticket, job, agent run — when state is stored.',
+    notWhen: isVi ? 'Chỉ có bước thực thi, chưa có state machine được persist.' : 'You only have execution stages, not a persisted state machine.',
+    prompt: isVi
+      ? `Dùng Archify Lifecycle chỉ khi object có state được lưu, event chuyển state, retry và terminal outcome.\n\nCâu hỏi: object có state nào, chuyển thế nào, kết thúc ra sao?\n\nNếu đây là đề xuất chứ không phải hiện trạng, ghi rõ Proposed Design. ${promptFooterVi}`
+      : `Use Archify Lifecycle only when the object has stored state, transition events, retries, and terminal outcomes.\n\nQuestion: which states exist, how do they transition, how do they end?\n\nIf this is a proposal, not current state, label it Proposed Design. ${promptFooterEn}`,
+  },
+  {
+    id: 'deployment-lifecycle',
+    type: 'lifecycle',
+    viType: 'Vòng đời',
+    enType: 'Lifecycle',
+    title: isVi ? 'Vòng đời bản release' : 'Deployment lifecycle',
+    question: isVi ? 'Release đang ở state nào, và chuyển tiếp thế nào?' : 'What state is the release in, and how does it transition?',
+    when: isVi ? 'GitOps, controller, status API.' : 'GitOps, controller, status API.',
+    notWhen: isVi ? 'Cần thứ tự hành động của người và CI — dùng Workflow.' : 'You need the action order of people and CI — use Workflow.',
+    prompt: isVi
+      ? `Dùng Archify Lifecycle để trả lời: deployment object đi qua build, verify, approve, promote, pause, rollback và terminal state nào?\n\n${promptFooterVi}`
+      : `Use Archify Lifecycle to answer: which states does the deployment object move through for build, verify, approve, promote, pause, rollback, and terminal outcomes?\n\n${promptFooterEn}`,
+  },
+];
 
 const recipeTypeFilters = isVi
   ? ['Kiến trúc', 'Quy trình', 'Luồng gọi', 'Luồng dữ liệu', 'Vòng đời']
   : ['Architecture', 'Workflow', 'Sequence', 'Dataflow', 'Lifecycle'];
 
-const officialRecipes = isVi
-  ? [
-      ['Kiến trúc', 'Tổng quan hệ thống', 'Hệ thống có gì, ai sở hữu, nối với nhau ra sao?', 'Bản đồ component chính, phụ thuộc, luồng chính, ranh giới tin cậy.', 'Dùng Archify tạo bản đồ tổng quan hệ thống cho web app bán sản phẩm số. Thể hiện storefront, checkout, payment provider, license delivery, user account, admin, database, email service, analytics và ranh giới tin cậy.'],
-      ['Kiến trúc', 'Quyền sở hữu triển khai', 'Workload chạy ở đâu, ranh giới nào bị đi qua?', 'Bản đồ vùng, mạng, cluster, workload, kho dữ liệu, cơ chế đi qua ranh giới.', 'Dùng Archify vẽ bản đồ quyền sở hữu triển khai cho web app bán sản phẩm số. Thể hiện CDN, frontend hosting, API runtime, worker queue, object storage cho file tải xuống, database, payment webhook, ranh giới secrets và team sở hữu từng workload.'],
-      ['Quy trình', 'Vòng lặp gọi tool của agent', 'Agent lập kế hoạch, xin quyền, gọi tool, phục hồi và báo cáo như thế nào?', 'Vòng lặp theo lane, có cổng chính sách, chạy tool, phục hồi lỗi, bằng chứng.', 'Dùng Archify vẽ vòng lặp gọi tool của agent khi bảo trì web app bán sản phẩm số. Bao gồm scout, xin quyền trước khi sửa file checkout/payment, chạy tool, validate, phục hồi khi test fail và report bằng chứng cuối cùng.'],
-      ['Quy trình', 'Quy trình delivery', 'Thay đổi đi từ commit tới production an toàn ra sao?', 'Build, kiểm tra, môi trường, phê duyệt, smoke test, rollback, lane sở hữu.', 'Dùng Archify vẽ quy trình delivery để release checkout flow mới cho sản phẩm số. Thể hiện commit, preview build, payment sandbox test, license email smoke test, approval, production deploy, monitoring và rollback.'],
-      ['Quy trình', 'Runbook sự cố', 'Responder phát hiện, phân loại, giảm thiểu, xác minh, escalate thế nào?', 'Tách tín hiệu, người phản hồi, bước giảm thiểu, kênh liên lạc, bằng chứng phục hồi.', 'Dùng Archify tạo runbook sự cố cho web app bán sản phẩm số khi khách đã trả tiền nhưng không nhận link tải xuống. Thể hiện detection, triage, payment verification, resend job, customer communication, escalation và recovery proof.'],
-      ['Luồng gọi', 'Luồng request API', 'Ai gọi ai, theo thứ tự nào, trả về gì?', 'Xác thực, cache fallback, lưu dữ liệu, response quay về, trace async.', 'Dùng Archify vẽ luồng request API khi mua sản phẩm số. Thể hiện browser, checkout API, auth/session check, coupon validation, payment provider, order database, license generation, email queue và response trả về buyer.'],
-      ['Luồng gọi', 'Vòng async roundtrip', 'Sau khi request đầu trả về thì chuyện gì xảy ra?', 'Đưa vào queue, xác nhận, việc nền, callback, thử lại, timeout, nhất quán dữ liệu.', 'Dùng Archify vẽ vòng async roundtrip sau khi payment success trong web app bán sản phẩm số. Thể hiện provider webhook, signature verification, order update, chuẩn bị license file, email delivery, retry, timeout và final consistency check.'],
-      ['Luồng dữ liệu', 'Nguồn gốc dữ liệu', 'Data đến từ đâu, biến đổi ra sao, ai tiêu thụ?', 'Nguồn dữ liệu, consent, bước biến đổi, nơi lưu nhạy cảm, warehouse, consumer.', 'Dùng Archify vẽ nguồn gốc dữ liệu cho web app bán sản phẩm số. Thể hiện visitor analytics, checkout form, payment metadata, order records, license entitlement, support dashboard, email marketing opt-in và ranh giới PII.'],
-      ['Luồng dữ liệu', 'Topology event stream', 'Event đi qua topic/processor/group/luồng lỗi nào?', 'Producer, topic, processor theo thứ tự, consumer group, state, replay, dead-letter queue.', 'Dùng Archify vẽ topology event stream cho web app bán sản phẩm số. Thể hiện order.created, payment.succeeded, license.generated, email.sent, processors, consumer groups, replay path, dead-letter queue và monitoring.'],
-      ['Vòng đời', 'Vòng đời object', 'Object có state nào, event nào chuyển state, kết thúc ra sao?', 'Việc đang chạy, trạng thái chờ, thử lại, hủy, lỗi, outcome kết thúc rõ ràng.', 'Dùng Archify vẽ vòng đời order cho giao dịch mua sản phẩm số. Bao gồm draft, pending_payment, paid, license_generating, fulfilled, refunded, expired, failed, cancelled và terminal states.'],
-      ['Vòng đời', 'Vòng đời triển khai', 'Release đang ở state nào và có thể đi đâu tiếp?', 'Xếp hàng, build, xác minh, phê duyệt, promote, rollback, outcome kết thúc.', 'Dùng Archify vẽ vòng đời deployment cho release của web app bán sản phẩm số. Bao gồm queued, building, preview_ready, sandbox_verified, awaiting_approval, promoted, monitored, rolled_back, failed và completed.'],
-    ]
-  : [
-      ['Architecture', 'System overview', 'What exists, who owns it, and how is it connected?', 'Core components, dependencies, primary paths, trust boundaries.', 'Use the archify skill to create a system overview for a digital product store. Show storefront, checkout, payment provider, license delivery, user account, admin, database, email service, analytics, and trust boundaries.'],
-      ['Architecture', 'Deployment ownership', 'Where does each workload run, and what crosses a boundary?', 'Regions, networks, clusters, workloads, stores, cross-boundary mechanisms.', 'Use the archify skill to map deployment ownership for a digital product store. Show CDN, frontend hosting, API runtime, worker queue, object storage for downloads, database, payment webhooks, secrets boundary, and which team owns each workload.'],
-      ['Workflow', 'Agent tool-call loop', 'How does an agent plan, get permission, act, recover, and report?', 'Policy gates, tool execution, exception recovery, evidence, final response.', 'Use the archify skill to draw an agent tool-call loop for maintaining a digital product store. Include scout, permission ask before editing checkout/payment files, tool execution, validation, recovery when tests fail, and final evidence report.'],
-      ['Workflow', 'Delivery workflow', 'How does a change move safely from commit to production?', 'Build, checks, environments, approvals, smoke tests, rollback, ownership lanes.', 'Use the archify skill to draw the delivery workflow for releasing a new digital product checkout flow. Show commit, preview build, payment sandbox test, license email smoke test, approval, production deploy, monitoring, and rollback.'],
-      ['Workflow', 'Incident runbook', 'How do responders detect, triage, mitigate, verify, and escalate?', 'Signals, responders, mitigation, communications, recovery proof.', 'Use the archify skill to create an incident runbook for a digital product store where paid customers do not receive download links. Show detection, triage, payment verification, resend job, customer communication, escalation, and recovery proof.'],
-      ['Sequence', 'API request chain', 'Who calls whom, in what order, and what returns?', 'Authentication, cache fallback, persistence, return traffic, async trace.', 'Use the archify skill to draw the API request chain for buying a digital product. Show browser, checkout API, auth/session check, coupon validation, payment provider, order database, license generation, email queue, and response to the buyer.'],
-      ['Sequence', 'Async roundtrip', 'What happens after the initial request returns?', 'Enqueue, acknowledgement, background work, callbacks, retries, timeout, consistency.', 'Use the archify skill to draw the async roundtrip after payment success in a digital product store. Show provider webhook, signature verification, order update, license file preparation, email delivery, retries, timeout, and final consistency check.'],
-      ['Dataflow', 'Data lineage', 'Where does data come from, how does it change, and who consumes it?', 'Sources, consent, transforms, sensitive stores, warehouse, consumers.', 'Use the archify skill to draw data lineage for a digital product store. Show visitor analytics, checkout form, payment metadata, order records, license entitlement, support dashboard, email marketing opt-in, and PII boundaries.'],
-      ['Dataflow', 'Event-stream topology', 'Which events move through which topics, processors, groups, and failure paths?', 'Producers, topics, ordered processors, consumer groups, state, replay, DLQ.', 'Use the archify skill to map event-stream topology for a digital product store. Show order.created, payment.succeeded, license.generated, email.sent, processors, consumer groups, replay path, dead-letter queue, and monitoring.'],
-      ['Lifecycle', 'Object lifecycle', 'Which states exist, what events move between them, and how does it end?', 'Active work, waits, retries, cancellation, failure, terminal outcomes.', 'Use the archify skill to draw the order lifecycle for a digital product purchase. Include draft, pending_payment, paid, license_generating, fulfilled, refunded, expired, failed, cancelled, and terminal states.'],
-      ['Lifecycle', 'Deployment lifecycle', 'What state is a release in, and what can happen next?', 'Queued, building, verifying, approval, promotion, rollback, terminal outcomes.', 'Use the archify skill to draw the deployment lifecycle for a digital product store release. Include queued, building, preview_ready, sandbox_verified, awaiting_approval, promoted, monitored, rolled_back, failed, and completed.'],
-    ];
+const officialRecipes = officialGalleryRecipes.map((recipe) => ({
+  ...recipe,
+  typeLabel: isVi ? recipe.viType : recipe.enType,
+  previewDark: `/guides/archify/gallery/${recipe.id}-dark.webp`,
+  previewLight: `/guides/archify/gallery/${recipe.id}-light.webp`,
+}));
 
-const recipeGroupIconKinds = ['architecture', 'workflow', 'sequence', 'dataflow', 'lifecycle'];
 const recipeGroupDescriptions = isVi
   ? [
-      'Hiểu hệ thống đang có gì, ai sở hữu và ranh giới nào quan trọng.',
-      'Biến delivery, incident và agent loop thành checklist trực quan.',
-      'Thấy rõ ai gọi ai, thứ tự gọi và điểm fallback/retry.',
-      'Theo dấu dữ liệu, event, PII và đường lỗi qua nhiều service.',
-      'Chốt state, transition, retry/cancel/fail và outcome cuối.',
+      'Hiểu hệ thống đang có gì, ai sở hữu, ranh giới nào quan trọng.',
+      'Công việc đi qua actor nào, quyết định / duyệt / retry ra sao.',
+      'Ai gọi ai, thứ tự nào, điểm fallback.',
+      'Data và event đi đâu, PII và đường lỗi.',
+      'State được lưu, transition, retry/cancel/fail, outcome cuối.',
     ]
   : [
-      'Understand what exists, who owns it, and which boundaries matter.',
-      'Turn delivery, incidents, and agent loops into visual checklists.',
-      'See who calls whom, in what order, and where fallback/retry happens.',
-      'Trace data, events, PII, and failure paths across services.',
-      'Lock states, transitions, retry/cancel/fail paths, and final outcomes.',
+      'What exists, who owns it, which boundaries matter.',
+      'Which actors, decisions, approvals, and retries.',
+      'Who calls whom, in what order, where fallback happens.',
+      'Where data and events travel, PII, failure paths.',
+      'Stored states, transitions, retry/cancel/fail, terminal outcomes.',
     ];
 
 const recipeGroups = recipeTypeFilters.map((type, index) => ({
   type,
   index: String(index + 1).padStart(2, '0'),
-  icon: recipeGroupIconKinds[index],
   description: recipeGroupDescriptions[index],
-  recipes: officialRecipes.filter(([recipeType]) => recipeType === type),
+  recipes: officialRecipes.filter((recipe) => recipe.typeLabel === type),
 }));
+
+const sdlcStages = isVi
+  ? [
+      { stage: 'Nhận dự án mới', artifact: 'Architecture tổng quan', goal: 'Tạo mental model ban đầu.', prompt: 'Dùng Archify Architecture để trả lời: hệ thống này có những phần nào, nối thế nào, phần nào nằm ngoài process? 8–12 box, một đường chính. Chỉ lấy file đã mở.' },
+      { stage: 'Trước khi code', artifact: 'Sequence, Dataflow, hoặc Lifecycle', goal: 'Chốt một contract — một câu hỏi, một sơ đồ.', prompt: 'Dùng Archify để trả lời đúng một câu hỏi trước khi code: ai gọi ai theo thứ tự nào, data đi đâu, hoặc object có những state nào? Chọn Sequence, Dataflow, hoặc Lifecycle — không gộp.' },
+      { stage: 'Đang implement', artifact: 'Cập nhật JSON có chọn lọc', goal: 'Sửa sơ đồ đang có, đừng vẽ lại từ đầu.', prompt: 'Cập nhật JSON Archify hiện có cho thay đổi này. Giữ ID ổn định. Chỉ thêm/bỏ/đổi khi code evidence hỗ trợ. Không vẽ sơ đồ mới nếu topology không đổi.' },
+      { stage: 'Review PR', artifact: 'Architecture Delta', goal: 'Reviewer thấy chỗ JSON đổi — không suy impact.', prompt: 'Dùng Archify Architecture Delta trên PR này. Baseline: JSON đã có trong repo. Trả đúng added, removed, changed, moved, rerouted. Không suy impact, risk, hay merge safety.' },
+      { stage: 'Release', artifact: 'Delivery Workflow hoặc Deployment Lifecycle', goal: 'Một câu hỏi: việc làm, hoặc state của bản phát hành.', prompt: 'Dùng Archify để trả lời đúng một câu hỏi lúc release: change đi từ commit tới production thế nào, hoặc bản phát hành đang ở state nào? Chọn Workflow hoặc Lifecycle — không gộp.' },
+      { stage: 'Vận hành', artifact: 'Incident runbook', goal: 'Chuẩn hóa detect, triage, mitigate, verify.', prompt: 'Dùng Archify Workflow để trả lời: khi sự cố xảy ra, detect, triage, mitigate, communicate và verify thế nào? Một main path, nhánh lỗi đi ngoài.' },
+      { stage: 'Onboarding', artifact: 'Architecture tổng quan', goal: 'Giảm thời gian đọc repo.', prompt: 'Dùng Archify Architecture để một người mới thấy: request đi qua những phần nào, dependency nào ở ngoài, đâu là đường chính? 8–12 box.' },
+      { stage: 'Compliance / data', artifact: 'Data lineage', goal: 'Data đến từ đâu, biến đổi, lưu, ai dùng.', prompt: 'Dùng Archify Dataflow để trả lời: data đến từ đâu, biến đổi thế nào, lưu ở đâu, ai dùng, PII đi qua chỗ nào? Chỉ ghi fact đã mở.' },
+    ]
+  : [
+      { stage: 'New project', artifact: 'System overview Architecture', goal: 'Build an initial mental model.', prompt: 'Use Archify Architecture to answer: what parts exist, how they connect, and what sits outside the process? 8–12 boxes, one main path. Only files you opened.' },
+      { stage: 'Before implementation', artifact: 'Sequence, Dataflow, or Lifecycle', goal: 'Lock one contract — one question, one diagram.', prompt: 'Use Archify to answer exactly one question before coding: who calls whom in what order, where data goes, or which states an object has? Pick Sequence, Dataflow, or Lifecycle — not more than one.' },
+      { stage: 'During implementation', artifact: 'Selective JSON updates', goal: 'Edit the existing diagram, do not redraw from scratch.', prompt: 'Update the existing Archify JSON for this change. Keep stable IDs. Add, remove, or change only with code evidence. Do not draw a new diagram if topology did not change.' },
+      { stage: 'PR review', artifact: 'Architecture Delta', goal: 'Show what the JSON changed — do not infer impact.', prompt: 'Use Archify Architecture Delta on this PR. Baseline: the JSON already in the repo. Return exactly added, removed, changed, moved, rerouted. Do not infer impact, risk, or merge safety.' },
+      { stage: 'Release', artifact: 'Delivery Workflow or Deployment Lifecycle', goal: 'One question: the work, or the release object state.', prompt: 'Use Archify to answer exactly one release question: how a change goes from commit to production, or which state the release is in? Pick Workflow or Lifecycle — not both.' },
+      { stage: 'Operation', artifact: 'Incident runbook', goal: 'Standardize detect, triage, mitigate, verify.', prompt: 'Use Archify Workflow to answer: when an incident happens, how do we detect, triage, mitigate, communicate, and verify? One main path; error branches leave it.' },
+      { stage: 'Onboarding', artifact: 'System overview Architecture', goal: 'Cut time-to-read the repo.', prompt: 'Use Archify Architecture so a new person can see: which parts a request passes through, what sits outside, and the main path. 8–12 boxes.' },
+      { stage: 'Compliance / data', artifact: 'Data lineage', goal: 'Where data comes from, how it changes, who uses it.', prompt: 'Use Archify Dataflow to answer: where data comes from, how it is transformed, where it is stored, who uses it, and where PII crosses a boundary. Only facts you opened.' },
+    ];
+
+const triggerYes = isVi
+  ? ['Runtime boundary', 'External dependency', 'Primary request / processing path', 'Cache hoặc storage ownership', 'Sync đổi async hoặc ngược lại', 'Trust / deployment crossing', 'Durable lifecycle state', 'Data contract hoặc classification quan trọng']
+  : ['Runtime boundary', 'External dependency', 'Primary request or processing path', 'Cache or storage ownership', 'Sync became async or the reverse', 'Trust or deployment crossing', 'Durable lifecycle state', 'Important data contract or classification'];
+
+const triggerNo = isVi
+  ? ['Rename thuần', 'Refactor nội bộ, topology không đổi', 'Chỉ test', 'Formatting', 'Bug fix không đổi architectural contract']
+  : ['Pure rename', 'Internal refactor with the same topology', 'Test-only change', 'Formatting', 'Bug fix that does not change the architectural contract'];
+
+const akPrinciples = isVi
+  ? [
+      { title: 'Cần evidence, không luôn cần scout', body: 'AgentKit đi hiểu → quyết định → làm → kiểm tra → ship. Chưa hiểu repo thì `/ak:scout` trước. Đã có plan, debug notes, hoặc PR diff thì Archify dùng evidence đó.' },
+      { title: 'Sơ đồ để review, không phải verdict', body: 'Không thay `/ak:test`, `/ak:security`, `/ak:code-review`, hay quyền quyết của người review.' },
+      { title: 'Dùng ở cổng rủi ro cao', body: 'Auth, payment, PII, token, webhook, migration, background job, incident — sơ đồ trước khi chốt plan/cook.' },
+      { title: 'Không nhét vào quick path', body: 'Task nhỏ giữ workflow ngắn nhất hữu ích (`/ak:cook --fast`). Chỉ thêm Archify khi sơ đồ giảm rủi ro hoặc làm handoff rõ hơn.' },
+    ]
+  : [
+      { title: 'Needs evidence, not always scout', body: 'AgentKit runs understand → decide → execute → verify → ship. If the repo is unclear, run `/ak:scout` first. If a plan, debug notes, or PR diff already exists, Archify can use that evidence.' },
+      { title: 'A review artifact, not a verdict', body: 'It does not replace `/ak:test`, `/ak:security`, `/ak:code-review`, or human review authority.' },
+      { title: 'Use it at high-risk gates', body: 'Auth, payments, PII, tokens, webhooks, migrations, background jobs, incidents — diagram before locking plan/cook.' },
+      { title: 'Do not force it into the quick path', body: 'Small tasks keep the shortest useful workflow (`/ak:cook --fast`). Add Archify only when the diagram reduces risk or clarifies a handoff.' },
+    ];
+
+const akChains = isVi
+  ? [
+      {
+        title: 'Xây feature mới',
+        ak: 'A1 · Build a new feature',
+        bestFor: 'Feature hình dạng chưa rõ hoặc đụng nhiều file. Bỏ qua với Quick implement.',
+        placements: [
+          { label: 'Hiện trạng', context: 'evidence / `/ak:scout`', archify: 'archify', next: '`/ak:brainstorm`', note: 'Một Architecture: hệ thống đang có gì trước khi chọn hướng.' },
+          { label: 'Hướng đã chọn', context: '`/ak:brainstorm`', archify: 'archify', next: '`/ak:plan`', note: 'Một Workflow hoặc một Dataflow — không gộp cả hai. Rồi `/ak:cook`.' },
+        ],
+        prompts: [
+          { label: 'Trước brainstorm', prompt: `Dùng Archify Architecture để trả lời: hiện trạng feature/refactor này có những component, dependency, external service và một request path chính nào?\n\nMục tiêu: input rõ cho /ak:brainstorm. ${promptFooterVi}` },
+          { label: 'Sau brainstorm', prompt: `Dùng Archify để trả lời đúng một câu hỏi sau brainstorm: luồng công việc mới đi qua actor nào, hoặc data mới đi đâu?\n\nChọn Workflow hoặc Dataflow, không cả hai. Ghi component đổi, boundary chạm, câu hỏi còn mở. Mục tiêu: /ak:plan bám architecture. ${promptFooterVi}` },
+        ],
+      },
+      {
+        title: 'Auth / payment / data nhạy cảm',
+        ak: 'G2 · Auth feature · Payments',
+        bestFor: 'Đụng tiền, PII, token, webhook, quyền, hoặc data rời hệ thống.',
+        placements: [
+          { label: 'Trước plan cứng', context: '`/ak:better-auth` hoặc domain skill', archify: 'archify', next: '`/ak:plan`', note: 'Một Dataflow (data đi đâu) hoặc một Sequence (ai gọi ai). Rồi cook → security → test.' },
+        ],
+        prompts: [
+          { label: 'Một câu hỏi rủi ro', prompt: `Dùng Archify để trả lời đúng một câu hỏi cho thay đổi auth/payment/data này: data nhạy cảm đi đâu và rời hệ thống ở đâu, hoặc ai gọi ai theo thứ tự nào?\n\nChọn Dataflow hoặc Sequence. Đánh dấu actor, quyền, token, webhook, PII, provider ngoài, failure path. Giả định chưa chắc phải ghi. ${promptFooterVi}` },
+        ],
+      },
+      {
+        title: 'Sửa bug / incident',
+        ak: 'C1 · Fix a bug',
+        bestFor: 'Lỗi nằm ở retry, queue, async state, hoặc nhiều service. Ưu tiên `/ak:fix`; đường sâu khi RCA chưa rõ.',
+        placements: [
+          { label: 'Sau chẩn đoán', context: '`/ak:debug`', archify: 'archify', next: '`/ak:fix`', note: 'Một Sequence cho failing interaction. Lifecycle chỉ khi object có state được lưu.' },
+        ],
+        prompts: [
+          { label: 'Failing path', prompt: `Dùng Archify Sequence để trả lời: failing path vừa debug gọi participant nào, theo thứ tự nào, retry/timeout trả về đâu?\n\nTách happy path khỏi failing path. Không biến bước thực thi thành Lifecycle trừ khi state được persist. Mục tiêu: chọn hướng /ak:fix trước khi sửa code. ${promptFooterVi}` },
+        ],
+      },
+      {
+        title: 'Review PR / ship',
+        ak: 'D1 · Review a PR · D3 · Ship',
+        bestFor: 'Chỉ khi architectural contract đổi. Không dùng cho mọi PR.',
+        placements: [
+          { label: 'Delta cấu trúc', context: 'JSON baseline đã validate', archify: 'archify', next: '`/ak:code-review` / `/ak:ship`', note: 'Architecture Delta: added, removed, changed, moved, rerouted. Không suy risk, impact, merge safety.' },
+        ],
+        prompts: [
+          { label: 'Architecture Delta', prompt: `Dùng Archify Architecture Delta trên PR hiện tại.\n\nBaseline: JSON architecture đã validate trong repo. Giữ stable ID cho component không đổi. Chỉ thêm/bỏ/đổi/reroute khi code evidence hỗ trợ.\n\nTrả đúng: added, removed, changed, moved, rerouted. Không suy blast radius, production impact, risk, hay merge safety. Reviewer đọc JSON, receipt, và delta đã render. ${promptFooterVi}` },
+        ],
+      },
+    ]
+  : [
+      {
+        title: 'Build a new feature',
+        ak: 'A1 · Build a new feature',
+        bestFor: 'Unclear shape or multi-file impact. Skip on Quick implement.',
+        placements: [
+          { label: 'Current state', context: 'evidence / `/ak:scout`', archify: 'archify', next: '`/ak:brainstorm`', note: 'One Architecture: what exists before choosing a direction.' },
+          { label: 'Chosen direction', context: '`/ak:brainstorm`', archify: 'archify', next: '`/ak:plan`', note: 'One Workflow or one Dataflow — not both. Then `/ak:cook`.' },
+        ],
+        prompts: [
+          { label: 'Before brainstorm', prompt: `Use Archify Architecture to answer: for this feature/refactor, which components, dependencies, external services, and one primary request path exist today?\n\nGoal: clear input for /ak:brainstorm. ${promptFooterEn}` },
+          { label: 'After brainstorm', prompt: `Use Archify to answer exactly one question after brainstorm: which actors does the new work pass through, or where does the new data go?\n\nPick Workflow or Dataflow, not both. Record changed components, touched boundaries, and open questions. Goal: keep /ak:plan aligned with architecture. ${promptFooterEn}` },
+        ],
+      },
+      {
+        title: 'Auth / payment / sensitive data',
+        ak: 'G2 · Auth feature · Payments',
+        bestFor: 'Money, PII, tokens, webhooks, access control, or data leaving the system.',
+        placements: [
+          { label: 'Before hard plan', context: '`/ak:better-auth` or domain skill', archify: 'archify', next: '`/ak:plan`', note: 'One Dataflow (where data goes) or one Sequence (who calls whom). Then cook → security → test.' },
+        ],
+        prompts: [
+          { label: 'One risk question', prompt: `Use Archify to answer exactly one question for this auth/payment/data change: where sensitive data goes and where it leaves the system, or who calls whom in what order?\n\nPick Dataflow or Sequence. Mark actors, permissions, tokens, webhooks, PII, external providers, and failure paths. Call out uncertain assumptions. ${promptFooterEn}` },
+        ],
+      },
+      {
+        title: 'Fix a bug / incident',
+        ak: 'C1 · Fix a bug',
+        bestFor: 'The bug lives in retry, queue, async state, or several services. Prefer `/ak:fix`; deep path when RCA is unclear.',
+        placements: [
+          { label: 'After diagnosis', context: '`/ak:debug`', archify: 'archify', next: '`/ak:fix`', note: 'One Sequence for the failing interaction. Lifecycle only if the object has stored state.' },
+        ],
+        prompts: [
+          { label: 'Failing path', prompt: `Use Archify Sequence to answer: which participants does the failing path call, in what order, and where do retry/timeout return?\n\nSeparate happy path from failing path. Do not turn execution stages into Lifecycle unless state is persisted. Goal: choose the /ak:fix direction before editing code. ${promptFooterEn}` },
+        ],
+      },
+      {
+        title: 'Review a PR / ship',
+        ak: 'D1 · Review a PR · D3 · Ship',
+        bestFor: 'Only when the architectural contract changed. Not every PR.',
+        placements: [
+          { label: 'Structural delta', context: 'validated baseline JSON', archify: 'archify', next: '`/ak:code-review` / `/ak:ship`', note: 'Architecture Delta: added, removed, changed, moved, rerouted. Do not infer risk, impact, or merge safety.' },
+        ],
+        prompts: [
+          { label: 'Architecture Delta', prompt: `Use Archify Architecture Delta on the current PR.\n\nBaseline: the validated architecture JSON in the repo. Keep stable IDs for unchanged components. Add, remove, change, or reroute only with code evidence.\n\nReturn exactly: added, removed, changed, moved, rerouted. Do not infer blast radius, production impact, risk, or merge safety. Reviewers read the JSON, the receipt, and the rendered delta. ${promptFooterEn}` },
+        ],
+      },
+    ];
+
+const antiPatterns = isVi
+  ? [
+      { dont: 'Một prompt tạo đủ năm sơ đồ', do: 'Bắt đầu Architecture + Workflow. Thêm mode khi có câu hỏi mới.' },
+      { dont: 'Mega-diagram hàng chục service', do: 'Tối đa khoảng 12 node chính. Tách landscape và subsystem.' },
+      { dont: 'Chỉ commit HTML', do: 'JSON là nguồn. HTML là viewer. Receipt để audit.' },
+      { dont: 'Ép Deployment Ownership khi thiếu fact', do: 'Profile này fail nếu thiếu owner/region/crossing. Local CLI thì đừng dùng.' },
+      { dont: 'Biến bước thực thi thành Lifecycle', do: '`download → OCR → package` là Workflow. Lifecycle cần state được lưu.' },
+      { dont: 'Xóa nhãn relationship để pass layout', do: 'Nhãn mang protocol/action/contract. Sửa bằng move, reroute, tăng spacing.' },
+      { dont: 'Gọi visual-check là human review', do: 'Ảnh là evidence. Người vẫn phải nhìn main path, boundary, label.' },
+      { dont: 'Set `meta.locale: "vi"`', do: 'Viết nội dung tiếng Việt, giữ identifier tiếng Anh, omit `meta.locale`. Viewer UI fallback English.' },
+    ]
+  : [
+      { dont: 'One prompt for all five diagrams', do: 'Start with Architecture + Workflow. Add a mode only with a new question.' },
+      { dont: 'A mega-diagram of dozens of services', do: 'Cap around 12 primary nodes. Split landscape vs subsystem.' },
+      { dont: 'Commit HTML only', do: 'JSON is the source. HTML is the viewer. Receipts are for audit.' },
+      { dont: 'Force Deployment Ownership without facts', do: 'That profile fails closed without owner/region/crossing. Skip it for a local CLI.' },
+      { dont: 'Turn execution stages into Lifecycle', do: '`download → OCR → package` is Workflow. Lifecycle needs stored state.' },
+      { dont: 'Delete relationship labels to pass layout', do: 'Labels carry protocol, action, or contract. Move, reroute, or add spacing.' },
+      { dont: 'Treat visual-check as human review', do: 'Screenshots are evidence. A person still checks main path, boundaries, labels.' },
+      { dont: 'Set `meta.locale: "vi"`', do: 'Write authored copy in Vietnamese, keep identifiers in English, omit `meta.locale`. Viewer UI falls back to English.' },
+    ];
 ---
 
 <div class="mt-6 space-y-10">
   <section class="relative overflow-hidden rounded-[2rem] border border-cyan-200/80 bg-white p-5 shadow-2xl shadow-cyan-500/10 md:p-6 dark:border-cyan-400/20 dark:bg-slate-950 dark:shadow-cyan-950/30">
     <div class="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_12%_88%,rgba(6,182,212,0.14),transparent_30%),radial-gradient(circle_at_84%_18%,rgba(139,92,246,0.12),transparent_32%),linear-gradient(135deg,#ffffff,#f8fafc_48%,#ecfeff)] dark:bg-[radial-gradient(circle_at_12%_88%,rgba(6,182,212,0.22),transparent_30%),radial-gradient(circle_at_84%_18%,rgba(139,92,246,0.20),transparent_32%),linear-gradient(135deg,#020617,#0f172a_48%,#10233a)]"></div>
-    <div class="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-[repeating-linear-gradient(170deg,rgba(6,182,212,0.12)_0_1px,transparent_1px_18px)] opacity-30 [mask-image:linear-gradient(to_top,black,transparent)] dark:bg-[repeating-linear-gradient(170deg,rgba(6,182,212,0.16)_0_1px,transparent_1px_18px)] dark:opacity-35"></div>
     <div class="relative grid gap-8 lg:grid-cols-2 lg:items-center">
       <div class="space-y-5 lg:max-w-[590px] lg:py-7">
         <div class="flex flex-wrap items-center gap-2">
           <span class="inline-flex items-center gap-2 rounded-full border border-cyan-200 bg-cyan-50 px-3 py-1.5 text-xs font-bold uppercase tracking-[0.16em] text-cyan-800 dark:border-cyan-300/20 dark:bg-cyan-300/10 dark:text-cyan-200">
             <span class="h-2 w-2 rounded-full bg-cyan-300 shadow-[0_0_14px_rgba(103,232,249,0.85)]"></span>
-            {isVi ? 'Sơ đồ hệ thống cho workflow AI' : 'System diagrams for AI workflows'}
+            {isVi ? 'Sơ đồ có nguồn, có kiểm' : 'Diagrams with a source and checks'}
           </span>
           <a href="https://github.com/tt-a1i/archify" target="_blank" rel="noreferrer" class="inline-flex items-center gap-1.5 rounded-full border border-slate-200 bg-white/80 px-3 py-1.5 text-xs font-semibold text-slate-600 shadow-sm transition hover:border-cyan-300 hover:text-cyan-700 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-400 dark:hover:border-cyan-300/30 dark:hover:text-cyan-200">
-            <svg aria-hidden="true" viewBox="0 0 24 24" class="h-3.5 w-3.5 fill-current">
-              <path d="M12 .5A11.5 11.5 0 0 0 8.36 22.9c.58.1.79-.25.79-.56v-2.02c-3.22.7-3.9-1.38-3.9-1.38-.53-1.34-1.3-1.7-1.3-1.7-1.05-.72.08-.7.08-.7 1.17.08 1.79 1.2 1.79 1.2 1.04 1.78 2.73 1.27 3.4.97.1-.75.4-1.27.74-1.56-2.57-.29-5.28-1.29-5.28-5.73 0-1.27.45-2.3 1.2-3.12-.12-.29-.52-1.48.11-3.08 0 0 .98-.31 3.2 1.19a11.1 11.1 0 0 1 5.82 0c2.22-1.5 3.2-1.19 3.2-1.19.63 1.6.23 2.79.11 3.08.75.82 1.2 1.85 1.2 3.12 0 4.46-2.72 5.43-5.3 5.72.42.36.79 1.08.79 2.18v3.23c0 .31.2.67.8.56A11.5 11.5 0 0 0 12 .5Z" />
-            </svg>
+            <svg aria-hidden="true" viewBox="0 0 24 24" class="h-3.5 w-3.5 fill-current"><path d="M12 .5A11.5 11.5 0 0 0 8.36 22.9c.58.1.79-.25.79-.56v-2.02c-3.22.7-3.9-1.38-3.9-1.38-.53-1.34-1.3-1.7-1.3-1.7-1.05-.72.08-.7.08-.7 1.17.08 1.79 1.2 1.79 1.2 1.04 1.78 2.73 1.27 3.4.97.1-.75.4-1.27.74-1.56-2.57-.29-5.28-1.29-5.28-5.73 0-1.27.45-2.3 1.2-3.12-.12-.29-.52-1.48.11-3.08 0 0 .98-.31 3.2 1.19a11.1 11.1 0 0 1 5.82 0c2.22-1.5 3.2-1.19 3.2-1.19.63 1.6.23 2.79.11 3.08.75.82 1.2 1.85 1.2 3.12 0 4.46-2.72 5.43-5.3 5.72.42.36.79 1.08.79 2.18v3.23c0 .31.2.67.8.56A11.5 11.5 0 0 0 12 .5Z" /></svg>
             <span>tt-a1i/archify</span>
           </a>
         </div>
 
         <h1 class="max-w-xl text-4xl font-semibold leading-[1.06] tracking-tight text-slate-950 md:text-5xl lg:text-[2.85rem] xl:text-[3rem] dark:text-white">
           {isVi ? (
-            <>Biến scout, plan, debug thành <span class="font-bold text-cyan-700 dark:text-cyan-300">sơ đồ dễ review.</span></>
+            <>Từ hiện trạng thành <span class="font-bold text-cyan-700 dark:text-cyan-300">sơ đồ có thể kiểm tra.</span></>
           ) : (
-            <>Turn scout, plan, and debug work into <span class="font-bold text-cyan-700 dark:text-cyan-300">reviewable system diagrams.</span></>
+            <>From the current system into <span class="font-bold text-cyan-700 dark:text-cyan-300">a diagram you can check.</span></>
           )}
         </h1>
 
         <p class="max-w-xl text-base leading-relaxed text-slate-600 md:text-lg dark:text-slate-300">
           {isVi
-            ? 'Archify giúp agent kể lại phần khó thấy của hệ thống: kiến trúc, luồng gọi, data flow, state và release path. Agent vẫn đọc code và chọn phạm vi; Archify biến kết quả đó thành artifact dễ kiểm tra, dễ chia sẻ.'
-            : 'Archify helps agents explain the parts of a system that are hard to see: architecture, request flow, data flow, states, and release paths. The agent still reads code and chooses scope; Archify turns the result into a shareable review artifact.'}
+            ? 'Agent đọc code rồi viết JSON. Archify ra file HTML. Bắt đầu từ việc cần hiểu, không từ loại sơ đồ.'
+            : 'The agent reads the code and writes JSON. Archify turns that into HTML. Start from what you need to understand, not from a diagram type.'}
         </p>
 
-        <div class="grid gap-2 text-sm text-slate-700 dark:text-slate-300 sm:grid-cols-2">
-          {[
-            isVi ? 'Map kết quả scout' : 'Map scout findings',
-            isVi ? 'Làm rõ plan/debug output' : 'Clarify plan/debug output',
-            isVi ? 'Review luồng gọi & data flow' : 'Review request and data flow',
-            isVi ? 'Share HTML/SVG trong PR' : 'Share HTML/SVG in PRs',
-          ].map((item) => (
-            <span class="inline-flex items-center gap-2 rounded-2xl border border-slate-200 bg-white/75 px-3 py-2 shadow-sm dark:border-white/10 dark:bg-white/[0.04] dark:shadow-none">
-              <span class="h-1.5 w-1.5 shrink-0 rounded-full bg-cyan-300"></span>{item}
-            </span>
-          ))}
+        <div>
+          <p class="mb-2 text-[11px] font-bold uppercase tracking-[0.16em] text-slate-500 dark:text-slate-400">{isVi ? 'Cách chạy' : 'How it runs'}</p>
+          <ol class="flex flex-nowrap items-center overflow-x-auto">
+            {compilerSteps.map((step, index) => (
+              <li class="flex shrink-0 items-center">
+                <span class="inline-flex items-center rounded-lg border border-slate-200 bg-white/80 px-2 py-1 text-xs font-semibold text-slate-800 dark:border-white/10 dark:bg-white/[0.05] dark:text-slate-100">{step}</span>
+                {index < compilerSteps.length - 1 && (
+                  <span class="mx-1.5 text-xs text-slate-400 dark:text-slate-500" aria-hidden="true">→</span>
+                )}
+              </li>
+            ))}
+          </ol>
         </div>
-
       </div>
 
       <div class="relative lg:justify-self-end">
         <div class="absolute -inset-3 rounded-[2rem] bg-gradient-to-br from-cyan-500/15 to-violet-500/12 blur-2xl"></div>
         <div class="relative w-full max-w-[680px] overflow-hidden rounded-[1.55rem] border border-slate-200 bg-white/90 p-3 shadow-2xl shadow-slate-900/10 backdrop-blur dark:border-white/10 dark:bg-slate-900/82 dark:shadow-black/30">
           <div class="mb-3 flex items-center justify-between px-2 text-xs text-slate-500 dark:text-slate-400">
-            <span class="font-mono">gallery/artifacts/*.html</span>
+            <span class="font-mono">JSON → validate → HTML</span>
             <span class="rounded-full border border-emerald-200 bg-emerald-50 px-2 py-1 font-semibold text-emerald-700 dark:border-emerald-300/20 dark:bg-emerald-400/10 dark:text-emerald-300">Archify 2.16.0</span>
           </div>
-          <img src="/guides/archify/architecture.png" alt="Archify architecture diagram rendered from the official gallery" class="aspect-[16/9] w-full rounded-2xl border border-slate-200 bg-white object-cover object-top dark:border-slate-700/70 dark:bg-slate-950" loading="eager" />
+          <img src="/guides/archify/gallery/web-app-light.webp" alt="Archify system overview in light theme" class="aspect-[16/9] w-full rounded-2xl border border-slate-200 bg-white object-contain object-top dark:hidden" loading="eager" />
+          <img src="/guides/archify/gallery/web-app-dark.webp" alt="Archify system overview in dark theme" class="hidden aspect-[16/9] w-full rounded-2xl border border-slate-700/70 bg-slate-950 object-contain object-top dark:block" loading="eager" />
           <div class="mt-3 space-y-3">
             <div class="grid grid-cols-3 gap-2 rounded-2xl border border-slate-200 bg-slate-50 p-2 text-center shadow-sm dark:border-white/10 dark:bg-white/[0.04]">
               <div class="rounded-xl bg-white px-2 py-2 dark:bg-white/[0.05]">
-                <div class="text-lg font-black text-slate-950 dark:text-white">5</div>
-                <div class="mt-0.5 text-[10px] font-semibold uppercase tracking-[0.12em] text-slate-500 dark:text-slate-400">{isVi ? 'loại' : 'types'}</div>
+                <div class="text-lg font-black text-slate-950 dark:text-white">JSON</div>
+                <div class="mt-0.5 text-[10px] font-semibold uppercase tracking-[0.12em] text-slate-500 dark:text-slate-400">{isVi ? 'nguồn' : 'source'}</div>
               </div>
               <div class="rounded-xl bg-white px-2 py-2 dark:bg-white/[0.05]">
-                <div class="text-lg font-black text-slate-950 dark:text-white">HTML</div>
-                <div class="mt-0.5 text-[10px] font-semibold uppercase tracking-[0.12em] text-slate-500 dark:text-slate-400">{isVi ? 'đầu ra' : 'artifact'}</div>
+                <div class="text-lg font-black text-slate-950 dark:text-white">5</div>
+                <div class="mt-0.5 text-[10px] font-semibold uppercase tracking-[0.12em] text-slate-500 dark:text-slate-400">{isVi ? 'mode' : 'modes'}</div>
               </div>
               <div class="rounded-xl bg-white px-2 py-2 dark:bg-white/[0.05]">
                 <div class="text-lg font-black text-emerald-600 dark:text-emerald-300">✓</div>
-                <div class="mt-0.5 text-[10px] font-semibold uppercase tracking-[0.12em] text-slate-500 dark:text-slate-400">{isVi ? 'kiểm tra' : 'validate'}</div>
+                <div class="mt-0.5 text-[10px] font-semibold uppercase tracking-[0.12em] text-slate-500 dark:text-slate-400">{isVi ? 'validate' : 'validate'}</div>
               </div>
             </div>
-            <div class="flex flex-wrap gap-3">
-              <a href="#install" class="inline-flex min-h-11 items-center rounded-xl border border-cyan-200/70 bg-cyan-300 px-4 text-sm font-extrabold text-slate-950 shadow-lg shadow-cyan-500/20 transition hover:-translate-y-0.5 hover:bg-cyan-200 hover:shadow-cyan-400/25">{isVi ? 'Cài Skill' : 'Install Skill'}</a>
-              <a href="#diagram-gallery" class="inline-flex min-h-11 items-center rounded-xl border border-slate-200 bg-white px-4 text-sm font-bold text-slate-800 shadow-sm backdrop-blur transition hover:-translate-y-0.5 hover:border-cyan-200 hover:bg-cyan-50 dark:border-white/15 dark:bg-white/8 dark:text-white dark:hover:border-cyan-200/40 dark:hover:bg-white/12">{isVi ? 'Xem bộ sưu tập' : 'See gallery'}</a>
+            <div class="flex flex-nowrap gap-2 overflow-x-auto">
+              <a href="#install" class="inline-flex min-h-9 shrink-0 items-center whitespace-nowrap rounded-xl border border-slate-200 bg-white px-3 text-sm font-bold text-slate-800 shadow-sm transition hover:-translate-y-0.5 hover:border-cyan-200 dark:border-white/15 dark:bg-white/8 dark:text-white dark:hover:border-cyan-200/40">{isVi ? 'Cài Skill' : 'Install Skill'}</a>
+              <a href="#recipes" class="inline-flex min-h-9 shrink-0 items-center whitespace-nowrap rounded-xl border border-slate-200 bg-white px-3 text-sm font-bold text-slate-800 shadow-sm transition hover:-translate-y-0.5 hover:border-cyan-200 dark:border-white/15 dark:bg-white/8 dark:text-white dark:hover:border-cyan-200/40">{isVi ? '11 recipe' : '11 recipes'}</a>
+              <a href="#sdlc" class="inline-flex min-h-9 shrink-0 items-center whitespace-nowrap rounded-xl border border-slate-200 bg-white px-3 text-sm font-bold text-slate-800 shadow-sm transition hover:-translate-y-0.5 hover:border-cyan-200 dark:border-white/15 dark:bg-white/8 dark:text-white dark:hover:border-cyan-200/40">SDLC</a>
+              <a href="#agentkit" class="inline-flex min-h-9 shrink-0 items-center whitespace-nowrap rounded-xl border border-slate-200 bg-white px-3 text-sm font-bold text-slate-800 shadow-sm transition hover:-translate-y-0.5 hover:border-cyan-200 dark:border-white/15 dark:bg-white/8 dark:text-white dark:hover:border-cyan-200/40">AgentKit</a>
             </div>
           </div>
         </div>
@@ -340,40 +599,84 @@ const recipeGroups = recipeTypeFilters.map((type, index) => ({
     </div>
   </section>
 
+  <section id="what" class="overflow-hidden rounded-[1.75rem] border border-cyan-200/80 bg-white shadow-lg shadow-cyan-500/10 dark:border-cyan-500/20 dark:bg-slate-900/70 dark:shadow-cyan-950/20">
+    <div class="grid gap-0 lg:grid-cols-[1.05fr_0.95fr]">
+      <div class="space-y-5 p-5 md:p-6">
+        <div>
+          <p class="text-[11px] font-bold uppercase tracking-[0.18em] text-cyan-700 dark:text-cyan-300">{isVi ? 'Archify là gì' : 'What Archify is'}</p>
+          <h2 class="mt-2 text-2xl font-extrabold tracking-tight text-slate-950 md:text-3xl dark:text-white">{isVi ? 'Archify giải quyết vấn đề gì?' : 'What problem does Archify solve?'}</h2>
+          <p class="mt-3 max-w-xl text-sm leading-relaxed text-slate-600 dark:text-slate-400">{otherToolsLead}</p>
+        </div>
+        <div class="grid gap-3 sm:grid-cols-3">
+          {problemCards.map((item) => (
+            <article class="rounded-2xl border border-slate-200 bg-slate-50 p-4 dark:border-slate-700 dark:bg-slate-800/70">
+              <span class="font-mono text-[11px] font-black text-rose-600 dark:text-rose-300">{item.n}</span>
+              <h3 class="mt-2 text-sm font-extrabold leading-snug text-slate-950 dark:text-white">{item.title}</h3>
+              <p class="mt-2 text-xs leading-relaxed text-slate-600 dark:text-slate-400">{item.body}</p>
+              <p class="mt-2 text-xs font-medium leading-relaxed text-teal-800 dark:text-teal-300">{item.fix}</p>
+            </article>
+          ))}
+        </div>
+      </div>
+      <div class="border-t border-cyan-100 bg-gradient-to-br from-slate-50 via-white to-cyan-50 p-5 dark:border-white/10 dark:from-slate-950 dark:via-slate-900 dark:to-cyan-950/20 lg:border-t-0 lg:border-l md:p-6">
+        <p class="text-[11px] font-bold uppercase tracking-[0.18em] text-cyan-700 dark:text-cyan-300">{isVi ? 'Từ hỏi tới sơ đồ' : 'From question to diagram'}</p>
+        <ol class="relative mt-4">
+          {pipelineSteps.map((step, index) => (
+            <li class="relative flex gap-3">
+              <div class="flex w-8 shrink-0 flex-col items-center">
+                <span class="flex h-8 w-8 items-center justify-center rounded-full border border-cyan-200 bg-white font-mono text-[11px] font-black text-cyan-800 dark:border-cyan-500/30 dark:bg-slate-950 dark:text-cyan-300">{String(index + 1).padStart(2, '0')}</span>
+                {index < pipelineSteps.length - 1 && <span class="my-1 w-px flex-1 bg-cyan-200 dark:bg-cyan-500/30" aria-hidden="true"></span>}
+              </div>
+              <div class:list={['min-w-0', index < pipelineSteps.length - 1 ? 'pb-4' : 'pb-0']}>
+                <h3 class="pt-1 text-sm font-extrabold leading-snug text-slate-950 dark:text-white">{step.title}</h3>
+                <p class="mt-0.5 text-xs leading-relaxed text-slate-500 dark:text-slate-400">{step.hint}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </div>
+  </section>
+
+
   <section class="overflow-hidden rounded-[1.75rem] border border-cyan-200/80 bg-white shadow-lg shadow-cyan-500/10 dark:border-cyan-500/20 dark:bg-slate-900/70 dark:shadow-cyan-950/20">
     <div class="grid gap-0 lg:grid-cols-[0.78fr_1.22fr]">
       <div class="relative border-b border-cyan-100 bg-gradient-to-br from-cyan-50 via-white to-violet-50 p-5 dark:border-white/10 dark:from-cyan-950/25 dark:via-slate-900 dark:to-violet-950/25 lg:border-b-0 lg:border-r">
-        <div class="pointer-events-none absolute -right-8 -top-10 h-28 w-28 rounded-full bg-cyan-400/20 blur-3xl dark:bg-cyan-300/10"></div>
-        <p class="relative text-[11px] font-bold uppercase tracking-[0.18em] text-cyan-700 dark:text-cyan-300">
-          {isVi ? 'Cách nghĩ đúng' : 'Mental model'}
-        </p>
-        <h2 class="relative mt-2 text-2xl font-extrabold tracking-tight text-slate-950 dark:text-white">
-          {isVi ? 'Archify không thay agent — nó làm kết quả của agent dễ kiểm tra hơn.' : 'Archify does not replace the agent — it makes agent output easier to inspect.'}
+        <p class="relative text-[11px] font-bold uppercase tracking-[0.18em] text-cyan-700 dark:text-cyan-300">{isVi ? 'Cách nghĩ đúng' : 'Mental model'}</p>
+        <h2 class="relative mt-3 text-[1.7rem] font-semibold leading-[1.25] tracking-tight text-slate-950 md:text-[1.85rem] dark:text-white">
+          {isVi ? (
+            <>
+              <span class="font-bold text-violet-600 dark:text-violet-300">Agent</span> ghi hiện trạng.{' '}
+              <span class="font-bold text-teal-600 dark:text-teal-300">Archify</span> ra sơ đồ.{' '}
+              <span class="font-bold text-amber-600 dark:text-amber-300">Người</span> review.
+            </>
+          ) : (
+            <>
+              <span class="font-bold text-violet-600 dark:text-violet-300">Agent</span> records the facts.{' '}
+              <span class="font-bold text-teal-600 dark:text-teal-300">Archify</span> makes the diagram.{' '}
+              <span class="font-bold text-amber-600 dark:text-amber-300">A person</span> reviews.
+            </>
+          )}
         </h2>
-        <p class="relative mt-3 text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+        <p class="relative mt-4 text-sm leading-relaxed text-slate-600 dark:text-slate-400">
           {isVi
-            ? 'Hãy dùng nó như bước “đóng gói bằng hình” sau scout, plan hoặc debug.'
-            : 'Use it as the visual packaging step after scout, plan, or debug work.'}
+            ? 'Sơ đồ AI hay trông ổn nhưng nối sai chỗ, không có nguồn để soi, lần sau ra hình khác. Archify bắt viết JSON có kiểu, rồi luôn render cùng một artifact.'
+            : 'AI diagrams often look fine while inventing connections, leaving nothing to review, and drawing a different picture next time. Archify requires typed JSON, then always renders the same artifact.'}
         </p>
       </div>
       <div class="grid gap-3 p-4 md:grid-cols-3">
-        {[
-          {
-            n: '01',
-            title: isVi ? 'Agent đọc code' : 'Agent reads code',
-            body: isVi ? 'Scout repo, chọn phạm vi, gom bằng chứng và giới hạn điều chưa chắc.' : 'Scout the repo, choose scope, gather evidence, and bound uncertainty.',
-          },
-          {
-            n: '02',
-            title: isVi ? 'Archify render sơ đồ' : 'Archify renders the map',
-            body: isVi ? 'Biến kiến trúc, luồng gọi, data flow hoặc state thành HTML/SVG có kiểm tra.' : 'Turns architecture, request flow, data flow, or states into validated HTML/SVG.',
-          },
-          {
-            n: '03',
-            title: isVi ? 'Team review nhanh hơn' : 'Team reviews faster',
-            body: isVi ? 'Dùng artifact để nhìn boundary, đường lỗi, rollback path và phần cần hỏi lại.' : 'Use the artifact to inspect boundaries, failure paths, rollback paths, and open questions.',
-          },
-        ].map((item) => (
+        {(isVi
+          ? [
+              { n: '01', title: 'Agent đọc code', body: 'Chọn phạm vi, main path, viết JSON. Không bịa service, edge, hay fallback.' },
+              { n: '02', title: 'Archify compile', body: 'Schema, geometry, identity, delivery atomic, viewer độc lập.' },
+              { n: '03', title: 'Người nhìn thật', body: 'JSON + HTML + receipt. Ảnh tự động không được tuyên bố đã pass.' },
+            ]
+          : [
+              { n: '01', title: 'Agent reads code', body: 'Chooses scope, main path, authors JSON. No invented services, edges, or fallbacks.' },
+              { n: '02', title: 'Archify compiles', body: 'Schema, geometry, identity, atomic delivery, self-contained viewer.' },
+              { n: '03', title: 'A person looks', body: 'JSON + HTML + receipt. Automated screenshots cannot claim a visual pass.' },
+            ]
+        ).map((item) => (
           <article class="rounded-2xl border border-slate-200 bg-slate-50 p-4 dark:border-slate-700 dark:bg-slate-800/70">
             <span class="font-mono text-[11px] font-black text-purple-600 dark:text-purple-400">{item.n}</span>
             <h3 class="mt-2 text-base font-bold text-slate-950 dark:text-white">{item.title}</h3>
@@ -381,6 +684,17 @@ const recipeGroups = recipeTypeFilters.map((type, index) => ({
           </article>
         ))}
       </div>
+    </div>
+    <div class="grid gap-3 border-t border-cyan-100 p-4 dark:border-white/10 md:grid-cols-3">
+      {handoffLayers.map((item) => (
+        <article class="rounded-2xl border border-slate-200 bg-white p-4 dark:border-slate-700 dark:bg-slate-950/50">
+          <div class="flex items-center justify-between gap-2">
+            <h3 class="font-mono text-sm font-black text-slate-950 dark:text-white">{item.layer}</h3>
+            <span class="rounded-full bg-cyan-50 px-2 py-0.5 text-[10px] font-bold uppercase tracking-[0.12em] text-cyan-800 dark:bg-cyan-500/15 dark:text-cyan-300">{item.commit}</span>
+          </div>
+          <p class="mt-2 text-sm leading-relaxed text-slate-600 dark:text-slate-400">{item.role}</p>
+        </article>
+      ))}
     </div>
   </section>
 
@@ -392,8 +706,8 @@ const recipeGroups = recipeTypeFilters.map((type, index) => ({
           <h2 class="mt-2 text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white">{isVi ? 'Chọn runtime, copy đúng command' : 'Choose a runtime, copy the right command'}</h2>
           <p class="mt-2 max-w-2xl text-sm leading-relaxed text-slate-600 dark:text-slate-400">
             {isVi
-              ? 'Không cần đoán folder. Chọn tool bạn đang dùng; guide sẽ hiện đúng command global hoặc project từ upstream Archify.'
-              : 'No folder guessing. Pick the tool you use; this guide shows the matching global or project command from upstream Archify.'}
+              ? 'Team hoặc CI nên dùng lệnh project để mọi người cùng một Skill. Global chỉ khi bạn dùng Archify ở mọi repo trên máy.'
+              : 'Prefer the project command for a team or CI so everyone shares the same Skill. Use global only when you want Archify on every local repo.'}
           </p>
         </div>
         <div class="space-y-2">
@@ -434,58 +748,34 @@ const recipeGroups = recipeTypeFilters.map((type, index) => ({
 
             {'global' in target ? (
               <div class="grid gap-3 lg:grid-cols-2">
-                <div class="overflow-hidden rounded-2xl border border-slate-200/90 bg-slate-100 shadow-sm shadow-slate-900/5 dark:border-slate-700 dark:bg-slate-800/90 dark:shadow-black/30">
+                <div class="overflow-hidden rounded-2xl border border-slate-200/90 bg-slate-100 shadow-sm dark:border-slate-700 dark:bg-slate-800/90">
                   <div class="flex items-center justify-between gap-3 border-b border-slate-200/80 bg-slate-200/60 px-3 py-2 dark:border-slate-700/80 dark:bg-slate-900/60">
-                    <div class="flex min-w-0 items-center gap-2">
-                      <div class="flex shrink-0 items-center gap-1.5" aria-hidden="true">
-                        <span class="h-2.5 w-2.5 rounded-full bg-rose-400/90"></span>
-                        <span class="h-2.5 w-2.5 rounded-full bg-amber-400/90"></span>
-                        <span class="h-2.5 w-2.5 rounded-full bg-emerald-400/90"></span>
-                      </div>
-                      <span class="truncate text-[11px] font-medium uppercase tracking-wider text-slate-500 dark:text-slate-400">{isVi ? 'Global · dùng cho mọi repo' : 'Global · use in every repo'}</span>
-                    </div>
-                    <button type="button" data-archify-copy={target.global} aria-label={isVi ? 'Sao chép lệnh global' : 'Copy global command'} class="archify-copy-btn inline-flex shrink-0 items-center gap-1.5 rounded-lg border border-slate-300/80 bg-white/70 px-2 py-1.5 text-slate-600 transition hover:border-slate-400 hover:bg-white hover:text-slate-900 dark:border-white/10 dark:bg-white/5 dark:text-slate-300 dark:hover:border-white/20 dark:hover:bg-white/10 dark:hover:text-white">
-                      <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    <span class="truncate text-[11px] font-medium uppercase tracking-wider text-slate-500 dark:text-slate-400">{isVi ? 'Global · mọi repo trên máy' : 'Global · every local repo'}</span>
+                    <button type="button" data-archify-copy={target.global} aria-label={isVi ? 'Sao chép lệnh global' : 'Copy global command'} class="inline-flex shrink-0 items-center gap-1.5 rounded-lg border border-slate-300/80 bg-white/70 px-2 py-1.5 text-slate-600 transition hover:bg-white dark:border-white/10 dark:bg-white/5 dark:text-slate-300">
                       <span class="hidden text-[11px] font-medium sm:inline">{isVi ? 'Sao chép' : 'Copy'}</span>
                     </button>
                   </div>
-                  <pre class="m-0 max-w-full overflow-x-auto p-4 text-[13px] leading-relaxed text-purple-600 dark:text-purple-400"><code class="block min-w-0 whitespace-pre break-normal font-mono [overflow-wrap:normal] [word-break:normal]">{target.global}</code></pre>
+                  <pre class="m-0 overflow-x-auto p-4 text-[13px] leading-relaxed text-purple-600 dark:text-purple-400"><code class="font-mono">{target.global}</code></pre>
                 </div>
-                <div class="overflow-hidden rounded-2xl border border-slate-200/90 bg-slate-100 shadow-sm shadow-slate-900/5 dark:border-slate-700 dark:bg-slate-800/90 dark:shadow-black/30">
-                  <div class="flex items-center justify-between gap-3 border-b border-slate-200/80 bg-slate-200/60 px-3 py-2 dark:border-slate-700/80 dark:bg-slate-900/60">
-                    <div class="flex min-w-0 items-center gap-2">
-                      <div class="flex shrink-0 items-center gap-1.5" aria-hidden="true">
-                        <span class="h-2.5 w-2.5 rounded-full bg-rose-400/90"></span>
-                        <span class="h-2.5 w-2.5 rounded-full bg-amber-400/90"></span>
-                        <span class="h-2.5 w-2.5 rounded-full bg-emerald-400/90"></span>
-                      </div>
-                      <span class="truncate text-[11px] font-medium uppercase tracking-wider text-slate-500 dark:text-slate-400">{isVi ? 'Project · chỉ repo hiện tại' : 'Project · current repo only'}</span>
-                    </div>
-                    <button type="button" data-archify-copy={target.project} aria-label={isVi ? 'Sao chép lệnh project' : 'Copy project command'} class="archify-copy-btn inline-flex shrink-0 items-center gap-1.5 rounded-lg border border-slate-300/80 bg-white/70 px-2 py-1.5 text-slate-600 transition hover:border-slate-400 hover:bg-white hover:text-slate-900 dark:border-white/10 dark:bg-white/5 dark:text-slate-300 dark:hover:border-white/20 dark:hover:bg-white/10 dark:hover:text-white">
-                      <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                <div class="overflow-hidden rounded-2xl border border-cyan-200/80 bg-slate-100 shadow-sm dark:border-cyan-500/25 dark:bg-slate-800/90">
+                  <div class="flex items-center justify-between gap-3 border-b border-slate-200/80 bg-cyan-50 px-3 py-2 dark:border-slate-700/80 dark:bg-cyan-950/30">
+                    <span class="truncate text-[11px] font-medium uppercase tracking-wider text-cyan-800 dark:text-cyan-300">{isVi ? 'Project · khuyến nghị cho team' : 'Project · recommended for teams'}</span>
+                    <button type="button" data-archify-copy={target.project} aria-label={isVi ? 'Sao chép lệnh project' : 'Copy project command'} class="inline-flex shrink-0 items-center gap-1.5 rounded-lg border border-slate-300/80 bg-white/70 px-2 py-1.5 text-slate-600 transition hover:bg-white dark:border-white/10 dark:bg-white/5 dark:text-slate-300">
                       <span class="hidden text-[11px] font-medium sm:inline">{isVi ? 'Sao chép' : 'Copy'}</span>
                     </button>
                   </div>
-                  <pre class="m-0 max-w-full overflow-x-auto p-4 text-[13px] leading-relaxed text-purple-600 dark:text-purple-400"><code class="block min-w-0 whitespace-pre break-normal font-mono [overflow-wrap:normal] [word-break:normal]">{target.project}</code></pre>
+                  <pre class="m-0 overflow-x-auto p-4 text-[13px] leading-relaxed text-purple-600 dark:text-purple-400"><code class="font-mono">{target.project}</code></pre>
                 </div>
               </div>
             ) : (
-              <div class="overflow-hidden rounded-2xl border border-slate-200/90 bg-slate-100 shadow-sm shadow-slate-900/5 dark:border-slate-700 dark:bg-slate-800/90 dark:shadow-black/30">
+              <div class="overflow-hidden rounded-2xl border border-slate-200/90 bg-slate-100 shadow-sm dark:border-slate-700 dark:bg-slate-800/90">
                 <div class="flex items-center justify-between gap-3 border-b border-slate-200/80 bg-slate-200/60 px-3 py-2 dark:border-slate-700/80 dark:bg-slate-900/60">
-                  <div class="flex min-w-0 items-center gap-2">
-                    <div class="flex shrink-0 items-center gap-1.5" aria-hidden="true">
-                      <span class="h-2.5 w-2.5 rounded-full bg-rose-400/90"></span>
-                      <span class="h-2.5 w-2.5 rounded-full bg-amber-400/90"></span>
-                      <span class="h-2.5 w-2.5 rounded-full bg-emerald-400/90"></span>
-                    </div>
-                    <span class="truncate text-[11px] font-medium uppercase tracking-wider text-slate-500 dark:text-slate-400">{isVi ? 'Cách cài riêng' : 'Specific install path'}</span>
-                  </div>
-                  <button type="button" data-archify-copy={target.code} aria-label={isVi ? 'Sao chép lệnh cài' : 'Copy install command'} class="archify-copy-btn inline-flex shrink-0 items-center gap-1.5 rounded-lg border border-slate-300/80 bg-white/70 px-2 py-1.5 text-slate-600 transition hover:border-slate-400 hover:bg-white hover:text-slate-900 dark:border-white/10 dark:bg-white/5 dark:text-slate-300 dark:hover:border-white/20 dark:hover:bg-white/10 dark:hover:text-white">
-                    <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                  <span class="truncate text-[11px] font-medium uppercase tracking-wider text-slate-500 dark:text-slate-400">{isVi ? 'Cách cài riêng' : 'Specific install path'}</span>
+                  <button type="button" data-archify-copy={target.code} aria-label={isVi ? 'Sao chép lệnh cài' : 'Copy install command'} class="inline-flex shrink-0 items-center gap-1.5 rounded-lg border border-slate-300/80 bg-white/70 px-2 py-1.5 text-slate-600 dark:border-white/10 dark:bg-white/5 dark:text-slate-300">
                     <span class="hidden text-[11px] font-medium sm:inline">{isVi ? 'Sao chép' : 'Copy'}</span>
                   </button>
                 </div>
-                <pre class="m-0 max-w-full overflow-x-auto p-4 text-[13px] leading-relaxed text-purple-600 dark:text-purple-400"><code class="block min-w-0 whitespace-pre break-normal font-mono [overflow-wrap:normal] [word-break:normal]">{target.code}</code></pre>
+                <pre class="m-0 overflow-x-auto p-4 text-[13px] leading-relaxed text-purple-600 dark:text-purple-400"><code class="font-mono whitespace-pre">{target.code}</code></pre>
               </div>
             )}
             {'hint' in target && <p class="text-xs leading-relaxed text-slate-500 dark:text-slate-400">{target.hint}</p>}
@@ -493,174 +783,100 @@ const recipeGroups = recipeTypeFilters.map((type, index) => ({
         ))}
       </div>
     </div>
-
     <AkCodeBlock title={isVi ? 'CLI thủ công cho power user' : 'Manual CLI for power users'} code={manualCliCode} />
   </section>
 
-
-  <section id="diagram-gallery" class="overflow-hidden rounded-[1.9rem] border border-slate-200/80 bg-white/85 shadow-lg shadow-violet-500/10 dark:border-slate-800 dark:bg-slate-950/70 dark:shadow-violet-950/20">
-    <div class="relative overflow-hidden border-b border-slate-200/80 bg-gradient-to-br from-violet-50 via-white to-cyan-50 p-5 dark:border-slate-800 dark:from-violet-950/30 dark:via-slate-950 dark:to-cyan-950/20 md:p-6">
-      <div class="pointer-events-none absolute -right-12 -top-16 h-44 w-44 rounded-full bg-violet-400/20 blur-3xl dark:bg-violet-400/10"></div>
-      <div class="pointer-events-none absolute -left-10 bottom-0 h-32 w-32 rounded-full bg-cyan-400/15 blur-3xl dark:bg-cyan-400/10"></div>
-      <div class="relative max-w-3xl">
-        <p class="text-[11px] font-bold uppercase tracking-[0.18em] text-violet-700 dark:text-violet-300">{isVi ? 'Bộ sưu tập tham chiếu' : 'Gallery reference'}</p>
-        <h2 class="mt-2 text-3xl font-extrabold tracking-tight text-slate-950 dark:text-white">{isVi ? '5 loại sơ đồ render thật từ Archify' : '5 real diagram renders from Archify'}</h2>
-        <p class="mt-2 max-w-2xl text-sm leading-relaxed text-slate-600 dark:text-slate-300">
-          {isVi
-            ? 'Các ảnh dưới đây lấy từ bộ sưu tập chính thức của Archify, dùng để bạn hình dung output thật trước khi cài skill.'
-            : 'The images below come from the official Archify gallery, so you can preview real output before installing the Skill.'}
-        </p>
-      </div>
+  <section id="loop" class="space-y-5">
+    <div>
+      <p class="text-[11px] font-bold uppercase tracking-[0.18em] text-cyan-600 dark:text-cyan-400">{isVi ? 'Cách làm' : 'How to run it'}</p>
+      <h2 class="mt-2 text-3xl font-black tracking-tight text-slate-900 dark:text-white">{isVi ? 'Khi bảo agent chạy Archify' : 'When you ask the agent to run Archify'}</h2>
+      <p class="mt-2 max-w-2xl text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+        {isVi
+          ? 'Bạn hỏi và xem HTML. Agent viết JSON rồi kiểm. Sơ đồ tiếng Việt: nhãn tiếng Việt, tên trong code giữ tiếng Anh — thanh công cụ của viewer vẫn tiếng Anh.'
+          : 'You ask the question and look at the HTML. The agent writes JSON and checks it. For Vietnamese diagrams: Vietnamese labels, English code names — the viewer chrome stays English.'}
+      </p>
     </div>
-
-    <div class="space-y-5 p-4 md:p-5">
-      {diagrams.map((diagram, index) => (
-        <article class:list={[
-          'overflow-hidden rounded-[1.7rem] border bg-white shadow-sm transition duration-300 hover:-translate-y-0.5 hover:shadow-xl dark:bg-slate-900/70',
-          index === 0 ? 'border-violet-200/80 shadow-violet-500/10 dark:border-violet-500/25' : 'border-slate-200/80 dark:border-slate-800',
-        ]}>
-          <div class="grid gap-0 lg:grid-cols-[1.25fr_0.75fr]">
-            <div class="border-b border-slate-200 bg-slate-50 p-3 lg:border-b-0 lg:border-r dark:border-slate-800 dark:bg-slate-950">
-              <div class="rounded-2xl bg-white p-2 shadow-inner shadow-slate-200/70 dark:bg-[radial-gradient(circle_at_20%_12%,rgba(6,182,212,0.12),transparent_32%),linear-gradient(135deg,#020617,#0f172a)] dark:shadow-black/30">
-                <img src={diagram.image} alt={`Archify ${diagram.title} diagram render`} class="h-auto w-full rounded-xl border border-slate-200 bg-white object-contain dark:border-slate-700/80 dark:bg-slate-950" loading={index === 0 ? 'eager' : 'lazy'} />
-              </div>
-            </div>
-            <div class="flex flex-col justify-between gap-5 p-5 md:p-6">
-              <div>
-                <span class="rounded-full bg-violet-100 px-2.5 py-1 text-[11px] font-bold uppercase tracking-[0.14em] text-violet-700 dark:bg-violet-500/15 dark:text-violet-300">{diagram.id}</span>
-                <h3 class="mt-4 text-2xl font-black text-slate-900 dark:text-white">{diagram.title}</h3>
-                <p class="mt-2 text-sm leading-relaxed text-slate-600 dark:text-slate-400">{diagram.desc}</p>
-              </div>
-              <div class="rounded-2xl border border-slate-200/80 bg-slate-50 p-3 dark:border-slate-700 dark:bg-slate-800/70">
-                <p class="mb-2 text-[11px] font-bold uppercase tracking-[0.14em] text-slate-500 dark:text-slate-400">{isVi ? 'Mẫu gợi ý — chỉnh trước khi dùng' : 'Template — edit before use'}</p>
-                <code class="block font-mono text-xs leading-relaxed text-slate-700 dark:text-slate-200">{diagram.prompt}</code>
-              </div>
-            </div>
-          </div>
+    <div class="grid gap-3 md:grid-cols-2 xl:grid-cols-4">
+      {authoringSteps.map((step) => (
+        <article class="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm dark:border-slate-800 dark:bg-slate-900/70">
+          <span class="font-mono text-[11px] font-black text-cyan-700 dark:text-cyan-300">{step.n}</span>
+          <h3 class="mt-2 text-sm font-extrabold leading-snug text-slate-950 dark:text-white">{step.title}</h3>
+          <p class="mt-2 text-xs leading-relaxed text-slate-600 dark:text-slate-400" set:html={inlineCodeHtml(step.body)} />
         </article>
       ))}
     </div>
   </section>
 
-  <section class="space-y-5" data-archify-recipes-root>
+  <section id="recipes" class="space-y-5" data-archify-recipes-root>
     <div class="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
       <div>
-        <p class="text-[11px] font-bold uppercase tracking-[0.18em] text-cyan-600 dark:text-cyan-400">{isVi ? 'Công thức từ guide chính thức' : 'Official guide recipes'}</p>
-        <h2 class="mt-2 text-3xl font-black tracking-tight text-slate-900 dark:text-white">{isVi ? '11 trường hợp sử dụng nên bắt đầu với Archify' : '11 use cases to start with Archify'}</h2>
+        <p class="text-[11px] font-bold uppercase tracking-[0.18em] text-cyan-600 dark:text-cyan-400">{isVi ? 'Question-first' : 'Question-first'}</p>
+        <h2 class="mt-2 text-3xl font-black tracking-tight text-slate-900 dark:text-white">{isVi ? '11 recipe — mỗi cái trả lời một câu hỏi' : '11 recipes — each answers one question'}</h2>
         <p class="mt-2 max-w-2xl text-sm leading-relaxed text-slate-600 dark:text-slate-400">
           {isVi
-            ? 'Tổng hợp từ guide chính thức của Archify. Tất cả prompt mẫu dùng cùng ví dụ xuyên suốt: web app bán sản phẩm số — hãy chỉnh tên hệ thống, service và ranh giới dữ liệu trước khi dùng.'
-            : 'Summarized from the official Archify guide. Every template uses one running example: a digital product store — edit system names, services, and data boundaries before use.'}
+            ? 'Chọn từ câu hỏi, không từ tên loại sơ đồ. Ảnh là mẫu gallery chính thức — prompt thì author từ evidence của bạn, không copy topology mẫu.'
+            : 'Pick from the question, not the diagram type. Previews are official gallery samples — the prompt authors from your evidence, not from that topology.'}
         </p>
       </div>
-      <a href="https://tt-a1i.github.io/archify/guide.html" rel="noreferrer" target="_blank" class="inline-flex min-h-10 items-center justify-center rounded-xl border border-cyan-200 bg-cyan-50 px-3.5 text-sm font-bold text-cyan-800 transition hover:-translate-y-0.5 hover:bg-cyan-100 dark:border-cyan-500/25 dark:bg-cyan-500/10 dark:text-cyan-300 dark:hover:bg-cyan-500/15">
-        {isVi ? 'Xem guide gốc' : 'Open source guide'}
+      <a href="https://tt-a1i.github.io/archify/gallery.html" rel="noreferrer" target="_blank" class="inline-flex min-h-10 shrink-0 items-center justify-center whitespace-nowrap rounded-xl border border-cyan-200 bg-cyan-50 px-3.5 text-sm font-bold text-cyan-800 transition hover:-translate-y-0.5 hover:bg-cyan-100 dark:border-cyan-500/25 dark:bg-cyan-500/10 dark:text-cyan-300 dark:hover:border-cyan-400/40 dark:hover:bg-cyan-500/20 dark:hover:text-cyan-100">
+        {isVi ? 'Xem gallery chính thức' : 'Official gallery'}
       </a>
     </div>
+
+    <div class="grid gap-3 md:grid-cols-2 xl:grid-cols-5">
+      {modeCards.map((card) => (
+        <article class="rounded-2xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900/70">
+          <h3 class="font-mono text-xs font-black uppercase tracking-[0.14em] text-cyan-700 dark:text-cyan-300">{card.type}</h3>
+          <p class="mt-2 text-sm font-semibold leading-snug text-slate-900 dark:text-white">{card.answers}</p>
+          <p class="mt-2 text-xs leading-relaxed text-slate-500 dark:text-slate-400"><span class="font-bold">{isVi ? 'Không dùng khi' : 'Not for'}</span> {card.not}</p>
+        </article>
+      ))}
+    </div>
+
     <div class="space-y-2">
-      <p class="text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">
-        {isVi ? 'Lọc theo loại sơ đồ' : 'Filter by diagram type'}
-      </p>
+      <p class="text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">{isVi ? 'Lọc theo loại sự thật' : 'Filter by kind of truth'}</p>
       <div class="flex flex-wrap gap-2" data-archify-recipe-filters role="group" aria-label={isVi ? 'Lọc theo loại sơ đồ' : 'Filter by diagram type'}>
-        <button type="button" data-archify-recipe-filter="all" class="archify-recipe-filter rounded-full border border-cyan-400 bg-cyan-600 px-3.5 py-1.5 text-xs font-semibold text-white shadow-sm dark:border-cyan-500">
-          {isVi ? 'Tất cả' : 'All'}
-        </button>
+        <button type="button" data-archify-recipe-filter="all" class="archify-recipe-filter rounded-full border border-cyan-400 bg-cyan-600 px-3.5 py-1.5 text-xs font-semibold text-white shadow-sm dark:border-cyan-500">{isVi ? 'Tất cả' : 'All'}</button>
         {recipeTypeFilters.map((type) => (
-          <button type="button" data-archify-recipe-filter={type} class="archify-recipe-filter rounded-full border border-slate-200 bg-white px-3.5 py-1.5 text-xs font-semibold text-slate-600 hover:border-cyan-300 hover:text-cyan-800 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300 dark:hover:border-cyan-500/40">
-            {type}
-          </button>
+          <button type="button" data-archify-recipe-filter={type} class="archify-recipe-filter rounded-full border border-slate-200 bg-white px-3.5 py-1.5 text-xs font-semibold text-slate-600 hover:border-cyan-300 hover:text-cyan-800 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300 dark:hover:border-cyan-500/40">{type}</button>
         ))}
       </div>
     </div>
+
     <div class="space-y-5">
       {recipeGroups.map((group) => (
         <section data-archify-recipe-group data-recipe-type={group.type} class="overflow-hidden rounded-[1.75rem] border border-slate-200/80 bg-white/80 shadow-sm dark:border-slate-800 dark:bg-slate-900/65">
-          <div class="relative overflow-hidden border-b border-slate-200/80 bg-gradient-to-br from-cyan-50 via-white to-violet-50 p-5 dark:border-slate-800 dark:from-cyan-950/20 dark:via-slate-900 dark:to-violet-950/25">
-            <div class="pointer-events-none absolute -right-10 -top-12 h-36 w-36 rounded-full bg-cyan-400/15 blur-3xl dark:bg-cyan-300/10"></div>
-            <div class="relative flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-              <div class="flex items-start gap-4">
-                <div class="relative flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-2xl border border-cyan-200/80 bg-white shadow-lg shadow-cyan-500/10 dark:border-cyan-500/25 dark:bg-slate-950 dark:shadow-cyan-950/30">
-                  <div class="absolute inset-0 bg-[radial-gradient(circle_at_28%_18%,rgba(34,211,238,0.35),transparent_32%),radial-gradient(circle_at_78%_82%,rgba(139,92,246,0.26),transparent_36%)]"></div>
-                  {group.icon === 'architecture' && (
-                    <svg aria-hidden="true" viewBox="0 0 32 32" class="relative h-7 w-7 text-cyan-700 dark:text-cyan-300" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                      <rect x="4" y="5" width="9" height="7" rx="2" />
-                      <rect x="19" y="5" width="9" height="7" rx="2" />
-                      <rect x="11.5" y="20" width="9" height="7" rx="2" />
-                      <path d="M13 8.5h6M8.5 12v4.5h7.5M23.5 12v4.5H16" />
-                    </svg>
-                  )}
-                  {group.icon === 'workflow' && (
-                    <svg aria-hidden="true" viewBox="0 0 32 32" class="relative h-7 w-7 text-cyan-700 dark:text-cyan-300" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                      <circle cx="7" cy="16" r="3" />
-                      <circle cx="16" cy="8" r="3" />
-                      <circle cx="25" cy="16" r="3" />
-                      <circle cx="16" cy="24" r="3" />
-                      <path d="M9.6 14.2l3.8-3.7M18.6 10.5l3.8 3.7M22.4 17.8l-3.8 3.7M13.4 21.5l-3.8-3.7" />
-                    </svg>
-                  )}
-                  {group.icon === 'sequence' && (
-                    <svg aria-hidden="true" viewBox="0 0 32 32" class="relative h-7 w-7 text-cyan-700 dark:text-cyan-300" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                      <path d="M6 7v18M16 7v18M26 7v18" />
-                      <path d="M7 11h15" />
-                      <path d="M20 8l4 3-4 3" />
-                      <path d="M25 20H10" />
-                      <path d="M12 17l-4 3 4 3" />
-                    </svg>
-                  )}
-                  {group.icon === 'dataflow' && (
-                    <svg aria-hidden="true" viewBox="0 0 32 32" class="relative h-7 w-7 text-cyan-700 dark:text-cyan-300" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                      <circle cx="6" cy="16" r="3" />
-                      <circle cx="16" cy="8" r="3" />
-                      <circle cx="16" cy="24" r="3" />
-                      <circle cx="26" cy="16" r="3" />
-                      <path d="M8.7 14.6l4.6-4.1M8.7 17.4l4.6 4.1M18.8 9.8l4.5 4.2M18.8 22.2l4.5-4.2" />
-                    </svg>
-                  )}
-                  {group.icon === 'lifecycle' && (
-                    <svg aria-hidden="true" viewBox="0 0 32 32" class="relative h-7 w-7 text-cyan-700 dark:text-cyan-300" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                      <path d="M24.5 11A9 9 0 0 0 9 8.7" />
-                      <path d="M8 5v5h5" />
-                      <path d="M7.5 21A9 9 0 0 0 23 23.3" />
-                      <path d="M24 27v-5h-5" />
-                      <circle cx="16" cy="16" r="3" />
-                    </svg>
-                  )}
-                </div>
-                <div>
-                  <div class="flex flex-wrap items-center gap-2">
-                    <span class="rounded-full border border-cyan-200 bg-cyan-100 px-2.5 py-1 font-mono text-[10px] font-black uppercase tracking-[0.14em] text-cyan-800 dark:border-cyan-500/25 dark:bg-cyan-500/15 dark:text-cyan-300">{group.index}</span>
-                    <span class="rounded-full border border-violet-200 bg-violet-100 px-2.5 py-1 text-[10px] font-black uppercase tracking-[0.14em] text-violet-800 dark:border-violet-500/25 dark:bg-violet-500/15 dark:text-violet-300">{group.recipes.length} {isVi ? 'mẫu' : 'recipes'}</span>
-                  </div>
-                  <h3 class="mt-2 text-2xl font-black tracking-tight text-slate-950 dark:text-white">{group.type}</h3>
-                  <p class="mt-1 max-w-2xl text-sm leading-relaxed text-slate-600 dark:text-slate-400">{group.description}</p>
-                </div>
-              </div>
-              <div class="hidden rounded-2xl border border-white/70 bg-white/70 px-4 py-3 text-right shadow-sm backdrop-blur dark:border-white/10 dark:bg-white/[0.04] md:block">
-                <div class="text-2xl font-black text-slate-950 dark:text-white">{group.recipes.length}</div>
-                <div class="text-[10px] font-bold uppercase tracking-[0.14em] text-slate-500 dark:text-slate-400">{isVi ? 'điểm bắt đầu' : 'starting points'}</div>
-              </div>
+          <div class="border-b border-slate-200/80 bg-gradient-to-br from-cyan-50 via-white to-violet-50 p-5 dark:border-slate-800 dark:from-cyan-950/20 dark:via-slate-900 dark:to-violet-950/25">
+            <div class="flex flex-wrap items-center gap-2">
+              <span class="rounded-full border border-cyan-200 bg-cyan-100 px-2.5 py-1 font-mono text-[10px] font-black uppercase tracking-[0.14em] text-cyan-800 dark:border-cyan-500/25 dark:bg-cyan-500/15 dark:text-cyan-300">{group.index}</span>
+              <h3 class="text-2xl font-black tracking-tight text-slate-950 dark:text-white">{group.type}</h3>
             </div>
+            <p class="mt-2 max-w-2xl text-sm leading-relaxed text-slate-600 dark:text-slate-400">{group.description}</p>
           </div>
-          <div class="grid gap-3 p-4 md:grid-cols-2 xl:grid-cols-3">
-            {group.recipes.map(([type, title, question, output, prompt]) => (
-              <article data-archify-recipe-card data-recipe-type={type} class="group/card flex min-h-full flex-col rounded-2xl border border-slate-200/80 bg-white p-4 shadow-sm transition duration-300 hover:-translate-y-0.5 hover:border-cyan-200 hover:shadow-xl hover:shadow-cyan-500/10 dark:border-slate-800 dark:bg-slate-950/55 dark:hover:border-cyan-500/25">
-                <div class="flex items-start justify-between gap-3">
-                  <h4 class="text-base font-black text-slate-900 dark:text-white">{title}</h4>
-                  <span class="shrink-0 rounded-full bg-violet-100 px-2 py-0.5 font-mono text-[10px] font-bold uppercase tracking-[0.1em] text-violet-700 dark:bg-violet-500/15 dark:text-violet-300">{type}</span>
+          <div class="grid gap-3 p-4 md:grid-cols-2">
+            {group.recipes.map((recipe) => (
+              <article data-archify-recipe-card data-recipe-type={recipe.typeLabel} class="flex min-h-full flex-col overflow-hidden rounded-2xl border border-slate-200/80 bg-white shadow-sm dark:border-slate-800 dark:bg-slate-950/55">
+                <div class="border-b border-slate-200 bg-slate-50 p-2 dark:border-slate-800 dark:bg-slate-950">
+                  <img src={recipe.previewLight} alt={`${recipe.title} light preview`} class="aspect-[16/10] w-full rounded-xl border border-slate-200 bg-white object-contain dark:hidden" loading="lazy" />
+                  <img src={recipe.previewDark} alt={`${recipe.title} dark preview`} class="hidden aspect-[16/10] w-full rounded-xl border border-slate-700 bg-slate-950 object-contain dark:block" loading="lazy" />
                 </div>
-                <p class="mt-3 text-sm font-semibold leading-relaxed text-slate-700 dark:text-slate-200">{question}</p>
-                <p class="mt-2 text-sm leading-relaxed text-slate-500 dark:text-slate-400">{output}</p>
-                <div class="group/code relative mt-4 flex-1 rounded-2xl border border-slate-200 bg-slate-100 p-4 transition group-hover/card:border-cyan-200 dark:border-slate-700 dark:bg-slate-800/90 dark:group-hover/card:border-cyan-500/25">
-                  <div class="mb-3 flex items-center justify-between gap-3 pr-24">
-                    <p class="text-[11px] font-bold uppercase tracking-[0.14em] text-purple-600 dark:text-purple-400">
-                      {isVi ? 'Prompt mẫu — chỉnh trước khi dùng' : 'Template — edit before use'}
-                    </p>
+                <div class="flex flex-1 flex-col p-4">
+                  <div class="flex items-start justify-between gap-3">
+                    <h4 class="text-base font-black text-slate-900 dark:text-white">{recipe.title}</h4>
+                    <span class="shrink-0 rounded-full bg-violet-100 px-2 py-0.5 font-mono text-[10px] font-bold uppercase tracking-[0.1em] text-violet-700 dark:bg-violet-500/15 dark:text-violet-300">{recipe.typeLabel}</span>
                   </div>
-                  <button type="button" data-archify-copy={prompt} aria-label={isVi ? 'Sao chép prompt mẫu' : 'Copy prompt template'} class="archify-copy-btn absolute right-3 top-3 inline-flex items-center gap-1.5 rounded-lg border border-slate-200 bg-white/90 px-2.5 py-1.5 text-xs font-bold text-slate-600 shadow-sm transition hover:border-purple-200 hover:text-purple-700 dark:border-slate-600 dark:bg-slate-900/90 dark:text-slate-300 dark:hover:border-purple-500/40 dark:hover:text-purple-300">
-                    <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-                    <span>{isVi ? 'Sao chép' : 'Copy'}</span>
-                  </button>
-                  <code class="block whitespace-pre-wrap break-words font-mono text-xs leading-relaxed text-slate-700 dark:text-slate-200">{prompt}</code>
+                  <p class="mt-2 text-sm font-semibold leading-snug text-slate-800 dark:text-slate-100">{recipe.question}</p>
+                  <div class="mt-3 grid gap-2 text-xs leading-relaxed sm:grid-cols-2">
+                    <p class="rounded-xl border border-emerald-200 bg-emerald-50 p-2 text-emerald-900 dark:border-emerald-500/25 dark:bg-emerald-950/20 dark:text-emerald-100"><span class="font-bold">{isVi ? 'Dùng khi' : 'Use when'}</span> {recipe.when}</p>
+                    <p class="rounded-xl border border-amber-200 bg-amber-50 p-2 text-amber-950 dark:border-amber-500/25 dark:bg-amber-950/20 dark:text-amber-100"><span class="font-bold">{isVi ? 'Không dùng khi' : 'Don’t use when'}</span> {recipe.notWhen}</p>
+                  </div>
+                  <div class="relative mt-4 flex-1 rounded-2xl border border-slate-200 bg-slate-100 p-4 dark:border-slate-700 dark:bg-slate-800/90">
+                    <p class="mb-3 pr-24 text-[11px] font-bold uppercase tracking-[0.14em] text-purple-600 dark:text-purple-400">{isVi ? 'Prompt — chỉnh theo repo' : 'Prompt — edit for your repo'}</p>
+                    <button type="button" data-archify-copy={recipe.prompt} aria-label={isVi ? 'Sao chép prompt' : 'Copy prompt'} class="absolute right-3 top-3 inline-flex items-center gap-1.5 rounded-lg border border-slate-200 bg-white/90 px-2.5 py-1.5 text-xs font-bold text-slate-600 shadow-sm dark:border-slate-600 dark:bg-slate-900/90 dark:text-slate-300">
+                      <span>{isVi ? 'Sao chép' : 'Copy'}</span>
+                    </button>
+                    <code class="block whitespace-pre-wrap break-words font-mono text-xs leading-relaxed text-slate-700 dark:text-slate-200">{recipe.prompt}</code>
+                  </div>
                 </div>
               </article>
             ))}
@@ -670,81 +886,162 @@ const recipeGroups = recipeTypeFilters.map((type, index) => ({
     </div>
   </section>
 
-  <section class="space-y-5">
+  <section id="sdlc" class="space-y-5">
     <div>
-      <p class="text-[11px] font-bold uppercase tracking-[0.18em] text-teal-600 dark:text-teal-400">{isVi ? 'SDLC + chuỗi skill AgentKit' : 'SDLC + AgentKit skill chains'}</p>
-      <h2 class="mt-2 text-3xl font-black tracking-tight text-slate-900 dark:text-white">{isVi ? 'Dừng ở đâu để kích hoạt Archify trong workflow?' : 'Where to trigger Archify in a workflow'}</h2>
+      <p class="text-[11px] font-bold uppercase tracking-[0.18em] text-teal-600 dark:text-teal-400">SDLC</p>
+      <h2 class="mt-2 text-3xl font-black tracking-tight text-slate-900 dark:text-white">{isVi ? 'Archify dùng lúc nào trong vòng đời dự án?' : 'Where does Archify fit in a project?'}</h2>
       <p class="mt-2 max-w-2xl text-sm leading-relaxed text-slate-600 dark:text-slate-400">
-        {isVi ? (
-          <>Archify không phải skill <code class={codeClass}>/ak:</code> chính thức. Sau khi cài, có thể kích hoạt bằng 2 cách dưới đây. Các chuỗi tiếp theo cho biết nên dừng ở cổng nào để tạo đầu ra trực quan.</>
-        ) : (
-          <>Archify is not an official <code class={codeClass}>/ak:</code> skill. After installation, you can trigger it in two ways below. The chains that follow show which gate should pause to create the artifact.</>
-        )}
+        {isVi
+          ? 'SDLC (software development life cycle) là các giai đoạn làm phần mềm: nhận dự án, viết code, review, phát hành, vận hành. Áp cho mọi team — không gắn AgentKit. Không bắt sơ đồ mọi PR; chỉ khi cách hệ thống nối với nhau đổi.'
+          : 'SDLC (software development life cycle) is the stages of building software: intake, coding, review, release, operations. For any team — not AgentKit-specific. Do not require a diagram on every PR; only when how the system connects has changed.'}
       </p>
     </div>
     <div class="grid gap-3 md:grid-cols-2">
+      {sdlcStages.map((row) => (
+        <article class="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm dark:border-slate-800 dark:bg-slate-900/70">
+          <p class="text-[11px] font-bold uppercase tracking-[0.14em] text-teal-700 dark:text-teal-300">{row.stage}</p>
+          <h3 class="mt-2 text-base font-extrabold text-slate-950 dark:text-white">{row.artifact}</h3>
+          <p class="mt-2 text-sm leading-relaxed text-slate-600 dark:text-slate-400">{row.goal}</p>
+          <div class="relative mt-3 rounded-xl border border-slate-200 bg-slate-100 p-3 dark:border-slate-700 dark:bg-slate-800/90">
+            <p class="mb-2 pr-20 text-[10px] font-bold uppercase tracking-[0.14em] text-purple-600 dark:text-purple-400">{isVi ? 'Prompt mẫu' : 'Sample prompt'}</p>
+            <button type="button" data-archify-copy={row.prompt} aria-label={isVi ? 'Sao chép prompt' : 'Copy prompt'} class="absolute right-2 top-2 inline-flex items-center rounded-lg border border-slate-200 bg-white/90 px-2 py-1 text-[11px] font-bold text-slate-600 dark:border-slate-600 dark:bg-slate-900/90 dark:text-slate-300">
+              <span>{isVi ? 'Sao chép' : 'Copy'}</span>
+            </button>
+            <code class="block whitespace-pre-wrap break-words font-mono text-xs leading-relaxed text-slate-700 dark:text-slate-200">{row.prompt}</code>
+          </div>
+        </article>
+      ))}
+    </div>
+    <div class="grid gap-3 md:grid-cols-2">
+      <article class="rounded-2xl border border-emerald-200 bg-emerald-50/80 p-4 dark:border-emerald-500/25 dark:bg-emerald-950/25">
+        <h3 class="text-sm font-extrabold text-emerald-900 dark:text-emerald-200">{isVi ? 'Nên vẽ lại khi đổi' : 'Redraw when this changes'}</h3>
+        <ul class="mt-3 space-y-1.5 text-sm text-emerald-950 dark:text-emerald-50">
+          {triggerYes.map((item) => <li class="flex gap-2"><span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-emerald-500"></span>{item}</li>)}
+        </ul>
+      </article>
+      <article class="rounded-2xl border border-slate-200 bg-slate-50 p-4 dark:border-slate-700 dark:bg-slate-800/70">
+        <h3 class="text-sm font-extrabold text-slate-900 dark:text-white">{isVi ? 'Không cần sơ đồ mới' : 'Skip a new diagram'}</h3>
+        <ul class="mt-3 space-y-1.5 text-sm text-slate-700 dark:text-slate-300">
+          {triggerNo.map((item) => <li class="flex gap-2"><span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-slate-400"></span>{item}</li>)}
+        </ul>
+      </article>
+    </div>
+    <p class="text-sm leading-relaxed text-slate-500 dark:text-slate-400">
+      {isVi ? 'Để Archify không thành việc giấy tờ: rename, refactor nội bộ, test, format, bug fix không đổi contract — bỏ qua.' : 'To keep Archify from becoming paperwork: skip renames, internal refactors, tests, formatting, and bug fixes that do not change the contract.'}
+    </p>
+  </section>
+
+  <section id="agentkit" class="space-y-5">
+    <div>
+      <p class="text-[11px] font-bold uppercase tracking-[0.18em] text-teal-600 dark:text-teal-400">{isVi ? 'AgentKit' : 'AgentKit'}</p>
+      <h2 class="mt-2 text-3xl font-black tracking-tight text-slate-900 dark:text-white">{isVi ? 'Dùng Archify với workflow AgentKit' : 'Using Archify with AgentKit workflows'}</h2>
+      <p class="mt-2 text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+        {isVi ? (
+          <>Archify không phải skill <code class={codeClass}>/ak:</code> chính thức. Cài riêng, rồi chèn vào cổng review của <a href="/guides/agentkit/workflows" class="whitespace-nowrap font-semibold text-cyan-800 underline decoration-cyan-300 underline-offset-2 dark:text-cyan-300">workflow AgentKit</a>.</>
+        ) : (
+          <>Archify is not an official <code class={codeClass}>/ak:</code> skill. Install it, then pause at a review gate in the <a href="/guides/agentkit/workflows" class="whitespace-nowrap font-semibold text-cyan-800 underline decoration-cyan-300 underline-offset-2 dark:text-cyan-300">AgentKit workflows</a>.</>
+        )}
+      </p>
+      <aside class="mt-4 rounded-2xl border border-amber-200 bg-amber-50 p-4 dark:border-amber-500/25 dark:bg-amber-950/20">
+        <p class="text-[11px] font-bold uppercase tracking-[0.14em] text-amber-800 dark:text-amber-300">{isVi ? 'Lưu ý' : 'Note'}</p>
+        <ul class="mt-2 space-y-1.5 text-sm leading-relaxed text-amber-950 dark:text-amber-50">
+          <li>{isVi ? 'Một sơ đồ trả lời một câu hỏi. Đừng bảo Archify vẽ năm kiểu cho cùng một việc.' : 'One diagram answers one question. Do not ask Archify for five diagram types of the same thing.'}</li>
+          <li>{isVi ? 'AgentKit đã có workflow "Giải thích kiến trúc bằng hình" — vẽ bằng tech-graph, Excalidraw hoặc Mermaid. Đó là tool khác. Nếu đã vẽ câu hỏi đó bằng một trong các tool kia, đừng chạy Archify chồng lên.' : 'AgentKit already has a "Visual architecture explainer" workflow — it draws with tech-graph, Excalidraw, or Mermaid. That is a different tool. If you already drew that question with one of those, do not also run Archify on it.'}</li>
+        </ul>
+      </aside>
+    </div>
+
+    <div class="grid gap-3 md:grid-cols-2">
       <div class="rounded-2xl border border-emerald-200 bg-emerald-50/80 p-4 dark:border-emerald-500/25 dark:bg-emerald-950/25">
         <p class="text-[11px] font-bold uppercase tracking-[0.14em] text-emerald-700 dark:text-emerald-300">{isVi ? 'Cách 1 · Gọi tên skill' : 'Way 1 · Call by skill name'}</p>
-        <code class="mt-2 block whitespace-pre-wrap font-mono text-xs leading-relaxed text-emerald-950 dark:text-emerald-50">{isVi ? 'Dùng Archify tạo bản đồ kiến trúc cho repo này.' : 'Use the archify skill to create an architecture map for this repo.'}</code>
+        <code class="mt-2 block whitespace-pre-wrap font-mono text-xs leading-relaxed text-emerald-950 dark:text-emerald-50">{isVi ? 'Dùng Archify tạo architecture map cho repo này.' : 'Use the archify skill to create an architecture map for this repo.'}</code>
       </div>
       <div class="rounded-2xl border border-violet-200 bg-violet-50/80 p-4 dark:border-violet-500/25 dark:bg-violet-950/25">
-        <p class="text-[11px] font-bold uppercase tracking-[0.14em] text-violet-700 dark:text-violet-300">{isVi ? 'Cách 2 · Lệnh slash / lệnh $' : 'Way 2 · Slash / $ command'}</p>
-        <code class="mt-2 block whitespace-pre-wrap font-mono text-xs leading-relaxed text-violet-950 dark:text-violet-50">{isVi ? '/archify Vẽ workflow map cho checkout release\n$archify Vẽ workflow map cho checkout release' : '/archify Create a workflow map for checkout release\n$archify Create a workflow map for checkout release'}</code>
+        <p class="text-[11px] font-bold uppercase tracking-[0.14em] text-violet-700 dark:text-violet-300">{isVi ? 'Cách 2 · Slash / lệnh $' : 'Way 2 · Slash / $ command'}</p>
+        <code class="mt-2 block whitespace-pre-wrap font-mono text-xs leading-relaxed text-violet-950 dark:text-violet-50">{isVi ? '/archify …\n/skill:archify …\n$archify …' : '/archify …\n/skill:archify …\n$archify …'}</code>
         <p class="mt-2 text-xs leading-relaxed text-violet-800/80 dark:text-violet-200/80">
-          {isVi ? 'Dùng lệnh slash khi runtime hỗ trợ. Trong Codex, dùng tiền tố $.' : 'Use slash commands when your runtime supports them. On Codex surfaces, use the $ prefix.'}
+          {isVi ? 'Claude Code / Cursor: /archify. Pi hoặc OMP: /skill:archify. Codex: tiền tố $.' : 'Claude Code / Cursor: /archify. Pi or OMP: /skill:archify. Codex: $ prefix.'}
         </p>
       </div>
     </div>
+
+    <div class="overflow-hidden rounded-[1.7rem] border border-cyan-200/80 bg-white shadow-sm dark:border-cyan-500/20 dark:bg-slate-900/65">
+      <div class="border-b border-cyan-100 bg-gradient-to-br from-cyan-50 via-white to-violet-50 p-5 dark:border-slate-800 dark:from-cyan-950/25 dark:via-slate-900 dark:to-violet-950/20">
+        <p class="text-[11px] font-bold uppercase tracking-[0.18em] text-cyan-700 dark:text-cyan-300">{isVi ? 'Nguyên tắc đặt Archify' : 'Placement rules'}</p>
+        <h3 class="mt-2 text-2xl font-black tracking-tight text-slate-950 dark:text-white">
+          {isVi ? 'Chèn ở cổng review/evidence — không thay kiểm thử.' : 'Insert at review/evidence gates — not as a substitute for verification.'}
+        </h3>
+      </div>
+      <div class="grid gap-3 p-4 md:grid-cols-2 xl:grid-cols-4">
+        {akPrinciples.map((rule, index) => (
+          <div class="rounded-2xl border border-slate-200 bg-slate-50 p-4 dark:border-slate-700 dark:bg-slate-800/70">
+            <span class="font-mono text-[11px] font-black text-cyan-700 dark:text-cyan-300">{String(index + 1).padStart(2, '0')}</span>
+            <h4 class="mt-2 text-sm font-extrabold leading-snug text-slate-950 dark:text-white">{rule.title}</h4>
+            <p class="mt-2 text-xs leading-relaxed text-slate-600 dark:text-slate-400" set:html={inlineCodeHtml(rule.body)} />
+          </div>
+        ))}
+      </div>
+    </div>
+
     <div class="space-y-4">
-      {workflowChains.map((chain, index) => (
+      {akChains.map((chain, index) => (
         <article class="overflow-hidden rounded-[1.7rem] border border-slate-200/80 bg-white/85 shadow-sm dark:border-slate-800 dark:bg-slate-900/65">
-          <div class="grid gap-4 border-b border-slate-200/80 bg-gradient-to-br from-white via-slate-50 to-teal-50 p-5 dark:border-slate-800 dark:from-slate-950 dark:via-slate-900 dark:to-teal-950/20 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
+          <div class="grid gap-4 border-b border-slate-200/80 bg-gradient-to-br from-white via-slate-50 to-teal-50 p-5 dark:border-slate-800 dark:from-slate-950 dark:via-slate-900 dark:to-teal-950/20 lg:grid-cols-[0.9fr_1.1fr]">
             <div class="flex items-start gap-3">
               <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-2xl bg-teal-100 font-mono text-sm font-black text-teal-800 dark:bg-teal-500/15 dark:text-teal-300">{String(index + 1).padStart(2, '0')}</span>
               <div>
-                <h3 class="text-xl font-extrabold text-slate-900 dark:text-white">{chain.title}</h3>
-                <p class="mt-1 text-sm leading-relaxed text-slate-600 dark:text-slate-400">{chain.bestFor}</p>
+                <p class="font-mono text-[10px] font-bold uppercase tracking-[0.14em] text-teal-700 dark:text-teal-300">{chain.ak}</p>
+                <h3 class="mt-1 text-xl font-extrabold text-slate-900 dark:text-white">{chain.title}</h3>
+                <p class="mt-1 text-sm leading-relaxed text-slate-600 dark:text-slate-400" set:html={inlineCodeHtml(chain.bestFor)} />
               </div>
             </div>
-            <div class="flex flex-wrap items-center gap-2 lg:justify-end">
-              {chain.steps.map((step, stepIndex) => (
-                <>
-                  <span class:list={[
-                    'inline-flex items-center rounded-xl border px-2.5 py-1.5 font-mono text-xs font-bold',
-                    step === 'archify'
-                      ? 'border-emerald-300 bg-emerald-100 text-emerald-800 shadow-sm shadow-emerald-500/10 dark:border-emerald-500/35 dark:bg-emerald-500/15 dark:text-emerald-300'
-                      : 'border-slate-200 bg-slate-100 text-slate-700 dark:border-slate-700 dark:bg-slate-800/90 dark:text-slate-200',
-                  ]}>{step}</span>
-                  {stepIndex < chain.steps.length - 1 && <span class="text-slate-300 dark:text-slate-600">→</span>}
-                </>
+            <div class="grid gap-2">
+              {chain.placements.map((spot) => (
+                <div class="rounded-2xl border border-slate-200 bg-white/85 px-3 py-2.5 shadow-sm dark:border-slate-700 dark:bg-slate-950/60">
+                  <p class="text-[10px] font-black uppercase tracking-[0.18em] text-slate-500 dark:text-slate-400">{spot.label}</p>
+                  <div class="mt-2 flex flex-wrap items-center gap-1.5 text-xs">
+                    <span class="rounded-lg bg-slate-100 px-2 py-1 font-semibold text-slate-700 dark:bg-slate-800 dark:text-slate-200" set:html={inlineCodeHtml(spot.context)} />
+                    <span class="font-black text-slate-300 dark:text-slate-600">→</span>
+                    <span class="rounded-lg border border-emerald-400/40 bg-emerald-500/15 px-2 py-1 font-mono font-black text-emerald-700 dark:text-emerald-300">{spot.archify}</span>
+                    <span class="font-black text-slate-300 dark:text-slate-600">→</span>
+                    <span class="rounded-lg bg-slate-100 px-2 py-1 font-semibold text-slate-700 dark:bg-slate-800 dark:text-slate-200" set:html={inlineCodeHtml(spot.next)} />
+                  </div>
+                  <p class="mt-1.5 text-[11px] leading-relaxed text-slate-500 dark:text-slate-400" set:html={inlineCodeHtml(spot.note)} />
+                </div>
               ))}
             </div>
           </div>
-          <div class="grid gap-3 p-5 lg:grid-cols-3">
-            <div class="rounded-2xl border border-amber-200 bg-amber-50 p-3 dark:border-amber-500/25 dark:bg-amber-950/25">
-              <p class="text-[11px] font-bold uppercase tracking-[0.14em] text-amber-700 dark:text-amber-300">{isVi ? 'Điểm kích hoạt' : 'Trigger point'}</p>
-              <p class="mt-2 text-sm leading-relaxed text-amber-950/90 dark:text-amber-50/90" set:html={inlineCodeHtml(chain.trigger)} />
-            </div>
-            <div class="rounded-2xl border border-cyan-200 bg-cyan-50 p-3 dark:border-cyan-500/25 dark:bg-cyan-950/20">
-              <p class="text-[11px] font-bold uppercase tracking-[0.14em] text-cyan-700 dark:text-cyan-300">{isVi ? 'Cách áp dụng thực tế' : 'How to use it in practice'}</p>
-              <p class="mt-2 text-sm leading-relaxed text-cyan-950/90 dark:text-cyan-50/90">{chain.apply}</p>
-            </div>
-            <div class="rounded-2xl border border-slate-200 bg-slate-50 p-3 dark:border-slate-700 dark:bg-slate-800/70">
-              <p class="text-[11px] font-bold uppercase tracking-[0.14em] text-slate-500 dark:text-slate-400">{isVi ? 'Sơ đồ nên tạo' : 'Diagram to create'}</p>
-              <p class="mt-2 text-sm leading-relaxed text-slate-700 dark:text-slate-300">{chain.artifact}</p>
-            </div>
-          </div>
-          <div class="px-5 pb-5">
-            <div class="group/code relative rounded-2xl border border-slate-200 bg-slate-100 p-4 dark:border-slate-700 dark:bg-slate-800/90">
-              <div class="mb-3 flex items-center justify-between gap-3 pr-24">
-                <p class="text-[11px] font-bold uppercase tracking-[0.14em] text-purple-600 dark:text-purple-400">{isVi ? 'Prompt mẫu — chỉnh trước khi dùng' : 'Template — edit before use'}</p>
+          <div class:list={['grid gap-3 p-5', chain.prompts.length > 1 && 'md:grid-cols-2']}>
+            {chain.prompts.map((item) => (
+              <div class="relative rounded-2xl border border-slate-200 bg-slate-100 p-4 dark:border-slate-700 dark:bg-slate-800/90">
+                <p class="mb-3 pr-24 text-[11px] font-bold uppercase tracking-[0.14em] text-purple-600 dark:text-purple-400">{item.label}</p>
+                <button type="button" data-archify-copy={item.prompt} aria-label={isVi ? 'Sao chép prompt' : 'Copy prompt'} class="absolute right-3 top-3 inline-flex items-center rounded-lg border border-slate-200 bg-white/90 px-2.5 py-1.5 text-xs font-bold text-slate-600 dark:border-slate-600 dark:bg-slate-900/90 dark:text-slate-300">
+                  <span>{isVi ? 'Sao chép' : 'Copy'}</span>
+                </button>
+                <code class="block whitespace-pre-wrap break-words font-mono text-xs leading-relaxed text-slate-700 dark:text-slate-200">{item.prompt}</code>
               </div>
-              <button type="button" data-archify-copy={chain.prompt} aria-label={isVi ? 'Sao chép prompt mẫu' : 'Copy prompt template'} class="archify-copy-btn absolute right-3 top-3 inline-flex items-center gap-1.5 rounded-lg border border-slate-200 bg-white/90 px-2.5 py-1.5 text-xs font-bold text-slate-600 shadow-sm transition hover:border-purple-200 hover:text-purple-700 dark:border-slate-600 dark:bg-slate-900/90 dark:text-slate-300 dark:hover:border-purple-500/40 dark:hover:text-purple-300">
-                <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-                <span>{isVi ? 'Sao chép' : 'Copy'}</span>
-              </button>
-              <code class="block whitespace-pre-wrap break-words font-mono text-xs leading-relaxed text-slate-700 dark:text-slate-200">{chain.prompt}</code>
-            </div>
+            ))}
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section id="donts" class="space-y-5">
+    <div>
+      <p class="text-[11px] font-bold uppercase tracking-[0.18em] text-rose-600 dark:text-rose-300">{isVi ? 'Đừng làm' : 'Don’t'}</p>
+      <h2 class="mt-2 text-3xl font-black tracking-tight text-slate-900 dark:text-white">{isVi ? 'Anti-pattern hay gặp' : 'Common anti-patterns'}</h2>
+    </div>
+    <div class="grid gap-3 md:grid-cols-2">
+      {antiPatterns.map((item) => (
+        <article class="grid gap-2 rounded-2xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900/70 sm:grid-cols-2">
+          <div>
+            <p class="text-[10px] font-black uppercase tracking-[0.14em] text-rose-600 dark:text-rose-300">{isVi ? 'Hay làm' : 'Common habit'}</p>
+            <p class="mt-1 text-sm font-semibold text-slate-900 dark:text-white" set:html={inlineCodeHtml(item.dont)} />
+          </div>
+          <div>
+            <p class="text-[10px] font-black uppercase tracking-[0.14em] text-emerald-700 dark:text-emerald-300">{isVi ? 'Nên làm' : 'Better'}</p>
+            <p class="mt-1 text-sm text-slate-700 dark:text-slate-300" set:html={inlineCodeHtml(item.do)} />
           </div>
         </article>
       ))}
@@ -756,7 +1053,6 @@ const recipeGroups = recipeTypeFilters.map((type, index) => ({
   const togglePillState = (button: HTMLButtonElement, isActive: boolean) => {
     const activeClasses = ['border-cyan-400', 'bg-cyan-600', 'text-white', 'shadow-sm', 'dark:border-cyan-500'];
     const inactiveClasses = ['border-slate-200', 'bg-white', 'text-slate-600', 'hover:border-cyan-300', 'hover:text-cyan-800', 'dark:border-slate-700', 'dark:bg-slate-900', 'dark:text-slate-300', 'dark:hover:border-cyan-500/40'];
-
     activeClasses.forEach((className) => button.classList.toggle(className, isActive));
     inactiveClasses.forEach((className) => button.classList.toggle(className, !isActive));
   };
@@ -764,15 +1060,12 @@ const recipeGroups = recipeTypeFilters.map((type, index) => ({
   const initArchifyInstallFilters = (root: HTMLElement) => {
     const select = root.querySelector<HTMLSelectElement>('[data-archify-install-select]');
     const cards = root.querySelectorAll<HTMLElement>('[data-archify-install-card]');
-
     const setActive = (selected: string) => {
       cards.forEach((card) => {
         card.classList.toggle('hidden', card.dataset.installTarget !== selected);
       });
     };
-
     select?.addEventListener('change', () => setActive(select.value));
-
   };
 
   const initArchifyCopyButtons = () => {
@@ -800,21 +1093,17 @@ const recipeGroups = recipeTypeFilters.map((type, index) => ({
     const filters = root.querySelectorAll<HTMLButtonElement>('[data-archify-recipe-filter]');
     const groups = root.querySelectorAll<HTMLElement>('[data-archify-recipe-group]');
     const cards = root.querySelectorAll<HTMLElement>('[data-archify-recipe-card]');
-
     const setActive = (selected: string) => {
       filters.forEach((filter) => togglePillState(filter, filter.dataset.archifyRecipeFilter === selected));
-
       groups.forEach((group) => {
         const show = selected === 'all' || group.dataset.recipeType === selected;
         group.classList.toggle('hidden', !show);
       });
-
       cards.forEach((card) => {
         const show = selected === 'all' || card.dataset.recipeType === selected;
         card.classList.toggle('hidden', !show);
       });
     };
-
     filters.forEach((filter) => {
       filter.addEventListener('click', () => setActive(filter.dataset.archifyRecipeFilter || 'all'));
     });

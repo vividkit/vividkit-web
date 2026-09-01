@@ -190,7 +190,7 @@ export const guides = {
   'guides.ccs.title': 'Accounts Switcher',
   'guides.ccs.description': 'Building custom components and skills',
   'guides.archify.title': 'System Diagramming',
-  'guides.archify.description': 'Create architecture, workflow, and data-flow diagrams for agent review',
+  'guides.archify.description': 'Question-first architecture diagrams for agent review',
   'guides.happy_ccs.title': 'Mobile Coding',
   'guides.happy_ccs.description': 'Code from your phone with CCS providers',
   'guides.codex_app.title': 'Codex App',
