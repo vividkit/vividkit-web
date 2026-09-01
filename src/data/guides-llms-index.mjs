@@ -236,6 +236,16 @@ export const guideSections = [
     ],
   },
   {
+    heading: 'Visualization Skills',
+    links: [
+      {
+        title: 'System Diagramming',
+        path: '/guides/archify',
+        desc: 'Create validated architecture, workflow, request-flow, dataflow, and lifecycle maps for agent review using Archify as a companion tool.',
+      },
+    ],
+  },
+  {
     heading: 'Resources',
     links: [
       {

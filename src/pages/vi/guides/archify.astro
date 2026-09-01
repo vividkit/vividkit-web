@@ -1,0 +1,16 @@
+---
+import GuidesLayout from '@/layouts/GuidesLayout.astro';
+import ArchifyGuide from '@/components/guides/ArchifyGuide.astro';
+import type { Language } from '@/i18n';
+
+const lang: Language = 'vi';
+---
+
+<GuidesLayout
+  title="Sơ đồ hệ thống - VividKit Documentation"
+  description="Tạo sơ đồ kiến trúc, workflow, luồng gọi, dataflow và lifecycle để review cùng agent bằng Archify."
+  activeTab="archify"
+  lang="vi"
+>
+  <ArchifyGuide lang={lang} />
+</GuidesLayout>

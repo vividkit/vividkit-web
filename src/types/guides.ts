@@ -7,6 +7,7 @@ export type GuideActiveTab =
   | 'ck-with-codex'
   | 'codex-app'
   | 'remote-control'
+  | 'archify'
   | 'ui-review-gate'
   | 'finding-unknowns'
   | 'ide-config'
