@@ -143,19 +143,6 @@ const handoffLayers = isVi
       { layer: 'Receipt', role: 'Proof the checks ran — status, hashes, screenshots.', commit: 'Keep when you need proof' },
     ];
 
-const authoringSteps = isVi
-  ? [
-      { n: '01', title: 'Hỏi một câu', body: 'Người xem sơ đồ cần hiểu gì? Một phạm vi, một câu chuyện.' },
-      { n: '02', title: 'Viết JSON trước', body: '8–12 box, một đường chính. Chỉ lấy file đã mở. Chưa chắc mode thì bảo agent chạy `archify guide`.' },
-      { n: '03', title: 'Kiểm rồi mới ghi HTML', body: 'Sửa đúng chỗ đang lỗi. Fail thì file cũ vẫn còn — đừng tưởng bản mới đã pass.' },
-      { n: '04', title: 'Bạn vẫn phải nhìn', body: 'Ảnh chụp không phải đã duyệt. Main path có thấy ngay không?' },
-    ]
-  : [
-      { n: '01', title: 'Ask one question', body: 'What should someone looking at the diagram understand? One scope, one story.' },
-      { n: '02', title: 'Write JSON first', body: '8–12 boxes, one main path. Only files you opened. If the mode is unclear, ask the agent to run `archify guide`.' },
-      { n: '03', title: 'Check, then write HTML', body: 'Fix the failing piece. On failure the old file may still be there — do not treat it as a pass.' },
-      { n: '04', title: 'You still have to look', body: 'Screenshots are not a review. Can you see the main path in a few seconds?' },
-    ];
 
 const modeCards = isVi
   ? [
@@ -805,27 +792,6 @@ const heroCtaClass =
       </div>
     </div>
     <AkCodeBlock title={isVi ? 'CLI thủ công cho power user' : 'Manual CLI for power users'} code={manualCliCode} />
-  </section>
-
-  <section id="loop" class="space-y-5">
-    <div>
-      <p class="text-[11px] font-bold uppercase tracking-[0.18em] text-cyan-600 dark:text-cyan-400">{isVi ? 'Cách làm' : 'How to run it'}</p>
-      <h2 class="mt-2 text-3xl font-black tracking-tight text-slate-900 dark:text-white">{isVi ? 'Khi bảo agent chạy Archify' : 'When you ask the agent to run Archify'}</h2>
-      <p class="mt-2 max-w-2xl text-sm leading-relaxed text-slate-600 dark:text-slate-400">
-        {isVi
-          ? 'Bạn hỏi và xem HTML. Agent viết JSON rồi kiểm. Sơ đồ tiếng Việt: nhãn tiếng Việt, tên trong code giữ tiếng Anh — thanh công cụ của viewer vẫn tiếng Anh.'
-          : 'You ask the question and look at the HTML. The agent writes JSON and checks it. For Vietnamese diagrams: Vietnamese labels, English code names — the viewer chrome stays English.'}
-      </p>
-    </div>
-    <div class="grid gap-3 md:grid-cols-2 xl:grid-cols-4">
-      {authoringSteps.map((step) => (
-        <article class="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm dark:border-slate-800 dark:bg-slate-900/70">
-          <span class="font-mono text-[11px] font-black text-cyan-700 dark:text-cyan-300">{step.n}</span>
-          <h3 class="mt-2 text-sm font-extrabold leading-snug text-slate-950 dark:text-white">{step.title}</h3>
-          <p class="mt-2 text-xs leading-relaxed text-slate-600 dark:text-slate-400" set:html={inlineCodeHtml(step.body)} />
-        </article>
-      ))}
-    </div>
   </section>
 
   <section id="recipes" class="space-y-5" data-archify-recipes-root>
