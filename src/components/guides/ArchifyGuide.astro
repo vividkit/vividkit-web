@@ -434,37 +434,58 @@ const recipeGroups = recipeTypeFilters.map((type, index) => ({
 
             {'global' in target ? (
               <div class="grid gap-3 lg:grid-cols-2">
-                <div class="group/code relative rounded-2xl border border-slate-200 bg-slate-100 p-4 dark:border-slate-700 dark:bg-slate-800/90">
-                  <div class="mb-3 flex items-center justify-between gap-3 pr-20">
-                    <p class="text-[11px] font-bold uppercase tracking-[0.14em] text-purple-600 dark:text-purple-400">{isVi ? 'Global · dùng cho mọi repo' : 'Global · use in every repo'}</p>
+                <div class="overflow-hidden rounded-2xl border border-slate-200/90 bg-slate-100 shadow-sm shadow-slate-900/5 dark:border-slate-700 dark:bg-slate-800/90 dark:shadow-black/30">
+                  <div class="flex items-center justify-between gap-3 border-b border-slate-200/80 bg-slate-200/60 px-3 py-2 dark:border-slate-700/80 dark:bg-slate-900/60">
+                    <div class="flex min-w-0 items-center gap-2">
+                      <div class="flex shrink-0 items-center gap-1.5" aria-hidden="true">
+                        <span class="h-2.5 w-2.5 rounded-full bg-rose-400/90"></span>
+                        <span class="h-2.5 w-2.5 rounded-full bg-amber-400/90"></span>
+                        <span class="h-2.5 w-2.5 rounded-full bg-emerald-400/90"></span>
+                      </div>
+                      <span class="truncate text-[11px] font-medium uppercase tracking-wider text-slate-500 dark:text-slate-400">{isVi ? 'Global · dùng cho mọi repo' : 'Global · use in every repo'}</span>
+                    </div>
+                    <button type="button" data-archify-copy={target.global} aria-label={isVi ? 'Sao chép lệnh global' : 'Copy global command'} class="archify-copy-btn inline-flex shrink-0 items-center gap-1.5 rounded-lg border border-slate-300/80 bg-white/70 px-2 py-1.5 text-slate-600 transition hover:border-slate-400 hover:bg-white hover:text-slate-900 dark:border-white/10 dark:bg-white/5 dark:text-slate-300 dark:hover:border-white/20 dark:hover:bg-white/10 dark:hover:text-white">
+                      <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                      <span class="hidden text-[11px] font-medium sm:inline">{isVi ? 'Sao chép' : 'Copy'}</span>
+                    </button>
                   </div>
-                  <button type="button" data-archify-copy={target.global} aria-label={isVi ? 'Sao chép lệnh global' : 'Copy global command'} class="archify-copy-btn absolute right-3 top-3 inline-flex items-center gap-1.5 rounded-lg border border-slate-200 bg-white/90 px-2.5 py-1.5 text-xs font-bold text-slate-600 shadow-sm transition hover:border-purple-200 hover:text-purple-700 dark:border-slate-600 dark:bg-slate-900/90 dark:text-slate-300 dark:hover:border-purple-500/40 dark:hover:text-purple-300">
-                    <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-                    <span>{isVi ? 'Sao chép' : 'Copy'}</span>
-                  </button>
-                  <code class="block whitespace-pre-wrap break-words font-mono text-xs leading-relaxed text-slate-700 dark:text-slate-200">{target.global}</code>
+                  <pre class="m-0 max-w-full overflow-x-auto p-4 text-[13px] leading-relaxed text-purple-600 dark:text-purple-400"><code class="block min-w-0 whitespace-pre break-normal font-mono [overflow-wrap:normal] [word-break:normal]">{target.global}</code></pre>
                 </div>
-                <div class="group/code relative rounded-2xl border border-slate-200 bg-slate-100 p-4 dark:border-slate-700 dark:bg-slate-800/90">
-                  <div class="mb-3 flex items-center justify-between gap-3 pr-20">
-                    <p class="text-[11px] font-bold uppercase tracking-[0.14em] text-purple-600 dark:text-purple-400">{isVi ? 'Project · chỉ repo hiện tại' : 'Project · current repo only'}</p>
+                <div class="overflow-hidden rounded-2xl border border-slate-200/90 bg-slate-100 shadow-sm shadow-slate-900/5 dark:border-slate-700 dark:bg-slate-800/90 dark:shadow-black/30">
+                  <div class="flex items-center justify-between gap-3 border-b border-slate-200/80 bg-slate-200/60 px-3 py-2 dark:border-slate-700/80 dark:bg-slate-900/60">
+                    <div class="flex min-w-0 items-center gap-2">
+                      <div class="flex shrink-0 items-center gap-1.5" aria-hidden="true">
+                        <span class="h-2.5 w-2.5 rounded-full bg-rose-400/90"></span>
+                        <span class="h-2.5 w-2.5 rounded-full bg-amber-400/90"></span>
+                        <span class="h-2.5 w-2.5 rounded-full bg-emerald-400/90"></span>
+                      </div>
+                      <span class="truncate text-[11px] font-medium uppercase tracking-wider text-slate-500 dark:text-slate-400">{isVi ? 'Project · chỉ repo hiện tại' : 'Project · current repo only'}</span>
+                    </div>
+                    <button type="button" data-archify-copy={target.project} aria-label={isVi ? 'Sao chép lệnh project' : 'Copy project command'} class="archify-copy-btn inline-flex shrink-0 items-center gap-1.5 rounded-lg border border-slate-300/80 bg-white/70 px-2 py-1.5 text-slate-600 transition hover:border-slate-400 hover:bg-white hover:text-slate-900 dark:border-white/10 dark:bg-white/5 dark:text-slate-300 dark:hover:border-white/20 dark:hover:bg-white/10 dark:hover:text-white">
+                      <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                      <span class="hidden text-[11px] font-medium sm:inline">{isVi ? 'Sao chép' : 'Copy'}</span>
+                    </button>
                   </div>
-                  <button type="button" data-archify-copy={target.project} aria-label={isVi ? 'Sao chép lệnh project' : 'Copy project command'} class="archify-copy-btn absolute right-3 top-3 inline-flex items-center gap-1.5 rounded-lg border border-slate-200 bg-white/90 px-2.5 py-1.5 text-xs font-bold text-slate-600 shadow-sm transition hover:border-purple-200 hover:text-purple-700 dark:border-slate-600 dark:bg-slate-900/90 dark:text-slate-300 dark:hover:border-purple-500/40 dark:hover:text-purple-300">
-                    <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-                    <span>{isVi ? 'Sao chép' : 'Copy'}</span>
-                  </button>
-                  <code class="block whitespace-pre-wrap break-words font-mono text-xs leading-relaxed text-slate-700 dark:text-slate-200">{target.project}</code>
+                  <pre class="m-0 max-w-full overflow-x-auto p-4 text-[13px] leading-relaxed text-purple-600 dark:text-purple-400"><code class="block min-w-0 whitespace-pre break-normal font-mono [overflow-wrap:normal] [word-break:normal]">{target.project}</code></pre>
                 </div>
               </div>
             ) : (
-              <div class="group/code relative rounded-2xl border border-slate-200 bg-slate-100 p-4 dark:border-slate-700 dark:bg-slate-800/90">
-                <div class="mb-3 flex items-center justify-between gap-3 pr-20">
-                  <p class="text-[11px] font-bold uppercase tracking-[0.14em] text-purple-600 dark:text-purple-400">{isVi ? 'Cách cài riêng' : 'Specific install path'}</p>
+              <div class="overflow-hidden rounded-2xl border border-slate-200/90 bg-slate-100 shadow-sm shadow-slate-900/5 dark:border-slate-700 dark:bg-slate-800/90 dark:shadow-black/30">
+                <div class="flex items-center justify-between gap-3 border-b border-slate-200/80 bg-slate-200/60 px-3 py-2 dark:border-slate-700/80 dark:bg-slate-900/60">
+                  <div class="flex min-w-0 items-center gap-2">
+                    <div class="flex shrink-0 items-center gap-1.5" aria-hidden="true">
+                      <span class="h-2.5 w-2.5 rounded-full bg-rose-400/90"></span>
+                      <span class="h-2.5 w-2.5 rounded-full bg-amber-400/90"></span>
+                      <span class="h-2.5 w-2.5 rounded-full bg-emerald-400/90"></span>
+                    </div>
+                    <span class="truncate text-[11px] font-medium uppercase tracking-wider text-slate-500 dark:text-slate-400">{isVi ? 'Cách cài riêng' : 'Specific install path'}</span>
+                  </div>
+                  <button type="button" data-archify-copy={target.code} aria-label={isVi ? 'Sao chép lệnh cài' : 'Copy install command'} class="archify-copy-btn inline-flex shrink-0 items-center gap-1.5 rounded-lg border border-slate-300/80 bg-white/70 px-2 py-1.5 text-slate-600 transition hover:border-slate-400 hover:bg-white hover:text-slate-900 dark:border-white/10 dark:bg-white/5 dark:text-slate-300 dark:hover:border-white/20 dark:hover:bg-white/10 dark:hover:text-white">
+                    <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    <span class="hidden text-[11px] font-medium sm:inline">{isVi ? 'Sao chép' : 'Copy'}</span>
+                  </button>
                 </div>
-                <button type="button" data-archify-copy={target.code} aria-label={isVi ? 'Sao chép lệnh cài' : 'Copy install command'} class="archify-copy-btn absolute right-3 top-3 inline-flex items-center gap-1.5 rounded-lg border border-slate-200 bg-white/90 px-2.5 py-1.5 text-xs font-bold text-slate-600 shadow-sm transition hover:border-purple-200 hover:text-purple-700 dark:border-slate-600 dark:bg-slate-900/90 dark:text-slate-300 dark:hover:border-purple-500/40 dark:hover:text-purple-300">
-                  <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-                  <span>{isVi ? 'Sao chép' : 'Copy'}</span>
-                </button>
-                <code class="block whitespace-pre-wrap break-words font-mono text-xs leading-relaxed text-slate-700 dark:text-slate-200">{target.code}</code>
+                <pre class="m-0 max-w-full overflow-x-auto p-4 text-[13px] leading-relaxed text-purple-600 dark:text-purple-400"><code class="block min-w-0 whitespace-pre break-normal font-mono [overflow-wrap:normal] [word-break:normal]">{target.code}</code></pre>
               </div>
             )}
             {'hint' in target && <p class="text-xs leading-relaxed text-slate-500 dark:text-slate-400">{target.hint}</p>}
