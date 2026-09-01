@@ -51,9 +51,9 @@ const tryCommands = [
     code: '/plannotator-review',
   },
   {
-    title: t('CK plan file', 'Plan file của CK'),
-    body: t('Open a ClaudeKit plan file manually when it was saved to disk.', 'Mở thủ công plan file do ClaudeKit lưu ra disk.'),
-    code: '/plannotator-annotate plans/<plan>/plan.md',
+    title: t('AgentKit plan file', 'Plan file của AgentKit'),
+    body: t('Open an AgentKit plan.md when `/ak:plan` saved it to disk.', 'Mở plan.md do `/ak:plan` lưu ra disk.'),
+    code: '/plannotator-annotate plans/<timestamp>-<slug>/plan.md',
   },
   {
     title: t('Any artifact', 'Artifact bất kỳ'),
@@ -165,15 +165,15 @@ const agents = [
       <p
         class="mt-2 text-sm leading-6 text-slate-600 dark:text-slate-400 lg:ml-10"
         set:html={renderInlineCode(t(
-          'Invoke one command yourself when needed. Automatic plan review does not apply to every plan; it only runs in flows where a Plannotator hook is already enabled. For example, in the built-in plan mode, leaving plan mode triggers the review automatically. CK plan files should be opened manually for review.',
-          'Tự gọi một command khi cần. Auto plan review không áp dụng cho mọi plan; nó chỉ chạy trong flow đã bật Plannotator hook. Ví dụ: trong built-in plan mode, khi bạn thoát plan mode thì review sẽ tự mở. Plan file do CK tạo nên mở thủ công để review.'
+          'Invoke one command yourself when needed. Automatic plan review does not apply to every plan; it only runs in flows where a Plannotator hook is already enabled. For example, in the built-in plan mode, leaving plan mode triggers the review automatically. AgentKit plan files from `/ak:plan` should be opened manually for review.',
+          'Tự gọi một command khi cần. Auto plan review không áp dụng cho mọi plan; nó chỉ chạy trong flow đã bật Plannotator hook. Ví dụ: trong built-in plan mode, khi bạn thoát plan mode thì review sẽ tự mở. Plan file do `/ak:plan` tạo nên mở thủ công để review.'
         ))}
       ></p>
       <div class="mt-3 grid min-w-0 gap-3 lg:ml-10 lg:grid-cols-2">
         {tryCommands.map((item) => (
           <div class="min-w-0 rounded-xl border border-slate-200 bg-slate-50/75 p-3 dark:border-slate-800 dark:bg-slate-900/55">
             <h4 class="text-sm font-bold text-slate-950 dark:text-white">{item.title}</h4>
-            <p class="mt-1 text-xs leading-5 text-slate-600 dark:text-slate-400">{item.body}</p>
+            <p class="mt-1 text-xs leading-5 text-slate-600 dark:text-slate-400" set:html={renderInlineCode(item.body)}></p>
             <div class="mt-3">
               <TerminalSnippet code={item.code} label="try it" mode="plain" copyMode="raw" compact />
             </div>

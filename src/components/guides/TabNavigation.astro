@@ -61,6 +61,7 @@ const icon = {
   paint: `<svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9.53 16.122a3 3 0 00-5.78 1.128 2.25 2.25 0 01-2.4 2.245 4.5 4.5 0 008.4-2.245c0-.399-.078-.78-.22-1.128zm0 0a15.998 15.998 0 003.388-1.62m-5.043-.025a15.994 15.994 0 011.622-3.395m3.396 3.395c.98-.18 1.933-.414 2.855-.693l1.955-1.956a8.827 8.827 0 01-4.186-3.416 19.584 19.584 0 00-4.218 4.218l-1.956 1.956a2.625 2.625 0 002.394 2.883l.003-.003h-.002z" /></svg>`,
   home: `<svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" /></svg>`,
   code: `<svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>`,
+  diagram: `<svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><circle cx="6" cy="12" r="2.25" /><circle cx="18" cy="6.75" r="2.25" /><circle cx="18" cy="17.25" r="2.25" /><path stroke-linecap="round" stroke-linejoin="round" d="M8.1 11.1l7.3-3.2M8.1 12.9l7.3 3.2" /></svg>`,
 };
 
 const navSections: NavSection[] = [
@@ -122,7 +123,6 @@ const navSections: NavSection[] = [
       { id: 'migrate', label: t('guides.nav.ck_migrate_other_tools'), icon: icon.path, href: '/guides/migrate' },
       { id: 'how-ck-works', label: t('guides.how_ck_works.title'), icon: icon.flow, href: '/guides/how-ck-works' },
       { id: 'inside-claudekit', label: t('guides.inside_claudekit.title'), icon: icon.book, href: '/guides/inside-claudekit' },
-      { id: 'ui-review-gate', label: t('guides.ui_review_gate.title'), icon: icon.review, href: '/guides/ui-review-gate' },
       { id: 'finding-unknowns', label: t('guides.finding_unknowns.title'), icon: icon.search, href: '/guides/finding-unknowns' },
       { id: 'session-recovery', label: t('guides.session_recovery.title'), icon: icon.session, href: '/guides/session-recovery' },
       { id: 'fix-logs', label: t('guides.fix_logs.title'), icon: icon.fix, href: '/guides/fix-logs' },
@@ -137,6 +137,14 @@ const navSections: NavSection[] = [
       { id: 'ide-config', label: t('guides.ide_config.title'), icon: icon.ide, href: '/guides/ide-config' },
       { id: 'remote-control', label: 'Remote Control', icon: icon.phone, href: '/guides/remote-control' },
       { id: 'codex-app', label: t('guides.codex_app.title'), icon: icon.openAI, href: '/guides/codex-app' },
+    ],
+  },
+  {
+    id: 'visualization',
+    label: t('guides.sections.visualization'),
+    items: [
+      { id: 'archify', label: t('guides.archify.title'), icon: icon.diagram, href: '/guides/archify' },
+      { id: 'ui-review-gate', label: t('guides.ui_review_gate.title'), icon: icon.review, href: '/guides/ui-review-gate' },
     ],
   },
   {

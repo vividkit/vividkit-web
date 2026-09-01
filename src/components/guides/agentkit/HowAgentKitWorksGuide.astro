@@ -1,5 +1,5 @@
 ---
-import { getLangFromUrl, type Language } from '@/i18n';
+import { getLangFromUrl, useTranslatedPath, type Language } from '@/i18n';
 import AkPageHero from './AkPageHero.astro';
 import AkSection from './AkSection.astro';
 import AkStepRail from './AkStepRail.astro';
@@ -15,6 +15,7 @@ interface Props {
 const { lang } = Astro.props;
 const currentLang = lang || getLangFromUrl(Astro.url);
 const isVi = currentLang === 'vi';
+const translatePath = useTranslatedPath(currentLang);
 
 const steps = isVi
   ? [
@@ -49,17 +50,36 @@ const steps = isVi
   />
 
   <!-- Visual pipeline strip -->
-  <div class="overflow-x-auto rounded-2xl border border-cyan-200/70 bg-gradient-to-r from-cyan-50/90 via-white to-teal-50/60 p-4 shadow-sm dark:border-slate-700 dark:bg-slate-950 dark:bg-none dark:shadow-lg">
-    <div class="flex min-w-[640px] items-center gap-2 text-[11px] font-semibold uppercase tracking-wide text-slate-600 dark:text-slate-300">
-      {(isVi
-        ? ['Registry', 'ak CLI', 'Adapter', 'Runtime', 'Workflow', 'Artifacts', 'Review']
-        : ['Registry', 'ak CLI', 'Adapter', 'Runtime', 'Workflow', 'Artifacts', 'Review']
-      ).map((label, i, arr) => (
-        <>
-          <span class="rounded-lg border border-teal-200/80 bg-teal-50/90 px-2.5 py-1.5 text-teal-800 dark:border-transparent dark:bg-white/10 dark:text-teal-200">{label}</span>
-          {i < arr.length - 1 && <span class="text-slate-300 dark:text-slate-600">→</span>}
-        </>
-      ))}
+  <div class="space-y-3">
+    <div class="overflow-x-auto rounded-2xl border border-cyan-200/70 bg-gradient-to-r from-cyan-50/90 via-white to-teal-50/60 p-4 shadow-sm dark:border-slate-700 dark:bg-slate-950 dark:bg-none dark:shadow-lg">
+      <div class="flex min-w-[640px] items-center gap-2 text-[11px] font-semibold uppercase tracking-wide text-slate-600 dark:text-slate-300">
+        {(isVi
+          ? ['Registry', 'ak CLI', 'Adapter', 'Runtime', 'Workflow', 'Artifacts', 'Review']
+          : ['Registry', 'ak CLI', 'Adapter', 'Runtime', 'Workflow', 'Artifacts', 'Review']
+        ).map((label, i, arr) => (
+          <>
+            <span class="rounded-lg border border-teal-200/80 bg-teal-50/90 px-2.5 py-1.5 text-teal-800 dark:border-transparent dark:bg-white/10 dark:text-teal-200">{label}</span>
+            {i < arr.length - 1 && <span class="text-slate-300 dark:text-slate-600">→</span>}
+          </>
+        ))}
+      </div>
+    </div>
+
+    <div class="flex flex-col gap-3 rounded-2xl border border-violet-200/70 bg-violet-50/70 p-4 shadow-sm dark:border-violet-500/25 dark:bg-violet-950/20 sm:flex-row sm:items-center sm:justify-between">
+      <div>
+        <p class="text-[11px] font-bold uppercase tracking-[0.16em] text-violet-700 dark:text-violet-300">
+          {isVi ? 'Muốn xem skill cụ thể?' : 'Need a specific skill?'}
+        </p>
+        <p class="mt-1 text-sm leading-relaxed text-slate-700 dark:text-slate-300">
+          {isVi
+            ? 'Sau khi hiểu luồng hoạt động, mở AgentKit Skills để xem từng skill, tham số, flag và trang detail của từng workflow.'
+            : 'After the flow clicks, open AgentKit Skills to inspect each skill, args, flags, and per-workflow detail pages.'}
+        </p>
+      </div>
+      <a href={translatePath('/guides/agentkit/skills')} class="inline-flex min-h-10 shrink-0 items-center justify-center rounded-xl border border-violet-200 bg-white px-3.5 text-sm font-bold text-violet-800 shadow-sm transition hover:-translate-y-0.5 hover:border-violet-300 hover:bg-violet-100 dark:border-violet-500/25 dark:bg-violet-500/10 dark:text-violet-200 dark:hover:bg-violet-500/15">
+        {isVi ? 'Xem AgentKit Skills' : 'Open AgentKit Skills'}
+        <span class="ml-2">→</span>
+      </a>
     </div>
   </div>
 

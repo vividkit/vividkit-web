@@ -15,6 +15,7 @@ export const GET: APIRoute = () => {
     { path: '/guides/workflows', changefreq: 'monthly', priority: '0.8' },
     { path: '/guides/uiux', changefreq: 'monthly', priority: '0.8' },
     { path: '/guides/ccs', changefreq: 'monthly', priority: '0.8' },
+    { path: '/guides/archify', changefreq: 'monthly', priority: '0.7' },
     { path: '/guides/permissions', changefreq: 'monthly', priority: '0.7' },
     { path: '/guides/fix-logs', changefreq: 'monthly', priority: '0.7' },
     { path: '/guides/session-recovery', changefreq: 'monthly', priority: '0.7' },
