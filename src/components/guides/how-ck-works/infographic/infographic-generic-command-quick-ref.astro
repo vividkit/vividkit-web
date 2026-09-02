@@ -290,15 +290,19 @@ const getPromptWhen = (prompt: PromptExample) => isVi ? prompt.whenVi : prompt.w
 const getPromptExpected = (prompt: PromptExample) => isVi ? prompt.expectedVi : prompt.expectedEn;
 const getPromptCommand = (prompt: PromptExample) => (isVi ? prompt.commandVi : prompt.command);
 const getOutputPattern = () => (isVi ? output?.patternVi : output?.patternEn)?.trim() || '';
-const LONG_TOKEN_RE = /(?:\/ak:[a-z0-9-]+|\$ak:[a-z0-9-]+|(?<![A-Za-z0-9/$@])ak:[a-z0-9-]+|--[a-z0-9][a-z0-9-]*)/g;
+const COMMAND_TOKEN_RE = /(?:\/ak:[a-z0-9-]+|\$ak:[a-z0-9-]+|(?<![A-Za-z0-9/$@])ak:[a-z0-9-]+)/g;
+const LONG_FLAG_RE = /--[a-z0-9][a-z0-9-]*/g;
 const SHORT_FLAG_RE = /(^|[\s"'`])(-[a-z]{1,3})(?=[\s"'`|,)]|$)/g;
+const chipBase = 'rounded-md bg-white px-1.5 py-0.5 font-mono text-[0.82em] font-semibold ring-1 ring-slate-200 dark:bg-slate-800/90 dark:ring-white/10';
 const commandChipClass = data.kit === 'marketer'
-  ? 'rounded-md bg-white px-1.5 py-0.5 font-mono text-[0.82em] font-semibold text-purple-600 ring-1 ring-slate-200 dark:bg-slate-800/90 dark:text-purple-400 dark:ring-white/10'
-  : 'rounded-md bg-white px-1.5 py-0.5 font-mono text-[0.82em] font-semibold text-teal-600 ring-1 ring-slate-200 dark:bg-slate-800/90 dark:text-teal-400 dark:ring-white/10';
+  ? `${chipBase} text-purple-600 dark:text-purple-400`
+  : `${chipBase} text-teal-600 dark:text-teal-400`;
+const flagChipClass = `${chipBase} text-purple-600 dark:text-purple-400`;
 const wrapCommandTokens = (value = '') =>
   renderInlineCode(value)
-    .replace(new RegExp(LONG_TOKEN_RE.source, 'g'), (flag) => `<code class="${commandChipClass}">${flag}</code>`)
-    .replace(new RegExp(SHORT_FLAG_RE.source, 'g'), (all, pre, flag) => `${pre}<code class="${commandChipClass}">${flag}</code>`);
+    .replace(new RegExp(COMMAND_TOKEN_RE.source, 'g'), (tok) => `<code class="${commandChipClass}">${tok}</code>`)
+    .replace(new RegExp(LONG_FLAG_RE.source, 'g'), (flag) => `<code class="${flagChipClass}">${flag}</code>`)
+    .replace(new RegExp(SHORT_FLAG_RE.source, 'g'), (all, pre, flag) => `${pre}<code class="${flagChipClass}">${flag}</code>`);
 const syntaxAlts = String(invocation?.syntax || '')
   .split(/\s+OR\s+/)
   .map((part) => part.trim())
