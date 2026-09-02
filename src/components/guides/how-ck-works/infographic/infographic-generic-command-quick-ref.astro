@@ -4,6 +4,7 @@
 import type { ProcessFlowStep, PromptExample, SkillInfographic, GuardrailItem, ModeCardData, SpecialOpCard, ProcessGroupLabel } from '@/data/guides/how-ck-works';
 import { useTranslatedPath, type Language } from '@/i18n';
 import { resolveAkSkillDetail, type AkSkillDetailKit } from '@/data/guides/agentkit-skill-details';
+import { isAkSkillBeta } from '@/data/guides/agentkit-skills-cheatsheet';
 interface Props {
   data: SkillInfographic;
   lang: Language;
@@ -30,6 +31,7 @@ const { data, lang, plainHeadline = false } = Astro.props;
 const isVi = lang === 'vi';
 const translatePath = useTranslatedPath(lang);
 const preferredKit: AkSkillDetailKit = data.kit === 'marketer' ? 'marketing' : 'engineer';
+const isBeta = isAkSkillBeta(preferredKit, data.id);
 
 
 const rawTitle = isVi ? data.header.titleVi : data.header.titleEn;
@@ -288,12 +290,15 @@ const getPromptWhen = (prompt: PromptExample) => isVi ? prompt.whenVi : prompt.w
 const getPromptExpected = (prompt: PromptExample) => isVi ? prompt.expectedVi : prompt.expectedEn;
 const getPromptCommand = (prompt: PromptExample) => (isVi ? prompt.commandVi : prompt.command);
 const getOutputPattern = () => (isVi ? output?.patternVi : output?.patternEn)?.trim() || '';
-const LONG_TOKEN_RE = /(?:\/ak:[a-z0-9-]+|\$ak:[a-z0-9-]+|--[a-z0-9][a-z0-9-]*)/g;
+const LONG_TOKEN_RE = /(?:\/ak:[a-z0-9-]+|\$ak:[a-z0-9-]+|(?<![A-Za-z0-9/$@])ak:[a-z0-9-]+|--[a-z0-9][a-z0-9-]*)/g;
 const SHORT_FLAG_RE = /(^|[\s"'`])(-[a-z]{1,3})(?=[\s"'`|,)]|$)/g;
+const commandChipClass = data.kit === 'marketer'
+  ? 'rounded-md bg-white px-1.5 py-0.5 font-mono text-[0.82em] font-semibold text-purple-600 ring-1 ring-slate-200 dark:bg-slate-800/90 dark:text-purple-400 dark:ring-white/10'
+  : 'rounded-md bg-white px-1.5 py-0.5 font-mono text-[0.82em] font-semibold text-teal-600 ring-1 ring-slate-200 dark:bg-slate-800/90 dark:text-teal-400 dark:ring-white/10';
 const wrapCommandTokens = (value = '') =>
   renderInlineCode(value)
-    .replace(new RegExp(LONG_TOKEN_RE.source, 'g'), (flag) => `<code class="rounded-md bg-white px-1.5 py-0.5 font-mono text-[0.82em] font-semibold text-purple-600 ring-1 ring-slate-200 dark:bg-slate-800/90 dark:text-purple-400 dark:ring-white/10">${flag}</code>`)
-    .replace(new RegExp(SHORT_FLAG_RE.source, 'g'), (all, pre, flag) => `${pre}<code class="rounded-md bg-white px-1.5 py-0.5 font-mono text-[0.82em] font-semibold text-purple-600 ring-1 ring-slate-200 dark:bg-slate-800/90 dark:text-purple-400 dark:ring-white/10">${flag}</code>`);
+    .replace(new RegExp(LONG_TOKEN_RE.source, 'g'), (flag) => `<code class="${commandChipClass}">${flag}</code>`)
+    .replace(new RegExp(SHORT_FLAG_RE.source, 'g'), (all, pre, flag) => `${pre}<code class="${commandChipClass}">${flag}</code>`);
 const syntaxAlts = String(invocation?.syntax || '')
   .split(/\s+OR\s+/)
   .map((part) => part.trim())
@@ -326,6 +331,11 @@ const composableCards = composableRaw
           <p class="rounded-full bg-white/70 px-3 py-1 text-xs font-medium text-slate-600 ring-1 ring-slate-200 dark:bg-white/[0.06] dark:text-slate-300 dark:ring-white/10">
             {text.kit}
           </p>
+          {isBeta && (
+            <p class="rounded-full bg-purple-100 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-purple-600 ring-1 ring-purple-200 dark:bg-purple-900/30 dark:text-purple-400 dark:ring-purple-800/50">
+              {isVi ? 'Chỉ trên beta' : 'Beta only'}
+            </p>
+          )}
         </div>
 
         <div class="mt-5">
@@ -372,7 +382,7 @@ const composableCards = composableRaw
                 <span class="flex h-6 w-6 items-center justify-center rounded-full bg-amber-500 font-mono text-[11px] font-bold text-white shadow-sm shadow-amber-500/30 dark:bg-amber-400 dark:text-amber-950">{index + 1}</span>
                 <div class="min-w-0">
                   <p class="text-[11px] font-semibold uppercase tracking-wide text-amber-900 dark:text-amber-200">{item.label}</p>
-                  <p class="mt-0.5 text-xs leading-5 text-amber-950/85 dark:text-amber-100/85" set:html={renderInlineCode(item.detail)} />
+                  <p class="mt-0.5 text-xs leading-5 text-amber-950/85 dark:text-amber-100/85" set:html={wrapCommandTokens(item.detail)} />
                 </div>
               </li>
             ))}
@@ -389,7 +399,7 @@ const composableCards = composableRaw
               <span class={`mt-1.5 h-2 w-2 shrink-0 rounded-full ${rule.marker}`}></span>
               <div class="min-w-0">
                 <p class="text-[11px] font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">{rule.title}</p>
-                <p class="mt-1 break-words text-sm font-semibold leading-5 text-slate-900 dark:text-white">{rule.desc}</p>
+                <p class="mt-1 break-words text-sm font-semibold leading-5 text-slate-900 dark:text-white" set:html={wrapCommandTokens(rule.desc)}></p>
               </div>
             </div>
           </div>

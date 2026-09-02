@@ -92,6 +92,7 @@ function main(argv) {
   if (args.akDocs) claims.push('--ak-docs', args.akDocs);
 
   const steps = [
+    ['scripts/check-ak-kit-skill-inventory.mjs', '--kit-root', args.kitRoot],
     ['scripts/check-ak-skill-detail-principles.mjs', '--self-test'],
     ['scripts/check-ak-skill-detail-principles.mjs'],
     ['scripts/check-ak-skill-details.mjs', '--kit-root', args.kitRoot],
