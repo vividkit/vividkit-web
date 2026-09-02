@@ -8,7 +8,9 @@
     "postbuild": "node scripts/generate-llms-full.mjs",
     "preview": "astro preview",
     "astro": "astro",
-    "audit:ak-workflows": "node .agents/skills/vk-audit-ak-workflows/scripts/detect-workflow-skill-drift.cjs --check"
+    "audit:ak-workflows": "node .agents/skills/vk-audit-ak-workflows/scripts/detect-workflow-skill-drift.cjs --check",
+    "audit:ak-kit-inventory": "node scripts/check-ak-kit-skill-inventory.mjs",
+    "audit:ak-guides": "node skills/vk-audit-ak-guides/scripts/run.mjs check"
   },
   "dependencies": {
     "@fontsource/dm-sans": "^5.2.8",

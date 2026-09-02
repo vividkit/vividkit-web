@@ -1,0 +1,4754 @@
+{
+  "schemaVersion": 2,
+  "authority": "ak-cli kit.yaml (local git refs; no fetch)",
+  "kitRootHint": "../../contribution/agentkit/ak-cli",
+  "stableRef": "origin/main",
+  "betaRef": "origin/dev",
+  "stableCommit": "77573e9d491068916c0e6d304a2ebf0db57d0a71",
+  "betaCommit": "02941d53a93c613c8be05300e6887fe1641c2ed8",
+  "kits": {
+    "core": {
+      "stableExports": [
+        "ak-agent-browser",
+        "ak-agentkit",
+        "ak-ai-artist",
+        "ak-ai-multimodal",
+        "ak-ak",
+        "ak-ask",
+        "ak-backend-development",
+        "ak-better-auth",
+        "ak-brainstorm",
+        "ak-bro",
+        "ak-chrome-profile",
+        "ak-code-review",
+        "ak-codex-goal",
+        "ak-common",
+        "ak-context-engineering",
+        "ak-cook",
+        "ak-copywriting",
+        "ak-databases",
+        "ak-design",
+        "ak-devops",
+        "ak-docs",
+        "ak-docs-seeker",
+        "ak-document-skills",
+        "ak-fable-thinking",
+        "ak-fix",
+        "ak-folder-context",
+        "ak-frontend-design",
+        "ak-frontend-development",
+        "ak-git",
+        "ak-google-adk-python",
+        "ak-handoff",
+        "ak-html-video",
+        "ak-hyperframes",
+        "ak-interview-docs",
+        "ak-journal",
+        "ak-markdown-novel-viewer",
+        "ak-mcp-builder",
+        "ak-media-processing",
+        "ak-mermaidjs-v11",
+        "ak-payment-integration",
+        "ak-plans-kanban",
+        "ak-preview",
+        "ak-problem-solving",
+        "ak-remotion",
+        "ak-repomix",
+        "ak-research-prompt",
+        "ak-review-pr",
+        "ak-scout",
+        "ak-sequential-thinking",
+        "ak-shader",
+        "ak-shopify",
+        "ak-skill-creator",
+        "ak-sowat",
+        "ak-sumup",
+        "ak-tech-graph",
+        "ak-test",
+        "ak-threejs",
+        "ak-ui-styling",
+        "ak-ui-ux-pro-max",
+        "ak-use-mcp",
+        "ak-watzup",
+        "ak-web-design-guidelines",
+        "ak-web-frameworks",
+        "ak-worktree"
+      ],
+      "stableAppends": [],
+      "stableOverrides": [],
+      "betaExports": [
+        "ak-agent-browser",
+        "ak-agentkit",
+        "ak-ai-artist",
+        "ak-ai-multimodal",
+        "ak-ak",
+        "ak-ask",
+        "ak-backend-development",
+        "ak-better-auth",
+        "ak-brainstorm",
+        "ak-bro",
+        "ak-chrome-profile",
+        "ak-code-review",
+        "ak-codex-goal",
+        "ak-common",
+        "ak-context-engineering",
+        "ak-cook",
+        "ak-copywriting",
+        "ak-databases",
+        "ak-design",
+        "ak-devops",
+        "ak-docs",
+        "ak-docs-seeker",
+        "ak-document-skills",
+        "ak-explain",
+        "ak-fable-thinking",
+        "ak-fix",
+        "ak-folder-context",
+        "ak-frontend-design",
+        "ak-frontend-development",
+        "ak-git",
+        "ak-google-adk-python",
+        "ak-handoff",
+        "ak-html-video",
+        "ak-hyperframes",
+        "ak-interview-docs",
+        "ak-journal",
+        "ak-markdown-novel-viewer",
+        "ak-mcp-builder",
+        "ak-media-processing",
+        "ak-mermaidjs-v11",
+        "ak-payment-integration",
+        "ak-plans-kanban",
+        "ak-preview",
+        "ak-problem-solving",
+        "ak-remotion",
+        "ak-repomix",
+        "ak-research-prompt",
+        "ak-review-pr",
+        "ak-scout",
+        "ak-sequential-thinking",
+        "ak-shader",
+        "ak-shopify",
+        "ak-skill-creator",
+        "ak-sowat",
+        "ak-sumup",
+        "ak-tech-graph",
+        "ak-test",
+        "ak-threejs",
+        "ak-ui-styling",
+        "ak-ui-ux-pro-max",
+        "ak-use-mcp",
+        "ak-watzup",
+        "ak-web-design-guidelines",
+        "ak-web-frameworks",
+        "ak-worktree"
+      ],
+      "betaAppends": [],
+      "betaOverrides": []
+    },
+    "engineer": {
+      "stableExports": [],
+      "stableAppends": [
+        "ak-advise",
+        "ak-agentize",
+        "ak-autoresearch",
+        "ak-bootstrap",
+        "ak-coding-level",
+        "ak-cti-expert",
+        "ak-debug",
+        "ak-deep-swe",
+        "ak-deploy",
+        "ak-diagram",
+        "ak-excalidraw",
+        "ak-find-skills",
+        "ak-github",
+        "ak-gkg",
+        "ak-goal-warmup",
+        "ak-graphify",
+        "ak-handover",
+        "ak-help",
+        "ak-issue-to-plan",
+        "ak-llms",
+        "ak-loop",
+        "ak-mintlify",
+        "ak-mobile-development",
+        "ak-orchestrate",
+        "ak-plan",
+        "ak-predict",
+        "ak-project-management",
+        "ak-project-organization",
+        "ak-react-best-practices",
+        "ak-research",
+        "ak-retro",
+        "ak-scenario",
+        "ak-security",
+        "ak-security-scan",
+        "ak-ship",
+        "ak-show-off",
+        "ak-stitch",
+        "ak-tanstack",
+        "ak-team",
+        "ak-vibe",
+        "ak-web-testing",
+        "ak-xia"
+      ],
+      "stableOverrides": [],
+      "betaExports": [],
+      "betaAppends": [
+        "ak-advise",
+        "ak-agentize",
+        "ak-autoresearch",
+        "ak-bootstrap",
+        "ak-coding-level",
+        "ak-cti-expert",
+        "ak-debug",
+        "ak-deep-swe",
+        "ak-deploy",
+        "ak-diagram",
+        "ak-excalidraw",
+        "ak-find-skills",
+        "ak-github",
+        "ak-gkg",
+        "ak-goal-warmup",
+        "ak-graphify",
+        "ak-handover",
+        "ak-help",
+        "ak-issue-to-plan",
+        "ak-llms",
+        "ak-loop",
+        "ak-mintlify",
+        "ak-mobile-development",
+        "ak-orchestrate",
+        "ak-plan",
+        "ak-predict",
+        "ak-project-management",
+        "ak-project-organization",
+        "ak-react-best-practices",
+        "ak-research",
+        "ak-retro",
+        "ak-scenario",
+        "ak-security",
+        "ak-security-scan",
+        "ak-ship",
+        "ak-show-off",
+        "ak-stitch",
+        "ak-tanstack",
+        "ak-team",
+        "ak-vibe",
+        "ak-web-testing",
+        "ak-xia"
+      ],
+      "betaOverrides": []
+    },
+    "marketing": {
+      "stableExports": [],
+      "stableAppends": [],
+      "stableOverrides": [
+        "ak-ab-test-setup",
+        "ak-ads-management",
+        "ak-affiliate-marketing",
+        "ak-agent-browser",
+        "ak-agentkit",
+        "ak-ai-multimodal",
+        "ak-ak",
+        "ak-analytics",
+        "ak-analyze",
+        "ak-ask",
+        "ak-assets-organizing",
+        "ak-banner-design",
+        "ak-brainstorm",
+        "ak-brand",
+        "ak-bro",
+        "ak-campaign",
+        "ak-cip-design",
+        "ak-ckm-storage",
+        "ak-claude-code",
+        "ak-codex-goal",
+        "ak-competitor",
+        "ak-content-hub",
+        "ak-content-marketing",
+        "ak-cook",
+        "ak-creativity",
+        "ak-dashboard",
+        "ak-debugging",
+        "ak-design",
+        "ak-design-system",
+        "ak-docs",
+        "ak-elevenlabs",
+        "ak-email",
+        "ak-fix",
+        "ak-folder-context",
+        "ak-form-cro",
+        "ak-free-tool-strategy",
+        "ak-frontend-design",
+        "ak-funnel",
+        "ak-gamification-marketing",
+        "ak-google-adk-python",
+        "ak-handoff",
+        "ak-hub",
+        "ak-init",
+        "ak-interview-docs",
+        "ak-journal",
+        "ak-kit-builder",
+        "ak-launch-strategy",
+        "ak-logo-design",
+        "ak-marketing-dashboard",
+        "ak-marketing-ideas",
+        "ak-marketing-planning",
+        "ak-marketing-psychology",
+        "ak-marketing-research",
+        "ak-mermaidjs-v11",
+        "ak-motion-design",
+        "ak-motion-graphics",
+        "ak-onboarding-cro",
+        "ak-paid-ads",
+        "ak-persona",
+        "ak-plan",
+        "ak-play",
+        "ak-preview",
+        "ak-pricing-strategy",
+        "ak-referral-program-building",
+        "ak-research-prompt",
+        "ak-scout",
+        "ak-seo",
+        "ak-skill",
+        "ak-slides",
+        "ak-social",
+        "ak-sowat",
+        "ak-storage",
+        "ak-sumup",
+        "ak-tech-graph",
+        "ak-test",
+        "ak-ui-ux-pro-max",
+        "ak-use-mcp",
+        "ak-video",
+        "ak-watzup",
+        "ak-web-design-guidelines",
+        "ak-worktree",
+        "ak-write",
+        "ak-youtube",
+        "ak-youtube-thumbnail-design"
+      ],
+      "betaExports": [],
+      "betaAppends": [],
+      "betaOverrides": [
+        "ak-ab-test-setup",
+        "ak-ads-management",
+        "ak-affiliate-marketing",
+        "ak-agent-browser",
+        "ak-agentkit",
+        "ak-ai-multimodal",
+        "ak-ak",
+        "ak-analytics",
+        "ak-analyze",
+        "ak-ask",
+        "ak-assets-organizing",
+        "ak-banner-design",
+        "ak-brainstorm",
+        "ak-brand",
+        "ak-bro",
+        "ak-campaign",
+        "ak-cip-design",
+        "ak-ckm-storage",
+        "ak-claude-code",
+        "ak-codex-goal",
+        "ak-competitor",
+        "ak-content-hub",
+        "ak-content-marketing",
+        "ak-cook",
+        "ak-creativity",
+        "ak-dashboard",
+        "ak-debugging",
+        "ak-design",
+        "ak-design-system",
+        "ak-docs",
+        "ak-elevenlabs",
+        "ak-email",
+        "ak-explain",
+        "ak-fix",
+        "ak-folder-context",
+        "ak-form-cro",
+        "ak-free-tool-strategy",
+        "ak-frontend-design",
+        "ak-funnel",
+        "ak-gamification-marketing",
+        "ak-google-adk-python",
+        "ak-handoff",
+        "ak-hub",
+        "ak-init",
+        "ak-interview-docs",
+        "ak-journal",
+        "ak-kit-builder",
+        "ak-launch-strategy",
+        "ak-logo-design",
+        "ak-marketing-dashboard",
+        "ak-marketing-ideas",
+        "ak-marketing-planning",
+        "ak-marketing-psychology",
+        "ak-marketing-research",
+        "ak-mermaidjs-v11",
+        "ak-motion-design",
+        "ak-motion-graphics",
+        "ak-onboarding-cro",
+        "ak-paid-ads",
+        "ak-persona",
+        "ak-plan",
+        "ak-play",
+        "ak-preview",
+        "ak-pricing-strategy",
+        "ak-referral-program-building",
+        "ak-research-prompt",
+        "ak-scout",
+        "ak-seo",
+        "ak-skill",
+        "ak-slides",
+        "ak-social",
+        "ak-sowat",
+        "ak-storage",
+        "ak-sumup",
+        "ak-tech-graph",
+        "ak-test",
+        "ak-ui-ux-pro-max",
+        "ak-use-mcp",
+        "ak-video",
+        "ak-watzup",
+        "ak-web-design-guidelines",
+        "ak-worktree",
+        "ak-write",
+        "ak-youtube",
+        "ak-youtube-thumbnail-design"
+      ]
+    }
+  },
+  "surfaces": {
+    "engineer": {
+      "merge": "core.exports.skills ∪ appends.skills",
+      "stable": [
+        "ak-advise",
+        "ak-agent-browser",
+        "ak-agentize",
+        "ak-agentkit",
+        "ak-ai-artist",
+        "ak-ai-multimodal",
+        "ak-ak",
+        "ak-ask",
+        "ak-autoresearch",
+        "ak-backend-development",
+        "ak-better-auth",
+        "ak-bootstrap",
+        "ak-brainstorm",
+        "ak-bro",
+        "ak-chrome-profile",
+        "ak-code-review",
+        "ak-codex-goal",
+        "ak-coding-level",
+        "ak-common",
+        "ak-context-engineering",
+        "ak-cook",
+        "ak-copywriting",
+        "ak-cti-expert",
+        "ak-databases",
+        "ak-debug",
+        "ak-deep-swe",
+        "ak-deploy",
+        "ak-design",
+        "ak-devops",
+        "ak-diagram",
+        "ak-docs",
+        "ak-docs-seeker",
+        "ak-document-skills",
+        "ak-excalidraw",
+        "ak-fable-thinking",
+        "ak-find-skills",
+        "ak-fix",
+        "ak-folder-context",
+        "ak-frontend-design",
+        "ak-frontend-development",
+        "ak-git",
+        "ak-github",
+        "ak-gkg",
+        "ak-goal-warmup",
+        "ak-google-adk-python",
+        "ak-graphify",
+        "ak-handoff",
+        "ak-handover",
+        "ak-help",
+        "ak-html-video",
+        "ak-hyperframes",
+        "ak-interview-docs",
+        "ak-issue-to-plan",
+        "ak-journal",
+        "ak-llms",
+        "ak-loop",
+        "ak-markdown-novel-viewer",
+        "ak-mcp-builder",
+        "ak-media-processing",
+        "ak-mermaidjs-v11",
+        "ak-mintlify",
+        "ak-mobile-development",
+        "ak-orchestrate",
+        "ak-payment-integration",
+        "ak-plan",
+        "ak-plans-kanban",
+        "ak-predict",
+        "ak-preview",
+        "ak-problem-solving",
+        "ak-project-management",
+        "ak-project-organization",
+        "ak-react-best-practices",
+        "ak-remotion",
+        "ak-repomix",
+        "ak-research",
+        "ak-research-prompt",
+        "ak-retro",
+        "ak-review-pr",
+        "ak-scenario",
+        "ak-scout",
+        "ak-security",
+        "ak-security-scan",
+        "ak-sequential-thinking",
+        "ak-shader",
+        "ak-ship",
+        "ak-shopify",
+        "ak-show-off",
+        "ak-skill-creator",
+        "ak-sowat",
+        "ak-stitch",
+        "ak-sumup",
+        "ak-tanstack",
+        "ak-team",
+        "ak-tech-graph",
+        "ak-test",
+        "ak-threejs",
+        "ak-ui-styling",
+        "ak-ui-ux-pro-max",
+        "ak-use-mcp",
+        "ak-vibe",
+        "ak-watzup",
+        "ak-web-design-guidelines",
+        "ak-web-frameworks",
+        "ak-web-testing",
+        "ak-worktree",
+        "ak-xia"
+      ],
+      "beta": [
+        "ak-advise",
+        "ak-agent-browser",
+        "ak-agentize",
+        "ak-agentkit",
+        "ak-ai-artist",
+        "ak-ai-multimodal",
+        "ak-ak",
+        "ak-ask",
+        "ak-autoresearch",
+        "ak-backend-development",
+        "ak-better-auth",
+        "ak-bootstrap",
+        "ak-brainstorm",
+        "ak-bro",
+        "ak-chrome-profile",
+        "ak-code-review",
+        "ak-codex-goal",
+        "ak-coding-level",
+        "ak-common",
+        "ak-context-engineering",
+        "ak-cook",
+        "ak-copywriting",
+        "ak-cti-expert",
+        "ak-databases",
+        "ak-debug",
+        "ak-deep-swe",
+        "ak-deploy",
+        "ak-design",
+        "ak-devops",
+        "ak-diagram",
+        "ak-docs",
+        "ak-docs-seeker",
+        "ak-document-skills",
+        "ak-excalidraw",
+        "ak-explain",
+        "ak-fable-thinking",
+        "ak-find-skills",
+        "ak-fix",
+        "ak-folder-context",
+        "ak-frontend-design",
+        "ak-frontend-development",
+        "ak-git",
+        "ak-github",
+        "ak-gkg",
+        "ak-goal-warmup",
+        "ak-google-adk-python",
+        "ak-graphify",
+        "ak-handoff",
+        "ak-handover",
+        "ak-help",
+        "ak-html-video",
+        "ak-hyperframes",
+        "ak-interview-docs",
+        "ak-issue-to-plan",
+        "ak-journal",
+        "ak-llms",
+        "ak-loop",
+        "ak-markdown-novel-viewer",
+        "ak-mcp-builder",
+        "ak-media-processing",
+        "ak-mermaidjs-v11",
+        "ak-mintlify",
+        "ak-mobile-development",
+        "ak-orchestrate",
+        "ak-payment-integration",
+        "ak-plan",
+        "ak-plans-kanban",
+        "ak-predict",
+        "ak-preview",
+        "ak-problem-solving",
+        "ak-project-management",
+        "ak-project-organization",
+        "ak-react-best-practices",
+        "ak-remotion",
+        "ak-repomix",
+        "ak-research",
+        "ak-research-prompt",
+        "ak-retro",
+        "ak-review-pr",
+        "ak-scenario",
+        "ak-scout",
+        "ak-security",
+        "ak-security-scan",
+        "ak-sequential-thinking",
+        "ak-shader",
+        "ak-ship",
+        "ak-shopify",
+        "ak-show-off",
+        "ak-skill-creator",
+        "ak-sowat",
+        "ak-stitch",
+        "ak-sumup",
+        "ak-tanstack",
+        "ak-team",
+        "ak-tech-graph",
+        "ak-test",
+        "ak-threejs",
+        "ak-ui-styling",
+        "ak-ui-ux-pro-max",
+        "ak-use-mcp",
+        "ak-vibe",
+        "ak-watzup",
+        "ak-web-design-guidelines",
+        "ak-web-frameworks",
+        "ak-web-testing",
+        "ak-worktree",
+        "ak-xia"
+      ],
+      "betaOnly": [
+        "ak-explain"
+      ],
+      "stableOnly": []
+    },
+    "marketing": {
+      "merge": "overrides.skills (replaces core)",
+      "stable": [
+        "ak-ab-test-setup",
+        "ak-ads-management",
+        "ak-affiliate-marketing",
+        "ak-agent-browser",
+        "ak-agentkit",
+        "ak-ai-multimodal",
+        "ak-ak",
+        "ak-analytics",
+        "ak-analyze",
+        "ak-ask",
+        "ak-assets-organizing",
+        "ak-banner-design",
+        "ak-brainstorm",
+        "ak-brand",
+        "ak-bro",
+        "ak-campaign",
+        "ak-cip-design",
+        "ak-ckm-storage",
+        "ak-claude-code",
+        "ak-codex-goal",
+        "ak-competitor",
+        "ak-content-hub",
+        "ak-content-marketing",
+        "ak-cook",
+        "ak-creativity",
+        "ak-dashboard",
+        "ak-debugging",
+        "ak-design",
+        "ak-design-system",
+        "ak-docs",
+        "ak-elevenlabs",
+        "ak-email",
+        "ak-fix",
+        "ak-folder-context",
+        "ak-form-cro",
+        "ak-free-tool-strategy",
+        "ak-frontend-design",
+        "ak-funnel",
+        "ak-gamification-marketing",
+        "ak-google-adk-python",
+        "ak-handoff",
+        "ak-hub",
+        "ak-init",
+        "ak-interview-docs",
+        "ak-journal",
+        "ak-kit-builder",
+        "ak-launch-strategy",
+        "ak-logo-design",
+        "ak-marketing-dashboard",
+        "ak-marketing-ideas",
+        "ak-marketing-planning",
+        "ak-marketing-psychology",
+        "ak-marketing-research",
+        "ak-mermaidjs-v11",
+        "ak-motion-design",
+        "ak-motion-graphics",
+        "ak-onboarding-cro",
+        "ak-paid-ads",
+        "ak-persona",
+        "ak-plan",
+        "ak-play",
+        "ak-preview",
+        "ak-pricing-strategy",
+        "ak-referral-program-building",
+        "ak-research-prompt",
+        "ak-scout",
+        "ak-seo",
+        "ak-skill",
+        "ak-slides",
+        "ak-social",
+        "ak-sowat",
+        "ak-storage",
+        "ak-sumup",
+        "ak-tech-graph",
+        "ak-test",
+        "ak-ui-ux-pro-max",
+        "ak-use-mcp",
+        "ak-video",
+        "ak-watzup",
+        "ak-web-design-guidelines",
+        "ak-worktree",
+        "ak-write",
+        "ak-youtube",
+        "ak-youtube-thumbnail-design"
+      ],
+      "beta": [
+        "ak-ab-test-setup",
+        "ak-ads-management",
+        "ak-affiliate-marketing",
+        "ak-agent-browser",
+        "ak-agentkit",
+        "ak-ai-multimodal",
+        "ak-ak",
+        "ak-analytics",
+        "ak-analyze",
+        "ak-ask",
+        "ak-assets-organizing",
+        "ak-banner-design",
+        "ak-brainstorm",
+        "ak-brand",
+        "ak-bro",
+        "ak-campaign",
+        "ak-cip-design",
+        "ak-ckm-storage",
+        "ak-claude-code",
+        "ak-codex-goal",
+        "ak-competitor",
+        "ak-content-hub",
+        "ak-content-marketing",
+        "ak-cook",
+        "ak-creativity",
+        "ak-dashboard",
+        "ak-debugging",
+        "ak-design",
+        "ak-design-system",
+        "ak-docs",
+        "ak-elevenlabs",
+        "ak-email",
+        "ak-explain",
+        "ak-fix",
+        "ak-folder-context",
+        "ak-form-cro",
+        "ak-free-tool-strategy",
+        "ak-frontend-design",
+        "ak-funnel",
+        "ak-gamification-marketing",
+        "ak-google-adk-python",
+        "ak-handoff",
+        "ak-hub",
+        "ak-init",
+        "ak-interview-docs",
+        "ak-journal",
+        "ak-kit-builder",
+        "ak-launch-strategy",
+        "ak-logo-design",
+        "ak-marketing-dashboard",
+        "ak-marketing-ideas",
+        "ak-marketing-planning",
+        "ak-marketing-psychology",
+        "ak-marketing-research",
+        "ak-mermaidjs-v11",
+        "ak-motion-design",
+        "ak-motion-graphics",
+        "ak-onboarding-cro",
+        "ak-paid-ads",
+        "ak-persona",
+        "ak-plan",
+        "ak-play",
+        "ak-preview",
+        "ak-pricing-strategy",
+        "ak-referral-program-building",
+        "ak-research-prompt",
+        "ak-scout",
+        "ak-seo",
+        "ak-skill",
+        "ak-slides",
+        "ak-social",
+        "ak-sowat",
+        "ak-storage",
+        "ak-sumup",
+        "ak-tech-graph",
+        "ak-test",
+        "ak-ui-ux-pro-max",
+        "ak-use-mcp",
+        "ak-video",
+        "ak-watzup",
+        "ak-web-design-guidelines",
+        "ak-worktree",
+        "ak-write",
+        "ak-youtube",
+        "ak-youtube-thumbnail-design"
+      ],
+      "betaOnly": [
+        "ak-explain"
+      ],
+      "stableOnly": []
+    }
+  },
+  "fingerprints": {
+    "core/ak-agent-browser": {
+      "id": "ak-agent-browser",
+      "sourceKit": "core",
+      "gitPath": {
+        "stable": "kits/core/skills/ak-agent-browser",
+        "beta": "kits/core/skills/ak-agent-browser"
+      },
+      "surfaces": {
+        "stable": [
+          "engineer",
+          "marketing"
+        ],
+        "beta": [
+          "engineer",
+          "marketing"
+        ]
+      },
+      "stable": {
+        "tree": "78bec828df608966ed7ef25c23d0de42d8866adc",
+        "skillMd": "af9e0b63227268c8e2001b8a88b819137473fbdd"
+      },
+      "beta": {
+        "tree": "78bec828df608966ed7ef25c23d0de42d8866adc",
+        "skillMd": "af9e0b63227268c8e2001b8a88b819137473fbdd"
+      }
+    },
+    "core/ak-agentkit": {
+      "id": "ak-agentkit",
+      "sourceKit": "core",
+      "gitPath": {
+        "stable": "kits/core/skills/ak-agentkit",
+        "beta": "kits/core/skills/ak-agentkit"
+      },
+      "surfaces": {
+        "stable": [
+          "engineer",
+          "marketing"
+        ],
+        "beta": [
+          "engineer",
+          "marketing"
+        ]
+      },
+      "stable": {
+        "tree": "d2c78f9dc5cbe99ba0e3dd04e76ebfbe281ce122",
+        "skillMd": "6b22dfebae1cdeedb108390d78cc887b6a592306"
+      },
+      "beta": {
+        "tree": "d2c78f9dc5cbe99ba0e3dd04e76ebfbe281ce122",
+        "skillMd": "6b22dfebae1cdeedb108390d78cc887b6a592306"
+      }
+    },
+    "core/ak-ai-artist": {
+      "id": "ak-ai-artist",
+      "sourceKit": "core",
+      "gitPath": {
+        "stable": "kits/core/skills/ak-ai-artist",
+        "beta": "kits/core/skills/ak-ai-artist"
+      },
+      "surfaces": {
+        "stable": [
+          "engineer"
+        ],
+        "beta": [
+          "engineer"
+        ]
+      },
+      "stable": {
+        "tree": "109a9fc95036847ae0a08a13ed3dad13af537fe5",
+        "skillMd": "1c42edd9f624a3aeb132ab772d55c665ae90db95"
+      },
+      "beta": {
+        "tree": "109a9fc95036847ae0a08a13ed3dad13af537fe5",
+        "skillMd": "1c42edd9f624a3aeb132ab772d55c665ae90db95"
+      }
+    },
+    "core/ak-ai-multimodal": {
+      "id": "ak-ai-multimodal",
+      "sourceKit": "core",
+      "gitPath": {
+        "stable": "kits/core/skills/ak-ai-multimodal",
+        "beta": "kits/core/skills/ak-ai-multimodal"
+      },
+      "surfaces": {
+        "stable": [
+          "engineer",
+          "marketing"
+        ],
+        "beta": [
+          "engineer",
+          "marketing"
+        ]
+      },
+      "stable": {
+        "tree": "b8bb8cc91e495d8900c2d7ac353f186d08c59c2c",
+        "skillMd": "b2ec49474210a2c74d8e629f8d3f2f9459afccac"
+      },
+      "beta": {
+        "tree": "17de6ce05f803532e9c976be8571efb3053bc5f6",
+        "skillMd": "9bd05dc8795365b2b975122e38941809d37cf9df"
+      }
+    },
+    "core/ak-ak": {
+      "id": "ak-ak",
+      "sourceKit": "core",
+      "gitPath": {
+        "stable": "kits/core/skills/ak-ak",
+        "beta": "kits/core/skills/ak-ak"
+      },
+      "surfaces": {
+        "stable": [
+          "engineer",
+          "marketing"
+        ],
+        "beta": [
+          "engineer",
+          "marketing"
+        ]
+      },
+      "stable": {
+        "tree": "c37baf91348768549265254eff0d2f6a1211cb5d",
+        "skillMd": "2c0376d3d78ee7dedcdda9cc68df0d803aa76017"
+      },
+      "beta": {
+        "tree": "9c50519224dd72ac28be864af09bf3e2aa23fe04",
+        "skillMd": "fe93a7a921735a2a4b27c2a890c787e6f0da337b"
+      }
+    },
+    "core/ak-ask": {
+      "id": "ak-ask",
+      "sourceKit": "core",
+      "gitPath": {
+        "stable": "kits/core/skills/ak-ask",
+        "beta": "kits/core/skills/ak-ask"
+      },
+      "surfaces": {
+        "stable": [
+          "engineer",
+          "marketing"
+        ],
+        "beta": [
+          "engineer",
+          "marketing"
+        ]
+      },
+      "stable": {
+        "tree": "6ca6e61b88a47cae563baf7ccfc579bb04da6347",
+        "skillMd": "e32f33574c7f94b743c3dceea85d6e52f0e21e05"
+      },
+      "beta": {
+        "tree": "6ca6e61b88a47cae563baf7ccfc579bb04da6347",
+        "skillMd": "e32f33574c7f94b743c3dceea85d6e52f0e21e05"
+      }
+    },
+    "core/ak-backend-development": {
+      "id": "ak-backend-development",
+      "sourceKit": "core",
+      "gitPath": {
+        "stable": "kits/core/skills/ak-backend-development",
+        "beta": "kits/core/skills/ak-backend-development"
+      },
+      "surfaces": {
+        "stable": [
+          "engineer"
+        ],
+        "beta": [
+          "engineer"
+        ]
+      },
+      "stable": {
+        "tree": "79397d2767129d2b2ea38ce86ea05380b0422f4e",
+        "skillMd": "9c861c0e291ea30695d4385a02fef8201704401a"
+      },
+      "beta": {
+        "tree": "79397d2767129d2b2ea38ce86ea05380b0422f4e",
+        "skillMd": "9c861c0e291ea30695d4385a02fef8201704401a"
+      }
+    },
+    "core/ak-better-auth": {
+      "id": "ak-better-auth",
+      "sourceKit": "core",
+      "gitPath": {
+        "stable": "kits/core/skills/ak-better-auth",
+        "beta": "kits/core/skills/ak-better-auth"
+      },
+      "surfaces": {
+        "stable": [
+          "engineer"
+        ],
+        "beta": [
+          "engineer"
+        ]
+      },
+      "stable": {
+        "tree": "0fdbbe79643dce3d458b742885120a357256d8e9",
+        "skillMd": "8e91870f4ea5176fd9dd4eadd2b5b6cef01a2250"
+      },
+      "beta": {
+        "tree": "0fdbbe79643dce3d458b742885120a357256d8e9",
+        "skillMd": "8e91870f4ea5176fd9dd4eadd2b5b6cef01a2250"
+      }
+    },
+    "core/ak-brainstorm": {
+      "id": "ak-brainstorm",
+      "sourceKit": "core",
+      "gitPath": {
+        "stable": "kits/core/skills/ak-brainstorm",
+        "beta": "kits/core/skills/ak-brainstorm"
+      },
+      "surfaces": {
+        "stable": [
+          "engineer",
+          "marketing"
+        ],
+        "beta": [
+          "engineer",
+          "marketing"
+        ]
+      },
+      "stable": {
+        "tree": "71a00f61889bfbaccdb7334d563d9d60a99baf4b",
+        "skillMd": "2e30d79ea215d1e19fb737ec40fa551fc1a10c16"
+      },
+      "beta": {
+        "tree": "b23490553b0c336b60b33dfe41c03ccc81b8d027",
+        "skillMd": "7b4fd58d933600c41ddc0ab99891fe30750a32c9"
+      }
+    },
+    "core/ak-bro": {
+      "id": "ak-bro",
+      "sourceKit": "core",
+      "gitPath": {
+        "stable": "kits/core/skills/ak-bro",
+        "beta": "kits/core/skills/ak-bro"
+      },
+      "surfaces": {
+        "stable": [
+          "engineer",
+          "marketing"
+        ],
+        "beta": [
+          "engineer",
+          "marketing"
+        ]
+      },
+      "stable": {
+        "tree": "dc8da0b640893a6cae1d016ee255bfe1352931d5",
+        "skillMd": "f0f06cdb78aa86cb4d96f5f53efaa699fe0a0d83"
+      },
+      "beta": {
+        "tree": "dc8da0b640893a6cae1d016ee255bfe1352931d5",
+        "skillMd": "f0f06cdb78aa86cb4d96f5f53efaa699fe0a0d83"
+      }
+    },
+    "core/ak-chrome-profile": {
+      "id": "ak-chrome-profile",
+      "sourceKit": "core",
+      "gitPath": {
+        "stable": "kits/core/skills/ak-chrome-profile",
+        "beta": "kits/core/skills/ak-chrome-profile"
+      },
+      "surfaces": {
+        "stable": [
+          "engineer"
+        ],
+        "beta": [
+          "engineer"
+        ]
+      },
+      "stable": {
+        "tree": "3ff72e1b8b40caeb2f9d3b7f715bb86180107f7b",
+        "skillMd": "2c5d4e7ab1f422a543e7d5b3499a174da45e0dfc"
+      },
+      "beta": {
+        "tree": "3ff72e1b8b40caeb2f9d3b7f715bb86180107f7b",
+        "skillMd": "2c5d4e7ab1f422a543e7d5b3499a174da45e0dfc"
+      }
+    },
+    "core/ak-code-review": {
+      "id": "ak-code-review",
+      "sourceKit": "core",
+      "gitPath": {
+        "stable": "kits/core/skills/ak-code-review",
+        "beta": "kits/core/skills/ak-code-review"
+      },
+      "surfaces": {
+        "stable": [
+          "engineer"
+        ],
+        "beta": [
+          "engineer"
+        ]
+      },
+      "stable": {
+        "tree": "1917b9d16baf5d167e02f54a14166f280ed6110e",
+        "skillMd": "343ccdd022e1b087c424e7aaa3682c4996ecf7bb"
+      },
+      "beta": {
+        "tree": "1917b9d16baf5d167e02f54a14166f280ed6110e",
+        "skillMd": "343ccdd022e1b087c424e7aaa3682c4996ecf7bb"
+      }
+    },
+    "core/ak-codex-goal": {
+      "id": "ak-codex-goal",
+      "sourceKit": "core",
+      "gitPath": {
+        "stable": "kits/core/skills/ak-codex-goal",
+        "beta": "kits/core/skills/ak-codex-goal"
+      },
+      "surfaces": {
+        "stable": [
+          "engineer",
+          "marketing"
+        ],
+        "beta": [
+          "engineer",
+          "marketing"
+        ]
+      },
+      "stable": {
+        "tree": "db59b9167668ce2dd72d026b2c276e799695245c",
+        "skillMd": "805e57dbf23a3aa2d754c8a45e23bd7a826e676e"
+      },
+      "beta": {
+        "tree": "db59b9167668ce2dd72d026b2c276e799695245c",
+        "skillMd": "805e57dbf23a3aa2d754c8a45e23bd7a826e676e"
+      }
+    },
+    "core/ak-common": {
+      "id": "ak-common",
+      "sourceKit": "core",
+      "gitPath": {
+        "stable": "kits/core/skills/ak-common",
+        "beta": "kits/core/skills/ak-common"
+      },
+      "surfaces": {
+        "stable": [
+          "engineer"
+        ],
+        "beta": [
+          "engineer"
+        ]
+      },
+      "stable": {
+        "tree": "0a764109ebd919701af83f690008de7ffba69915",
+        "skillMd": "dd90e4221bc03a4166e2badb9e0a1f9d9202ab12"
+      },
+      "beta": {
+        "tree": "0a764109ebd919701af83f690008de7ffba69915",
+        "skillMd": "dd90e4221bc03a4166e2badb9e0a1f9d9202ab12"
+      }
+    },
+    "core/ak-context-engineering": {
+      "id": "ak-context-engineering",
+      "sourceKit": "core",
+      "gitPath": {
+        "stable": "kits/core/skills/ak-context-engineering",
+        "beta": "kits/core/skills/ak-context-engineering"
+      },
+      "surfaces": {
+        "stable": [
+          "engineer"
+        ],
+        "beta": [
+          "engineer"
+        ]
+      },
+      "stable": {
+        "tree": "4d6a905e03bae1233a0abc7d92bf979862ec63cc",
+        "skillMd": "4523f9e149f5ea708fd62888dad923d12e9b9767"
+      },
+      "beta": {
+        "tree": "4d6a905e03bae1233a0abc7d92bf979862ec63cc",
+        "skillMd": "4523f9e149f5ea708fd62888dad923d12e9b9767"
+      }
+    },
+    "core/ak-cook": {
+      "id": "ak-cook",
+      "sourceKit": "core",
+      "gitPath": {
+        "stable": "kits/core/skills/ak-cook",
+        "beta": "kits/core/skills/ak-cook"
+      },
+      "surfaces": {
+        "stable": [
+          "engineer",
+          "marketing"
+        ],
+        "beta": [
+          "engineer",
+          "marketing"
+        ]
+      },
+      "stable": {
+        "tree": "4cd63deb7ebfb3303c7506145d2f061a50814e96",
+        "skillMd": "15f0a490f503d88d9219363bfc0e8484ce951a28"
+      },
+      "beta": {
+        "tree": "4cd63deb7ebfb3303c7506145d2f061a50814e96",
+        "skillMd": "15f0a490f503d88d9219363bfc0e8484ce951a28"
+      }
+    },
+    "core/ak-copywriting": {
+      "id": "ak-copywriting",
+      "sourceKit": "core",
+      "gitPath": {
+        "stable": "kits/core/skills/ak-copywriting",
+        "beta": "kits/core/skills/ak-copywriting"
+      },
+      "surfaces": {
+        "stable": [
+          "engineer"
+        ],
+        "beta": [
+          "engineer"
+        ]
+      },
+      "stable": {
+        "tree": "e0a787fc60132e89b6e12593e3f618052ae0d4fe",
+        "skillMd": "37fbdbc4c727f4c0ac7592a9acb19c9444f29e04"
+      },
+      "beta": {
+        "tree": "e0a787fc60132e89b6e12593e3f618052ae0d4fe",
+        "skillMd": "37fbdbc4c727f4c0ac7592a9acb19c9444f29e04"
+      }
+    },
+    "core/ak-databases": {
+      "id": "ak-databases",
+      "sourceKit": "core",
+      "gitPath": {
+        "stable": "kits/core/skills/ak-databases",
+        "beta": "kits/core/skills/ak-databases"
+      },
+      "surfaces": {
+        "stable": [
+          "engineer"
+        ],
+        "beta": [
+          "engineer"
+        ]
+      },
+      "stable": {
+        "tree": "089438cf0393771304b2242d87e6a2d38407e021",
+        "skillMd": "08b5078b24798840005f9174817b97f5b8fca9b7"
+      },
+      "beta": {
+        "tree": "089438cf0393771304b2242d87e6a2d38407e021",
+        "skillMd": "08b5078b24798840005f9174817b97f5b8fca9b7"
+      }
+    },
+    "core/ak-design": {
+      "id": "ak-design",
+      "sourceKit": "core",
+      "gitPath": {
+        "stable": "kits/core/skills/ak-design",
+        "beta": "kits/core/skills/ak-design"
+      },
+      "surfaces": {
+        "stable": [
+          "engineer",
+          "marketing"
+        ],
+        "beta": [
+          "engineer",
+          "marketing"
+        ]
+      },
+      "stable": {
+        "tree": "f8256b51078c38e790bf379197ea504e389b96dd",
+        "skillMd": "b1c1b6ba740f6f310d0c3c4d1aaa1dce965f98fc"
+      },
+      "beta": {
+        "tree": "f8256b51078c38e790bf379197ea504e389b96dd",
+        "skillMd": "b1c1b6ba740f6f310d0c3c4d1aaa1dce965f98fc"
+      }
+    },
+    "core/ak-devops": {
+      "id": "ak-devops",
+      "sourceKit": "core",
+      "gitPath": {
+        "stable": "kits/core/skills/ak-devops",
+        "beta": "kits/core/skills/ak-devops"
+      },
+      "surfaces": {
+        "stable": [
+          "engineer"
+        ],
+        "beta": [
+          "engineer"
+        ]
+      },
+      "stable": {
+        "tree": "cc5773379ae62156ee500b3f93c474f032e8dbc9",
+        "skillMd": "c1c908bfd42b548ea5ab701f6e330ccae3fd7d1a"
+      },
+      "beta": {
+        "tree": "cc5773379ae62156ee500b3f93c474f032e8dbc9",
+        "skillMd": "c1c908bfd42b548ea5ab701f6e330ccae3fd7d1a"
+      }
+    },
+    "core/ak-docs": {
+      "id": "ak-docs",
+      "sourceKit": "core",
+      "gitPath": {
+        "stable": "kits/core/skills/ak-docs",
+        "beta": "kits/core/skills/ak-docs"
+      },
+      "surfaces": {
+        "stable": [
+          "engineer",
+          "marketing"
+        ],
+        "beta": [
+          "engineer",
+          "marketing"
+        ]
+      },
+      "stable": {
+        "tree": "475c9d95a935736c573f6ed7193c7f6f94094efb",
+        "skillMd": "d309f4c946f0a666d0a8c7ab4a43049ed44276c9"
+      },
+      "beta": {
+        "tree": "475c9d95a935736c573f6ed7193c7f6f94094efb",
+        "skillMd": "d309f4c946f0a666d0a8c7ab4a43049ed44276c9"
+      }
+    },
+    "core/ak-docs-seeker": {
+      "id": "ak-docs-seeker",
+      "sourceKit": "core",
+      "gitPath": {
+        "stable": "kits/core/skills/ak-docs-seeker",
+        "beta": "kits/core/skills/ak-docs-seeker"
+      },
+      "surfaces": {
+        "stable": [
+          "engineer"
+        ],
+        "beta": [
+          "engineer"
+        ]
+      },
+      "stable": {
+        "tree": "93b83bf9e5855c36cedbbc343e262db0a735f05f",
+        "skillMd": "df762e80ebf8b1d7e989e8b8eaf316ed5676e8a4"
+      },
+      "beta": {
+        "tree": "93b83bf9e5855c36cedbbc343e262db0a735f05f",
+        "skillMd": "df762e80ebf8b1d7e989e8b8eaf316ed5676e8a4"
+      }
+    },
+    "core/ak-document-skills": {
+      "id": "ak-document-skills",
+      "sourceKit": "core",
+      "gitPath": {
+        "stable": "kits/core/skills/ak-document-skills",
+        "beta": "kits/core/skills/ak-document-skills"
+      },
+      "surfaces": {
+        "stable": [
+          "engineer"
+        ],
+        "beta": [
+          "engineer"
+        ]
+      },
+      "stable": {
+        "tree": "65b28340ba40b6b6e185444fc1d540ee826fb7dd",
+        "skillMd": "449262f95e65f7f7b45289beb594983484a9e6b6"
+      },
+      "beta": {
+        "tree": "65b28340ba40b6b6e185444fc1d540ee826fb7dd",
+        "skillMd": "449262f95e65f7f7b45289beb594983484a9e6b6"
+      }
+    },
+    "core/ak-explain": {
+      "id": "ak-explain",
+      "sourceKit": "core",
+      "gitPath": {
+        "stable": null,
+        "beta": "kits/core/skills/ak-explain"
+      },
+      "surfaces": {
+        "stable": [],
+        "beta": [
+          "engineer",
+          "marketing"
+        ]
+      },
+      "stable": {
+        "tree": null,
+        "skillMd": null
+      },
+      "beta": {
+        "tree": "73d2a083608f0ae80bdbf112f70ecae6767956fc",
+        "skillMd": "271cd1da43701f423ed3c4332f8bfb1ac8719667"
+      }
+    },
+    "core/ak-fable-thinking": {
+      "id": "ak-fable-thinking",
+      "sourceKit": "core",
+      "gitPath": {
+        "stable": "kits/core/skills/ak-fable-thinking",
+        "beta": "kits/core/skills/ak-fable-thinking"
+      },
+      "surfaces": {
+        "stable": [
+          "engineer"
+        ],
+        "beta": [
+          "engineer"
+        ]
+      },
+      "stable": {
+        "tree": "bbdb9991b38b129d513a60f35f857c750e6a4f25",
+        "skillMd": "33d98e86cb3deddb75e4cf536c603e56c136dcd3"
+      },
+      "beta": {
+        "tree": "bbdb9991b38b129d513a60f35f857c750e6a4f25",
+        "skillMd": "33d98e86cb3deddb75e4cf536c603e56c136dcd3"
+      }
+    },
+    "core/ak-fix": {
+      "id": "ak-fix",
+      "sourceKit": "core",
+      "gitPath": {
+        "stable": "kits/core/skills/ak-fix",
+        "beta": "kits/core/skills/ak-fix"
+      },
+      "surfaces": {
+        "stable": [
+          "engineer",
+          "marketing"
+        ],
+        "beta": [
+          "engineer",
+          "marketing"
+        ]
+      },
+      "stable": {
+        "tree": "17612f1accd5a017e87e0062c71bd07d187a0510",
+        "skillMd": "bb57f3f633f3c03a3dfd8cf57615553c8bd11357"
+      },
+      "beta": {
+        "tree": "17612f1accd5a017e87e0062c71bd07d187a0510",
+        "skillMd": "bb57f3f633f3c03a3dfd8cf57615553c8bd11357"
+      }
+    },
+    "core/ak-folder-context": {
+      "id": "ak-folder-context",
+      "sourceKit": "core",
+      "gitPath": {
+        "stable": "kits/core/skills/ak-folder-context",
+        "beta": "kits/core/skills/ak-folder-context"
+      },
+      "surfaces": {
+        "stable": [
+          "engineer",
+          "marketing"
+        ],
+        "beta": [
+          "engineer",
+          "marketing"
+        ]
+      },
+      "stable": {
+        "tree": "bc9b3f36fbd4a0b7f452ce8eee137346466e1bee",
+        "skillMd": "d736e498886df007cb5a6fffe09a90b3cffae3db"
+      },
+      "beta": {
+        "tree": "bc9b3f36fbd4a0b7f452ce8eee137346466e1bee",
+        "skillMd": "d736e498886df007cb5a6fffe09a90b3cffae3db"
+      }
+    },
+    "core/ak-frontend-design": {
+      "id": "ak-frontend-design",
+      "sourceKit": "core",
+      "gitPath": {
+        "stable": "kits/core/skills/ak-frontend-design",
+        "beta": "kits/core/skills/ak-frontend-design"
+      },
+      "surfaces": {
+        "stable": [
+          "engineer",
+          "marketing"
+        ],
+        "beta": [
+          "engineer",
+          "marketing"
+        ]
+      },
+      "stable": {
+        "tree": "d008265debb5547dcd7bc0d32c3b087c3ed0ee3d",
+        "skillMd": "d69abbbcd222363eccdfb3e4da6c564f0a2ed894"
+      },
+      "beta": {
+        "tree": "d008265debb5547dcd7bc0d32c3b087c3ed0ee3d",
+        "skillMd": "d69abbbcd222363eccdfb3e4da6c564f0a2ed894"
+      }
+    },
+    "core/ak-frontend-development": {
+      "id": "ak-frontend-development",
+      "sourceKit": "core",
+      "gitPath": {
+        "stable": "kits/core/skills/ak-frontend-development",
+        "beta": "kits/core/skills/ak-frontend-development"
+      },
+      "surfaces": {
+        "stable": [
+          "engineer"
+        ],
+        "beta": [
+          "engineer"
+        ]
+      },
+      "stable": {
+        "tree": "3cbd3a0f9159eac453e50805c6bc2db13715c855",
+        "skillMd": "152c7612b4889ff9d4e1fa5e4d9d9e4e76772f7e"
+      },
+      "beta": {
+        "tree": "3cbd3a0f9159eac453e50805c6bc2db13715c855",
+        "skillMd": "152c7612b4889ff9d4e1fa5e4d9d9e4e76772f7e"
+      }
+    },
+    "core/ak-git": {
+      "id": "ak-git",
+      "sourceKit": "core",
+      "gitPath": {
+        "stable": "kits/core/skills/ak-git",
+        "beta": "kits/core/skills/ak-git"
+      },
+      "surfaces": {
+        "stable": [
+          "engineer"
+        ],
+        "beta": [
+          "engineer"
+        ]
+      },
+      "stable": {
+        "tree": "111bb016e931835ae3c0a7485d5c36ccdc013fa7",
+        "skillMd": "02f1707736613f6a34aae1f4348f4dd32a82e061"
+      },
+      "beta": {
+        "tree": "111bb016e931835ae3c0a7485d5c36ccdc013fa7",
+        "skillMd": "02f1707736613f6a34aae1f4348f4dd32a82e061"
+      }
+    },
+    "core/ak-google-adk-python": {
+      "id": "ak-google-adk-python",
+      "sourceKit": "core",
+      "gitPath": {
+        "stable": "kits/core/skills/ak-google-adk-python",
+        "beta": "kits/core/skills/ak-google-adk-python"
+      },
+      "surfaces": {
+        "stable": [
+          "engineer",
+          "marketing"
+        ],
+        "beta": [
+          "engineer",
+          "marketing"
+        ]
+      },
+      "stable": {
+        "tree": "6d75d07406913e11483e7f21b069db20fd9a2746",
+        "skillMd": "e8f15d9a310cb9a9c4b661fe6544b6e5b5c991fe"
+      },
+      "beta": {
+        "tree": "6d75d07406913e11483e7f21b069db20fd9a2746",
+        "skillMd": "e8f15d9a310cb9a9c4b661fe6544b6e5b5c991fe"
+      }
+    },
+    "core/ak-handoff": {
+      "id": "ak-handoff",
+      "sourceKit": "core",
+      "gitPath": {
+        "stable": "kits/core/skills/ak-handoff",
+        "beta": "kits/core/skills/ak-handoff"
+      },
+      "surfaces": {
+        "stable": [
+          "engineer",
+          "marketing"
+        ],
+        "beta": [
+          "engineer",
+          "marketing"
+        ]
+      },
+      "stable": {
+        "tree": "3411da7b6e2a81259190187e1a8bec7efa1acf45",
+        "skillMd": "687d53a14fe2a910377ecfb41dcbe959ba313426"
+      },
+      "beta": {
+        "tree": "3411da7b6e2a81259190187e1a8bec7efa1acf45",
+        "skillMd": "687d53a14fe2a910377ecfb41dcbe959ba313426"
+      }
+    },
+    "core/ak-html-video": {
+      "id": "ak-html-video",
+      "sourceKit": "core",
+      "gitPath": {
+        "stable": "kits/core/skills/ak-html-video",
+        "beta": "kits/core/skills/ak-html-video"
+      },
+      "surfaces": {
+        "stable": [
+          "engineer"
+        ],
+        "beta": [
+          "engineer"
+        ]
+      },
+      "stable": {
+        "tree": "9a195f8b0ae415f2b2343bc711165cd92ea00bff",
+        "skillMd": "afabe4ec419375ae1bc22b101516e76bed51c1cc"
+      },
+      "beta": {
+        "tree": "9a195f8b0ae415f2b2343bc711165cd92ea00bff",
+        "skillMd": "afabe4ec419375ae1bc22b101516e76bed51c1cc"
+      }
+    },
+    "core/ak-hyperframes": {
+      "id": "ak-hyperframes",
+      "sourceKit": "core",
+      "gitPath": {
+        "stable": "kits/core/skills/ak-hyperframes",
+        "beta": "kits/core/skills/ak-hyperframes"
+      },
+      "surfaces": {
+        "stable": [
+          "engineer"
+        ],
+        "beta": [
+          "engineer"
+        ]
+      },
+      "stable": {
+        "tree": "1eae93f2d56517ff569c69cb4cd6af152335816a",
+        "skillMd": "42455c95673b574c882496df374c0beae3d2ac45"
+      },
+      "beta": {
+        "tree": "1eae93f2d56517ff569c69cb4cd6af152335816a",
+        "skillMd": "42455c95673b574c882496df374c0beae3d2ac45"
+      }
+    },
+    "core/ak-interview-docs": {
+      "id": "ak-interview-docs",
+      "sourceKit": "core",
+      "gitPath": {
+        "stable": "kits/core/skills/ak-interview-docs",
+        "beta": "kits/core/skills/ak-interview-docs"
+      },
+      "surfaces": {
+        "stable": [
+          "engineer",
+          "marketing"
+        ],
+        "beta": [
+          "engineer",
+          "marketing"
+        ]
+      },
+      "stable": {
+        "tree": "ba44c4b16fdd9bb1996462404cbcfb8057f50529",
+        "skillMd": "989f6a15c981b11ede144bd22678404ff7bcda53"
+      },
+      "beta": {
+        "tree": "ba44c4b16fdd9bb1996462404cbcfb8057f50529",
+        "skillMd": "989f6a15c981b11ede144bd22678404ff7bcda53"
+      }
+    },
+    "core/ak-journal": {
+      "id": "ak-journal",
+      "sourceKit": "core",
+      "gitPath": {
+        "stable": "kits/core/skills/ak-journal",
+        "beta": "kits/core/skills/ak-journal"
+      },
+      "surfaces": {
+        "stable": [
+          "engineer",
+          "marketing"
+        ],
+        "beta": [
+          "engineer",
+          "marketing"
+        ]
+      },
+      "stable": {
+        "tree": "d177c386e25ea51360ea95a530edcad6e3458f38",
+        "skillMd": "948cb2406f6efba8f38e796c3b1358f198ec4dc2"
+      },
+      "beta": {
+        "tree": "d177c386e25ea51360ea95a530edcad6e3458f38",
+        "skillMd": "948cb2406f6efba8f38e796c3b1358f198ec4dc2"
+      }
+    },
+    "core/ak-markdown-novel-viewer": {
+      "id": "ak-markdown-novel-viewer",
+      "sourceKit": "core",
+      "gitPath": {
+        "stable": "kits/core/skills/ak-markdown-novel-viewer",
+        "beta": "kits/core/skills/ak-markdown-novel-viewer"
+      },
+      "surfaces": {
+        "stable": [
+          "engineer"
+        ],
+        "beta": [
+          "engineer"
+        ]
+      },
+      "stable": {
+        "tree": "1cb553348502b303e96688224171aa54f657bb8e",
+        "skillMd": "d59b0ffb7753d6fed61c30df8694414d988d6934"
+      },
+      "beta": {
+        "tree": "1cb553348502b303e96688224171aa54f657bb8e",
+        "skillMd": "d59b0ffb7753d6fed61c30df8694414d988d6934"
+      }
+    },
+    "core/ak-mcp-builder": {
+      "id": "ak-mcp-builder",
+      "sourceKit": "core",
+      "gitPath": {
+        "stable": "kits/core/skills/ak-mcp-builder",
+        "beta": "kits/core/skills/ak-mcp-builder"
+      },
+      "surfaces": {
+        "stable": [
+          "engineer"
+        ],
+        "beta": [
+          "engineer"
+        ]
+      },
+      "stable": {
+        "tree": "9377691618d2d2c966de6f2869d9727f765d08f3",
+        "skillMd": "05019ef54904d9058a234a919624bafde1134145"
+      },
+      "beta": {
+        "tree": "9377691618d2d2c966de6f2869d9727f765d08f3",
+        "skillMd": "05019ef54904d9058a234a919624bafde1134145"
+      }
+    },
+    "core/ak-media-processing": {
+      "id": "ak-media-processing",
+      "sourceKit": "core",
+      "gitPath": {
+        "stable": "kits/core/skills/ak-media-processing",
+        "beta": "kits/core/skills/ak-media-processing"
+      },
+      "surfaces": {
+        "stable": [
+          "engineer"
+        ],
+        "beta": [
+          "engineer"
+        ]
+      },
+      "stable": {
+        "tree": "2b0ac4c172fe8d1922c6f79aaeb8bf85db705312",
+        "skillMd": "3e4eb5f4776ef453d852bce38e3738d5e632948f"
+      },
+      "beta": {
+        "tree": "2b0ac4c172fe8d1922c6f79aaeb8bf85db705312",
+        "skillMd": "3e4eb5f4776ef453d852bce38e3738d5e632948f"
+      }
+    },
+    "core/ak-mermaidjs-v11": {
+      "id": "ak-mermaidjs-v11",
+      "sourceKit": "core",
+      "gitPath": {
+        "stable": "kits/core/skills/ak-mermaidjs-v11",
+        "beta": "kits/core/skills/ak-mermaidjs-v11"
+      },
+      "surfaces": {
+        "stable": [
+          "engineer",
+          "marketing"
+        ],
+        "beta": [
+          "engineer",
+          "marketing"
+        ]
+      },
+      "stable": {
+        "tree": "9dca5a98b3e2f60573bbf0fd5a0258ace7defa35",
+        "skillMd": "0895281fe5b833a726964b90e52041d355ed2559"
+      },
+      "beta": {
+        "tree": "9dca5a98b3e2f60573bbf0fd5a0258ace7defa35",
+        "skillMd": "0895281fe5b833a726964b90e52041d355ed2559"
+      }
+    },
+    "core/ak-payment-integration": {
+      "id": "ak-payment-integration",
+      "sourceKit": "core",
+      "gitPath": {
+        "stable": "kits/core/skills/ak-payment-integration",
+        "beta": "kits/core/skills/ak-payment-integration"
+      },
+      "surfaces": {
+        "stable": [
+          "engineer"
+        ],
+        "beta": [
+          "engineer"
+        ]
+      },
+      "stable": {
+        "tree": "40af4415c668ea92cc51fa5f0b196352b9238207",
+        "skillMd": "fa15f59f852ef4ab3ecf3f784f992434601b0a1f"
+      },
+      "beta": {
+        "tree": "40af4415c668ea92cc51fa5f0b196352b9238207",
+        "skillMd": "fa15f59f852ef4ab3ecf3f784f992434601b0a1f"
+      }
+    },
+    "core/ak-plans-kanban": {
+      "id": "ak-plans-kanban",
+      "sourceKit": "core",
+      "gitPath": {
+        "stable": "kits/core/skills/ak-plans-kanban",
+        "beta": "kits/core/skills/ak-plans-kanban"
+      },
+      "surfaces": {
+        "stable": [
+          "engineer"
+        ],
+        "beta": [
+          "engineer"
+        ]
+      },
+      "stable": {
+        "tree": "8935e6af213f594eee473ba3c697c8ce683326c1",
+        "skillMd": "f5cb4e1eb74bce07ce1cfd8209bd020bc0f817bb"
+      },
+      "beta": {
+        "tree": "8935e6af213f594eee473ba3c697c8ce683326c1",
+        "skillMd": "f5cb4e1eb74bce07ce1cfd8209bd020bc0f817bb"
+      }
+    },
+    "core/ak-preview": {
+      "id": "ak-preview",
+      "sourceKit": "core",
+      "gitPath": {
+        "stable": "kits/core/skills/ak-preview",
+        "beta": "kits/core/skills/ak-preview"
+      },
+      "surfaces": {
+        "stable": [
+          "engineer",
+          "marketing"
+        ],
+        "beta": [
+          "engineer",
+          "marketing"
+        ]
+      },
+      "stable": {
+        "tree": "d692ac40712504a0005e377e8b8c8975135a9256",
+        "skillMd": "6547f2e9e0df26113207122a03b27e7e4af78158"
+      },
+      "beta": {
+        "tree": "57697abb25368a9421acbe23b173f183f85b1dc9",
+        "skillMd": "fbcbc80c382e21e64b3c781f214358fbc6b5a118"
+      }
+    },
+    "core/ak-problem-solving": {
+      "id": "ak-problem-solving",
+      "sourceKit": "core",
+      "gitPath": {
+        "stable": "kits/core/skills/ak-problem-solving",
+        "beta": "kits/core/skills/ak-problem-solving"
+      },
+      "surfaces": {
+        "stable": [
+          "engineer"
+        ],
+        "beta": [
+          "engineer"
+        ]
+      },
+      "stable": {
+        "tree": "0e719bd9bd969943a002c0845ba1892dfd4158e7",
+        "skillMd": "6c828b71e4b5a18209a9fd7f371558e0d8a1fd31"
+      },
+      "beta": {
+        "tree": "0e719bd9bd969943a002c0845ba1892dfd4158e7",
+        "skillMd": "6c828b71e4b5a18209a9fd7f371558e0d8a1fd31"
+      }
+    },
+    "core/ak-remotion": {
+      "id": "ak-remotion",
+      "sourceKit": "core",
+      "gitPath": {
+        "stable": "kits/core/skills/ak-remotion",
+        "beta": "kits/core/skills/ak-remotion"
+      },
+      "surfaces": {
+        "stable": [
+          "engineer"
+        ],
+        "beta": [
+          "engineer"
+        ]
+      },
+      "stable": {
+        "tree": "4a6846889d2c0da5349840ac05add7a44bf1ff0b",
+        "skillMd": "58fbf210daea57cdb5c33c3aa812136e61423420"
+      },
+      "beta": {
+        "tree": "4a6846889d2c0da5349840ac05add7a44bf1ff0b",
+        "skillMd": "58fbf210daea57cdb5c33c3aa812136e61423420"
+      }
+    },
+    "core/ak-repomix": {
+      "id": "ak-repomix",
+      "sourceKit": "core",
+      "gitPath": {
+        "stable": "kits/core/skills/ak-repomix",
+        "beta": "kits/core/skills/ak-repomix"
+      },
+      "surfaces": {
+        "stable": [
+          "engineer"
+        ],
+        "beta": [
+          "engineer"
+        ]
+      },
+      "stable": {
+        "tree": "e4d640b26d41a6a80f073a730d8ebc5c0a105aeb",
+        "skillMd": "56cf59d9e32c14b556a65319c952026df40ac60a"
+      },
+      "beta": {
+        "tree": "e4d640b26d41a6a80f073a730d8ebc5c0a105aeb",
+        "skillMd": "56cf59d9e32c14b556a65319c952026df40ac60a"
+      }
+    },
+    "core/ak-research-prompt": {
+      "id": "ak-research-prompt",
+      "sourceKit": "core",
+      "gitPath": {
+        "stable": "kits/core/skills/ak-research-prompt",
+        "beta": "kits/core/skills/ak-research-prompt"
+      },
+      "surfaces": {
+        "stable": [
+          "engineer",
+          "marketing"
+        ],
+        "beta": [
+          "engineer",
+          "marketing"
+        ]
+      },
+      "stable": {
+        "tree": "1b4cdc0e896440373c47d80cdad210851411d104",
+        "skillMd": "2b95b0157a4556eafa3f168826abb77260fb44cc"
+      },
+      "beta": {
+        "tree": "1b4cdc0e896440373c47d80cdad210851411d104",
+        "skillMd": "2b95b0157a4556eafa3f168826abb77260fb44cc"
+      }
+    },
+    "core/ak-review-pr": {
+      "id": "ak-review-pr",
+      "sourceKit": "core",
+      "gitPath": {
+        "stable": "kits/core/skills/ak-review-pr",
+        "beta": "kits/core/skills/ak-review-pr"
+      },
+      "surfaces": {
+        "stable": [
+          "engineer"
+        ],
+        "beta": [
+          "engineer"
+        ]
+      },
+      "stable": {
+        "tree": "1898d36b26869c3bf8dc4ff2bfbb1e560f3900bf",
+        "skillMd": "f46e0db81b909a3a96d40637f6c941ab62a45d24"
+      },
+      "beta": {
+        "tree": "1898d36b26869c3bf8dc4ff2bfbb1e560f3900bf",
+        "skillMd": "f46e0db81b909a3a96d40637f6c941ab62a45d24"
+      }
+    },
+    "core/ak-scout": {
+      "id": "ak-scout",
+      "sourceKit": "core",
+      "gitPath": {
+        "stable": "kits/core/skills/ak-scout",
+        "beta": "kits/core/skills/ak-scout"
+      },
+      "surfaces": {
+        "stable": [
+          "engineer",
+          "marketing"
+        ],
+        "beta": [
+          "engineer",
+          "marketing"
+        ]
+      },
+      "stable": {
+        "tree": "aabd9dbfb16f6170019decd9ba12a381733c6900",
+        "skillMd": "0dfb9403d09b2b0c551a64886e56f18603d6965f"
+      },
+      "beta": {
+        "tree": "aabd9dbfb16f6170019decd9ba12a381733c6900",
+        "skillMd": "0dfb9403d09b2b0c551a64886e56f18603d6965f"
+      }
+    },
+    "core/ak-sequential-thinking": {
+      "id": "ak-sequential-thinking",
+      "sourceKit": "core",
+      "gitPath": {
+        "stable": "kits/core/skills/ak-sequential-thinking",
+        "beta": "kits/core/skills/ak-sequential-thinking"
+      },
+      "surfaces": {
+        "stable": [
+          "engineer"
+        ],
+        "beta": [
+          "engineer"
+        ]
+      },
+      "stable": {
+        "tree": "0e8e1792fb077d1c8de00bb8e38c93176197e5a5",
+        "skillMd": "6e97f96362a71e80c27a7618e4d415103acda10e"
+      },
+      "beta": {
+        "tree": "0e8e1792fb077d1c8de00bb8e38c93176197e5a5",
+        "skillMd": "6e97f96362a71e80c27a7618e4d415103acda10e"
+      }
+    },
+    "core/ak-shader": {
+      "id": "ak-shader",
+      "sourceKit": "core",
+      "gitPath": {
+        "stable": "kits/core/skills/ak-shader",
+        "beta": "kits/core/skills/ak-shader"
+      },
+      "surfaces": {
+        "stable": [
+          "engineer"
+        ],
+        "beta": [
+          "engineer"
+        ]
+      },
+      "stable": {
+        "tree": "4150136bb49baacc58d07814e68f71acc7fbde75",
+        "skillMd": "9d01595764c11a63c63898f5e0b8b62c484e3130"
+      },
+      "beta": {
+        "tree": "4150136bb49baacc58d07814e68f71acc7fbde75",
+        "skillMd": "9d01595764c11a63c63898f5e0b8b62c484e3130"
+      }
+    },
+    "core/ak-shopify": {
+      "id": "ak-shopify",
+      "sourceKit": "core",
+      "gitPath": {
+        "stable": "kits/core/skills/ak-shopify",
+        "beta": "kits/core/skills/ak-shopify"
+      },
+      "surfaces": {
+        "stable": [
+          "engineer"
+        ],
+        "beta": [
+          "engineer"
+        ]
+      },
+      "stable": {
+        "tree": "37c0593df1836561800415eecb43951d6eff532f",
+        "skillMd": "25da43abf812f29d6ec3fea72c2303b0405e9a87"
+      },
+      "beta": {
+        "tree": "37c0593df1836561800415eecb43951d6eff532f",
+        "skillMd": "25da43abf812f29d6ec3fea72c2303b0405e9a87"
+      }
+    },
+    "core/ak-skill-creator": {
+      "id": "ak-skill-creator",
+      "sourceKit": "core",
+      "gitPath": {
+        "stable": "kits/core/skills/ak-skill-creator",
+        "beta": "kits/core/skills/ak-skill-creator"
+      },
+      "surfaces": {
+        "stable": [
+          "engineer"
+        ],
+        "beta": [
+          "engineer"
+        ]
+      },
+      "stable": {
+        "tree": "c21e621e1d3ff4aafab566c8270e05b60e5cabc0",
+        "skillMd": "6a7c2e94a2c61db90c285789cbe64e92fb35889a"
+      },
+      "beta": {
+        "tree": "c21e621e1d3ff4aafab566c8270e05b60e5cabc0",
+        "skillMd": "6a7c2e94a2c61db90c285789cbe64e92fb35889a"
+      }
+    },
+    "core/ak-sowat": {
+      "id": "ak-sowat",
+      "sourceKit": "core",
+      "gitPath": {
+        "stable": "kits/core/skills/ak-sowat",
+        "beta": "kits/core/skills/ak-sowat"
+      },
+      "surfaces": {
+        "stable": [
+          "engineer",
+          "marketing"
+        ],
+        "beta": [
+          "engineer",
+          "marketing"
+        ]
+      },
+      "stable": {
+        "tree": "e461eb07724cf73965c6eaa8e756ae86687d806f",
+        "skillMd": "59a715ec0299eebba6ed5bb209cd797cfb182284"
+      },
+      "beta": {
+        "tree": "e461eb07724cf73965c6eaa8e756ae86687d806f",
+        "skillMd": "59a715ec0299eebba6ed5bb209cd797cfb182284"
+      }
+    },
+    "core/ak-sumup": {
+      "id": "ak-sumup",
+      "sourceKit": "core",
+      "gitPath": {
+        "stable": "kits/core/skills/ak-sumup",
+        "beta": "kits/core/skills/ak-sumup"
+      },
+      "surfaces": {
+        "stable": [
+          "engineer",
+          "marketing"
+        ],
+        "beta": [
+          "engineer",
+          "marketing"
+        ]
+      },
+      "stable": {
+        "tree": "2400ae746156d5c3d778f9ed90c305f60f10a91c",
+        "skillMd": "00d686b9145a984d133e9c3a4ca4e266ec569bb6"
+      },
+      "beta": {
+        "tree": "2400ae746156d5c3d778f9ed90c305f60f10a91c",
+        "skillMd": "00d686b9145a984d133e9c3a4ca4e266ec569bb6"
+      }
+    },
+    "core/ak-tech-graph": {
+      "id": "ak-tech-graph",
+      "sourceKit": "core",
+      "gitPath": {
+        "stable": "kits/core/skills/ak-tech-graph",
+        "beta": "kits/core/skills/ak-tech-graph"
+      },
+      "surfaces": {
+        "stable": [
+          "engineer",
+          "marketing"
+        ],
+        "beta": [
+          "engineer",
+          "marketing"
+        ]
+      },
+      "stable": {
+        "tree": "f1c7c0015ccbe9dc7f7e91ce9a82f574bb050210",
+        "skillMd": "322b4ddaf27fc8f27106ad03976d00bc479df636"
+      },
+      "beta": {
+        "tree": "f1c7c0015ccbe9dc7f7e91ce9a82f574bb050210",
+        "skillMd": "322b4ddaf27fc8f27106ad03976d00bc479df636"
+      }
+    },
+    "core/ak-test": {
+      "id": "ak-test",
+      "sourceKit": "core",
+      "gitPath": {
+        "stable": "kits/core/skills/ak-test",
+        "beta": "kits/core/skills/ak-test"
+      },
+      "surfaces": {
+        "stable": [
+          "engineer"
+        ],
+        "beta": [
+          "engineer"
+        ]
+      },
+      "stable": {
+        "tree": "c5fa25b7a746696c6dfed3058caa260840f686b8",
+        "skillMd": "de08ab7a99dbcd0c296254abe7cfa95cee3c56da"
+      },
+      "beta": {
+        "tree": "c5fa25b7a746696c6dfed3058caa260840f686b8",
+        "skillMd": "de08ab7a99dbcd0c296254abe7cfa95cee3c56da"
+      }
+    },
+    "core/ak-threejs": {
+      "id": "ak-threejs",
+      "sourceKit": "core",
+      "gitPath": {
+        "stable": "kits/core/skills/ak-threejs",
+        "beta": "kits/core/skills/ak-threejs"
+      },
+      "surfaces": {
+        "stable": [
+          "engineer"
+        ],
+        "beta": [
+          "engineer"
+        ]
+      },
+      "stable": {
+        "tree": "e367991cab75ca72d1de1c091134047aac7655bc",
+        "skillMd": "5e7d41b403073bf413d528aa43c85a16c2e68aaa"
+      },
+      "beta": {
+        "tree": "e367991cab75ca72d1de1c091134047aac7655bc",
+        "skillMd": "5e7d41b403073bf413d528aa43c85a16c2e68aaa"
+      }
+    },
+    "core/ak-ui-styling": {
+      "id": "ak-ui-styling",
+      "sourceKit": "core",
+      "gitPath": {
+        "stable": "kits/core/skills/ak-ui-styling",
+        "beta": "kits/core/skills/ak-ui-styling"
+      },
+      "surfaces": {
+        "stable": [
+          "engineer"
+        ],
+        "beta": [
+          "engineer"
+        ]
+      },
+      "stable": {
+        "tree": "201d9df9091ac8a6cdd353082c6d79fd35d290a6",
+        "skillMd": "66604ed9378067666ef56eaaf2b012ea6a59141a"
+      },
+      "beta": {
+        "tree": "201d9df9091ac8a6cdd353082c6d79fd35d290a6",
+        "skillMd": "66604ed9378067666ef56eaaf2b012ea6a59141a"
+      }
+    },
+    "core/ak-ui-ux-pro-max": {
+      "id": "ak-ui-ux-pro-max",
+      "sourceKit": "core",
+      "gitPath": {
+        "stable": "kits/core/skills/ak-ui-ux-pro-max",
+        "beta": "kits/core/skills/ak-ui-ux-pro-max"
+      },
+      "surfaces": {
+        "stable": [
+          "engineer",
+          "marketing"
+        ],
+        "beta": [
+          "engineer",
+          "marketing"
+        ]
+      },
+      "stable": {
+        "tree": "d575f57cc0a2ee4ceda79d99ffc2e3a0a06d5d50",
+        "skillMd": "5e4b965679e413eadbaa2c0a82794bbd1706290c"
+      },
+      "beta": {
+        "tree": "d575f57cc0a2ee4ceda79d99ffc2e3a0a06d5d50",
+        "skillMd": "5e4b965679e413eadbaa2c0a82794bbd1706290c"
+      }
+    },
+    "core/ak-use-mcp": {
+      "id": "ak-use-mcp",
+      "sourceKit": "core",
+      "gitPath": {
+        "stable": "kits/core/skills/ak-use-mcp",
+        "beta": "kits/core/skills/ak-use-mcp"
+      },
+      "surfaces": {
+        "stable": [
+          "engineer",
+          "marketing"
+        ],
+        "beta": [
+          "engineer",
+          "marketing"
+        ]
+      },
+      "stable": {
+        "tree": "96490c1267ab2c86eb1c863579461fe23caf9a6e",
+        "skillMd": "1bfce817258f592316f8136242751df72089e911"
+      },
+      "beta": {
+        "tree": "96490c1267ab2c86eb1c863579461fe23caf9a6e",
+        "skillMd": "1bfce817258f592316f8136242751df72089e911"
+      }
+    },
+    "core/ak-watzup": {
+      "id": "ak-watzup",
+      "sourceKit": "core",
+      "gitPath": {
+        "stable": "kits/core/skills/ak-watzup",
+        "beta": "kits/core/skills/ak-watzup"
+      },
+      "surfaces": {
+        "stable": [
+          "engineer",
+          "marketing"
+        ],
+        "beta": [
+          "engineer",
+          "marketing"
+        ]
+      },
+      "stable": {
+        "tree": "1e009d9c47fdabd969ea71ee44bbc86828a96895",
+        "skillMd": "c903d1ee79d2eca28b9c2abdce2fe26a09d48ab0"
+      },
+      "beta": {
+        "tree": "1e009d9c47fdabd969ea71ee44bbc86828a96895",
+        "skillMd": "c903d1ee79d2eca28b9c2abdce2fe26a09d48ab0"
+      }
+    },
+    "core/ak-web-design-guidelines": {
+      "id": "ak-web-design-guidelines",
+      "sourceKit": "core",
+      "gitPath": {
+        "stable": "kits/core/skills/ak-web-design-guidelines",
+        "beta": "kits/core/skills/ak-web-design-guidelines"
+      },
+      "surfaces": {
+        "stable": [
+          "engineer",
+          "marketing"
+        ],
+        "beta": [
+          "engineer",
+          "marketing"
+        ]
+      },
+      "stable": {
+        "tree": "ab210b6c3e96e404c634ea1464fd7dce0662ddc1",
+        "skillMd": "d81e5e845ccefa072a2aadc80415dab53d886d93"
+      },
+      "beta": {
+        "tree": "ab210b6c3e96e404c634ea1464fd7dce0662ddc1",
+        "skillMd": "d81e5e845ccefa072a2aadc80415dab53d886d93"
+      }
+    },
+    "core/ak-web-frameworks": {
+      "id": "ak-web-frameworks",
+      "sourceKit": "core",
+      "gitPath": {
+        "stable": "kits/core/skills/ak-web-frameworks",
+        "beta": "kits/core/skills/ak-web-frameworks"
+      },
+      "surfaces": {
+        "stable": [
+          "engineer"
+        ],
+        "beta": [
+          "engineer"
+        ]
+      },
+      "stable": {
+        "tree": "52c6995d42d009e09bc9267e8e153157916b551b",
+        "skillMd": "b84a7a5c33286970bff832aef5d7a943979489e3"
+      },
+      "beta": {
+        "tree": "52c6995d42d009e09bc9267e8e153157916b551b",
+        "skillMd": "b84a7a5c33286970bff832aef5d7a943979489e3"
+      }
+    },
+    "core/ak-worktree": {
+      "id": "ak-worktree",
+      "sourceKit": "core",
+      "gitPath": {
+        "stable": "kits/core/skills/ak-worktree",
+        "beta": "kits/core/skills/ak-worktree"
+      },
+      "surfaces": {
+        "stable": [
+          "engineer",
+          "marketing"
+        ],
+        "beta": [
+          "engineer",
+          "marketing"
+        ]
+      },
+      "stable": {
+        "tree": "41a1b7e2c530a12bd60be1610cdd77b2fafe5f8e",
+        "skillMd": "9fcadb39c5785cb7081708726049a85f5606d39a"
+      },
+      "beta": {
+        "tree": "41a1b7e2c530a12bd60be1610cdd77b2fafe5f8e",
+        "skillMd": "9fcadb39c5785cb7081708726049a85f5606d39a"
+      }
+    },
+    "engineer/ak-advise": {
+      "id": "ak-advise",
+      "sourceKit": "engineer",
+      "gitPath": {
+        "stable": "kits/engineer/skills/ak-advise",
+        "beta": "kits/engineer/skills/ak-advise"
+      },
+      "surfaces": {
+        "stable": [
+          "engineer"
+        ],
+        "beta": [
+          "engineer"
+        ]
+      },
+      "stable": {
+        "tree": "1535e31565f00b8c173285ee57ea60c7a51d60b0",
+        "skillMd": "091efb84e5b9528eb638a46652586e2e57955259"
+      },
+      "beta": {
+        "tree": "74ad4fc4cd9e1513084ab601c162c9ef906d9190",
+        "skillMd": "535448081bf6a8fc94d0230f17e990ef992faa3e"
+      }
+    },
+    "engineer/ak-agentize": {
+      "id": "ak-agentize",
+      "sourceKit": "engineer",
+      "gitPath": {
+        "stable": "kits/engineer/skills/ak-agentize",
+        "beta": "kits/engineer/skills/ak-agentize"
+      },
+      "surfaces": {
+        "stable": [
+          "engineer"
+        ],
+        "beta": [
+          "engineer"
+        ]
+      },
+      "stable": {
+        "tree": "934234ec4eab0ba4729837c4cf086b57e45b9c49",
+        "skillMd": "1dbcdad530ea2936df29131f2db3e0dda7626074"
+      },
+      "beta": {
+        "tree": "934234ec4eab0ba4729837c4cf086b57e45b9c49",
+        "skillMd": "1dbcdad530ea2936df29131f2db3e0dda7626074"
+      }
+    },
+    "engineer/ak-autoresearch": {
+      "id": "ak-autoresearch",
+      "sourceKit": "engineer",
+      "gitPath": {
+        "stable": "kits/engineer/skills/ak-autoresearch",
+        "beta": "kits/engineer/skills/ak-autoresearch"
+      },
+      "surfaces": {
+        "stable": [
+          "engineer"
+        ],
+        "beta": [
+          "engineer"
+        ]
+      },
+      "stable": {
+        "tree": "b4947dfa4ab5738301f4a61cc0a18a2d5fc364ef",
+        "skillMd": "a32491b8651f039bb544cafb85b3f9892e5fb035"
+      },
+      "beta": {
+        "tree": "b4947dfa4ab5738301f4a61cc0a18a2d5fc364ef",
+        "skillMd": "a32491b8651f039bb544cafb85b3f9892e5fb035"
+      }
+    },
+    "engineer/ak-bootstrap": {
+      "id": "ak-bootstrap",
+      "sourceKit": "engineer",
+      "gitPath": {
+        "stable": "kits/engineer/skills/ak-bootstrap",
+        "beta": "kits/engineer/skills/ak-bootstrap"
+      },
+      "surfaces": {
+        "stable": [
+          "engineer"
+        ],
+        "beta": [
+          "engineer"
+        ]
+      },
+      "stable": {
+        "tree": "c79a640ff6faa862915a54975962ac7519bdc3b1",
+        "skillMd": "b61bb4946a7e7bb4ab9536fea7141ea14349dd8c"
+      },
+      "beta": {
+        "tree": "c79a640ff6faa862915a54975962ac7519bdc3b1",
+        "skillMd": "b61bb4946a7e7bb4ab9536fea7141ea14349dd8c"
+      }
+    },
+    "engineer/ak-coding-level": {
+      "id": "ak-coding-level",
+      "sourceKit": "engineer",
+      "gitPath": {
+        "stable": "kits/engineer/skills/ak-coding-level",
+        "beta": "kits/engineer/skills/ak-coding-level"
+      },
+      "surfaces": {
+        "stable": [
+          "engineer"
+        ],
+        "beta": [
+          "engineer"
+        ]
+      },
+      "stable": {
+        "tree": "1230b71b8cbee3c12f5f55e14926ea07f8f4aa11",
+        "skillMd": "9bcc90eede0a25b6e8a74d6991310c90f624827d"
+      },
+      "beta": {
+        "tree": "1230b71b8cbee3c12f5f55e14926ea07f8f4aa11",
+        "skillMd": "9bcc90eede0a25b6e8a74d6991310c90f624827d"
+      }
+    },
+    "engineer/ak-cti-expert": {
+      "id": "ak-cti-expert",
+      "sourceKit": "engineer",
+      "gitPath": {
+        "stable": "kits/engineer/skills/ak-cti-expert",
+        "beta": "kits/engineer/skills/ak-cti-expert"
+      },
+      "surfaces": {
+        "stable": [
+          "engineer"
+        ],
+        "beta": [
+          "engineer"
+        ]
+      },
+      "stable": {
+        "tree": "7784235f149d09c2d2c7ba209de6ff5c90dd875c",
+        "skillMd": "a5d8e21cc69826f3aa763d478575414f69868f36"
+      },
+      "beta": {
+        "tree": "19e60bd5a1d4b9d211744e347c5e662b01892ad4",
+        "skillMd": "2a96f64dfae977699b23005bc069804317e896a3"
+      }
+    },
+    "engineer/ak-debug": {
+      "id": "ak-debug",
+      "sourceKit": "engineer",
+      "gitPath": {
+        "stable": "kits/engineer/skills/ak-debug",
+        "beta": "kits/engineer/skills/ak-debug"
+      },
+      "surfaces": {
+        "stable": [
+          "engineer"
+        ],
+        "beta": [
+          "engineer"
+        ]
+      },
+      "stable": {
+        "tree": "ca04b67ff5113e4fefe642b593508e5917cbd0b0",
+        "skillMd": "386e7ba6a21684bb39cdf1e87c693ff27433bf29"
+      },
+      "beta": {
+        "tree": "ca04b67ff5113e4fefe642b593508e5917cbd0b0",
+        "skillMd": "386e7ba6a21684bb39cdf1e87c693ff27433bf29"
+      }
+    },
+    "engineer/ak-deep-swe": {
+      "id": "ak-deep-swe",
+      "sourceKit": "engineer",
+      "gitPath": {
+        "stable": "kits/engineer/skills/ak-deep-swe",
+        "beta": "kits/engineer/skills/ak-deep-swe"
+      },
+      "surfaces": {
+        "stable": [
+          "engineer"
+        ],
+        "beta": [
+          "engineer"
+        ]
+      },
+      "stable": {
+        "tree": "24f81010d07a125a6d5907f9ccca5759533db4dc",
+        "skillMd": "82c8b8d7ffcb3f8e38ffad4112d0f3d486246dc7"
+      },
+      "beta": {
+        "tree": "24f81010d07a125a6d5907f9ccca5759533db4dc",
+        "skillMd": "82c8b8d7ffcb3f8e38ffad4112d0f3d486246dc7"
+      }
+    },
+    "engineer/ak-deploy": {
+      "id": "ak-deploy",
+      "sourceKit": "engineer",
+      "gitPath": {
+        "stable": "kits/engineer/skills/ak-deploy",
+        "beta": "kits/engineer/skills/ak-deploy"
+      },
+      "surfaces": {
+        "stable": [
+          "engineer"
+        ],
+        "beta": [
+          "engineer"
+        ]
+      },
+      "stable": {
+        "tree": "84c5d4d0cfb3a1aadd70942c44eae0473976d139",
+        "skillMd": "f3e964a61e9a4a6563c030b435f2d6e2c9ac80b0"
+      },
+      "beta": {
+        "tree": "84c5d4d0cfb3a1aadd70942c44eae0473976d139",
+        "skillMd": "f3e964a61e9a4a6563c030b435f2d6e2c9ac80b0"
+      }
+    },
+    "engineer/ak-diagram": {
+      "id": "ak-diagram",
+      "sourceKit": "engineer",
+      "gitPath": {
+        "stable": "kits/engineer/skills/ak-diagram",
+        "beta": "kits/engineer/skills/ak-diagram"
+      },
+      "surfaces": {
+        "stable": [
+          "engineer"
+        ],
+        "beta": [
+          "engineer"
+        ]
+      },
+      "stable": {
+        "tree": "422954de6a4437ca2cc18a200495b47515bd3dae",
+        "skillMd": "062ccdb377f573d4c15941887139c09b041cbba8"
+      },
+      "beta": {
+        "tree": "a5c8336704a73b6eba2d594cc9ae3ec9560422da",
+        "skillMd": "a8574c3f3c2cf7386216fa7341df837f0cfce221"
+      }
+    },
+    "engineer/ak-excalidraw": {
+      "id": "ak-excalidraw",
+      "sourceKit": "engineer",
+      "gitPath": {
+        "stable": "kits/engineer/skills/ak-excalidraw",
+        "beta": "kits/engineer/skills/ak-excalidraw"
+      },
+      "surfaces": {
+        "stable": [
+          "engineer"
+        ],
+        "beta": [
+          "engineer"
+        ]
+      },
+      "stable": {
+        "tree": "5c33c514b39c385584bd76c2a32e9f0da3a57245",
+        "skillMd": "a508c0dec4448f0c30e7c09fec4f5d591fbe7716"
+      },
+      "beta": {
+        "tree": "5c33c514b39c385584bd76c2a32e9f0da3a57245",
+        "skillMd": "a508c0dec4448f0c30e7c09fec4f5d591fbe7716"
+      }
+    },
+    "engineer/ak-find-skills": {
+      "id": "ak-find-skills",
+      "sourceKit": "engineer",
+      "gitPath": {
+        "stable": "kits/engineer/skills/ak-find-skills",
+        "beta": "kits/engineer/skills/ak-find-skills"
+      },
+      "surfaces": {
+        "stable": [
+          "engineer"
+        ],
+        "beta": [
+          "engineer"
+        ]
+      },
+      "stable": {
+        "tree": "4a8c0bc5e4eabb75d928b1198f32028c43e231a4",
+        "skillMd": "0181f7ce5042f6b8b77fddee267e252428cfbc72"
+      },
+      "beta": {
+        "tree": "4a8c0bc5e4eabb75d928b1198f32028c43e231a4",
+        "skillMd": "0181f7ce5042f6b8b77fddee267e252428cfbc72"
+      }
+    },
+    "engineer/ak-github": {
+      "id": "ak-github",
+      "sourceKit": "engineer",
+      "gitPath": {
+        "stable": "kits/engineer/skills/ak-github",
+        "beta": "kits/engineer/skills/ak-github"
+      },
+      "surfaces": {
+        "stable": [
+          "engineer"
+        ],
+        "beta": [
+          "engineer"
+        ]
+      },
+      "stable": {
+        "tree": "4ddfc5e154ff6d326c461fe491dc2b5a4e2bf566",
+        "skillMd": "da1ffb96a3986382f80040cfde8e361b62bad13b"
+      },
+      "beta": {
+        "tree": "4ddfc5e154ff6d326c461fe491dc2b5a4e2bf566",
+        "skillMd": "da1ffb96a3986382f80040cfde8e361b62bad13b"
+      }
+    },
+    "engineer/ak-gkg": {
+      "id": "ak-gkg",
+      "sourceKit": "engineer",
+      "gitPath": {
+        "stable": "kits/engineer/skills/ak-gkg",
+        "beta": "kits/engineer/skills/ak-gkg"
+      },
+      "surfaces": {
+        "stable": [
+          "engineer"
+        ],
+        "beta": [
+          "engineer"
+        ]
+      },
+      "stable": {
+        "tree": "f34ce513e75b302688d0095d75c169a2a754714c",
+        "skillMd": "1ab2be6d20ce66083d59d590712931ab2e3dd193"
+      },
+      "beta": {
+        "tree": "f34ce513e75b302688d0095d75c169a2a754714c",
+        "skillMd": "1ab2be6d20ce66083d59d590712931ab2e3dd193"
+      }
+    },
+    "engineer/ak-goal-warmup": {
+      "id": "ak-goal-warmup",
+      "sourceKit": "engineer",
+      "gitPath": {
+        "stable": "kits/engineer/skills/ak-goal-warmup",
+        "beta": "kits/engineer/skills/ak-goal-warmup"
+      },
+      "surfaces": {
+        "stable": [
+          "engineer"
+        ],
+        "beta": [
+          "engineer"
+        ]
+      },
+      "stable": {
+        "tree": "7701971ba4081766be97ad7fab113be0fa62848c",
+        "skillMd": "19b4b69d577a9d3fc6881ba72b0969f722b1d3be"
+      },
+      "beta": {
+        "tree": "7701971ba4081766be97ad7fab113be0fa62848c",
+        "skillMd": "19b4b69d577a9d3fc6881ba72b0969f722b1d3be"
+      }
+    },
+    "engineer/ak-graphify": {
+      "id": "ak-graphify",
+      "sourceKit": "engineer",
+      "gitPath": {
+        "stable": "kits/engineer/skills/ak-graphify",
+        "beta": "kits/engineer/skills/ak-graphify"
+      },
+      "surfaces": {
+        "stable": [
+          "engineer"
+        ],
+        "beta": [
+          "engineer"
+        ]
+      },
+      "stable": {
+        "tree": "b67a17433407ca40679a6e177469c111dc6d3263",
+        "skillMd": "9629bf38acbff460a28da3dc770c187036b9f320"
+      },
+      "beta": {
+        "tree": "b67a17433407ca40679a6e177469c111dc6d3263",
+        "skillMd": "9629bf38acbff460a28da3dc770c187036b9f320"
+      }
+    },
+    "engineer/ak-handover": {
+      "id": "ak-handover",
+      "sourceKit": "engineer",
+      "gitPath": {
+        "stable": "kits/engineer/skills/ak-handover",
+        "beta": "kits/engineer/skills/ak-handover"
+      },
+      "surfaces": {
+        "stable": [
+          "engineer"
+        ],
+        "beta": [
+          "engineer"
+        ]
+      },
+      "stable": {
+        "tree": "86017e09d008109ba6c33b8a2eda62c8112d760d",
+        "skillMd": "6169afc00abf23323f7a962082f4a4acca941dab"
+      },
+      "beta": {
+        "tree": "86017e09d008109ba6c33b8a2eda62c8112d760d",
+        "skillMd": "6169afc00abf23323f7a962082f4a4acca941dab"
+      }
+    },
+    "engineer/ak-help": {
+      "id": "ak-help",
+      "sourceKit": "engineer",
+      "gitPath": {
+        "stable": "kits/engineer/skills/ak-help",
+        "beta": "kits/engineer/skills/ak-help"
+      },
+      "surfaces": {
+        "stable": [
+          "engineer"
+        ],
+        "beta": [
+          "engineer"
+        ]
+      },
+      "stable": {
+        "tree": "ae077949adeb80a60baefbb363b846323d416ff7",
+        "skillMd": "9ad62e56c31fd3a52177e668364a62c77943dddb"
+      },
+      "beta": {
+        "tree": "ae077949adeb80a60baefbb363b846323d416ff7",
+        "skillMd": "9ad62e56c31fd3a52177e668364a62c77943dddb"
+      }
+    },
+    "engineer/ak-issue-to-plan": {
+      "id": "ak-issue-to-plan",
+      "sourceKit": "engineer",
+      "gitPath": {
+        "stable": "kits/engineer/skills/ak-issue-to-plan",
+        "beta": "kits/engineer/skills/ak-issue-to-plan"
+      },
+      "surfaces": {
+        "stable": [
+          "engineer"
+        ],
+        "beta": [
+          "engineer"
+        ]
+      },
+      "stable": {
+        "tree": "5d8fc882e595f2134c6fdda3c6b3222c637d51f1",
+        "skillMd": "b5b6f3355ab5afa8b5e7a1ac24f799bd9dd7d6a9"
+      },
+      "beta": {
+        "tree": "a4fb23e340b12556fc5a1d9dd56868eded65714c",
+        "skillMd": "f7e39506c87db59a6405049eccb2c6f2bca7e7b1"
+      }
+    },
+    "engineer/ak-llms": {
+      "id": "ak-llms",
+      "sourceKit": "engineer",
+      "gitPath": {
+        "stable": "kits/engineer/skills/ak-llms",
+        "beta": "kits/engineer/skills/ak-llms"
+      },
+      "surfaces": {
+        "stable": [
+          "engineer"
+        ],
+        "beta": [
+          "engineer"
+        ]
+      },
+      "stable": {
+        "tree": "06d433341d4073598bdb4d8249cf43b1f346847c",
+        "skillMd": "471f8c20bfa9065ff5c1c4ee6ccda4c63dba9471"
+      },
+      "beta": {
+        "tree": "06d433341d4073598bdb4d8249cf43b1f346847c",
+        "skillMd": "471f8c20bfa9065ff5c1c4ee6ccda4c63dba9471"
+      }
+    },
+    "engineer/ak-loop": {
+      "id": "ak-loop",
+      "sourceKit": "engineer",
+      "gitPath": {
+        "stable": "kits/engineer/skills/ak-loop",
+        "beta": "kits/engineer/skills/ak-loop"
+      },
+      "surfaces": {
+        "stable": [
+          "engineer"
+        ],
+        "beta": [
+          "engineer"
+        ]
+      },
+      "stable": {
+        "tree": "50fad064b666ad643a7232f432457791f9c06ec2",
+        "skillMd": "22e31acbf5cf147dc49f16529298ab731d7602f5"
+      },
+      "beta": {
+        "tree": "50fad064b666ad643a7232f432457791f9c06ec2",
+        "skillMd": "22e31acbf5cf147dc49f16529298ab731d7602f5"
+      }
+    },
+    "engineer/ak-mintlify": {
+      "id": "ak-mintlify",
+      "sourceKit": "engineer",
+      "gitPath": {
+        "stable": "kits/engineer/skills/ak-mintlify",
+        "beta": "kits/engineer/skills/ak-mintlify"
+      },
+      "surfaces": {
+        "stable": [
+          "engineer"
+        ],
+        "beta": [
+          "engineer"
+        ]
+      },
+      "stable": {
+        "tree": "e7be175cb6a076b38fa9af0e6df70d0df6e0d74d",
+        "skillMd": "963adceb69a8363adc47a2cdb7da1d350c918527"
+      },
+      "beta": {
+        "tree": "e7be175cb6a076b38fa9af0e6df70d0df6e0d74d",
+        "skillMd": "963adceb69a8363adc47a2cdb7da1d350c918527"
+      }
+    },
+    "engineer/ak-mobile-development": {
+      "id": "ak-mobile-development",
+      "sourceKit": "engineer",
+      "gitPath": {
+        "stable": "kits/engineer/skills/ak-mobile-development",
+        "beta": "kits/engineer/skills/ak-mobile-development"
+      },
+      "surfaces": {
+        "stable": [
+          "engineer"
+        ],
+        "beta": [
+          "engineer"
+        ]
+      },
+      "stable": {
+        "tree": "996b2e6cef4a1b17d8022459b232490efb794723",
+        "skillMd": "cb9996497db6e70f0d3fb4d0c682e1efa4c5b4a3"
+      },
+      "beta": {
+        "tree": "996b2e6cef4a1b17d8022459b232490efb794723",
+        "skillMd": "cb9996497db6e70f0d3fb4d0c682e1efa4c5b4a3"
+      }
+    },
+    "engineer/ak-orchestrate": {
+      "id": "ak-orchestrate",
+      "sourceKit": "engineer",
+      "gitPath": {
+        "stable": "kits/engineer/skills/ak-orchestrate",
+        "beta": "kits/engineer/skills/ak-orchestrate"
+      },
+      "surfaces": {
+        "stable": [
+          "engineer"
+        ],
+        "beta": [
+          "engineer"
+        ]
+      },
+      "stable": {
+        "tree": "1185bec15bc66a8b4af8bf0aefaaee8666da2db1",
+        "skillMd": "293aad858d00376e9e89c6d9acb76ca12b8f5df3"
+      },
+      "beta": {
+        "tree": "1185bec15bc66a8b4af8bf0aefaaee8666da2db1",
+        "skillMd": "293aad858d00376e9e89c6d9acb76ca12b8f5df3"
+      }
+    },
+    "engineer/ak-plan": {
+      "id": "ak-plan",
+      "sourceKit": "engineer",
+      "gitPath": {
+        "stable": "kits/engineer/skills/ak-plan",
+        "beta": "kits/engineer/skills/ak-plan"
+      },
+      "surfaces": {
+        "stable": [
+          "engineer"
+        ],
+        "beta": [
+          "engineer"
+        ]
+      },
+      "stable": {
+        "tree": "a516defa795ce33b6a2b12a30d67320b47acb4e5",
+        "skillMd": "b2f624881bd377b5f3f6c8de37b949e72de0168c"
+      },
+      "beta": {
+        "tree": "3c579d0c0bfd1abba435fccdf01f60fbfee0f2ae",
+        "skillMd": "650f27785ac0bf6c432e38cef9414ec671df0b2e"
+      }
+    },
+    "engineer/ak-predict": {
+      "id": "ak-predict",
+      "sourceKit": "engineer",
+      "gitPath": {
+        "stable": "kits/engineer/skills/ak-predict",
+        "beta": "kits/engineer/skills/ak-predict"
+      },
+      "surfaces": {
+        "stable": [
+          "engineer"
+        ],
+        "beta": [
+          "engineer"
+        ]
+      },
+      "stable": {
+        "tree": "784ecd90761137b700b1487a9d83a4364bf828fb",
+        "skillMd": "5c12351de52c6e89d490ec39b80589a82b18360b"
+      },
+      "beta": {
+        "tree": "784ecd90761137b700b1487a9d83a4364bf828fb",
+        "skillMd": "5c12351de52c6e89d490ec39b80589a82b18360b"
+      }
+    },
+    "engineer/ak-project-management": {
+      "id": "ak-project-management",
+      "sourceKit": "engineer",
+      "gitPath": {
+        "stable": "kits/engineer/skills/ak-project-management",
+        "beta": "kits/engineer/skills/ak-project-management"
+      },
+      "surfaces": {
+        "stable": [
+          "engineer"
+        ],
+        "beta": [
+          "engineer"
+        ]
+      },
+      "stable": {
+        "tree": "3e1839b9dbcc7e7fb16ba75293ab943dfc23d79c",
+        "skillMd": "96195ced2aff6eaa8e8fd11c6b191a129f714a01"
+      },
+      "beta": {
+        "tree": "3e1839b9dbcc7e7fb16ba75293ab943dfc23d79c",
+        "skillMd": "96195ced2aff6eaa8e8fd11c6b191a129f714a01"
+      }
+    },
+    "engineer/ak-project-organization": {
+      "id": "ak-project-organization",
+      "sourceKit": "engineer",
+      "gitPath": {
+        "stable": "kits/engineer/skills/ak-project-organization",
+        "beta": "kits/engineer/skills/ak-project-organization"
+      },
+      "surfaces": {
+        "stable": [
+          "engineer"
+        ],
+        "beta": [
+          "engineer"
+        ]
+      },
+      "stable": {
+        "tree": "ba2eff5de24b3cfc34a27df3d5a8c96f21c19816",
+        "skillMd": "bc37b7863dc41e3ae3e26427325c3ba64cefdd73"
+      },
+      "beta": {
+        "tree": "ba2eff5de24b3cfc34a27df3d5a8c96f21c19816",
+        "skillMd": "bc37b7863dc41e3ae3e26427325c3ba64cefdd73"
+      }
+    },
+    "engineer/ak-react-best-practices": {
+      "id": "ak-react-best-practices",
+      "sourceKit": "engineer",
+      "gitPath": {
+        "stable": "kits/engineer/skills/ak-react-best-practices",
+        "beta": "kits/engineer/skills/ak-react-best-practices"
+      },
+      "surfaces": {
+        "stable": [
+          "engineer"
+        ],
+        "beta": [
+          "engineer"
+        ]
+      },
+      "stable": {
+        "tree": "dcec63865b85448507db0df9bfd671b5893646b8",
+        "skillMd": "0490449d53cbb9f79ea7867745575c2ed240afc7"
+      },
+      "beta": {
+        "tree": "dcec63865b85448507db0df9bfd671b5893646b8",
+        "skillMd": "0490449d53cbb9f79ea7867745575c2ed240afc7"
+      }
+    },
+    "engineer/ak-research": {
+      "id": "ak-research",
+      "sourceKit": "engineer",
+      "gitPath": {
+        "stable": "kits/engineer/skills/ak-research",
+        "beta": "kits/engineer/skills/ak-research"
+      },
+      "surfaces": {
+        "stable": [
+          "engineer"
+        ],
+        "beta": [
+          "engineer"
+        ]
+      },
+      "stable": {
+        "tree": "a8b4c775cd49ae71e0a64099d3cb8bb6841a5249",
+        "skillMd": "a25c260e01e727bc4c8a1351cf08d49298985791"
+      },
+      "beta": {
+        "tree": "a8b4c775cd49ae71e0a64099d3cb8bb6841a5249",
+        "skillMd": "a25c260e01e727bc4c8a1351cf08d49298985791"
+      }
+    },
+    "engineer/ak-retro": {
+      "id": "ak-retro",
+      "sourceKit": "engineer",
+      "gitPath": {
+        "stable": "kits/engineer/skills/ak-retro",
+        "beta": "kits/engineer/skills/ak-retro"
+      },
+      "surfaces": {
+        "stable": [
+          "engineer"
+        ],
+        "beta": [
+          "engineer"
+        ]
+      },
+      "stable": {
+        "tree": "4e62d734d051bc4487a3f209eaa44b9d08096d35",
+        "skillMd": "51938464d9037483516daf215da2b2ab8c8a438e"
+      },
+      "beta": {
+        "tree": "ea4b1c44c80ed5936cbf2ec9436bc4e868c56e08",
+        "skillMd": "916c36adc86748fda00867e6eed6739a9020ac37"
+      }
+    },
+    "engineer/ak-scenario": {
+      "id": "ak-scenario",
+      "sourceKit": "engineer",
+      "gitPath": {
+        "stable": "kits/engineer/skills/ak-scenario",
+        "beta": "kits/engineer/skills/ak-scenario"
+      },
+      "surfaces": {
+        "stable": [
+          "engineer"
+        ],
+        "beta": [
+          "engineer"
+        ]
+      },
+      "stable": {
+        "tree": "e959b2f36a02065b9a3e29b693f18c7a43818989",
+        "skillMd": "93686aa94d16fec6626926e51a0b3ec39c324c33"
+      },
+      "beta": {
+        "tree": "e959b2f36a02065b9a3e29b693f18c7a43818989",
+        "skillMd": "93686aa94d16fec6626926e51a0b3ec39c324c33"
+      }
+    },
+    "engineer/ak-security": {
+      "id": "ak-security",
+      "sourceKit": "engineer",
+      "gitPath": {
+        "stable": "kits/engineer/skills/ak-security",
+        "beta": "kits/engineer/skills/ak-security"
+      },
+      "surfaces": {
+        "stable": [
+          "engineer"
+        ],
+        "beta": [
+          "engineer"
+        ]
+      },
+      "stable": {
+        "tree": "c33e866acb3bd1678b5f5aecb010c323afc7b4f5",
+        "skillMd": "89f875a10b0991df3059f55a9f022b1bd3f09e62"
+      },
+      "beta": {
+        "tree": "c33e866acb3bd1678b5f5aecb010c323afc7b4f5",
+        "skillMd": "89f875a10b0991df3059f55a9f022b1bd3f09e62"
+      }
+    },
+    "engineer/ak-security-scan": {
+      "id": "ak-security-scan",
+      "sourceKit": "engineer",
+      "gitPath": {
+        "stable": "kits/engineer/skills/ak-security-scan",
+        "beta": "kits/engineer/skills/ak-security-scan"
+      },
+      "surfaces": {
+        "stable": [
+          "engineer"
+        ],
+        "beta": [
+          "engineer"
+        ]
+      },
+      "stable": {
+        "tree": "61653e09b57da174a949ae89a4b5861ef25f4841",
+        "skillMd": "6113d78621e391393735c8bfe81d0c43a706616d"
+      },
+      "beta": {
+        "tree": "61653e09b57da174a949ae89a4b5861ef25f4841",
+        "skillMd": "6113d78621e391393735c8bfe81d0c43a706616d"
+      }
+    },
+    "engineer/ak-ship": {
+      "id": "ak-ship",
+      "sourceKit": "engineer",
+      "gitPath": {
+        "stable": "kits/engineer/skills/ak-ship",
+        "beta": "kits/engineer/skills/ak-ship"
+      },
+      "surfaces": {
+        "stable": [
+          "engineer"
+        ],
+        "beta": [
+          "engineer"
+        ]
+      },
+      "stable": {
+        "tree": "1a742b41770e179da0897d06f6730b2dbbecbf02",
+        "skillMd": "3c0b095877de51260ee715be1a886dc62b732b48"
+      },
+      "beta": {
+        "tree": "1a742b41770e179da0897d06f6730b2dbbecbf02",
+        "skillMd": "3c0b095877de51260ee715be1a886dc62b732b48"
+      }
+    },
+    "engineer/ak-show-off": {
+      "id": "ak-show-off",
+      "sourceKit": "engineer",
+      "gitPath": {
+        "stable": "kits/engineer/skills/ak-show-off",
+        "beta": "kits/engineer/skills/ak-show-off"
+      },
+      "surfaces": {
+        "stable": [
+          "engineer"
+        ],
+        "beta": [
+          "engineer"
+        ]
+      },
+      "stable": {
+        "tree": "568735a3825ec03a74c7b43846b6619ddecbe1db",
+        "skillMd": "c6cb33c0a537f4aad7720be0dfc57ec2d0d996c4"
+      },
+      "beta": {
+        "tree": "b061dc9f1df53680d40efddafb39824f981a6006",
+        "skillMd": "02b1fff2abee3aa5f3f2f48e8d45f888ad6dfb42"
+      }
+    },
+    "engineer/ak-stitch": {
+      "id": "ak-stitch",
+      "sourceKit": "engineer",
+      "gitPath": {
+        "stable": "kits/engineer/skills/ak-stitch",
+        "beta": "kits/engineer/skills/ak-stitch"
+      },
+      "surfaces": {
+        "stable": [
+          "engineer"
+        ],
+        "beta": [
+          "engineer"
+        ]
+      },
+      "stable": {
+        "tree": "080641da91817045d677b7d3ceb3cefd7d905da0",
+        "skillMd": "624659bb0e32e4e52893b86533e6cac1d7116cb6"
+      },
+      "beta": {
+        "tree": "080641da91817045d677b7d3ceb3cefd7d905da0",
+        "skillMd": "624659bb0e32e4e52893b86533e6cac1d7116cb6"
+      }
+    },
+    "engineer/ak-tanstack": {
+      "id": "ak-tanstack",
+      "sourceKit": "engineer",
+      "gitPath": {
+        "stable": "kits/engineer/skills/ak-tanstack",
+        "beta": "kits/engineer/skills/ak-tanstack"
+      },
+      "surfaces": {
+        "stable": [
+          "engineer"
+        ],
+        "beta": [
+          "engineer"
+        ]
+      },
+      "stable": {
+        "tree": "9ff86bd0d6d7d52127f301d60bee2192a99da671",
+        "skillMd": "149944e637ce9e4e743e701d906c821c0549997b"
+      },
+      "beta": {
+        "tree": "9ff86bd0d6d7d52127f301d60bee2192a99da671",
+        "skillMd": "149944e637ce9e4e743e701d906c821c0549997b"
+      }
+    },
+    "engineer/ak-team": {
+      "id": "ak-team",
+      "sourceKit": "engineer",
+      "gitPath": {
+        "stable": "kits/engineer/skills/ak-team",
+        "beta": "kits/engineer/skills/ak-team"
+      },
+      "surfaces": {
+        "stable": [
+          "engineer"
+        ],
+        "beta": [
+          "engineer"
+        ]
+      },
+      "stable": {
+        "tree": "ebce0f30a8bcb051fb11551549afc3903b8e8742",
+        "skillMd": "59dea2038a81005c775c34d56601ac39f8e576a7"
+      },
+      "beta": {
+        "tree": "ebce0f30a8bcb051fb11551549afc3903b8e8742",
+        "skillMd": "59dea2038a81005c775c34d56601ac39f8e576a7"
+      }
+    },
+    "engineer/ak-vibe": {
+      "id": "ak-vibe",
+      "sourceKit": "engineer",
+      "gitPath": {
+        "stable": "kits/engineer/skills/ak-vibe",
+        "beta": "kits/engineer/skills/ak-vibe"
+      },
+      "surfaces": {
+        "stable": [
+          "engineer"
+        ],
+        "beta": [
+          "engineer"
+        ]
+      },
+      "stable": {
+        "tree": "ea3b810b6e1ecba24e2f48f9afa0293c8da35642",
+        "skillMd": "2f1bc19dc8bebf2962a964666fe02ad907a61690"
+      },
+      "beta": {
+        "tree": "ea3b810b6e1ecba24e2f48f9afa0293c8da35642",
+        "skillMd": "2f1bc19dc8bebf2962a964666fe02ad907a61690"
+      }
+    },
+    "engineer/ak-web-testing": {
+      "id": "ak-web-testing",
+      "sourceKit": "engineer",
+      "gitPath": {
+        "stable": "kits/engineer/skills/ak-web-testing",
+        "beta": "kits/engineer/skills/ak-web-testing"
+      },
+      "surfaces": {
+        "stable": [
+          "engineer"
+        ],
+        "beta": [
+          "engineer"
+        ]
+      },
+      "stable": {
+        "tree": "b0495fc047e3f2e913a0ffb2d47d9f7a1f0bbe22",
+        "skillMd": "ec8411331d01344ab99bf90c9e3092fa9625c452"
+      },
+      "beta": {
+        "tree": "b0495fc047e3f2e913a0ffb2d47d9f7a1f0bbe22",
+        "skillMd": "ec8411331d01344ab99bf90c9e3092fa9625c452"
+      }
+    },
+    "engineer/ak-xia": {
+      "id": "ak-xia",
+      "sourceKit": "engineer",
+      "gitPath": {
+        "stable": "kits/engineer/skills/ak-xia",
+        "beta": "kits/engineer/skills/ak-xia"
+      },
+      "surfaces": {
+        "stable": [
+          "engineer"
+        ],
+        "beta": [
+          "engineer"
+        ]
+      },
+      "stable": {
+        "tree": "d75824c9918630c032adc4450d8a29ff16fe2ae1",
+        "skillMd": "c6993f81673d6ffbcec1d6d53615d3d637772b20"
+      },
+      "beta": {
+        "tree": "d75824c9918630c032adc4450d8a29ff16fe2ae1",
+        "skillMd": "c6993f81673d6ffbcec1d6d53615d3d637772b20"
+      }
+    },
+    "marketing/ak-ab-test-setup": {
+      "id": "ak-ab-test-setup",
+      "sourceKit": "marketing",
+      "gitPath": {
+        "stable": "kits/marketing/skills/ak-ab-test-setup",
+        "beta": "kits/marketing/skills/ak-ab-test-setup"
+      },
+      "surfaces": {
+        "stable": [
+          "marketing"
+        ],
+        "beta": [
+          "marketing"
+        ]
+      },
+      "stable": {
+        "tree": "c162190fddfb37987da67a83e3db89a1f5e02055",
+        "skillMd": "4e3a6c3aa8a137a69fccaa176bf83737added3e0"
+      },
+      "beta": {
+        "tree": "c162190fddfb37987da67a83e3db89a1f5e02055",
+        "skillMd": "4e3a6c3aa8a137a69fccaa176bf83737added3e0"
+      }
+    },
+    "marketing/ak-ads-management": {
+      "id": "ak-ads-management",
+      "sourceKit": "marketing",
+      "gitPath": {
+        "stable": "kits/marketing/skills/ak-ads-management",
+        "beta": "kits/marketing/skills/ak-ads-management"
+      },
+      "surfaces": {
+        "stable": [
+          "marketing"
+        ],
+        "beta": [
+          "marketing"
+        ]
+      },
+      "stable": {
+        "tree": "eb89110181fa018b49190b725761961abff77ed5",
+        "skillMd": "a61063af6896e84cd3a3eaa0b47d92b0656d94d5"
+      },
+      "beta": {
+        "tree": "eb89110181fa018b49190b725761961abff77ed5",
+        "skillMd": "a61063af6896e84cd3a3eaa0b47d92b0656d94d5"
+      }
+    },
+    "marketing/ak-affiliate-marketing": {
+      "id": "ak-affiliate-marketing",
+      "sourceKit": "marketing",
+      "gitPath": {
+        "stable": "kits/marketing/skills/ak-affiliate-marketing",
+        "beta": "kits/marketing/skills/ak-affiliate-marketing"
+      },
+      "surfaces": {
+        "stable": [
+          "marketing"
+        ],
+        "beta": [
+          "marketing"
+        ]
+      },
+      "stable": {
+        "tree": "880897ab86ce4a7fe3a3961b24239d01aa6b158a",
+        "skillMd": "68e0c8dd290f1c597496bd071106948583ae13b9"
+      },
+      "beta": {
+        "tree": "880897ab86ce4a7fe3a3961b24239d01aa6b158a",
+        "skillMd": "68e0c8dd290f1c597496bd071106948583ae13b9"
+      }
+    },
+    "marketing/ak-analytics": {
+      "id": "ak-analytics",
+      "sourceKit": "marketing",
+      "gitPath": {
+        "stable": "kits/marketing/skills/ak-analytics",
+        "beta": "kits/marketing/skills/ak-analytics"
+      },
+      "surfaces": {
+        "stable": [
+          "marketing"
+        ],
+        "beta": [
+          "marketing"
+        ]
+      },
+      "stable": {
+        "tree": "9cfe571db452d69ed920371188bb99599a72b028",
+        "skillMd": "503e13f33823a490bf4f5c038364862df16b59f2"
+      },
+      "beta": {
+        "tree": "9cfe571db452d69ed920371188bb99599a72b028",
+        "skillMd": "503e13f33823a490bf4f5c038364862df16b59f2"
+      }
+    },
+    "marketing/ak-analyze": {
+      "id": "ak-analyze",
+      "sourceKit": "marketing",
+      "gitPath": {
+        "stable": "kits/marketing/skills/ak-analyze",
+        "beta": "kits/marketing/skills/ak-analyze"
+      },
+      "surfaces": {
+        "stable": [
+          "marketing"
+        ],
+        "beta": [
+          "marketing"
+        ]
+      },
+      "stable": {
+        "tree": "c80deef1ef8b2b914808c51742a64d0cda82ea74",
+        "skillMd": "f5ebc247ef3d8ffc4a04ac0a2f4891c62a160062"
+      },
+      "beta": {
+        "tree": "c80deef1ef8b2b914808c51742a64d0cda82ea74",
+        "skillMd": "f5ebc247ef3d8ffc4a04ac0a2f4891c62a160062"
+      }
+    },
+    "marketing/ak-assets-organizing": {
+      "id": "ak-assets-organizing",
+      "sourceKit": "marketing",
+      "gitPath": {
+        "stable": "kits/marketing/skills/ak-assets-organizing",
+        "beta": "kits/marketing/skills/ak-assets-organizing"
+      },
+      "surfaces": {
+        "stable": [
+          "marketing"
+        ],
+        "beta": [
+          "marketing"
+        ]
+      },
+      "stable": {
+        "tree": "2287f4d0753b117e7d7aefafbd4d3e2619181c5e",
+        "skillMd": "8d5d20a3588d926071d46fa3f2474b40078464dc"
+      },
+      "beta": {
+        "tree": "2287f4d0753b117e7d7aefafbd4d3e2619181c5e",
+        "skillMd": "8d5d20a3588d926071d46fa3f2474b40078464dc"
+      }
+    },
+    "marketing/ak-banner-design": {
+      "id": "ak-banner-design",
+      "sourceKit": "marketing",
+      "gitPath": {
+        "stable": "kits/marketing/skills/ak-banner-design",
+        "beta": "kits/marketing/skills/ak-banner-design"
+      },
+      "surfaces": {
+        "stable": [
+          "marketing"
+        ],
+        "beta": [
+          "marketing"
+        ]
+      },
+      "stable": {
+        "tree": "bdb9c712ed7e993a8d16b684c06d645dca8ee768",
+        "skillMd": "4715f5041c4082010b6dd535b4454a5634a16433"
+      },
+      "beta": {
+        "tree": "bdb9c712ed7e993a8d16b684c06d645dca8ee768",
+        "skillMd": "4715f5041c4082010b6dd535b4454a5634a16433"
+      }
+    },
+    "marketing/ak-brand": {
+      "id": "ak-brand",
+      "sourceKit": "marketing",
+      "gitPath": {
+        "stable": "kits/marketing/skills/ak-brand",
+        "beta": "kits/marketing/skills/ak-brand"
+      },
+      "surfaces": {
+        "stable": [
+          "marketing"
+        ],
+        "beta": [
+          "marketing"
+        ]
+      },
+      "stable": {
+        "tree": "eed2b0b36ab7b4183e8ce646af6323f65c406e5d",
+        "skillMd": "0a167e7b64a0d79cb5389f3f4f8a101d6378c921"
+      },
+      "beta": {
+        "tree": "eed2b0b36ab7b4183e8ce646af6323f65c406e5d",
+        "skillMd": "0a167e7b64a0d79cb5389f3f4f8a101d6378c921"
+      }
+    },
+    "marketing/ak-campaign": {
+      "id": "ak-campaign",
+      "sourceKit": "marketing",
+      "gitPath": {
+        "stable": "kits/marketing/skills/ak-campaign",
+        "beta": "kits/marketing/skills/ak-campaign"
+      },
+      "surfaces": {
+        "stable": [
+          "marketing"
+        ],
+        "beta": [
+          "marketing"
+        ]
+      },
+      "stable": {
+        "tree": "334450eddd89efc14f15be172346ad113023c929",
+        "skillMd": "87653aead3ea17288dbe45e55effbad4ce43b164"
+      },
+      "beta": {
+        "tree": "334450eddd89efc14f15be172346ad113023c929",
+        "skillMd": "87653aead3ea17288dbe45e55effbad4ce43b164"
+      }
+    },
+    "marketing/ak-cip-design": {
+      "id": "ak-cip-design",
+      "sourceKit": "marketing",
+      "gitPath": {
+        "stable": "kits/marketing/skills/ak-cip-design",
+        "beta": "kits/marketing/skills/ak-cip-design"
+      },
+      "surfaces": {
+        "stable": [
+          "marketing"
+        ],
+        "beta": [
+          "marketing"
+        ]
+      },
+      "stable": {
+        "tree": "c58c8139e3dec0e2ebdf69ee8ae2be9095787836",
+        "skillMd": "e2d7f8b304fd1c91c8f78b6bd664fe00e662bfdc"
+      },
+      "beta": {
+        "tree": "c58c8139e3dec0e2ebdf69ee8ae2be9095787836",
+        "skillMd": "e2d7f8b304fd1c91c8f78b6bd664fe00e662bfdc"
+      }
+    },
+    "marketing/ak-ckm-storage": {
+      "id": "ak-ckm-storage",
+      "sourceKit": "marketing",
+      "gitPath": {
+        "stable": "kits/marketing/skills/ak-ckm-storage",
+        "beta": "kits/marketing/skills/ak-ckm-storage"
+      },
+      "surfaces": {
+        "stable": [
+          "marketing"
+        ],
+        "beta": [
+          "marketing"
+        ]
+      },
+      "stable": {
+        "tree": "cd5a6ffcc326b11f3d7cf78723c8b20a82a39a5e",
+        "skillMd": "9f3c19ee51a565b687c25e8a75530084fe4674a5"
+      },
+      "beta": {
+        "tree": "cd5a6ffcc326b11f3d7cf78723c8b20a82a39a5e",
+        "skillMd": "9f3c19ee51a565b687c25e8a75530084fe4674a5"
+      }
+    },
+    "marketing/ak-claude-code": {
+      "id": "ak-claude-code",
+      "sourceKit": "marketing",
+      "gitPath": {
+        "stable": "kits/marketing/skills/ak-claude-code",
+        "beta": "kits/marketing/skills/ak-claude-code"
+      },
+      "surfaces": {
+        "stable": [
+          "marketing"
+        ],
+        "beta": [
+          "marketing"
+        ]
+      },
+      "stable": {
+        "tree": "c067bdf92aba1109ca483d22a641c35b850e7780",
+        "skillMd": "32d2615eed573c334e7fe02f58f02c827ea0a65a"
+      },
+      "beta": {
+        "tree": "c067bdf92aba1109ca483d22a641c35b850e7780",
+        "skillMd": "32d2615eed573c334e7fe02f58f02c827ea0a65a"
+      }
+    },
+    "marketing/ak-competitor": {
+      "id": "ak-competitor",
+      "sourceKit": "marketing",
+      "gitPath": {
+        "stable": "kits/marketing/skills/ak-competitor",
+        "beta": "kits/marketing/skills/ak-competitor"
+      },
+      "surfaces": {
+        "stable": [
+          "marketing"
+        ],
+        "beta": [
+          "marketing"
+        ]
+      },
+      "stable": {
+        "tree": "d8b03a0e9c44619bd4a644781f810c36bfaffa04",
+        "skillMd": "ed63f19f0e1ccb74d9a5cf49be60baa3b7fe4fd6"
+      },
+      "beta": {
+        "tree": "d8b03a0e9c44619bd4a644781f810c36bfaffa04",
+        "skillMd": "ed63f19f0e1ccb74d9a5cf49be60baa3b7fe4fd6"
+      }
+    },
+    "marketing/ak-content-hub": {
+      "id": "ak-content-hub",
+      "sourceKit": "marketing",
+      "gitPath": {
+        "stable": "kits/marketing/skills/ak-content-hub",
+        "beta": "kits/marketing/skills/ak-content-hub"
+      },
+      "surfaces": {
+        "stable": [
+          "marketing"
+        ],
+        "beta": [
+          "marketing"
+        ]
+      },
+      "stable": {
+        "tree": "da318e74c01fd15842ab72c628fe428863d8f98d",
+        "skillMd": "b501f69c136a2be19be4c41eb6caaad9a1bf0a8f"
+      },
+      "beta": {
+        "tree": "da318e74c01fd15842ab72c628fe428863d8f98d",
+        "skillMd": "b501f69c136a2be19be4c41eb6caaad9a1bf0a8f"
+      }
+    },
+    "marketing/ak-content-marketing": {
+      "id": "ak-content-marketing",
+      "sourceKit": "marketing",
+      "gitPath": {
+        "stable": "kits/marketing/skills/ak-content-marketing",
+        "beta": "kits/marketing/skills/ak-content-marketing"
+      },
+      "surfaces": {
+        "stable": [
+          "marketing"
+        ],
+        "beta": [
+          "marketing"
+        ]
+      },
+      "stable": {
+        "tree": "f0f7e2747be155171eac9c5f182f6fabe28035b0",
+        "skillMd": "2ec4f1ddfdc85964f1404549d27fc8feee036793"
+      },
+      "beta": {
+        "tree": "f0f7e2747be155171eac9c5f182f6fabe28035b0",
+        "skillMd": "2ec4f1ddfdc85964f1404549d27fc8feee036793"
+      }
+    },
+    "marketing/ak-creativity": {
+      "id": "ak-creativity",
+      "sourceKit": "marketing",
+      "gitPath": {
+        "stable": "kits/marketing/skills/ak-creativity",
+        "beta": "kits/marketing/skills/ak-creativity"
+      },
+      "surfaces": {
+        "stable": [
+          "marketing"
+        ],
+        "beta": [
+          "marketing"
+        ]
+      },
+      "stable": {
+        "tree": "003e53e04e2cd42400e409a3bdae903d82ce64bc",
+        "skillMd": "4734c1267c01037c977e2eea013910a2ad1fa81f"
+      },
+      "beta": {
+        "tree": "003e53e04e2cd42400e409a3bdae903d82ce64bc",
+        "skillMd": "4734c1267c01037c977e2eea013910a2ad1fa81f"
+      }
+    },
+    "marketing/ak-dashboard": {
+      "id": "ak-dashboard",
+      "sourceKit": "marketing",
+      "gitPath": {
+        "stable": "kits/marketing/skills/ak-dashboard",
+        "beta": "kits/marketing/skills/ak-dashboard"
+      },
+      "surfaces": {
+        "stable": [
+          "marketing"
+        ],
+        "beta": [
+          "marketing"
+        ]
+      },
+      "stable": {
+        "tree": "4c1eabbe6532745baed1c9b32ddd5d5981048262",
+        "skillMd": "8d48642659af41952b321060f30a422bae25c728"
+      },
+      "beta": {
+        "tree": "4c1eabbe6532745baed1c9b32ddd5d5981048262",
+        "skillMd": "8d48642659af41952b321060f30a422bae25c728"
+      }
+    },
+    "marketing/ak-debugging": {
+      "id": "ak-debugging",
+      "sourceKit": "marketing",
+      "gitPath": {
+        "stable": "kits/marketing/skills/ak-debugging",
+        "beta": "kits/marketing/skills/ak-debugging"
+      },
+      "surfaces": {
+        "stable": [
+          "marketing"
+        ],
+        "beta": [
+          "marketing"
+        ]
+      },
+      "stable": {
+        "tree": "2c7b2b689d78e2d38510549a9ece81c98bc5ab54",
+        "skillMd": "699dd53ba93e5d2a8691d7a85c6db0fa3a1d9ff6"
+      },
+      "beta": {
+        "tree": "2c7b2b689d78e2d38510549a9ece81c98bc5ab54",
+        "skillMd": "699dd53ba93e5d2a8691d7a85c6db0fa3a1d9ff6"
+      }
+    },
+    "marketing/ak-design-system": {
+      "id": "ak-design-system",
+      "sourceKit": "marketing",
+      "gitPath": {
+        "stable": "kits/marketing/skills/ak-design-system",
+        "beta": "kits/marketing/skills/ak-design-system"
+      },
+      "surfaces": {
+        "stable": [
+          "marketing"
+        ],
+        "beta": [
+          "marketing"
+        ]
+      },
+      "stable": {
+        "tree": "26362c4f686f25b056866a5939046390d42d1297",
+        "skillMd": "8f3fa9ac736628b9fffe848565789cd6c373bb2c"
+      },
+      "beta": {
+        "tree": "26362c4f686f25b056866a5939046390d42d1297",
+        "skillMd": "8f3fa9ac736628b9fffe848565789cd6c373bb2c"
+      }
+    },
+    "marketing/ak-elevenlabs": {
+      "id": "ak-elevenlabs",
+      "sourceKit": "marketing",
+      "gitPath": {
+        "stable": "kits/marketing/skills/ak-elevenlabs",
+        "beta": "kits/marketing/skills/ak-elevenlabs"
+      },
+      "surfaces": {
+        "stable": [
+          "marketing"
+        ],
+        "beta": [
+          "marketing"
+        ]
+      },
+      "stable": {
+        "tree": "5ba358e047f58f4d25a7bb7cc8c8bf49da0ac9e1",
+        "skillMd": "377c22dfbbb41a147948b5d29613d3987a502c14"
+      },
+      "beta": {
+        "tree": "5ba358e047f58f4d25a7bb7cc8c8bf49da0ac9e1",
+        "skillMd": "377c22dfbbb41a147948b5d29613d3987a502c14"
+      }
+    },
+    "marketing/ak-email": {
+      "id": "ak-email",
+      "sourceKit": "marketing",
+      "gitPath": {
+        "stable": "kits/marketing/skills/ak-email",
+        "beta": "kits/marketing/skills/ak-email"
+      },
+      "surfaces": {
+        "stable": [
+          "marketing"
+        ],
+        "beta": [
+          "marketing"
+        ]
+      },
+      "stable": {
+        "tree": "e2732e7e151efaa39003a7c697546f74b7823af5",
+        "skillMd": "846ed86145aa8a5fb33e223a2d6a47467ea59c17"
+      },
+      "beta": {
+        "tree": "e2732e7e151efaa39003a7c697546f74b7823af5",
+        "skillMd": "846ed86145aa8a5fb33e223a2d6a47467ea59c17"
+      }
+    },
+    "marketing/ak-form-cro": {
+      "id": "ak-form-cro",
+      "sourceKit": "marketing",
+      "gitPath": {
+        "stable": "kits/marketing/skills/ak-form-cro",
+        "beta": "kits/marketing/skills/ak-form-cro"
+      },
+      "surfaces": {
+        "stable": [
+          "marketing"
+        ],
+        "beta": [
+          "marketing"
+        ]
+      },
+      "stable": {
+        "tree": "76e83e5bbd89938edb8e226cf7f5dad40c02c33b",
+        "skillMd": "3ca0a3e2c1bb439e82f10f5bbb4ca8b0959a2cd3"
+      },
+      "beta": {
+        "tree": "76e83e5bbd89938edb8e226cf7f5dad40c02c33b",
+        "skillMd": "3ca0a3e2c1bb439e82f10f5bbb4ca8b0959a2cd3"
+      }
+    },
+    "marketing/ak-free-tool-strategy": {
+      "id": "ak-free-tool-strategy",
+      "sourceKit": "marketing",
+      "gitPath": {
+        "stable": "kits/marketing/skills/ak-free-tool-strategy",
+        "beta": "kits/marketing/skills/ak-free-tool-strategy"
+      },
+      "surfaces": {
+        "stable": [
+          "marketing"
+        ],
+        "beta": [
+          "marketing"
+        ]
+      },
+      "stable": {
+        "tree": "1e0f0ff9bd9929bc2b91397003f0a1c33ce0dc83",
+        "skillMd": "cd92072ca92e293e8469314d5ca95a4b0952c903"
+      },
+      "beta": {
+        "tree": "1e0f0ff9bd9929bc2b91397003f0a1c33ce0dc83",
+        "skillMd": "cd92072ca92e293e8469314d5ca95a4b0952c903"
+      }
+    },
+    "marketing/ak-funnel": {
+      "id": "ak-funnel",
+      "sourceKit": "marketing",
+      "gitPath": {
+        "stable": "kits/marketing/skills/ak-funnel",
+        "beta": "kits/marketing/skills/ak-funnel"
+      },
+      "surfaces": {
+        "stable": [
+          "marketing"
+        ],
+        "beta": [
+          "marketing"
+        ]
+      },
+      "stable": {
+        "tree": "b18ce075bd63e49f766e30142f5b0939d8c0a7d4",
+        "skillMd": "4335fb4439e610a19d40765c164086e787f5cbec"
+      },
+      "beta": {
+        "tree": "b18ce075bd63e49f766e30142f5b0939d8c0a7d4",
+        "skillMd": "4335fb4439e610a19d40765c164086e787f5cbec"
+      }
+    },
+    "marketing/ak-gamification-marketing": {
+      "id": "ak-gamification-marketing",
+      "sourceKit": "marketing",
+      "gitPath": {
+        "stable": "kits/marketing/skills/ak-gamification-marketing",
+        "beta": "kits/marketing/skills/ak-gamification-marketing"
+      },
+      "surfaces": {
+        "stable": [
+          "marketing"
+        ],
+        "beta": [
+          "marketing"
+        ]
+      },
+      "stable": {
+        "tree": "7256a288c600fa342b388ae294c11760e3695ac4",
+        "skillMd": "731eee08d8a7306b4e5001e0d8b14fae6ea4c6b3"
+      },
+      "beta": {
+        "tree": "7256a288c600fa342b388ae294c11760e3695ac4",
+        "skillMd": "731eee08d8a7306b4e5001e0d8b14fae6ea4c6b3"
+      }
+    },
+    "marketing/ak-hub": {
+      "id": "ak-hub",
+      "sourceKit": "marketing",
+      "gitPath": {
+        "stable": "kits/marketing/skills/ak-hub",
+        "beta": "kits/marketing/skills/ak-hub"
+      },
+      "surfaces": {
+        "stable": [
+          "marketing"
+        ],
+        "beta": [
+          "marketing"
+        ]
+      },
+      "stable": {
+        "tree": "c8520c0d30040f8ee4d0860e28240389e4b6c7f9",
+        "skillMd": "a25b952085bb9a47a82fb638e3a45fb455bc75e1"
+      },
+      "beta": {
+        "tree": "c8520c0d30040f8ee4d0860e28240389e4b6c7f9",
+        "skillMd": "a25b952085bb9a47a82fb638e3a45fb455bc75e1"
+      }
+    },
+    "marketing/ak-init": {
+      "id": "ak-init",
+      "sourceKit": "marketing",
+      "gitPath": {
+        "stable": "kits/marketing/skills/ak-init",
+        "beta": "kits/marketing/skills/ak-init"
+      },
+      "surfaces": {
+        "stable": [
+          "marketing"
+        ],
+        "beta": [
+          "marketing"
+        ]
+      },
+      "stable": {
+        "tree": "c43d31e0fe489ce00e3976f3f5e1a12b28935b03",
+        "skillMd": "8a172d87e563b8dde0449cb2941b31ead4ace254"
+      },
+      "beta": {
+        "tree": "c43d31e0fe489ce00e3976f3f5e1a12b28935b03",
+        "skillMd": "8a172d87e563b8dde0449cb2941b31ead4ace254"
+      }
+    },
+    "marketing/ak-kit-builder": {
+      "id": "ak-kit-builder",
+      "sourceKit": "marketing",
+      "gitPath": {
+        "stable": "kits/marketing/skills/ak-kit-builder",
+        "beta": "kits/marketing/skills/ak-kit-builder"
+      },
+      "surfaces": {
+        "stable": [
+          "marketing"
+        ],
+        "beta": [
+          "marketing"
+        ]
+      },
+      "stable": {
+        "tree": "c0bd0ccceaff0603c7100bde388cd28b9d4be0e0",
+        "skillMd": "fb27d2ffa00d866aaf4c6802e316e09e581f3bbe"
+      },
+      "beta": {
+        "tree": "c0bd0ccceaff0603c7100bde388cd28b9d4be0e0",
+        "skillMd": "fb27d2ffa00d866aaf4c6802e316e09e581f3bbe"
+      }
+    },
+    "marketing/ak-launch-strategy": {
+      "id": "ak-launch-strategy",
+      "sourceKit": "marketing",
+      "gitPath": {
+        "stable": "kits/marketing/skills/ak-launch-strategy",
+        "beta": "kits/marketing/skills/ak-launch-strategy"
+      },
+      "surfaces": {
+        "stable": [
+          "marketing"
+        ],
+        "beta": [
+          "marketing"
+        ]
+      },
+      "stable": {
+        "tree": "3f6dd256941abd9daf1804e267f27ffdc67cba23",
+        "skillMd": "6bac796951dd1ed2ee034e4bddf8b70cb99e4120"
+      },
+      "beta": {
+        "tree": "3f6dd256941abd9daf1804e267f27ffdc67cba23",
+        "skillMd": "6bac796951dd1ed2ee034e4bddf8b70cb99e4120"
+      }
+    },
+    "marketing/ak-logo-design": {
+      "id": "ak-logo-design",
+      "sourceKit": "marketing",
+      "gitPath": {
+        "stable": "kits/marketing/skills/ak-logo-design",
+        "beta": "kits/marketing/skills/ak-logo-design"
+      },
+      "surfaces": {
+        "stable": [
+          "marketing"
+        ],
+        "beta": [
+          "marketing"
+        ]
+      },
+      "stable": {
+        "tree": "7fc6881e685b0f9b11b420dff7bfc5ea5de6533f",
+        "skillMd": "9d3c6297a899cca01aa84367952f1be1f555d597"
+      },
+      "beta": {
+        "tree": "7fc6881e685b0f9b11b420dff7bfc5ea5de6533f",
+        "skillMd": "9d3c6297a899cca01aa84367952f1be1f555d597"
+      }
+    },
+    "marketing/ak-marketing-dashboard": {
+      "id": "ak-marketing-dashboard",
+      "sourceKit": "marketing",
+      "gitPath": {
+        "stable": "kits/marketing/skills/ak-marketing-dashboard",
+        "beta": "kits/marketing/skills/ak-marketing-dashboard"
+      },
+      "surfaces": {
+        "stable": [
+          "marketing"
+        ],
+        "beta": [
+          "marketing"
+        ]
+      },
+      "stable": {
+        "tree": "b6069c2662ac5db0c1ae963d0361c7145a24fe26",
+        "skillMd": "23da01c9b125d9cdd44865fd2f5fec80416b71e7"
+      },
+      "beta": {
+        "tree": "b6069c2662ac5db0c1ae963d0361c7145a24fe26",
+        "skillMd": "23da01c9b125d9cdd44865fd2f5fec80416b71e7"
+      }
+    },
+    "marketing/ak-marketing-ideas": {
+      "id": "ak-marketing-ideas",
+      "sourceKit": "marketing",
+      "gitPath": {
+        "stable": "kits/marketing/skills/ak-marketing-ideas",
+        "beta": "kits/marketing/skills/ak-marketing-ideas"
+      },
+      "surfaces": {
+        "stable": [
+          "marketing"
+        ],
+        "beta": [
+          "marketing"
+        ]
+      },
+      "stable": {
+        "tree": "f520949dc072cdd4659c9413541f80717c553441",
+        "skillMd": "f55637fcb46d3cd33b35b53dd09ebf4cf4cdf73e"
+      },
+      "beta": {
+        "tree": "f520949dc072cdd4659c9413541f80717c553441",
+        "skillMd": "f55637fcb46d3cd33b35b53dd09ebf4cf4cdf73e"
+      }
+    },
+    "marketing/ak-marketing-planning": {
+      "id": "ak-marketing-planning",
+      "sourceKit": "marketing",
+      "gitPath": {
+        "stable": "kits/marketing/skills/ak-marketing-planning",
+        "beta": "kits/marketing/skills/ak-marketing-planning"
+      },
+      "surfaces": {
+        "stable": [
+          "marketing"
+        ],
+        "beta": [
+          "marketing"
+        ]
+      },
+      "stable": {
+        "tree": "97741f25be98abb1c2be8960ba80776780c6c49f",
+        "skillMd": "de8572e283487d5dab8c633eb3e0159253a7ab2f"
+      },
+      "beta": {
+        "tree": "97741f25be98abb1c2be8960ba80776780c6c49f",
+        "skillMd": "de8572e283487d5dab8c633eb3e0159253a7ab2f"
+      }
+    },
+    "marketing/ak-marketing-psychology": {
+      "id": "ak-marketing-psychology",
+      "sourceKit": "marketing",
+      "gitPath": {
+        "stable": "kits/marketing/skills/ak-marketing-psychology",
+        "beta": "kits/marketing/skills/ak-marketing-psychology"
+      },
+      "surfaces": {
+        "stable": [
+          "marketing"
+        ],
+        "beta": [
+          "marketing"
+        ]
+      },
+      "stable": {
+        "tree": "f91e5abfba13a887efbcf1ebfea437bea796a814",
+        "skillMd": "f5772a9c7b3eb865c819e5f7de72510a4fc93768"
+      },
+      "beta": {
+        "tree": "f91e5abfba13a887efbcf1ebfea437bea796a814",
+        "skillMd": "f5772a9c7b3eb865c819e5f7de72510a4fc93768"
+      }
+    },
+    "marketing/ak-marketing-research": {
+      "id": "ak-marketing-research",
+      "sourceKit": "marketing",
+      "gitPath": {
+        "stable": "kits/marketing/skills/ak-marketing-research",
+        "beta": "kits/marketing/skills/ak-marketing-research"
+      },
+      "surfaces": {
+        "stable": [
+          "marketing"
+        ],
+        "beta": [
+          "marketing"
+        ]
+      },
+      "stable": {
+        "tree": "75be6530d1508084a8d2666ffc9b6a07018326d9",
+        "skillMd": "d34b0d3788b3f6f262045c88af03b9eb92a470c9"
+      },
+      "beta": {
+        "tree": "75be6530d1508084a8d2666ffc9b6a07018326d9",
+        "skillMd": "d34b0d3788b3f6f262045c88af03b9eb92a470c9"
+      }
+    },
+    "marketing/ak-motion-design": {
+      "id": "ak-motion-design",
+      "sourceKit": "marketing",
+      "gitPath": {
+        "stable": "kits/marketing/skills/ak-motion-design",
+        "beta": "kits/marketing/skills/ak-motion-design"
+      },
+      "surfaces": {
+        "stable": [
+          "marketing"
+        ],
+        "beta": [
+          "marketing"
+        ]
+      },
+      "stable": {
+        "tree": "bd35a0a927bd7494c008f276f7e25e5f7bcb13d2",
+        "skillMd": "bc8e9b4b7ae60d6787b36e4b897beee623b3d2e3"
+      },
+      "beta": {
+        "tree": "bd35a0a927bd7494c008f276f7e25e5f7bcb13d2",
+        "skillMd": "bc8e9b4b7ae60d6787b36e4b897beee623b3d2e3"
+      }
+    },
+    "marketing/ak-motion-graphics": {
+      "id": "ak-motion-graphics",
+      "sourceKit": "marketing",
+      "gitPath": {
+        "stable": "kits/marketing/skills/ak-motion-graphics",
+        "beta": "kits/marketing/skills/ak-motion-graphics"
+      },
+      "surfaces": {
+        "stable": [
+          "marketing"
+        ],
+        "beta": [
+          "marketing"
+        ]
+      },
+      "stable": {
+        "tree": "4fc6951d2a56bd5140f323364b53b41459cf62eb",
+        "skillMd": "f5df8072aeaaf080d37284a2199ed142fe12ba60"
+      },
+      "beta": {
+        "tree": "4fc6951d2a56bd5140f323364b53b41459cf62eb",
+        "skillMd": "f5df8072aeaaf080d37284a2199ed142fe12ba60"
+      }
+    },
+    "marketing/ak-onboarding-cro": {
+      "id": "ak-onboarding-cro",
+      "sourceKit": "marketing",
+      "gitPath": {
+        "stable": "kits/marketing/skills/ak-onboarding-cro",
+        "beta": "kits/marketing/skills/ak-onboarding-cro"
+      },
+      "surfaces": {
+        "stable": [
+          "marketing"
+        ],
+        "beta": [
+          "marketing"
+        ]
+      },
+      "stable": {
+        "tree": "59bd321f997e6e70361fd6cf0bffda5b536c2447",
+        "skillMd": "4185015190a99fac8107186d33ff1bd2d16b82af"
+      },
+      "beta": {
+        "tree": "59bd321f997e6e70361fd6cf0bffda5b536c2447",
+        "skillMd": "4185015190a99fac8107186d33ff1bd2d16b82af"
+      }
+    },
+    "marketing/ak-paid-ads": {
+      "id": "ak-paid-ads",
+      "sourceKit": "marketing",
+      "gitPath": {
+        "stable": "kits/marketing/skills/ak-paid-ads",
+        "beta": "kits/marketing/skills/ak-paid-ads"
+      },
+      "surfaces": {
+        "stable": [
+          "marketing"
+        ],
+        "beta": [
+          "marketing"
+        ]
+      },
+      "stable": {
+        "tree": "039461a2aada08c7309aa72782d763cae83b3359",
+        "skillMd": "f36038cf499714cf613baab66b766ad180009648"
+      },
+      "beta": {
+        "tree": "039461a2aada08c7309aa72782d763cae83b3359",
+        "skillMd": "f36038cf499714cf613baab66b766ad180009648"
+      }
+    },
+    "marketing/ak-persona": {
+      "id": "ak-persona",
+      "sourceKit": "marketing",
+      "gitPath": {
+        "stable": "kits/marketing/skills/ak-persona",
+        "beta": "kits/marketing/skills/ak-persona"
+      },
+      "surfaces": {
+        "stable": [
+          "marketing"
+        ],
+        "beta": [
+          "marketing"
+        ]
+      },
+      "stable": {
+        "tree": "5e39a4fa4b66b4d71bc3d0289aead8802eb1fecf",
+        "skillMd": "224854c5083fad1381d60280310c001b23af0011"
+      },
+      "beta": {
+        "tree": "5e39a4fa4b66b4d71bc3d0289aead8802eb1fecf",
+        "skillMd": "224854c5083fad1381d60280310c001b23af0011"
+      }
+    },
+    "marketing/ak-plan": {
+      "id": "ak-plan",
+      "sourceKit": "marketing",
+      "gitPath": {
+        "stable": "kits/marketing/skills/ak-plan",
+        "beta": "kits/marketing/skills/ak-plan"
+      },
+      "surfaces": {
+        "stable": [
+          "marketing"
+        ],
+        "beta": [
+          "marketing"
+        ]
+      },
+      "stable": {
+        "tree": "6e43bfa14765f50696272e0bb986b3313866bc75",
+        "skillMd": "d327011ef9fa955ab14d8a775ab0ad3a500144fb"
+      },
+      "beta": {
+        "tree": "632ed0644da8008936971bd481f46eef2317cd85",
+        "skillMd": "db2ef1d953a1f617189a923bab6bdbd78c07995f"
+      }
+    },
+    "marketing/ak-play": {
+      "id": "ak-play",
+      "sourceKit": "marketing",
+      "gitPath": {
+        "stable": "kits/marketing/skills/ak-play",
+        "beta": "kits/marketing/skills/ak-play"
+      },
+      "surfaces": {
+        "stable": [
+          "marketing"
+        ],
+        "beta": [
+          "marketing"
+        ]
+      },
+      "stable": {
+        "tree": "f1c448fe74515a38635f307d7b5d847db288fcce",
+        "skillMd": "e211e6e8f1b591c5a49a8e255b8dc0dd2f8931e5"
+      },
+      "beta": {
+        "tree": "f1c448fe74515a38635f307d7b5d847db288fcce",
+        "skillMd": "e211e6e8f1b591c5a49a8e255b8dc0dd2f8931e5"
+      }
+    },
+    "marketing/ak-pricing-strategy": {
+      "id": "ak-pricing-strategy",
+      "sourceKit": "marketing",
+      "gitPath": {
+        "stable": "kits/marketing/skills/ak-pricing-strategy",
+        "beta": "kits/marketing/skills/ak-pricing-strategy"
+      },
+      "surfaces": {
+        "stable": [
+          "marketing"
+        ],
+        "beta": [
+          "marketing"
+        ]
+      },
+      "stable": {
+        "tree": "6711cfce305169a59084268a27cb0750d68cbb72",
+        "skillMd": "f39005f6efbddc4b848a0a77f8dd99a0f69aa41f"
+      },
+      "beta": {
+        "tree": "6711cfce305169a59084268a27cb0750d68cbb72",
+        "skillMd": "f39005f6efbddc4b848a0a77f8dd99a0f69aa41f"
+      }
+    },
+    "marketing/ak-referral-program-building": {
+      "id": "ak-referral-program-building",
+      "sourceKit": "marketing",
+      "gitPath": {
+        "stable": "kits/marketing/skills/ak-referral-program-building",
+        "beta": "kits/marketing/skills/ak-referral-program-building"
+      },
+      "surfaces": {
+        "stable": [
+          "marketing"
+        ],
+        "beta": [
+          "marketing"
+        ]
+      },
+      "stable": {
+        "tree": "9c7a9bb44f76cd0a89e785b3f234ff18663b2129",
+        "skillMd": "c0dabfcf1a78dae1bc5e4f9a7ca59946ee6f9b07"
+      },
+      "beta": {
+        "tree": "9c7a9bb44f76cd0a89e785b3f234ff18663b2129",
+        "skillMd": "c0dabfcf1a78dae1bc5e4f9a7ca59946ee6f9b07"
+      }
+    },
+    "marketing/ak-seo": {
+      "id": "ak-seo",
+      "sourceKit": "marketing",
+      "gitPath": {
+        "stable": "kits/marketing/skills/ak-seo",
+        "beta": "kits/marketing/skills/ak-seo"
+      },
+      "surfaces": {
+        "stable": [
+          "marketing"
+        ],
+        "beta": [
+          "marketing"
+        ]
+      },
+      "stable": {
+        "tree": "a114a8c9e0de1e62f43eed472c0e59719fd14582",
+        "skillMd": "e9b7f43eb599579ba9084a54b714aa9f664a88fa"
+      },
+      "beta": {
+        "tree": "a114a8c9e0de1e62f43eed472c0e59719fd14582",
+        "skillMd": "e9b7f43eb599579ba9084a54b714aa9f664a88fa"
+      }
+    },
+    "marketing/ak-skill": {
+      "id": "ak-skill",
+      "sourceKit": "marketing",
+      "gitPath": {
+        "stable": "kits/marketing/skills/ak-skill",
+        "beta": "kits/marketing/skills/ak-skill"
+      },
+      "surfaces": {
+        "stable": [
+          "marketing"
+        ],
+        "beta": [
+          "marketing"
+        ]
+      },
+      "stable": {
+        "tree": "0c3dd01247c7170127662b44e07761aac29604e6",
+        "skillMd": "bd35bbc7645662da889197f3bdced8e3cccb0405"
+      },
+      "beta": {
+        "tree": "0c3dd01247c7170127662b44e07761aac29604e6",
+        "skillMd": "bd35bbc7645662da889197f3bdced8e3cccb0405"
+      }
+    },
+    "marketing/ak-slides": {
+      "id": "ak-slides",
+      "sourceKit": "marketing",
+      "gitPath": {
+        "stable": "kits/marketing/skills/ak-slides",
+        "beta": "kits/marketing/skills/ak-slides"
+      },
+      "surfaces": {
+        "stable": [
+          "marketing"
+        ],
+        "beta": [
+          "marketing"
+        ]
+      },
+      "stable": {
+        "tree": "7f09074e440ea6415d432e02fbdfbec1457e2c29",
+        "skillMd": "0b159ee3703ea6839ee926547798a83f80480ae2"
+      },
+      "beta": {
+        "tree": "7f09074e440ea6415d432e02fbdfbec1457e2c29",
+        "skillMd": "0b159ee3703ea6839ee926547798a83f80480ae2"
+      }
+    },
+    "marketing/ak-social": {
+      "id": "ak-social",
+      "sourceKit": "marketing",
+      "gitPath": {
+        "stable": "kits/marketing/skills/ak-social",
+        "beta": "kits/marketing/skills/ak-social"
+      },
+      "surfaces": {
+        "stable": [
+          "marketing"
+        ],
+        "beta": [
+          "marketing"
+        ]
+      },
+      "stable": {
+        "tree": "b7852a03ad1473520495a3ccef5be40a32b0ac7d",
+        "skillMd": "f6905c335d25b1b5b92577a66b26d33bf5b9a238"
+      },
+      "beta": {
+        "tree": "b7852a03ad1473520495a3ccef5be40a32b0ac7d",
+        "skillMd": "f6905c335d25b1b5b92577a66b26d33bf5b9a238"
+      }
+    },
+    "marketing/ak-storage": {
+      "id": "ak-storage",
+      "sourceKit": "marketing",
+      "gitPath": {
+        "stable": "kits/marketing/skills/ak-storage",
+        "beta": "kits/marketing/skills/ak-storage"
+      },
+      "surfaces": {
+        "stable": [
+          "marketing"
+        ],
+        "beta": [
+          "marketing"
+        ]
+      },
+      "stable": {
+        "tree": "d659a3cc2ba0727fadfa232477824c8140f203ad",
+        "skillMd": "40af5013df9c02375eb134ff4cdc50b9dbbe4e96"
+      },
+      "beta": {
+        "tree": "d659a3cc2ba0727fadfa232477824c8140f203ad",
+        "skillMd": "40af5013df9c02375eb134ff4cdc50b9dbbe4e96"
+      }
+    },
+    "marketing/ak-test": {
+      "id": "ak-test",
+      "sourceKit": "marketing",
+      "gitPath": {
+        "stable": "kits/marketing/skills/ak-test",
+        "beta": "kits/marketing/skills/ak-test"
+      },
+      "surfaces": {
+        "stable": [
+          "marketing"
+        ],
+        "beta": [
+          "marketing"
+        ]
+      },
+      "stable": {
+        "tree": "d7b9cd328294578f4966b220a60e67a564c6730a",
+        "skillMd": "0caf2bd3a332e51a4456a0cd72a0f564b9939582"
+      },
+      "beta": {
+        "tree": "d7b9cd328294578f4966b220a60e67a564c6730a",
+        "skillMd": "0caf2bd3a332e51a4456a0cd72a0f564b9939582"
+      }
+    },
+    "marketing/ak-video": {
+      "id": "ak-video",
+      "sourceKit": "marketing",
+      "gitPath": {
+        "stable": "kits/marketing/skills/ak-video",
+        "beta": "kits/marketing/skills/ak-video"
+      },
+      "surfaces": {
+        "stable": [
+          "marketing"
+        ],
+        "beta": [
+          "marketing"
+        ]
+      },
+      "stable": {
+        "tree": "621840092de3fbd513b0a2b98804ba3a70733381",
+        "skillMd": "f6f93505b980147bdacd79043e069e689b5ac7e7"
+      },
+      "beta": {
+        "tree": "621840092de3fbd513b0a2b98804ba3a70733381",
+        "skillMd": "f6f93505b980147bdacd79043e069e689b5ac7e7"
+      }
+    },
+    "marketing/ak-write": {
+      "id": "ak-write",
+      "sourceKit": "marketing",
+      "gitPath": {
+        "stable": "kits/marketing/skills/ak-write",
+        "beta": "kits/marketing/skills/ak-write"
+      },
+      "surfaces": {
+        "stable": [
+          "marketing"
+        ],
+        "beta": [
+          "marketing"
+        ]
+      },
+      "stable": {
+        "tree": "ef18b154cbf5073c3f5a0aadcc8e9617aabd8c11",
+        "skillMd": "a7bda463021f848bb7683ab4497305335919acce"
+      },
+      "beta": {
+        "tree": "ef18b154cbf5073c3f5a0aadcc8e9617aabd8c11",
+        "skillMd": "a7bda463021f848bb7683ab4497305335919acce"
+      }
+    },
+    "marketing/ak-youtube": {
+      "id": "ak-youtube",
+      "sourceKit": "marketing",
+      "gitPath": {
+        "stable": "kits/marketing/skills/ak-youtube",
+        "beta": "kits/marketing/skills/ak-youtube"
+      },
+      "surfaces": {
+        "stable": [
+          "marketing"
+        ],
+        "beta": [
+          "marketing"
+        ]
+      },
+      "stable": {
+        "tree": "bea1d3cffac0b915895bfa523232c4384ab790f8",
+        "skillMd": "15aec39ed4bd3895254f2cbd0c805d4d756e3783"
+      },
+      "beta": {
+        "tree": "bea1d3cffac0b915895bfa523232c4384ab790f8",
+        "skillMd": "15aec39ed4bd3895254f2cbd0c805d4d756e3783"
+      }
+    },
+    "marketing/ak-youtube-thumbnail-design": {
+      "id": "ak-youtube-thumbnail-design",
+      "sourceKit": "marketing",
+      "gitPath": {
+        "stable": "kits/marketing/skills/ak-youtube-thumbnail-design",
+        "beta": "kits/marketing/skills/ak-youtube-thumbnail-design"
+      },
+      "surfaces": {
+        "stable": [
+          "marketing"
+        ],
+        "beta": [
+          "marketing"
+        ]
+      },
+      "stable": {
+        "tree": "ad22a58883ec2307367d50de988501f90b27de8e",
+        "skillMd": "6d3b89d2ecf3b99cb71ade4d85ec44a991023f38"
+      },
+      "beta": {
+        "tree": "ad22a58883ec2307367d50de988501f90b27de8e",
+        "skillMd": "6d3b89d2ecf3b99cb71ade4d85ec44a991023f38"
+      }
+    }
+  }
+}
