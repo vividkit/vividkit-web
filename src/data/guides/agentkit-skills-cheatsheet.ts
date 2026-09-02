@@ -1,8 +1,9 @@
 // AgentKit kit skills cheatsheet.
-// User-facing skill page inventory authority: ak-docs Fumadocs meta.json pages[]
-//   content/docs/{stable|beta}/kits/{engineer|marketing}/skills/meta.json
-// Snapshots + notes: reference/ak-docs-skills-meta/. Drift check: node scripts/check-ak-skill-details.mjs --kit-root <agentkit>
-// Flags/argument-hint/descriptions: kit SKILL.md (ak-cli kits). Not CLI version.
+// Inventory authority (beta-only / isBeta): ak-cli kit.yaml git refs
+//   origin/main = stable, origin/dev = beta. Engineer inherits core.exports.skills
+//   via appends; marketing overrides.skills replaces core (no automatic inherit).
+//   Drift: node scripts/check-ak-kit-skill-inventory.mjs --kit-root <ak-cli>
+// Flags/argument-hint/descriptions: kit SKILL.md. Not CLI version. Not ak-docs pages[].
 // Nested docx/pdf/pptx/xlsx under document-skills are not separate top-level pages.
 // UI groups: Engineer = workflow (CK-like); Marketing = GTM lifecycle.
 // Invoke: Claude Code/Cursor /ak:<skill>, Codex $ak:<skill>.
@@ -382,6 +383,18 @@ export const akEngineerSkills: AkSkillEntry[] = [
     description: "Create Excalidraw diagrams — architecture, data flow, workflows, system design. Use when user wants to visualize, diagram, draw architecture, show data flow, create flowcharts, map components, or export .excalidraw files to PNG/SVG. Supports two modes: live MCP canvas (real-time) or file-based JSON + Playwright rendering. Also supports zero-config codebase auto-diagramming — just say \"diagram this repo\" or \"visualize the architecture\".",
     descriptionVi: "Vẽ sơ đồ Excalidraw về kiến trúc, luồng dữ liệu, quy trình và thiết kế hệ thống, qua canvas MCP trực tiếp hoặc file JSON kèm Playwright, và tự vẽ mã nguồn không cần cấu hình. Dùng khi muốn hình dung, vẽ kiến trúc, hiện luồng dữ liệu, flowchart, map thành phần, xuất file .excalidraw sang PNG/SVG, hoặc bảo diagram this repo hay visualize the architecture.",
     category: "designFrontend",
+  },
+  {
+    id: "ak-explain",
+    command: "/ak:explain",
+    commandCodex: "$ak:explain",
+    description: "Explain concepts, code, systems, architecture, errors, documents, and technical decisions accurately and at the requested depth. Use whenever the user asks \"explain this\", \"how does this work\", \"why does X happen\", requests a code walkthrough, or needs a complex topic simplified; use --eli5 for plain analogies without losing safety warnings and --html for a visual self-contained explanation.",
+    descriptionVi: "Giải thích khái niệm, mã, hệ thống, kiến trúc, lỗi, tài liệu và quyết định kỹ thuật đúng mức sâu được yêu cầu. Dùng khi hỏi explain this, cái này chạy thế nào, sao X xảy ra, walkthrough mã, hoặc cần nói dễ hơn; --eli5 cho ví dụ đời thường vẫn giữ cảnh báo an toàn, --html cho bản giải thích trực quan một file.",
+    category: "utilities",
+    isBeta: true,
+    argumentHint: "[subject|path|URL] [--html] [--eli5]",
+    args: ["[subject|path|URL]"],
+    flags: ["--eli5", "--html"],
   },
   {
     id: "ak-fable-thinking",
@@ -1276,6 +1289,14 @@ export const akMarketingSkills: AkSkillEntry[] = [
     flags: ["--advice", "--html", "--no-antv", "--no-diagram-design", "--no-editorial-visuals", "--report", "--ultra", "--yagni"],
   },
   {
+    id: "ak-bro",
+    command: "/ak:bro",
+    commandCodex: "$ak:bro",
+    description: "Restate the assistant's last message in simpler, shorter, jargon-free language. Use when the user says ak:bro, simplify that, say it plainly, or explain it like a human.",
+    descriptionVi: "Viết lại câu trả lời trước của AI cho gọn, dễ hiểu, bỏ thuật ngữ. Dùng khi muốn nói lại cho dễ, nói thường, hoặc giải thích như người.",
+    category: "essentials",
+  },
+  {
     id: "ak-brand",
     command: "/ak:brand",
     commandCodex: "$ak:brand",
@@ -1451,6 +1472,18 @@ export const akMarketingSkills: AkSkillEntry[] = [
     argumentHint: "[action: speak|clone|sfx] [text-or-file]",
     subcommands: ["clone", "sfx"],
     args: ["[text-or-file]"],
+  },
+  {
+    id: "ak-explain",
+    command: "/ak:explain",
+    commandCodex: "$ak:explain",
+    description: "Explain concepts, code, systems, architecture, errors, documents, and technical decisions accurately and at the requested depth. Use whenever the user asks \"explain this\", \"how does this work\", \"why does X happen\", requests a code walkthrough, or needs a complex topic simplified; use --eli5 for plain analogies without losing safety warnings and --html for a visual self-contained explanation.",
+    descriptionVi: "Giải thích khái niệm, mã, hệ thống, kiến trúc, lỗi, tài liệu và quyết định kỹ thuật đúng mức sâu được yêu cầu. Dùng khi hỏi explain this, cái này chạy thế nào, sao X xảy ra, walkthrough mã, hoặc cần nói dễ hơn; --eli5 cho ví dụ đời thường vẫn giữ cảnh báo an toàn, --html cho bản giải thích trực quan một file.",
+    category: "utilities",
+    isBeta: true,
+    argumentHint: "[subject|path|URL] [--html] [--eli5]",
+    args: ["[subject|path|URL]"],
+    flags: ["--eli5", "--html"],
   },
   {
     id: "ak-email",
@@ -1853,12 +1886,28 @@ export const akMarketingSkills: AkSkillEntry[] = [
     args: ["[platform]", "[type]"],
   },
   {
+    id: "ak-sowat",
+    command: "/ak:sowat",
+    commandCodex: "$ak:sowat",
+    description: "Analyze recently implemented work and related issues like a product owner. Use to identify high-impact next steps, challenge weak priorities, and explain what matters now.",
+    descriptionVi: "Xem việc vừa làm và issue liên quan như product owner: chọn bước tiếp theo đáng làm, phản biện ưu tiên yếu, và nói rõ điều quan trọng lúc này.",
+    category: "strategyResearch",
+  },
+  {
     id: "ak-storage",
     command: "/ak:storage",
     commandCodex: "$ak:storage",
     description: "S3-compatible object storage integration for marketing assets. Works with Cloudflare R2, AWS S3, MinIO, Backblaze B2, DigitalOcean Spaces.",
     descriptionVi: "Lưu asset marketing lên object storage tương thích S3: Cloudflare R2, AWS S3, MinIO, Backblaze B2, DigitalOcean Spaces.",
     category: "utilities",
+  },
+  {
+    id: "ak-sumup",
+    command: "/ak:sumup",
+    commandCodex: "$ak:sumup",
+    description: "Summarize completed implementation, failures, workarounds, decisions, behavior, architecture, usage, follow-ups, and next steps. Use after implementation or for a technical recap.",
+    descriptionVi: "Tóm việc đã làm: kết quả, chỗ fail, cách xử lý tạm, quyết định, hành vi, kiến trúc, cách dùng, việc còn lại và bước tiếp. Dùng sau khi implement hoặc khi cần recap kỹ thuật.",
+    category: "sessionMgmt",
   },
   {
     id: "ak-tech-graph",
@@ -2051,11 +2100,38 @@ export interface AkBetaPreviewItem {
   flags?: string[];
 }
 
-/** Engineer beta-only skills (present on origin/dev, absent on origin/main kit tree). */
-export const akEngineerBetaPreview: AkBetaPreviewItem[] = [];
+/** Engineer beta-only skills from ak-cli kit.yaml (origin/dev minus origin/main). */
+export const akEngineerBetaPreview: AkBetaPreviewItem[] = [
+  {
+    id: "ak-explain",
+    command: "/ak:explain",
+    commandCodex: "$ak:explain",
+    description: "Explain concepts, code, systems, and decisions at the requested depth. Use --eli5 for plain analogies; --html for a visual page.",
+    descriptionVi: "Giải thích khái niệm, mã, hệ thống và quyết định đúng mức sâu yêu cầu. --eli5 cho ví dụ đời thường; --html cho trang trực quan.",
+    badge: "new",
+    args: ["[subject|path|URL]"],
+    flags: ["--eli5", "--html"],
+  },
+];
 
-/** Marketing: stable (main) and beta (dev) skill inventories are identical. */
-export const akMarketingBetaPreview: AkBetaPreviewItem[] = [];
+/** Marketing beta-only skills. overrides.skills replaces core; listed only when present in that override. */
+export const akMarketingBetaPreview: AkBetaPreviewItem[] = [
+  {
+    id: "ak-explain",
+    command: "/ak:explain",
+    commandCodex: "$ak:explain",
+    description: "Explain concepts, code, systems, and decisions at the requested depth. Use --eli5 for plain analogies; --html for a visual page.",
+    descriptionVi: "Giải thích khái niệm, mã, hệ thống và quyết định đúng mức sâu yêu cầu. --eli5 cho ví dụ đời thường; --html cho trang trực quan.",
+    badge: "new",
+    args: ["[subject|path|URL]"],
+    flags: ["--eli5", "--html"],
+  },
+];
 
 export const akEngineerSkillCount = akEngineerSkills.length;
 export const akMarketingSkillCount = akMarketingSkills.length;
+
+export function isAkSkillBeta(kit: "engineer" | "marketing", id: string): boolean {
+  const list = kit === "marketing" ? akMarketingSkills : akEngineerSkills;
+  return Boolean(list.find((s) => s.id === id)?.isBeta);
+}

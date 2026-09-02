@@ -320,8 +320,8 @@ function groupSkills(skills: AkSkillEntry[], order: AkGroupMeta[]) {
 
 const engGroups = groupSkills(akEngineerSkills, akEngineerGroupOrder);
 const mktGroups = groupSkills(akMarketingSkills, akMarketingGroupOrder);
-const engNewCount = akEngineerSkills.filter((s) => s.isNew).length;
-const mktNewCount = akMarketingSkills.filter((s) => s.isNew).length;
+const engNewCount = akEngineerSkills.filter((s) => s.isNew).length + akEngineerBetaPreview.length;
+const mktNewCount = akMarketingSkills.filter((s) => s.isNew).length + akMarketingBetaPreview.length;
 const engCommonCount = akEngineerSkills.filter((s) => s.isCommon).length;
 const mktCommonCount = akMarketingSkills.filter((s) => s.isCommon).length;
 
@@ -431,7 +431,7 @@ const accent = {
           aria-pressed="false"
           data-count-engineer={String(engNewCount)}
           data-count-marketing={String(mktNewCount)}
-          aria-label={isVi ? 'Chỉ hiện skill NEW' : 'Show only NEW skills'}
+          aria-label={isVi ? 'Chỉ hiện skill NEW và Beta Preview' : 'Show only NEW skills and Beta Preview'}
           class="inline-flex items-center gap-1.5 rounded-md border border-amber-300 bg-amber-50 px-2.5 py-1.5 text-[11px] font-bold uppercase tracking-wide text-amber-800 transition hover:border-amber-400 dark:border-amber-500/40 dark:bg-amber-950/40 dark:text-amber-200"
         >
           NEW
@@ -456,7 +456,7 @@ const accent = {
   {/* Engineer panel */}
   <div data-ak-kit-panel="engineer" class="space-y-5">
     {/* Beta Preview */}
-    <div data-ak-beta-preview class="overflow-hidden rounded-xl border-2 border-purple-400/60 bg-gradient-to-br from-purple-500/10 via-violet-500/5 to-pink-500/10 dark:border-purple-500/40">
+    <div data-ak-beta-preview data-has-items={akEngineerBetaPreview.length > 0 ? 'true' : 'false'} class="overflow-hidden rounded-xl border-2 border-purple-400/60 bg-gradient-to-br from-purple-500/10 via-violet-500/5 to-pink-500/10 dark:border-purple-500/40">
       <div class="border-b border-purple-300/30 bg-gradient-to-r from-purple-600/10 to-violet-500/10 p-4 dark:border-purple-600/30">
         <h2 class="flex items-center gap-2 text-lg font-bold text-purple-600 dark:text-purple-400">
           <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -602,7 +602,7 @@ const accent = {
 
   {/* Marketing panel */}
   <div data-ak-kit-panel="marketing" class="hidden space-y-5">
-    <div data-ak-beta-preview class="overflow-hidden rounded-xl border-2 border-purple-400/60 bg-gradient-to-br from-purple-500/10 via-violet-500/5 to-pink-500/10 dark:border-purple-500/40">
+    <div data-ak-beta-preview data-has-items={akMarketingBetaPreview.length > 0 ? 'true' : 'false'} class="overflow-hidden rounded-xl border-2 border-purple-400/60 bg-gradient-to-br from-purple-500/10 via-violet-500/5 to-pink-500/10 dark:border-purple-500/40">
       <div class="border-b border-purple-300/30 bg-gradient-to-r from-purple-600/10 to-violet-500/10 p-4 dark:border-purple-600/30">
         <h2 class="flex items-center gap-2 text-lg font-bold text-purple-600 dark:text-purple-400">
           <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -832,12 +832,13 @@ const accent = {
           }
         });
         panel.querySelectorAll('[data-ak-beta-preview]').forEach((el) => {
-          el.classList.toggle('hidden', filtering);
+          el.classList.toggle('hidden', commonOn);
         });
         const newEmpty = panel.querySelector('[data-ak-new-empty]');
         if (newEmpty) {
-          const any = panel.querySelectorAll('[data-ak-skill-card][data-new="true"]').length > 0;
-          newEmpty.classList.toggle('hidden', !newOn || any);
+          const anyCards = panel.querySelectorAll('[data-ak-skill-card][data-new="true"]').length > 0;
+          const previewHas = panel.querySelector('[data-ak-beta-preview][data-has-items="true"]');
+          newEmpty.classList.toggle('hidden', !newOn || anyCards || Boolean(previewHas));
         }
         const commonEmpty = panel.querySelector('[data-ak-common-empty]');
         if (commonEmpty) {

@@ -3,6 +3,7 @@ import { getLangFromUrl, useTranslatedPath, type Language } from '@/i18n';
 import type { SkillInfographic } from '@/data/guides/how-ck-works';
 import InfographicGenericCommandQuickRef from '@/components/guides/how-ck-works/infographic/infographic-generic-command-quick-ref.astro';
 import { getAkSkillInfographic, listAkSkillJumpItems, resolveAkSkillDetail } from '@/data/guides/agentkit-skill-details';
+import { isAkSkillBeta } from '@/data/guides/agentkit-skills-cheatsheet';
 import AkSkillJump from './AkSkillJump.astro';
 import AkNextLinks from './AkNextLinks.astro';
 
@@ -20,6 +21,7 @@ const cheatsheetHref = translatePath('/guides/agentkit/skills');
 const kitLabel = kit === 'marketing'
   ? (isVi ? 'Marketing Kit' : 'Marketing Kit')
   : (isVi ? 'Engineer Kit' : 'Engineer Kit');
+const isBeta = isAkSkillBeta(kit, data.id);
 
 const relatedSeen = new Set<string>();
 const relatedLinks = (data.skillStack || [])
@@ -59,6 +61,17 @@ const jumpItems = listAkSkillJumpItems().map((item) => ({
     </nav>
     <AkSkillJump lang={currentLang} currentKit={kit} currentSkill={data.id} items={jumpItems} />
   </div>
+
+  {isBeta && (
+    <aside class="rounded-xl border border-purple-200 bg-purple-50 px-4 py-3 text-sm text-purple-900 dark:border-purple-800/50 dark:bg-purple-950/40 dark:text-purple-100" role="status">
+      <p class="text-[10px] font-bold uppercase tracking-[0.16em] text-purple-600 dark:text-purple-300">Beta</p>
+      <p class="mt-1 leading-relaxed">
+        {isVi
+          ? `Skill này hiện chỉ có trên beta. Stable chưa có ${data.command}.`
+          : `This skill is currently beta-only. Stable does not include ${data.command} yet.`}
+      </p>
+    </aside>
+  )}
 
   <InfographicGenericCommandQuickRef data={data} lang={currentLang} plainHeadline />
 
