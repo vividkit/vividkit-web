@@ -286,7 +286,7 @@ const renderInlineCode = (value = '') => value
 const getPromptLabel = (prompt: PromptExample) => isVi ? prompt.labelVi : prompt.labelEn;
 const getPromptWhen = (prompt: PromptExample) => isVi ? prompt.whenVi : prompt.whenEn;
 const getPromptExpected = (prompt: PromptExample) => isVi ? prompt.expectedVi : prompt.expectedEn;
-const getPromptCommand = (prompt: PromptExample) => (isVi ? prompt.commandVi : prompt.command);
+const getPromptCommand = (prompt: PromptExample) => (isVi ? (prompt.commandVi || prompt.command) : prompt.command);
 const getOutputPattern = () => (isVi ? output?.patternVi : output?.patternEn)?.trim() || '';
 const LONG_TOKEN_RE = /(?:\/ak:[a-z0-9-]+|\$ak:[a-z0-9-]+|(?<![A-Za-z0-9/$@])ak:[a-z0-9-]+|--[a-z0-9][a-z0-9-]*)/g;
 const SHORT_FLAG_RE = /(^|[\s"'`])(-[a-z]{1,3})(?=[\s"'`|,)]|$)/g;
