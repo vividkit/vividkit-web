@@ -38,11 +38,14 @@ actionable even if the row said `ok`.
 | Script | Source | Fail on |
 | --- | --- | --- |
 | `scripts/check-ak-kit-skill-inventory.mjs` | ak-cli `kit.yaml` local git refs + `SKILL.md` blob / skill-dir tree OIDs | onlyKit/onlyCatalog, beta-only/`isBeta`, `contract-updated` vs `package-updated` |
-| `scripts/check-ak-skill-details.mjs` | kit `SKILL.md` sha + inventory | missing/extra pages, hash drift |
-| `scripts/check-ak-skill-detail-claims.mjs` | kit `SKILL.md` | invented flags/subcommands |
+| `scripts/check-ak-skill-details.mjs` | kit `SKILL.md` at page `sourceChannel` (`beta-only` → `origin/dev`, shared/stable-only → `origin/main`); fingerprint git blob OID or sha256 | missing/extra pages, hash/hint drift. Shared-skill Beta deltas are advisory |
+| `scripts/check-ak-skill-detail-claims.mjs` | same `sourceChannel` SKILL.md | invented flags/subcommands on that channel. Do not require beta flags on a shared page |
 | `scripts/check-ak-skill-detail-principles.mjs` | detail TS + renderer | EN/VI count mismatch, dummy copy, sliced principles |
 | `scripts/check-ak-skill-detail-ak-docs.mjs` | same-kit structured tables | table-token drift (advisory vs claims) |
 
 Kit-tree lock: `reference/ak-docs-skills-meta/kit-tree-inventory.json`.
-Lock file: `reference/ak-docs-skills-meta/skill-details-lock.json`.
+Lock file: `reference/ak-docs-skills-meta/skill-details-lock.json` (per-page `sourceChannel`/`sourceRef`/`sourceBlob`).
 Coverage snapshot: `scripts/ak-docs-skill-detail-coverage.json`.
+
+Engineer pages resolve `{engineer,core}` via kit.yaml effective entries. Marketing overrides may resolve files in `kits/core` (same as inventory); never engineer.
+
