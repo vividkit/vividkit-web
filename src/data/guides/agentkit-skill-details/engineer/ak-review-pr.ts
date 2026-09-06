@@ -5,8 +5,8 @@ const data: SkillInfographic = {
   "command": "/ak:review-pr",
   "kit": "engineer",
   "header": {
-    "titleEn": "/ak:review-pr",
-    "titleVi": "/ak:review-pr",
+    "titleEn": "/ak:review-pr — GitHub PR review",
+    "titleVi": "/ak:review-pr — Rà soát PR GitHub",
     "taglineEn": "Review one or more GitHub PRs for correctness, security, breaking changes, code quality, project rules, tests, and AI-slop, with optional fix, reply, merge, advice, ultra, and REST fallback paths.",
     "taglineVi": "Review một hoặc nhiều PR GitHub về đúng sai, bảo mật, breaking change, chất lượng code, quy tắc dự án, test và AI-slop, có tùy chọn fix, reply, merge, advice, ultra và fallback REST."
   },

@@ -5,8 +5,8 @@ const data: SkillInfographic = {
   "command": "/ak:project-organization",
   "kit": "engineer",
   "header": {
-    "titleEn": "/ak:project-organization",
-    "titleVi": "/ak:project-organization",
+    "titleEn": "/ak:project-organization — File layout and naming",
+    "titleVi": "/ak:project-organization — Sắp xếp file và đặt tên",
     "taglineEn": "Single source of truth for file placement, kebab-case naming, plan/report/doc templates, and safe organize-mode migrations.",
     "taglineVi": "Nguồn chuẩn duy nhất để chọn vị trí file, đặt tên kebab-case, dùng mẫu plan/report/doc và di chuyển cấu trúc dự án an toàn."
   },

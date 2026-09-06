@@ -36,16 +36,14 @@ const isBeta = isAkSkillBeta(preferredKit, data.id);
 
 const rawTitle = isVi ? data.header.titleVi : data.header.titleEn;
 const tagline = isVi ? data.header.taglineVi : data.header.taglineEn;
-const humanizeHeadline = (headline: string, blurb: string) => {
+const humanizeHeadline = (headline: string) => {
   const stripped = headline
     .replace(/^[/\$]ak:[^\s—–]+(?:\s*[—–-]\s*)?/i, '')
     .trim();
   if (stripped && !/^[/\$]ak:/i.test(stripped)) return stripped;
-  const first = (blurb.split(/(?<=[.!?])\s+/)[0] || blurb).replace(/[.]$/, '').trim();
-  const clause = first.split(/[—–:]/)[0].trim();
-  return clause.length >= 12 ? clause : first;
+  return headline.trim();
 };
-const title = plainHeadline ? humanizeHeadline(rawTitle, tagline) : rawTitle;
+const title = plainHeadline ? humanizeHeadline(rawTitle) : rawTitle;
 const principles = (isVi ? data.corePrinciplesVi : data.corePrinciplesEn) || [];
 const expertise = (isVi ? data.expertiseAreasVi : data.expertiseAreasEn)?.filter(Boolean) || [];
 const modes = data.workflowModes || [];

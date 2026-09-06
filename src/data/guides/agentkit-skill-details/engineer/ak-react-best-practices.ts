@@ -21,8 +21,8 @@ const data: SkillInfographic = {
   "command": "/ak:react-best-practices",
   "kit": "engineer",
   "header": {
-    "titleEn": "/ak:react-best-practices",
-    "titleVi": "/ak:react-best-practices",
+    "titleEn": "/ak:react-best-practices — React/Next performance patterns",
+    "titleVi": "/ak:react-best-practices — Mẫu hiệu năng React/Next",
     "taglineEn": "Apply Vercel Engineering React and Next.js performance patterns across component optimization, rendering performance, bundle analysis, and data fetching.",
     "taglineVi": "Áp dụng các mẫu tối ưu hiệu năng React và Next.js của Vercel Engineering cho component, render, phân tích bundle và data fetching."
   },

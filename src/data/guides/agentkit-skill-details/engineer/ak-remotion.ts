@@ -24,8 +24,8 @@ const data: SkillInfographic = {
   "command": "/ak:remotion",
   "kit": "engineer",
   "header": {
-    "titleEn": "/ak:remotion",
-    "titleVi": "/ak:remotion",
+    "titleEn": "/ak:remotion — Remotion React video",
+    "titleVi": "/ak:remotion — Video React bằng Remotion",
     "taglineEn": "Use Remotion's React video rules for compositions, sequencing, animation curves, assets, captions, effects, data-driven charts, and render metadata.",
     "taglineVi": "Dùng bộ quy tắc Remotion cho video React: composition, sequencing, đường cong animation, asset, caption, effect, chart theo dữ liệu và metadata render."
   },

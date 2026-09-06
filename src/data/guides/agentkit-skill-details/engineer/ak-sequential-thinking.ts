@@ -5,8 +5,8 @@ const data: SkillInfographic = {
   "command": "/ak:sequential-thinking",
   "kit": "engineer",
   "header": {
-    "titleEn": "/ak:sequential-thinking",
-    "titleVi": "/ak:sequential-thinking",
+    "titleEn": "/ak:sequential-thinking — Reflective step-by-step analysis",
+    "titleVi": "/ak:sequential-thinking — Phân tích từng bước rồi chỉnh lại",
     "taglineEn": "Use reflective step-by-step analysis with dynamic expansion, contraction, revision, branching, hypothesis verification, and explicit final convergence.",
     "taglineVi": "Dùng phân tích từng bước có phản tư, tự mở rộng/thu gọn, sửa nhận định, rẽ nhánh, kiểm chứng giả thuyết và hội tụ cuối rõ ràng."
   },

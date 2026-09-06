@@ -5,8 +5,8 @@ const data: SkillInfographic = {
   "command": "/ak:shader",
   "kit": "engineer",
   "header": {
-    "titleEn": "/ak:shader",
-    "titleVi": "/ak:shader",
+    "titleEn": "/ak:shader — GLSL fragment shaders",
+    "titleVi": "/ak:shader — Shader GLSL",
     "taglineEn": "Author GLSL fragment shaders for procedural textures, SDF shapes, gradients, noise, fBm, tiling, animation, WebGL, Three.js, and generative effects.",
     "taglineVi": "Viết GLSL fragment shader cho texture thủ tục, hình SDF, gradient, noise, fBm, tiling, animation, WebGL, Three.js và hiệu ứng tạo sinh."
   },
