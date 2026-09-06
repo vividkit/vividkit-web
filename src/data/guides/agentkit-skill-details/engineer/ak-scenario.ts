@@ -5,8 +5,8 @@ const data: SkillInfographic = {
   "command": "/ak:scenario",
   "kit": "engineer",
   "header": {
-    "titleEn": "/ak:scenario",
-    "titleVi": "/ak:scenario",
+    "titleEn": "/ak:scenario — Edge-case test scenarios",
+    "titleVi": "/ak:scenario — Kịch bản kiểm thử ca biên",
     "taglineEn": "Expand a feature or code path into edge cases and test scenarios across 12 dimensions, with one-shot or iterative saturation modes.",
     "taglineVi": "Mở rộng một feature hoặc code path thành edge case và kịch bản test qua 12 chiều, bằng chế độ one-shot hoặc lặp đến bão hòa."
   },

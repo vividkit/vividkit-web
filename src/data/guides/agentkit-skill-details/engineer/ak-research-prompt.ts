@@ -5,8 +5,8 @@ const data: SkillInfographic = {
   "command": "/ak:research-prompt",
   "kit": "engineer",
   "header": {
-    "titleEn": "/ak:research-prompt",
-    "titleVi": "/ak:research-prompt",
+    "titleEn": "/ak:research-prompt — Self-contained research brief",
+    "titleVi": "/ak:research-prompt — Đề bài nghiên cứu độc lập",
     "taglineEn": "Draft one self-contained research brief paragraph that another human or AI researcher can execute without a follow-up exchange.",
     "taglineVi": "Soạn một đoạn brief nghiên cứu tự đủ ngữ cảnh để người hoặc AI researcher khác có thể thực hiện mà không cần hỏi lại."
   },

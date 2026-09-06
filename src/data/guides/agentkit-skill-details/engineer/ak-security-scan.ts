@@ -49,8 +49,8 @@ const data: SkillInfographic = {
   "command": "/ak:security-scan",
   "kit": "engineer",
   "header": {
-    "titleEn": "/ak:security-scan",
-    "titleVi": "/ak:security-scan",
+    "titleEn": "/ak:security-scan — Lightweight security scan",
+    "titleVi": "/ak:security-scan — Quét bảo mật nhẹ",
     "taglineEn": "Lightweight no-dependency security scan for secrets, dependency advisories, .env exposure, and common vulnerable code patterns.",
     "taglineVi": "Quét bảo mật nhẹ không cần dependency ngoài: secret, cảnh báo dependency, lộ .env và pattern code dễ tổn thương."
   },

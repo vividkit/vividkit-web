@@ -112,8 +112,8 @@ const data: SkillInfographic = {
   "command": "/ak:repomix",
   "kit": "engineer",
   "header": {
-    "titleEn": "/ak:repomix",
-    "titleVi": "/ak:repomix",
+    "titleEn": "/ak:repomix — AI-ready repo context",
+    "titleVi": "/ak:repomix — Ngữ cảnh AI từ repo",
     "taglineEn": "Pack local, remote, or third-party repositories into AI-friendly XML, Markdown, JSON, or plain-text context with token counts and security checks.",
     "taglineVi": "Đóng gói repo local, remote hoặc bên thứ ba thành ngữ cảnh XML, Markdown, JSON hoặc plain text thân thiện với AI, có đếm token và kiểm tra bảo mật."
   },

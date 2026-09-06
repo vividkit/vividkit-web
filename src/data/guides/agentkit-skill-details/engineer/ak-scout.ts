@@ -5,8 +5,8 @@ const data: SkillInfographic = {
   "command": "/ak:scout",
   "kit": "engineer",
   "header": {
-    "titleEn": "/ak:scout",
-    "titleVi": "/ak:scout",
+    "titleEn": "/ak:scout — Token-efficient codebase scout",
+    "titleVi": "/ak:scout — Khảo sát codebase tiết kiệm token",
     "taglineEn": "Fast, token-efficient codebase scouting with native search, scoped reads, permitted Explore agents, optional OpenCode probes, and best-of-5 verifier mode.",
     "taglineVi": "Scout codebase nhanh, tiết kiệm token bằng tìm kiếm gốc, đọc hẹp, Explore agent khi được phép, probe OpenCode tùy chọn và chế độ verifier best-of-5."
   },

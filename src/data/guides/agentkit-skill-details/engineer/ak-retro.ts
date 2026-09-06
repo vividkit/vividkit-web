@@ -76,8 +76,8 @@ const data: SkillInfographic = {
   "command": "/ak:retro",
   "kit": "engineer",
   "header": {
-    "titleEn": "/ak:retro",
-    "titleVi": "/ak:retro",
+    "titleEn": "/ak:retro — Git-history retrospective",
+    "titleVi": "/ak:retro — Tổng kết từ lịch sử Git",
     "taglineEn": "Generate an objective engineering retrospective from git history: velocity, churn, hotspots, author activity, plan completion, comparisons, and optional HTML visuals.",
     "taglineVi": "Tạo retrospective kỹ thuật khách quan từ lịch sử git: velocity, churn, điểm nóng, hoạt động tác giả, hoàn thành plan, so sánh và HTML trực quan tùy chọn."
   },

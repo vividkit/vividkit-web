@@ -5,8 +5,8 @@ const data: SkillInfographic = {
   "command": "/ak:research",
   "kit": "engineer",
   "header": {
-    "titleEn": "/ak:research",
-    "titleVi": "/ak:research",
+    "titleEn": "/ak:research — Source-backed technical research",
+    "titleVi": "/ak:research — Nghiên cứu kỹ thuật có nguồn",
     "taglineEn": "Run concise, source-backed technical research from scope definition through multi-source gathering, synthesis, recommendations, and saved report.",
     "taglineVi": "Thực hiện nghiên cứu kỹ thuật ngắn gọn có nguồn dẫn: xác định phạm vi, thu thập đa nguồn, tổng hợp, khuyến nghị và lưu báo cáo."
   },

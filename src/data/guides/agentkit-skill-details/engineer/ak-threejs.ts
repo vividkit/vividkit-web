@@ -81,8 +81,8 @@ const data: SkillInfographic = {
   "command": "/ak:threejs",
   "kit": "engineer",
   "header": {
-    "titleEn": "/ak:threejs",
-    "titleVi": "/ak:threejs",
+    "titleEn": "/ak:threejs — Three.js 3D scenes",
+    "titleVi": "/ak:threejs — Cảnh 3D Three.js",
     "taglineEn": "Builds Three.js WebGL/WebGPU scenes with models, animation, physics, XR, particles, shaders, optimization, 556 searchable examples, 60 API classes, and 20 use-case templates.",
     "taglineVi": "Xây scene Three.js WebGL/WebGPU với model, animation, physics, XR, particle, shader, tối ưu, 556 ví dụ có thể tìm kiếm, 60 API class và 20 template use case."
   },

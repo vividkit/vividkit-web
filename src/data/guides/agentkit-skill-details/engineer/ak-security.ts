@@ -5,8 +5,8 @@ const data: SkillInfographic = {
   "command": "/ak:security",
   "kit": "engineer",
   "header": {
-    "titleEn": "/ak:security",
-    "titleVi": "/ak:security",
+    "titleEn": "/ak:security — Threat-model security audit",
+    "titleVi": "/ak:security — Đánh giá bảo mật theo mô hình mối đe dọa",
     "taglineEn": "Threat-model a scope with STRIDE and OWASP, optional red-team personas, severity-ranked findings, credential masking, and iterative fixes when authorized.",
     "taglineVi": "Threat-model một phạm vi bằng STRIDE và OWASP, có persona red-team tùy chọn, findings theo severity, che credential và sửa lặp khi được phép."
   },
