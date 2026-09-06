@@ -6,7 +6,7 @@ Shared renderer:
 
 ## Required fields
 
-- `header.titleEn/Vi`, `taglineEn/Vi` — title short; tagline may be long
+- `header.titleEn/Vi`, `taglineEn/Vi` — after `/ak:id — `, EN title 1–7 words and ≤50 chars; VI title non-empty and ≤60 chars; tagline may be long. Title may be a prefix of the tagline; it must not equal the tagline’s full first sentence.
 - `processFlow[]` — every step has `titleEn`, `titleVi`, `descEn`, `descVi`
 - `corePrinciplesEn` and `corePrinciplesVi` — **same length**, no empty strings
 - User-facing skills: `invocation.syntax` plus arguments/options/subcommands as documented
