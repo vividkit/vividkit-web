@@ -1,4 +1,4 @@
-// Auto-curated from AgentKit CLI help (stable v2.14.0). Keep in sync with `ak --help`.
+// Auto-curated from AgentKit CLI help (stable v2.14.0). ak onboard is beta-only (v2.15.0-beta.x).
 export type AkCliCategory = 'setup' | 'kits' | 'account' | 'inspect' | 'config';
 
 export interface AkCliCommand {
@@ -33,6 +33,14 @@ export const akCliCommandsCheatsheet: AkCliCommand[] = [
     descriptionVi: "Wizard cấu hình lần đầu",
     category: "setup",
     example: "ak setup",
+  },
+  {
+    name: "ak onboard",
+    description: "Beta CLI: run only missing first-run setup, login, and Kit install. --yes never force-overwrites.",
+    descriptionVi: "CLI ak beta: chỉ chạy bước còn thiếu (setup, login, cài Kit). --yes không ghi đè hay takeover.",
+    category: "setup",
+    keyFlags: ["--kit", "--target", "--channel", "--global", "--project-dir", "--email", "--yes", "--no-interactive"],
+    example: "ak onboard --kit engineer --target codex",
   },
   {
     name: "ak self-update",
@@ -189,10 +197,11 @@ export const akCliCommandsCheatsheet: AkCliCommand[] = [
   },
   {
     name: "ak recover",
-    description: "Recover AgentKit state from a snapshot",
-    descriptionVi: "Khôi phục state AgentKit từ snapshot",
+    description: "Restore one rollback snapshot (alias of ak backups restore)",
+    descriptionVi: "Khôi phục một snapshot (cùng lệnh ak backups restore)",
     category: "inspect",
-    example: "ak recover",
+    keyFlags: ["--dry-run", "--latest", "--allow-root"],
+    example: "ak recover <id> --dry-run",
   },
   {
     name: "ak journal",

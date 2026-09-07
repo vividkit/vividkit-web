@@ -502,6 +502,48 @@ ak kit refresh engineer --local --kits-dir ./kits --yes`}
     </p>
   </AkSection>
 
+  <AkSection
+    eyebrow={isVi ? '4 · Khôi phục' : '4 · Recover'}
+    title={isVi ? 'Khôi phục snapshot: ak recover' : 'Restore a snapshot: ak recover'}
+    desc={isVi
+      ? 'ak recover cùng lệnh với ak backups restore. Chỉ hoàn tác file trong snapshot — không phải backup cả máy, không phải giao dịch all-or-nothing.'
+      : 'ak recover is the same command as ak backups restore. It rolls back captured files only — not a full-machine backup, not an all-or-nothing transaction.'}
+  >
+    <AkCodeBlock
+      title="shell"
+      code={isVi
+        ? `ak backups list
+ak backups show <id>
+ak backups verify <id>
+
+# Xem trước — không ghi
+ak recover <id> --dry-run
+
+# Project bundle: lặp đúng mọi root mà show in ra
+ak recover <id> --dry-run --allow-root /absolute/project
+ak recover <id> --allow-root /absolute/project
+
+# Đừng --latest khi chưa đọc show/verify`
+        : `ak backups list
+ak backups show <id>
+ak backups verify <id>
+
+# Preview — no writes
+ak recover <id> --dry-run
+
+# Project bundle: repeat every exact root printed by show
+ak recover <id> --dry-run --allow-root /absolute/project
+ak recover <id> --allow-root /absolute/project
+
+# Do not use --latest until you have read show/verify`}
+    />
+    <p class="mt-3 text-sm text-slate-600 dark:text-slate-400">
+      {isVi
+        ? 'Một số snapshot khi cập nhật project nằm ngoài ak backups restore — làm theo đường dẫn recovery mà lệnh cập nhật in ra (copy file từ thư mục snapshot). --allow-root phải khớp từng root trong bundle; ancestor rộng hơn sẽ fail trước khi ghi.'
+        : 'Some project-update snapshots sit outside ak backups restore — follow the recovery path the update command printed (copy files from the snapshot folder). --allow-root must match each bundle root exactly; a broader ancestor fails before any write.'}
+    </p>
+  </AkSection>
+
 
   <AkCallout variant="info" title={isVi ? 'Mã thoát (ak update)' : 'Exit codes (ak update)'}>
     {isVi

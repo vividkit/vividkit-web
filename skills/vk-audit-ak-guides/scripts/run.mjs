@@ -86,10 +86,11 @@ function runInventory(repo, kitRoot) {
 function runSkillDetails(repo, kitRoot, akDocs) {
   const script = join(repo, 'skills/vk-audit-ak-skill-details/scripts/run.mjs');
   if (!existsSync(script)) return { code: 2, stdout: '', stderr: 'missing vk:audit-ak-skills runner' };
-  const args = [script, 'check', '--repo', repo, '--kit-root', kitRoot, '--kit', 'all'];
+  const args = [script, 'check', '--repo', repo, '--kit-root', kitRoot, '--kit', 'all', '--skip-inventory'];
   if (akDocs) args.push('--ak-docs', akDocs);
   return runNode(repo, args);
 }
+
 
 function runWorkflows(repo, kitRoot) {
   const candidates = [
@@ -148,14 +149,16 @@ function main(argv) {
     if (cls.kind === 'skills-cheatsheet') {
       status = inventory.code === 0 ? 'owned' : inventory.code === 2 ? 'uncovered' : `owned-fail:${inventory.code}`;
     } else if (cls.kind === 'skills-detail') {
-      if (details.code === 2) status = 'uncovered';
-      else if (details.code === 0) status = 'owned';
-      else status = `owned-fail:${details.code}`;
+      if (inventory.code === 2 || details.code === 2) status = 'uncovered';
+      else if (inventory.code === 0 && details.code === 0) status = 'owned';
+      else status = `owned-fail:${inventory.code !== 0 ? inventory.code : details.code}`;
+
     } else if (cls.kind === 'workflows') {
       if (workflows.code === 2) status = 'uncovered';
       else if (workflows.code === 0) status = 'owned';
       else status = `owned-fail:${workflows.code}`;
     }
+
     return { route: identity, vi: `/vi${identity}`, ...cls, status };
   });
 

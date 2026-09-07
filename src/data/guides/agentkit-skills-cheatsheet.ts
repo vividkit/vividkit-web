@@ -1128,6 +1128,18 @@ export const akEngineerSkills: AkSkillEntry[] = [
     args: ["[test-type]", "[target]"],
   },
   {
+    id: "ak-webmcp",
+    command: "/ak:webmcp",
+    commandCodex: "$ak:webmcp",
+    description: "Build agent-ready websites with WebMCP — expose page features as callable tools to in-browser AI agents via document.modelContext. Use whenever the user wants to make a website or web app agent-actionable, add AI-agent tools to a page, make a form agent-callable, use registerTool/getTools/executeTool, the imperative or declarative WebMCP API, tool annotations, the tools Permissions-Policy, or WebMCP evals. In-browser page tools, NOT stdio/HTTP MCP servers — for an MCP server use ak:mcp-builder, to run MCP tools use ak:use-mcp.",
+    descriptionVi: "Làm website sẵn cho agent bằng WebMCP: lộ tính năng trang thành tool in-browser gọi qua document.modelContext. Dùng khi muốn site/app gọi được bởi agent, thêm tool AI vào trang, form gọi được, registerTool/getTools/executeTool, API WebMCP imperative hoặc declarative, annotation, Permissions-Policy tools, hoặc evals WebMCP. Tool trên trang, không phải MCP server stdio/HTTP — server thì ak:mcp-builder, chạy tool MCP thì ak:use-mcp.",
+    category: "designFrontend",
+    isBeta: true,
+    argumentHint: "[page, form, or feature to expose as a tool]",
+    args: ["[page, form, or feature to expose as a tool]"],
+  },
+
+  {
     id: "ak-worktree",
     command: "/ak:worktree",
     commandCodex: "$ak:worktree",
@@ -2112,6 +2124,16 @@ export const akEngineerBetaPreview: AkBetaPreviewItem[] = [
     args: ["[subject|path|URL]"],
     flags: ["--eli5", "--html"],
   },
+  {
+    id: "ak-webmcp",
+    command: "/ak:webmcp",
+    commandCodex: "$ak:webmcp",
+    description: "Expose page features as in-browser WebMCP tools via document.modelContext. Not an MCP server — use ak:mcp-builder for that.",
+    descriptionVi: "Lộ tính năng trang thành tool WebMCP in-browser qua document.modelContext. Không phải MCP server — server dùng ak:mcp-builder.",
+    badge: "new",
+    args: ["[page, form, or feature to expose as a tool]"],
+  },
+
 ];
 
 /** Marketing beta-only skills. overrides.skills replaces core; listed only when present in that override. */

@@ -1,4 +1,6 @@
 ---
+// Do not pin exact CLI versions in reader copy (AGENTS.md). Live check: ak --version.
+// Maintainer refs (ak-cli local): origin/main v2.14.0, origin/dev v2.15.0-beta.22.
 import { getLangFromUrl, useTranslatedPath, type Language } from '@/i18n';
 import AkPageHero from './AkPageHero.astro';
 import AkSection from './AkSection.astro';
@@ -18,18 +20,20 @@ const isVi = currentLang === 'vi';
 const translatePath = useTranslatedPath(currentLang);
 
 const overview = isVi
-  ? [
-      { title: 'Cài ak CLI', body: 'Installer đã ký — macOS/Linux hoặc Windows PowerShell.' },
-      { title: 'Xác nhận', body: 'ak --version và ak doctor để chắc cài đặt sạch.' },
-      { title: 'Đăng nhập & cài Kit', body: 'ak login (email + OTP, API key, hoặc license key), rồi cài Kit cho runtime.' },
-      { title: 'Gọi Skill trong runtime', body: 'Cài Kit không chạy workflow — mở coding assistant.' },
-    ]
-  : [
-      { title: 'Install ak CLI', body: 'Signed installer — macOS/Linux or Windows PowerShell.' },
-      { title: 'Verify', body: 'ak --version and ak doctor to confirm a clean install.' },
-      { title: 'Log in & install a Kit', body: 'ak login (email + OTP, API key, or license key), then install a Kit for your runtime.' },
-      { title: 'Invoke a Skill in the runtime', body: 'Installing a Kit does not run a workflow — open the assistant.' },
-    ];
+    ? [
+        { title: 'Cài CLI ak', body: 'Installer đã ký — macOS/Linux hoặc Windows PowerShell.' },
+        { title: 'Xác nhận', body: 'ak --version và ak doctor để chắc cài đặt sạch.' },
+        { title: 'Cấu hình lần đầu', body: 'ak setup ghi preference (adapter, kit mặc định, telemetry). Không đăng nhập, không cài Kit.' },
+        { title: 'Đăng nhập & cài Kit', body: 'ak login (API key khuyến nghị; hoặc email + OTP), rồi cài Kit cho runtime.' },
+        { title: 'Gọi Skill trong runtime', body: 'Cài Kit không chạy workflow — mở coding assistant.' },
+      ]
+    : [
+        { title: 'Install the ak CLI', body: 'Signed installer — macOS/Linux or Windows PowerShell.' },
+        { title: 'Verify', body: 'ak --version and ak doctor to confirm a clean install.' },
+        { title: 'First-run setup', body: 'ak setup writes preferences (adapters, default kit, telemetry). Does not log in or install a Kit.' },
+        { title: 'Log in & install a Kit', body: 'ak login (API key recommended; or email + OTP), then install a Kit for your runtime.' },
+        { title: 'Invoke a Skill in the runtime', body: 'Installing a Kit does not run a workflow — open the assistant.' },
+      ];
 ---
 
 <div class="space-y-10 mt-6">
@@ -39,13 +43,26 @@ const overview = isVi
     kicker={isVi ? 'AgentKit · Onboarding' : 'AgentKit · Onboarding'}
     title={isVi ? 'Cài Đặt AgentKit' : 'AgentKit Installation'}
     subtitle={isVi
-      ? 'Từ zero đến Skill đầu tiên với AgentKit: cài CLI ak, verify, đăng nhập, cài Kit, gọi trong runtime.'
-      : 'From zero to a first Skill with AgentKit: install the ak CLI, verify, sign in, install a Kit, invoke in your runtime.'}
+      ? 'Từ zero đến Skill đầu tiên với AgentKit: cài CLI ak, xác nhận, ak setup, đăng nhập, cài Kit, gọi trong runtime.'
+      : 'From zero to a first Skill with AgentKit: install the ak CLI, verify, run ak setup, sign in, install a Kit, invoke in your runtime.'}
     badges={isVi ? ['Khuyến nghị'] : ['Recommended']}
   />
 
-  <AkSection eyebrow={isVi ? 'Tổng quan' : 'Overview'} title={isVi ? 'Bốn bước' : 'Four steps'}>
+  <AkSection eyebrow={isVi ? 'Tổng quan' : 'Overview'} title={isVi ? 'Năm bước' : 'Five steps'}>
     <AkStepRail steps={overview} accent="teal" />
+    <p class="mt-3 text-sm text-slate-500 dark:text-slate-400">
+      {isVi ? (
+        <>
+          Trên CLI ak kênh beta, <AkInlineCode text="ak onboard" /> chỉ chạy bước còn thiếu (setup, login, cài Kit).{' '}
+          <AkInlineCode text="--yes" /> chỉ đồng ý prompt — không ghi đè file hay takeover.
+        </>
+      ) : (
+        <>
+          On the beta ak CLI, <AkInlineCode text="ak onboard" /> runs only missing steps (setup, login, Kit install).{' '}
+          <AkInlineCode text="--yes" /> accepts prompts — it does not force-overwrite or take over ownership.
+        </>
+      )}
+    </p>
   </AkSection>
 
   <AkSection
@@ -130,11 +147,24 @@ const overview = isVi
           </div>
           <div class="flex flex-1 flex-col gap-3">
             <AkCodeBlock title="install.ps1" code={`irm https://agentkit.best/install.ps1 | iex`} />
-            <p class="mt-auto rounded-xl border border-violet-200/50 bg-violet-50/60 px-3.5 py-2.5 text-xs leading-relaxed text-slate-600 dark:border-violet-500/20 dark:bg-violet-950/20 dark:text-slate-400">
+            <p class="rounded-xl border border-violet-200/50 bg-violet-50/60 px-3.5 py-2.5 text-xs leading-relaxed text-slate-600 dark:border-violet-500/20 dark:bg-violet-950/20 dark:text-slate-400">
               {isVi
                 ? 'Chạy trong PowerShell (không phải CMD). Sau khi cài, mở cửa sổ terminal mới.'
                 : 'Run in PowerShell (not CMD). After install, open a new terminal window.'}
             </p>
+            <details class="group rounded-xl border border-slate-200/80 bg-white/70 open:bg-white dark:border-slate-700/80 dark:bg-slate-950/40 dark:open:bg-slate-950/70">
+              <summary class="cursor-pointer list-none px-3.5 py-2.5 text-xs font-medium text-slate-600 marker:content-none [&::-webkit-details-marker]:hidden dark:text-slate-400">
+                <span class="inline-flex items-center gap-2">
+                  <span class="inline-flex h-5 w-5 items-center justify-center rounded-md bg-slate-100 text-[10px] font-bold text-slate-500 transition group-open:rotate-90 dark:bg-slate-800 dark:text-slate-400">
+                    ›
+                  </span>
+                  {isVi ? 'Fallback nếu host chính lỗi' : 'Fallback if the primary host fails'}
+                </span>
+              </summary>
+              <div class="space-y-2 border-t border-slate-200/70 px-3 pb-3 pt-2 dark:border-slate-700/70">
+                <AkCodeBlock title="releases host" code={`irm https://releases.agentkit.best/install.ps1 | iex`} />
+              </div>
+            </details>
           </div>
         </article>
       </div>
@@ -152,17 +182,48 @@ const overview = isVi
           </>
         )}
       </AkCallout>
+      <details class="group rounded-xl border border-slate-200/80 bg-white/70 open:bg-white dark:border-slate-700/80 dark:bg-slate-950/40 dark:open:bg-slate-950/70">
+        <summary class="cursor-pointer list-none px-3.5 py-2.5 text-xs font-medium text-slate-600 marker:content-none [&::-webkit-details-marker]:hidden dark:text-slate-400">
+          <span class="inline-flex items-center gap-2">
+            <span class="inline-flex h-5 w-5 items-center justify-center rounded-md bg-slate-100 text-[10px] font-bold text-slate-500 transition group-open:rotate-90 dark:bg-slate-800 dark:text-slate-400">
+              ›
+            </span>
+            {isVi ? 'Ghim phiên bản hoặc thư mục cài' : 'Pin a version or install directory'}
+          </span>
+        </summary>
+        <div class="space-y-2 border-t border-slate-200/70 px-3 pb-3 pt-2 dark:border-slate-700/70">
+          <p class="text-[11px] leading-relaxed text-slate-500 dark:text-slate-400">
+            {isVi
+              ? 'Để trống trừ khi cần kiểm soát. Thay x.y.z bằng phiên bản semantic (vd 2.14.0). AK_INSTALL_DIR đổi thư mục đích. Giá trị phải trong dấu nháy — đừng dùng < > (shell hiểu là chuyển hướng).'
+              : 'Leave unset unless you need that control. Replace x.y.z with a semantic version (for example 2.14.0). AK_INSTALL_DIR changes the destination directory. Quote the value — do not use < > (the shell treats those as redirection).'}
+          </p>
+          <AkCodeBlock
+            title="shell"
+            code={isVi
+              ? `curl -fsSL https://agentkit.best/install.sh | AK_VERSION='x.y.z' sh
+# Đổi thư mục cài (tùy chọn)
+# curl -fsSL https://agentkit.best/install.sh | AK_INSTALL_DIR="$HOME/bin" sh`
+              : `curl -fsSL https://agentkit.best/install.sh | AK_VERSION='x.y.z' sh
+# Optional install directory
+# curl -fsSL https://agentkit.best/install.sh | AK_INSTALL_DIR="$HOME/bin" sh`}
+          />
+        </div>
+      </details>
     </div>
   </AkSection>
 
   <AkSection eyebrow="02" title={isVi ? 'Xác nhận' : 'Verify'}>
     <AkCodeBlock title="shell" code={`ak --version\nak doctor --json`} />
     <p class="mt-3 text-sm leading-relaxed text-slate-600 dark:text-slate-400">
-      {isVi ? 'CLI signed hiện tại: ' : 'Current signed CLI: '}
-      <AkInlineCode text="ak 2.14.0" />
-      {isVi ? ' (stable). Beta: ' : ' (stable). Beta: '}
-      <AkInlineCode text="ak 2.15.0-beta.4" />
-      {'.'}
+      {isVi ? (
+        <>
+          Chạy <AkInlineCode text="ak --version" /> để xem CLI trên máy. Stable và beta là hai kênh riêng — trang này không gắn số phiên bản.
+        </>
+      ) : (
+        <>
+          Run <AkInlineCode text="ak --version" /> for the CLI on this machine. Stable and beta are separate channels — this page does not pin a version number.
+        </>
+      )}
     </p>
     <div class="mt-3 space-y-2">
       <p class="text-xs font-semibold uppercase tracking-wide text-slate-500">
@@ -179,43 +240,71 @@ const overview = isVi
       {'.'}
     </p>
   </AkSection>
-
   <AkSection
     eyebrow="03"
+    title={isVi ? 'Cấu hình lần đầu (ak setup)' : 'First-run setup (ak setup)'}
+    desc={isVi
+      ? 'Ghi preference AgentKit. Không đăng nhập registry và không cài nội dung Kit.'
+      : 'Writes AgentKit preferences. Does not sign in to the registry and does not install Kit content.'}
+  >
+    <AkCodeBlock title="shell" code={`ak setup`} />
+    <p class="mt-3 text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+      {isVi ? (
+        <>
+          Wizard phát hiện runtime đã login, cho chọn adapter, rồi cập nhật <AkInlineCode text="~/.agentkit/config.yaml" /> (kit mặc định, telemetry). Chạy lại được — không copy credential runtime.
+        </>
+      ) : (
+        <>
+          The wizard detects available runtime login state, lets you choose adapters, then updates <AkInlineCode text="~/.agentkit/config.yaml" /> (default kit, telemetry). Re-running is safe — it does not copy runtime credentials.
+        </>
+      )}
+    </p>
+  </AkSection>
+
+  <AkSection
+    eyebrow="04"
     title={isVi ? 'Đăng nhập (ak login) rồi cài Kit' : 'Log in (ak login), then install a Kit'}
     desc={isVi
-      ? 'Trước khi cài Kit remote có license, đăng nhập registry bằng một trong các cách sau. Khuyến nghị cho hầu hết người dùng: email + OTP.'
-      : 'Before installing licensed remote Kits, authenticate to the registry with one of the methods below. Recommended for most users: email + OTP.'}
+      ? 'Trước khi cài Kit remote có license, đăng nhập registry. Khuyến nghị: API key (dùng thường ngày và CI). Email + OTP khi bạn đang ở terminal tương tác.'
+      : 'Before installing licensed remote Kits, authenticate to the registry. Recommended: API key (regular use and CI). Email + OTP when you are in an interactive terminal.'}
   >
     <div class="space-y-5">
       <div class="space-y-3">
         <div class="flex flex-wrap items-center gap-2">
           <h3 class="text-sm font-semibold text-slate-900 dark:text-white">
-            {isVi ? 'Email + OTP (khuyến nghị)' : 'Email + OTP (recommended)'}
+            {isVi ? 'API key (khuyến nghị)' : 'API key (recommended)'}
           </h3>
           <span class="rounded-full bg-teal-100 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-teal-800 dark:bg-teal-500/15 dark:text-teal-300">
-            {isVi ? 'Phổ biến' : 'Common'}
+            {isVi ? 'Khuyến nghị' : 'Recommended'}
           </span>
         </div>
         <p class="text-sm leading-relaxed text-slate-600 dark:text-slate-400">
-          {isVi
-            ? 'Gửi mã một lần (OTP) tới email của bạn. CLI hỏi Enter OTP code — nhập mã từ hộp thư. Mã OTP không được lưu trên máy; session CLI lưu credential refresh (không phải mã OTP).'
-            : 'Sends a one-time password (OTP) to your email. The CLI prompts Enter OTP code — type the code from your inbox. The OTP is not stored on disk; the CLI session keeps a rotating refresh credential (not the OTP itself).'}
+          {isVi ? (
+            <>
+              Tạo user API key trên Account Dashboard, rồi chạy local với key thật. Phù hợp dùng thường ngày và môi trường không tương tác. AgentKit lưu key và session CLI trong file hạn quyền dưới{' '}
+              <AkInlineCode text="~/.agentkit/auth" />.
+            </>
+          ) : (
+            <>
+              Create a user API key in the Account Dashboard, then run this locally with your real key. Suits regular use and non-interactive hosts. AgentKit stores the API key and CLI session in restricted files under{' '}
+              <AkInlineCode text="~/.agentkit/auth" />.
+            </>
+          )}
         </p>
-        <AkCodeBlock title="shell" code={`ak login --email you@example.com\n# Prompt: Enter OTP code:\nak whoami`} />
+        <AkCodeBlock title="shell" code={`ak login --api-key ak_live_... --no-interactive\nak whoami`} />
       </div>
 
       <div class="grid gap-4 lg:grid-cols-2">
         <div class="space-y-3 rounded-2xl border border-slate-200/80 bg-white/80 p-4 dark:border-slate-700 dark:bg-slate-900/50">
           <h3 class="text-sm font-semibold text-slate-900 dark:text-white">
-            {isVi ? 'API key (script / CI)' : 'API key (scripts / CI)'}
+            {isVi ? 'Email + OTP' : 'Email + OTP'}
           </h3>
           <p class="text-xs leading-relaxed text-slate-500 dark:text-slate-400">
             {isVi
-              ? 'Key từ web profile. Phù hợp môi trường không tương tác. Key được lưu trong session private.'
-              : 'Key from your web profile. Suited to non-interactive hosts. The private API key is stored in the session.'}
+              ? 'Gửi mã một lần tới email. CLI hỏi Enter OTP code. OTP không lưu trên đĩa; session CLI giữ credential refresh.'
+              : 'Sends a one-time code to your email. The CLI prompts Enter OTP code. The OTP is not stored on disk; the CLI session keeps a rotating refresh credential.'}
           </p>
-          <AkCodeBlock title="shell" code={`ak login --api-key ak_live_... --no-interactive`} />
+          <AkCodeBlock title="shell" code={`ak login --email you@example.com\nak whoami`} />
         </div>
         <div class="space-y-3 rounded-2xl border border-slate-200/80 bg-white/80 p-4 dark:border-slate-700 dark:bg-slate-900/50">
           <h3 class="text-sm font-semibold text-slate-900 dark:text-white">
@@ -277,7 +366,9 @@ const overview = isVi
       <AkCallout variant="info" title={isVi ? 'Kiểm tra & đăng xuất' : 'Check status & sign out'}>
         <span class="inline-flex flex-wrap items-center gap-x-1 gap-y-1">
           <AkInlineCode text="ak whoami" />
-          {isVi ? ' xác nhận account và kit được license. ' : ' confirms the account and licensed kits. '}
+          {isVi
+            ? ' xác nhận account và kit được license. Chưa đăng nhập thì lệnh vẫn chạy xong — đọc output, đừng tin mỗi “thành công”. '
+            : ' confirms the account and licensed kits. If you are not signed in, the command still finishes — read the output; do not treat “success” as proof of login. '}
           <AkInlineCode text="ak licenses" />
           {isVi ? ' liệt kê Kit được cấp. ' : ' lists licensed Kits. '}
           <AkInlineCode text="ak logout" />
@@ -304,7 +395,7 @@ const overview = isVi
     </div>
   </AkSection>
 
-  <AkSection eyebrow="04" title={isVi ? 'Tuỳ chọn: Desktop App (mua thêm)' : 'Optional: Desktop App (extra purchase)'}>
+  <AkSection eyebrow="05" title={isVi ? 'Tuỳ chọn: Desktop App (mua thêm)' : 'Optional: Desktop App (extra purchase)'}>
     <div class="flex flex-col gap-4 rounded-2xl border border-teal-200/70 bg-gradient-to-br from-teal-50/80 to-white p-5 sm:flex-row sm:items-center sm:justify-between dark:border-teal-500/25 dark:from-teal-950/30 dark:to-slate-900">
       <p class="text-sm text-slate-600 dark:text-slate-300">
         {isVi

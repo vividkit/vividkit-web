@@ -172,9 +172,13 @@ const desktopTips = isVi
         ? 'Recovery gợi ý thường gồm '
         : 'Recovery hints often include '}
       <AkInlineCode text="ak migrate rollback" />
-      {isVi ? ' và ' : ' and '}
+      {isVi ? ', ' : ', '}
       <AkInlineCode text="ak backups list" />
-      {isVi ? '. Xem hướng dẫn migrate cho dry-run và backup. ' : '. See the migration guide for dry-run and backup. '}
+      {isVi ? ', và ' : ', and '}
+      <AkInlineCode text="ak recover <id> --dry-run" />
+      {isVi
+        ? ' (project bundle cần --allow-root đúng root). Xem hướng dẫn migrate và cập nhật. '
+        : ' (project bundles need --allow-root with the exact root). See the migrate and updating guides. '}
       {isVi ? (
         <>
           Gỡ hẳn ClaudeKit:{' '}

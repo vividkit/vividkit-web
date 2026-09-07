@@ -6,16 +6,33 @@
 import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { buildSnapshot, resolvePageSkill, showFileRaw } from './lib/ak-kit-sources.mjs';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const DETAILS = join(ROOT, 'src/data/guides/agentkit-skill-details');
 const FLAG_RE = /--[a-z0-9][a-z0-9-]*/g;
 
 function parseArgs(argv) {
-  const out = { akDocs: '', kit: 'all', selfTest: false };
+  const out = {
+    akDocs: '',
+    kit: 'all',
+    selfTest: false,
+    kitRoot: '',
+    stableRef: 'origin/main',
+    betaRef: 'origin/dev',
+    akDocsStableRef: 'origin/main',
+    akDocsBetaRef: 'origin/dev',
+  };
+
   for (let i = 0; i < argv.length; i++) {
     const a = argv[i];
     if (a === '--ak-docs') out.akDocs = argv[++i] || '';
+    else if (a === '--kit-root') out.kitRoot = argv[++i] || '';
+    else if (a === '--stable-ref') out.stableRef = argv[++i] || out.stableRef;
+    else if (a === '--beta-ref') out.betaRef = argv[++i] || out.betaRef;
+    else if (a === '--ak-docs-stable-ref') out.akDocsStableRef = argv[++i] || out.akDocsStableRef;
+    else if (a === '--ak-docs-beta-ref') out.akDocsBetaRef = argv[++i] || out.akDocsBetaRef;
+
     else if (a === '--kit') out.kit = argv[++i] || 'all';
     else if (a === '--self-test') out.selfTest = true;
   }
@@ -66,9 +83,17 @@ function extractDetailFlags(src) {
   return flags;
 }
 
-function docPath(akDocs, kit, slug, locale) {
-  return join(akDocs, 'content/docs/stable/kits', kit, 'skills', `${slug}.${locale}.mdx`);
+function readDocMdx(akDocs, channel, kit, slug, locale, refs) {
+  const rel = `content/docs/${channel}/kits/${kit}/skills/${slug}.${locale}.mdx`;
+  const ref = channel === 'beta' ? refs.beta : refs.stable;
+  if (akDocs && existsSync(join(akDocs, '.git')) && ref) {
+    const raw = showFileRaw(akDocs, ref, rel);
+    return raw ? raw.toString('utf8') : '';
+  }
+  const abs = join(akDocs, rel);
+  return existsSync(abs) ? readFileSync(abs, 'utf8') : '';
 }
+
 
 function checkFile(detailSrc, enMdx, viMdx) {
   const detail = extractDetailFlags(detailSrc);
@@ -102,9 +127,23 @@ function main(argv) {
     process.stderr.write('Missing --ak-docs\n');
     process.exit(2);
   }
+  if (!args.kitRoot) {
+    process.stderr.write('Missing --kit-root\n');
+    process.exit(2);
+  }
+  const kitRoot = resolve(args.kitRoot);
+  let snapshot;
+  try {
+    snapshot = buildSnapshot(args, kitRoot);
+  } catch (err) {
+    process.stderr.write(`check-ak-skill-detail-ak-docs: ${err.message}\n`);
+    process.exit(2);
+  }
+  const docsRefs = { stable: args.akDocsStableRef, beta: args.akDocsBetaRef };
   const kits = args.kit === 'all' ? ['engineer', 'marketing'] : [args.kit];
   const rows = [];
   const missingDocs = [];
+  const betaRows = [];
   let files = 0;
   for (const kit of kits) {
     const dir = join(DETAILS, kit);
@@ -112,36 +151,73 @@ function main(argv) {
       files++;
       const id = name.slice(0, -3);
       const slug = id.replace(/^ak-/, '');
-      const en = docPath(args.akDocs, kit, slug, 'en');
-      const vi = docPath(args.akDocs, kit, slug, 'vi');
-      if (!existsSync(en) || !existsSync(vi)) {
-        missingDocs.push(`${kit}/${id} missing ${!existsSync(en) ? 'en' : ''}${!existsSync(en) && !existsSync(vi) ? '+' : ''}${!existsSync(vi) ? 'vi' : ''} mdx`);
-        continue;
+      const resolved = resolvePageSkill(snapshot, kit, id);
+      const channel = resolved.channel || 'stable';
+      const src = readFileSync(join(dir, name), 'utf8');
+      const en = readDocMdx(args.akDocs, channel, kit, slug, 'en', docsRefs);
+      const vi = readDocMdx(args.akDocs, channel, kit, slug, 'vi', docsRefs);
+      if (!en || !vi) {
+        missingDocs.push(
+          `${kit}/${id} missing ${!en ? 'en' : ''}${!en && !vi ? '+' : ''}${!vi ? 'vi' : ''} mdx channel=${channel}`,
+        );
+      } else {
+        const result = checkFile(src, en, vi);
+        if (result.invented.length || result.missed.length || result.localeDrift.length) {
+          rows.push({ kit, id, channel, ...result });
+        }
       }
-      const result = checkFile(
-        readFileSync(join(dir, name), 'utf8'),
-        readFileSync(en, 'utf8'),
-        readFileSync(vi, 'utf8'),
-      );
-      if (result.invented.length || result.missed.length || result.localeDrift.length) {
-        rows.push({ kit, id, ...result });
+      if (
+        channel === 'stable' &&
+        resolved.stableRec &&
+        resolved.betaRec &&
+        (resolved.stableRec.stable?.skillMd || null) !== (resolved.betaRec.beta?.skillMd || null)
+      ) {
+        const betaEn = readDocMdx(args.akDocs, 'beta', kit, slug, 'en', docsRefs);
+        const betaVi = readDocMdx(args.akDocs, 'beta', kit, slug, 'vi', docsRefs);
+        if (!betaEn || !betaVi) {
+          betaRows.push({
+            kit,
+            id,
+            missing: `docs-beta ${docsRefs.beta} missing ${!betaEn ? 'en' : ''}${!betaVi ? 'vi' : ''} mdx`,
+          });
+        } else {
+          const result = checkFile(src, betaEn, betaVi);
+          if (result.invented.length || result.missed.length || result.localeDrift.length) {
+            betaRows.push({ kit, id, ...result });
+          }
+        }
       }
     }
   }
 
+
   for (const m of missingDocs) process.stdout.write(`missing-docs ${m}\n`);
+  if (betaRows.length) {
+    process.stdout.write(
+      `beta-docs-delta ${betaRows.length} shared pages (advisory, not gated) docs-beta=${docsRefs.beta}\n`,
+    );
+    for (const row of betaRows) {
+      process.stdout.write(`\nbeta-docs ${row.kit}/${row.id}\n`);
+      if (row.missing) process.stdout.write(`  - ${row.missing}\n`);
+      for (const f of row.invented || []) process.stdout.write(`  - wrong ${f}\n`);
+      for (const f of row.missed || []) process.stdout.write(`  - missed ${f}\n`);
+      for (const f of row.localeDrift || []) process.stdout.write(`  - en/vi drift ${f}\n`);
+    }
+  }
   if (!rows.length && !missingDocs.length) {
     process.stdout.write(`ok ${files} skill-detail files vs same-kit ak-docs\n`);
-    return;
+    process.exit(0);
   }
   process.stdout.write(`${rows.length} mapped files with drift; ${missingDocs.length} missing same-kit mdx; ${files} total\n`);
   for (const row of rows) {
-    process.stdout.write(`\n${row.kit}/${row.id}\n`);
+    process.stdout.write(`\n${row.kit}/${row.id} channel=${row.channel}\n`);
     for (const f of row.invented) process.stdout.write(`  - wrong ${f}\n`);
     for (const f of row.missed) process.stdout.write(`  - missed ${f}\n`);
     for (const f of row.localeDrift) process.stdout.write(`  - en/vi drift ${f}\n`);
   }
   process.exit(rows.some((r) => r.invented.length || r.missed.length) ? 1 : 0);
+
 }
+
 
 main(process.argv.slice(2));

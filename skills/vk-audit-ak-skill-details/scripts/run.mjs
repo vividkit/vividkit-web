@@ -7,7 +7,8 @@ import { fileURLToPath } from 'node:url';
 const SKILL_DIR = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 
 function parseArgs(argv) {
-  const out = { cmd: 'check', repo: '', kitRoot: '', akDocs: '', kit: 'all' };
+  const out = { cmd: 'check', repo: '', kitRoot: '', akDocs: '', kit: 'all', skipInventory: false };
+
   const rest = [];
   for (let i = 0; i < argv.length; i++) {
     const a = argv[i];
@@ -15,6 +16,8 @@ function parseArgs(argv) {
     else if (a === '--kit-root') out.kitRoot = argv[++i] || '';
     else if (a === '--ak-docs') out.akDocs = argv[++i] || '';
     else if (a === '--kit') out.kit = argv[++i] || 'all';
+    else if (a === '--skip-inventory') out.skipInventory = true;
+
     else if (a === '--help' || a === '-h') out.cmd = 'help';
     else if (!a.startsWith('-') && rest.length === 0) rest.push(a);
     else {
@@ -68,7 +71,9 @@ function main(argv) {
   --kit-root <ak-cli>
   --ak-docs <ak-docs>
   --kit engineer|marketing|all
+  --skip-inventory
 `);
+
     process.exit(0);
   }
 
@@ -91,14 +96,18 @@ function main(argv) {
   ];
   if (args.akDocs) claims.push('--ak-docs', args.akDocs);
 
-  const steps = [
-    ['scripts/check-ak-kit-skill-inventory.mjs', '--kit-root', args.kitRoot],
+  const steps = [];
+  if (!args.skipInventory) {
+    steps.push(['scripts/check-ak-kit-skill-inventory.mjs', '--kit-root', args.kitRoot]);
+  }
+  steps.push(
     ['scripts/check-ak-skill-detail-principles.mjs', '--self-test'],
     ['scripts/check-ak-skill-detail-principles.mjs'],
+    ['scripts/check-ak-skill-details.mjs', '--self-test'],
     ['scripts/check-ak-skill-details.mjs', '--kit-root', args.kitRoot],
     ['scripts/check-ak-skill-detail-claims.mjs', '--self-test'],
     claims,
-  ];
+  );
   if (args.akDocs && args.cmd !== 'check') {
     steps.push(['scripts/check-ak-skill-detail-ak-docs.mjs', '--self-test']);
     steps.push([
@@ -107,7 +116,10 @@ function main(argv) {
       args.akDocs,
       '--kit',
       args.kit,
+      '--kit-root',
+      args.kitRoot,
     ]);
+
   }
 
   const logs = [];
@@ -120,11 +132,10 @@ function main(argv) {
     dirty.push(...parsed.dirty);
     missing.push(...parsed.missing);
     logs.push({ step: step.join(' '), code: result.code, dirty: parsed.dirty, missing: parsed.missing });
-    if (result.code !== 0) {
-      failed = result.code;
-      if (args.cmd === 'check') process.exit(result.code);
-    }
+    process.stdout.write(`checker ${step[0].split('/').pop()} exit ${result.code}\n`);
+    if (result.code !== 0) failed = result.code;
   }
+
   dirty = [...new Set(dirty)];
   missing = [...new Set(missing)];
 

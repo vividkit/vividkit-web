@@ -6,7 +6,17 @@
 import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
+
 import { selfTestWrapCommandTokens } from './wrap-command-tokens.mjs';
+import {
+  buildSnapshot,
+  resolvePageSkill,
+  selfTestSourceChannel,
+  showFileRaw,
+} from './lib/ak-kit-sources.mjs';
+
+
+
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const DETAILS = join(ROOT, 'src/data/guides/agentkit-skill-details');
@@ -19,16 +29,24 @@ function parseArgs(argv) {
     akDocs: '',
     kit: 'engineer',
     selfTest: false,
+    stableRef: 'origin/main',
+    betaRef: 'origin/dev',
+    akDocsStableRef: 'origin/main',
+    akDocsBetaRef: 'origin/dev',
   };
   for (let i = 0; i < argv.length; i++) {
     const a = argv[i];
     if (a === '--kit-root') out.kitRoot = argv[++i] || '';
     else if (a === '--ak-docs') out.akDocs = argv[++i] || '';
     else if (a === '--kit') out.kit = argv[++i] || 'engineer';
+    else if (a === '--stable-ref') out.stableRef = argv[++i] || out.stableRef;
+    else if (a === '--beta-ref') out.betaRef = argv[++i] || out.betaRef;
+    else if (a === '--ak-docs-stable-ref') out.akDocsStableRef = argv[++i] || out.akDocsStableRef;
+    else if (a === '--ak-docs-beta-ref') out.akDocsBetaRef = argv[++i] || out.akDocsBetaRef;
     else if (a === '--self-test') out.selfTest = true;
     else if (a === '--help' || a === '-h') {
       process.stdout.write(
-        'Usage: check-ak-skill-detail-claims --kit-root <ak-cli> [--ak-docs <ak-docs>] [--kit engineer|marketing|all] [--self-test]\n',
+        'Usage: check-ak-skill-detail-claims --kit-root <ak-cli> [--ak-docs <ak-docs>] [--kit engineer|marketing|all] [--stable-ref] [--beta-ref] [--ak-docs-stable-ref] [--ak-docs-beta-ref] [--self-test]\n',
       );
       process.exit(0);
     }
@@ -59,18 +77,20 @@ function extractFrontmatter(text) {
   return { argumentHint: get('argument-hint'), name: get('name') };
 }
 
-function resolveSource(kitRoot, pageKit, id) {
-  const order =
-    pageKit === 'marketing'
-      ? ['marketing', 'core', 'engineer']
-      : ['engineer', 'core', 'marketing'];
-  for (const kit of order) {
-    const rel = `kits/${kit}/skills/${id}/SKILL.md`;
-    const abs = join(kitRoot, rel);
-    if (existsSync(abs)) return { rel, abs };
+function readDocsMdx(akDocs, channel, kit, slug, refs) {
+  if (!akDocs) return '';
+  const rel = `content/docs/${channel}/kits/${kit}/skills/${slug}.en.mdx`;
+  const ref = channel === 'beta' ? refs.beta : refs.stable;
+  if (existsSync(join(akDocs, '.git')) && ref) {
+    const raw = showFileRaw(akDocs, ref, rel);
+    return raw ? raw.toString('utf8') : '';
   }
-  return null;
+  const abs = join(akDocs, rel);
+  if (existsSync(abs)) return readFileSync(abs, 'utf8');
+  return '';
 }
+
+
 
 function extractFlagsFromText(text) {
   const flags = new Set();
@@ -705,6 +725,17 @@ const data = {
   if (!modeHit.some((v) => v.includes('mode --mode wild'))) fail.push('--mode search vs wild');
   if (broHit.length) fail.push(`no-arg one prompt: ${broHit.join('; ')}`);
   if (!planOneHit.some((v) => /needs >=2 promptExamples/.test(v))) fail.push('flag skill still needs 2 prompts');
+  fail.push(...selfTestSourceChannel());
+  const hintFlags = extractFlagsFromText('[--ship] [--ultra] <github-issue-url>');
+  if (!hintFlags.has('--ultra') || hintFlags.has('--git-dir')) {
+    fail.push('beta-delta contract flags come from argument-hint only');
+  }
+  const bodyScan = extractAllowedFlags('[--ultra]', 'run git rev-parse --git-dir --git-common-dir');
+  if (!bodyScan.has('--git-dir')) fail.push('canonical claims still parse SKILL body flags');
+  if (readDocsMdx('', 'beta', 'engineer', 'vibe', { stable: 'origin/main', beta: 'origin/dev' })) {
+    fail.push('readDocsMdx empty akDocs must be empty');
+  }
+
   if (fail.length) {
     process.stderr.write(`self-test failed: ${fail.join(', ')}\n`);
     process.exit(1);
@@ -712,22 +743,50 @@ const data = {
   process.stdout.write('self-test ok\n');
 }
 
-function warnAkDocs(akDocs, id, flags) {
-  if (!akDocs) return [];
-  const slug = slugFromId(id);
-  const mdx = join(
-    akDocs,
-    'content/docs/stable/kits/engineer/skills',
-    `${slug}.en.mdx`,
-  );
-  if (!existsSync(mdx)) return [`warn ${id}: no ak-docs ${slug}.en.mdx`];
-  const text = readFileSync(mdx, 'utf8');
-  const docsFlags = extractFlagsFromText(text);
-  const extra = [];
-  for (const f of flags) {
-    if (!docsFlags.has(f)) extra.push(`warn ${id}: flag ${f} missing from ak-docs mdx`);
+
+function collectBetaDelta(kitRoot, snapshot, kit, id, src, akDocs, docsRefs) {
+  const resolved = resolvePageSkill(snapshot, kit, id);
+  if (resolved.channel !== 'stable' || !resolved.stableRec || !resolved.betaRec) return null;
+  if ((resolved.stableRec.stable?.skillMd || null) === (resolved.betaRec.beta?.skillMd || null)) return null;
+  const stablePath = resolved.stableRec.gitPath?.stable;
+  const betaPath = resolved.betaRec.gitPath?.beta;
+  if (!stablePath || !betaPath) return null;
+  const stableMd = showFileRaw(kitRoot, snapshot.stableRef, `${stablePath}/SKILL.md`);
+  const betaMd = showFileRaw(kitRoot, snapshot.betaRef, `${betaPath}/SKILL.md`);
+  if (!stableMd || !betaMd) return null;
+  const sText = stableMd.toString('utf8');
+  const bText = betaMd.toString('utf8');
+  const sFm = extractFrontmatter(sText);
+  const bFm = extractFrontmatter(bText);
+  const sFlags = extractFlagsFromText(sFm.argumentHint);
+  const bFlags = extractFlagsFromText(bFm.argumentHint);
+
+  const pageFlags = new Set(extractDetailFlags(src));
+  const onlyBeta = [...bFlags].filter((f) => !sFlags.has(f)).sort();
+  const onlyStable = [...sFlags].filter((f) => !bFlags.has(f)).sort();
+  const pageMissed = onlyBeta.filter((f) => !pageFlags.has(f));
+  const lines = [
+    `beta-delta ${kit}/${id} kit-stable=${snapshot.stableRef} kit-beta=${snapshot.betaRef}`,
+  ];
+  if ((sFm.argumentHint || '') !== (bFm.argumentHint || '')) {
+    lines.push(`  hint stable: ${sFm.argumentHint || '(none)'}`);
+    lines.push(`  hint beta:   ${bFm.argumentHint || '(none)'}`);
   }
-  return extra;
+  if (onlyBeta.length) lines.push(`  flags only-beta: ${onlyBeta.join(' ')}`);
+  if (onlyStable.length) lines.push(`  flags only-stable: ${onlyStable.join(' ')}`);
+  if (pageMissed.length) lines.push(`  page missed vs beta SKILL.md: ${pageMissed.join(' ')}`);
+  if (akDocs) {
+    const betaMdx = readDocsMdx(akDocs, 'beta', kit, slugFromId(id), docsRefs);
+    if (betaMdx) {
+      const table = extractDocTableFlags(betaMdx);
+      const extras = [...table].filter((f) => !pageFlags.has(f)).sort();
+      if (extras.length) lines.push(`  docs-beta table vs page missed: ${extras.join(' ')}`);
+    } else {
+      lines.push(`  docs-beta: no mdx at ${docsRefs.beta} content/docs/beta/kits/${kit}/skills/${slugFromId(id)}.en.mdx`);
+    }
+  }
+  if (lines.length === 1) lines.push('  blob differs; no argument-hint/flag delta');
+  return lines;
 }
 
 function main() {
@@ -740,8 +799,18 @@ function main() {
     process.stderr.write('Missing --kit-root\n');
     process.exit(2);
   }
+  const kitRoot = resolve(args.kitRoot);
+  let snapshot;
+  try {
+    snapshot = buildSnapshot(args, kitRoot);
+  } catch (err) {
+    process.stderr.write(`check-ak-skill-detail-claims: ${err.message}\n`);
+    process.exit(2);
+  }
+  const docsRefs = { stable: args.akDocsStableRef, beta: args.akDocsBetaRef };
   const kitList = args.kit === 'all' ? ['engineer', 'marketing'] : [args.kit];
   const rows = [];
+  const betaDeltas = [];
   let fileCount = 0;
   for (const kit of kitList) {
     const dir = join(DETAILS, kit);
@@ -756,24 +825,28 @@ function main() {
     for (const name of files) {
       const id = name.slice(0, -3);
       const src = readFileSync(join(dir, name), 'utf8');
-      const skill = resolveSource(args.kitRoot, kit, id);
-      if (!skill) {
-        rows.push({ id: `${kit}/${id}`, violations: ['missing SKILL.md'] });
+      const resolved = resolvePageSkill(snapshot, kit, id);
+      const delta = collectBetaDelta(kitRoot, snapshot, kit, id, src, args.akDocs, docsRefs);
+      if (delta) betaDeltas.push(delta);
+
+      if (!resolved.skillPath || !resolved.ref) {
+        rows.push({ id: `${kit}/${id}`, violations: [`missing SKILL.md channel=${resolved.channel || 'none'}`] });
+
         continue;
       }
-      const skillMd = readFileSync(skill.abs, 'utf8');
+      const raw = showFileRaw(kitRoot, resolved.ref, resolved.skillPath);
+      if (!raw) {
+        rows.push({ id: `${kit}/${id}`, violations: [`missing SKILL.md channel=${resolved.channel || 'none'}`] });
+
+        continue;
+      }
+      const skillMd = raw.toString('utf8');
       const fm = extractFrontmatter(skillMd);
       const extraAllowedFlags = new Set();
-      if (args.akDocs) {
-        const mdx = join(
-          args.akDocs,
-          'content/docs/stable/kits',
-          kit,
-          'skills',
-          `${slugFromId(id)}.en.mdx`,
-        );
-        if (existsSync(mdx)) {
-          for (const f of extractDocTableFlags(readFileSync(mdx, 'utf8'))) extraAllowedFlags.add(f);
+      if (args.akDocs && resolved.channel) {
+        const text = readDocsMdx(args.akDocs, resolved.channel, kit, slugFromId(id), docsRefs);
+        if (text) {
+          for (const f of extractDocTableFlags(text)) extraAllowedFlags.add(f);
         }
       }
       const violations = checkFile({
@@ -788,6 +861,13 @@ function main() {
     }
   }
 
+  if (betaDeltas.length) {
+    process.stdout.write(`beta-delta ${betaDeltas.length} shared pages (advisory, not gated)\n`);
+    for (const lines of betaDeltas) {
+      for (const line of lines) process.stdout.write(`${line}\n`);
+    }
+  }
+
   if (!rows.length) {
     process.stdout.write(`ok ${fileCount} ${args.kit} skill-detail files\n`);
     return;
@@ -799,5 +879,6 @@ function main() {
   }
   process.exit(1);
 }
+
 
 main();
