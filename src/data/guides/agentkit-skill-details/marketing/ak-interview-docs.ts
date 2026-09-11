@@ -137,7 +137,7 @@ const data: SkillInfographic = {
       expectedVi: "Tạo skeleton tối thiểu nếu cần, hỏi đúng một câu mở và giữ edits."
     },
     { labelEn: 'Marketing principles doc', labelVi: 'Tài liệu nguyên tắc marketing', command: '/ak:interview-docs write a marketing principles doc from our decisions',
-      commandVi: '/ak:interview-docs viết tài liệu nguyên tắc marketing từ các quyết định của chúng tôi', whenEn: "The document must come from the user's answers, not invented strategy copy.", whenVi: 'Tài liệu phải đến từ câu trả lời của user, không phải copy chiến lược bịa.', expectedEn: "Interview questions then a principles doc in the user's wording.", expectedVi: 'Câu hỏi phỏng vấn rồi tài liệu nguyên tắc bằng ngôn từ của user.' }
+      commandVi: '/ak:interview-docs viết tài liệu nguyên tắc marketing từ các quyết định của chúng tôi', whenEn: "The document must come from the user's answers, not invented strategy copy.", whenVi: 'Tài liệu phải đến từ câu trả lời của user, không phải copy chiến lược bịa.', expectedEn: "Asks interview questions one at a time, then writes a principles doc in the user's wording without inventing strategy.", expectedVi: 'Hỏi từng câu phỏng vấn rồi viết tài liệu nguyên tắc bằng ngôn từ của user, không bịa chiến lược.' }
   ],
   reportOutput: {
     titleEn: "Interview-docs output",

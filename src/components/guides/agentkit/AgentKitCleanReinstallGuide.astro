@@ -1,9 +1,9 @@
 ---
 // Clean reinstall of AgentKit stable (ownership-aware kit uninstall → optional state reset → CLI + kits).
-// Stable pointer: https://releases.agentkit.best/channels/stable/binary-update.json (2026-08-29 → 2.14.0).
+// Stable pointer: https://releases.agentkit.best/channels/stable/binary-update.json (2026-09-10 → 2.15.0).
 // Snapshot walk at 405ea37 uses hasParentTraversal (path components).
 // Older 2.7.0 HasPrefix(rel, "..") false-positive on `..*` basenames is fixed.
-// --fresh is still not a public flag on 2.14.0.
+// --fresh is still not a public flag on origin/main (2.15.0).
 import { getLangFromUrl, useTranslatedPath, type Language } from '@/i18n';
 import AkPageHero from './AkPageHero.astro';
 import AkSection from './AkSection.astro';
@@ -412,11 +412,11 @@ ak doctor --json`;
         <li>
           {isVi ? (
             <>
-              AgentKit 2.14.0 stable không expose <AkInlineCode text="--fresh" />. Đừng document hoặc mô phỏng bằng xóa filesystem rộng.
+              CLI ak stable hiện tại không expose <AkInlineCode text="--fresh" />. Đừng document hoặc mô phỏng bằng xóa filesystem rộng.
             </>
           ) : (
             <>
-              AgentKit 2.14.0 stable does not expose <AkInlineCode text="--fresh" />. Do not document it or emulate it with broad filesystem deletion.
+              Current stable AgentKit does not expose <AkInlineCode text="--fresh" />. Do not document it or emulate it with broad filesystem deletion.
             </>
           )}
         </li>

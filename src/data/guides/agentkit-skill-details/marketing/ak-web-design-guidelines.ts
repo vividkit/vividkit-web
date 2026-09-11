@@ -111,7 +111,7 @@ const data: SkillInfographic = {
       expectedVi: "Danh sách ngắn các vi phạm cụ thể, vị trí bị ảnh hưởng và nguyên tắc guideline liên quan."
     },
     { labelEn: 'Pricing page audit', labelVi: 'Audit trang pricing', command: '/ak:web-design-guidelines audit the pricing page UI',
-      commandVi: '/ak:web-design-guidelines kiểm tra UI trang định giá', whenEn: 'A live UI surface needs a fresh Web Interface Guidelines review.', whenVi: 'Một bề mặt UI đang chạy cần review theo Web Interface Guidelines mới.', expectedEn: 'file:line findings with guideline principle, evidence, and practical remediation.', expectedVi: 'Phát hiện file:line kèm nguyên tắc guideline, evidence và hướng sửa thực tế.' }
+      commandVi: '/ak:web-design-guidelines kiểm tra UI trang định giá', whenEn: 'A live UI surface needs a fresh Web Interface Guidelines review.', whenVi: 'Một bề mặt UI đang chạy cần review theo Web Interface Guidelines mới.', expectedEn: 'Lists file:line findings with the guideline principle, evidence, and a practical remediation for each issue.', expectedVi: 'Liệt kê phát hiện file:line kèm nguyên tắc guideline, evidence và hướng sửa thực tế cho từng lỗi.' }
   ],
   reportOutput: {
     titleEn: "Guideline findings",

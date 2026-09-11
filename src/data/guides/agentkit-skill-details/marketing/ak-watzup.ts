@@ -117,7 +117,7 @@ const data: SkillInfographic = {
       expectedVi: "Scanner có thể kèm fetch rồi báo các lưu ý stale-ref nếu có."
     },
     { labelEn: 'Branch status', labelVi: 'Trạng thái nhánh', command: '/ak:watzup what is in flight on this branch',
-      commandVi: '/ak:watzup những gì đang in flight trên nhánh này', whenEn: 'You need a read-only handoff of current work, not an implementation pass.', whenVi: 'Khi cần bàn giao trạng thái chỉ đọc, không phải lượt triển khai.', expectedEn: 'Current state, in-flight plans, next steps, warnings, and confidence notes.', expectedVi: 'Trạng thái hiện tại, plan đang chạy, bước tiếp theo, cảnh báo và ghi chú độ tin.' }
+      commandVi: '/ak:watzup những gì đang in flight trên nhánh này', whenEn: 'You need a read-only handoff of current work, not an implementation pass.', whenVi: 'Khi cần bàn giao trạng thái chỉ đọc, không phải lượt triển khai.', expectedEn: 'Reports current state, in-flight plans, next steps, warnings, and confidence notes without changing git.', expectedVi: 'Báo trạng thái hiện tại, plan đang chạy, bước tiếp theo, cảnh báo và ghi chú độ tin, không đổi git.' }
   ],
   reportOutput: {
     titleEn: "Handoff report",

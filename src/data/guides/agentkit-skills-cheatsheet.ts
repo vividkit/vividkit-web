@@ -130,6 +130,9 @@ export const akEngineerSkills: AkSkillEntry[] = [
     description: "Route bounded, goal-directed iteration to the AgentKit skill that owns the desired outcome.",
     descriptionVi: "Đưa vòng lặp có giới hạn và bám mục tiêu tới đúng skill AgentKit phụ trách kết quả cần có.",
     category: "planResearch",
+    argumentHint: "<goal or hypothesis> [--iterations N] [--metric <metric>]",
+    args: ["<goal or hypothesis>"],
+    flags: ["--iterations", "--metric"],
   },
   {
     id: "ak-backend-development",
@@ -184,6 +187,8 @@ export const akEngineerSkills: AkSkillEntry[] = [
     category: "essentials",
     isNew: true,
     order: 3,
+    argumentHint: "[last message | topic to simplify]",
+    args: ["[last message | topic to simplify]"],
   },
   {
     id: "ak-chrome-profile",
@@ -192,6 +197,9 @@ export const akEngineerSkills: AkSkillEntry[] = [
     description: "Target a real Google Chrome profile for browser automation through Chrome DevTools MCP. Provides the chrome-profile CLI, profile discovery, live DevTools probing guidance, setup playbooks, and URL-anchor tab selection.",
     descriptionVi: "Nhắm profile Google Chrome thật để tự động hóa trình duyệt qua Chrome DevTools MCP, gồm CLI chrome-profile, tìm profile, hướng dẫn dò DevTools trực tiếp, hướng dẫn cài đặt, và chọn tab neo theo URL.",
     category: "mcpIntegration",
+    argumentHint: "[url] [--profile <name>] [--tab <title|url>]",
+    args: ["[url]"],
+    flags: ["--profile", "--tab"],
   },
   {
     id: "ak-code-review",
@@ -233,6 +241,8 @@ export const akEngineerSkills: AkSkillEntry[] = [
     description: "Shared utilities and conventions used across other skills. Internal — invoke only when another skill loads it.",
     descriptionVi: "Tiện ích và quy ước dùng chung cho skill khác. Nội bộ — chỉ gọi khi skill khác nạp vào, không gọi trực tiếp.",
     category: "utilities",
+    argumentHint: "[module|helper]",
+    args: ["[module|helper]"],
   },
   {
     id: "ak-context-engineering",
@@ -347,6 +357,9 @@ export const akEngineerSkills: AkSkillEntry[] = [
     description: "Unified diagram surface — Mermaid, editorial diagrams (24 base types across architecture, flow, storytelling, data-viz), and animated SVG connectors. Use when the user wants a static image (PNG/SVG), a self-contained editorial HTML page, or a short video (MP4 default, GIF via --gif) of a diagram at editorial quality. Deterministic byte-for-byte output.",
     descriptionVi: "Một bề mặt vẽ sơ đồ: Mermaid, sơ đồ biên tập (24 kiểu kiến trúc, luồng, kể chuyện, data-viz) và connector SVG có animation. Dùng khi cần ảnh tĩnh PNG/SVG, trang HTML biên tập độc lập, hoặc video ngắn (MP4 mặc định, GIF với --gif) đạt chất lượng làm tay. Output byte-for-byte, chạy lại ra giống nhau.",
     category: "designFrontend",
+    argumentHint: "[input-file] [--format <svg|fragment|html>] [--preset <classic|signal-flow|blueprint|editorial>] [--theme <light|dark>] [--out <path>]",
+    args: ["[input-file]"],
+    flags: ["--format", "--out", "--preset", "--theme"],
   },
   {
     id: "ak-docs",
@@ -375,6 +388,8 @@ export const akEngineerSkills: AkSkillEntry[] = [
     description: "Read, create, and edit Office documents (docx, pdf, pptx, xlsx). Use for tables, forms, slides, spreadsheets.",
     descriptionVi: "Đọc, tạo và sửa tài liệu Office (docx, pdf, pptx, xlsx). Dùng khi làm bảng, biểu mẫu, slide, bảng tính.",
     category: "docsContent",
+    argumentHint: "<docx|pdf|pptx|xlsx> [path] [action]",
+    args: ["<docx|pdf|pptx|xlsx>", "[path]", "[action]"],
   },
   {
     id: "ak-excalidraw",
@@ -383,6 +398,9 @@ export const akEngineerSkills: AkSkillEntry[] = [
     description: "Create Excalidraw diagrams — architecture, data flow, workflows, system design. Use when user wants to visualize, diagram, draw architecture, show data flow, create flowcharts, map components, or export .excalidraw files to PNG/SVG. Supports two modes: live MCP canvas (real-time) or file-based JSON + Playwright rendering. Also supports zero-config codebase auto-diagramming — just say \"diagram this repo\" or \"visualize the architecture\".",
     descriptionVi: "Vẽ sơ đồ Excalidraw về kiến trúc, luồng dữ liệu, quy trình và thiết kế hệ thống, qua canvas MCP trực tiếp hoặc file JSON kèm Playwright, và tự vẽ mã nguồn không cần cấu hình. Dùng khi muốn hình dung, vẽ kiến trúc, hiện luồng dữ liệu, flowchart, map thành phần, xuất file .excalidraw sang PNG/SVG, hoặc bảo diagram this repo hay visualize the architecture.",
     category: "designFrontend",
+    argumentHint: "[diagram description|path] [--export <png|svg>] [--live]",
+    args: ["[diagram description|path]"],
+    flags: ["--export", "--live"],
   },
   {
     id: "ak-explain",
@@ -391,7 +409,6 @@ export const akEngineerSkills: AkSkillEntry[] = [
     description: "Explain concepts, code, systems, architecture, errors, documents, and technical decisions accurately and at the requested depth. Use whenever the user asks \"explain this\", \"how does this work\", \"why does X happen\", requests a code walkthrough, or needs a complex topic simplified; use --eli5 for plain analogies without losing safety warnings and --html for a visual self-contained explanation.",
     descriptionVi: "Giải thích khái niệm, mã, hệ thống, kiến trúc, lỗi, tài liệu và quyết định kỹ thuật đúng mức sâu được yêu cầu. Dùng khi hỏi explain this, cái này chạy thế nào, sao X xảy ra, walkthrough mã, hoặc cần nói dễ hơn; --eli5 cho ví dụ đời thường vẫn giữ cảnh báo an toàn, --html cho bản giải thích trực quan một file.",
     category: "utilities",
-    isBeta: true,
     argumentHint: "[subject|path|URL] [--html] [--eli5]",
     args: ["[subject|path|URL]"],
     flags: ["--eli5", "--html"],
@@ -445,6 +462,8 @@ export const akEngineerSkills: AkSkillEntry[] = [
     description: "Create polished frontend interfaces from designs/screenshots/videos. Use for web components, 3D experiences, replicating UI designs, quick prototypes, immersive interfaces, avoiding AI slop.",
     descriptionVi: "Làm giao diện frontend chỉn chu từ thiết kế, ảnh chụp màn hình hoặc video. Dùng khi dựng component web, trải nghiệm 3D, bắt chước thiết kế UI, prototype nhanh, giao diện đắm chìm, tránh giao diện AI sáo rỗng.",
     category: "designFrontend",
+    argumentHint: "[prompt|image-path|component]",
+    args: ["[prompt|image-path|component]"],
   },
   {
     id: "ak-frontend-development",
@@ -551,6 +570,8 @@ export const akEngineerSkills: AkSkillEntry[] = [
     description: "Open the AgentKit help index. Use when users ask how to use ak, what skills are available, or which workflow to run.",
     descriptionVi: "Mở mục lục trợ giúp AgentKit. Dùng khi hỏi cách dùng CLI ak, skill nào có sẵn, hoặc nên chạy quy trình nào.",
     category: "utilities",
+    argumentHint: "[topic|skill|command]",
+    args: ["[topic|skill|command]"],
   },
   {
     id: "ak-html-video",
@@ -888,20 +909,9 @@ export const akEngineerSkills: AkSkillEntry[] = [
     description: "STRIDE + OWASP-based security audit with optional red-team persona discovery loop and auto-fix. Scans code for vulnerabilities from multiple attacker perspectives (auth attacker, supply chain, insider, infrastructure), categorizes by severity, and can iteratively fix findings using ak:autoresearch pattern.",
     descriptionVi: "Rà soát bảo mật theo STRIDE + OWASP với vòng khám phá persona red-team tùy chọn và tự sửa, quét mã theo nhiều góc tấn công (auth, supply chain, insider, hạ tầng), xếp theo mức nghiêm trọng, và có thể sửa dần phát hiện theo pattern ak:autoresearch.",
     category: "securityIntel",
-    argumentHint: "<scope glob or 'full'> [--fix] [--red-team] [--iterations N]",
-    args: ["<scope glob or 'full'>"],
-    flags: ["--fix", "--iterations", "--red-team"],
-  },
-  {
-    id: "ak-security-scan",
-    command: "/ak:security-scan",
-    commandCodex: "$ak:security-scan",
-    description: "Scan codebase for security vulnerabilities, hardcoded secrets, dependency issues, and OWASP patterns. Use when asked to 'security scan', 'check for secrets', 'audit security', or before major releases.",
-    descriptionVi: "Quét mã nguồn tìm lỗ hổng bảo mật, secret gắn cứng trong mã, vấn đề dependency và mẫu OWASP. Dùng khi được yêu cầu security scan, check for secrets, audit security, hoặc trước lần phát hành lớn.",
-    category: "securityIntel",
-    argumentHint: "[scope] [--secrets-only] [--deps-only] [--full]",
+    argumentHint: "[scope] [--secrets-only] [--deps-only] [--fix] [--red-team] [--iterations N]",
     args: ["[scope]"],
-    flags: ["--deps-only", "--full", "--secrets-only"],
+    flags: ["--deps-only", "--fix", "--iterations", "--red-team", "--secrets-only"],
   },
   {
     id: "ak-sequential-thinking",
@@ -963,9 +973,9 @@ export const akEngineerSkills: AkSkillEntry[] = [
     description: "Create or update Claude skills. Use for new skills, skill scripts, references, packaging, metadata validation, and extending Claude's capabilities.",
     descriptionVi: "Tạo hoặc cập nhật skill Claude. Dùng khi làm skill mới, script skill, tài liệu tham chiếu, đóng gói, kiểm tra metadata và mở rộng khả năng của Claude.",
     category: "utilities",
-    argumentHint: "[skill-name or description] [--advice]",
-    args: ["[skill-name or description]"],
-    flags: ["--advice"],
+    argumentHint: "<create|update|audit|optimize> [skill-name|path|kit|--all] [--kit <kit>|--project|--user] [--long-horizon] [--apply] [--from-audit <report>] [--advice]",
+    args: ["[skill-name|path|kit|--all]"],
+    flags: ["--advice", "--all", "--apply", "--from-audit", "--kit", "--long-horizon", "--project", "--user"],
   },
   {
     id: "ak-sowat",
@@ -975,6 +985,8 @@ export const akEngineerSkills: AkSkillEntry[] = [
     descriptionVi: "Xem việc vừa làm và issue liên quan như product owner: chọn bước tiếp theo đáng làm, phản biện ưu tiên yếu, và nói rõ điều quan trọng lúc này.",
     category: "planResearch",
     isNew: true,
+    argumentHint: "[recent-changes|issue|PR]",
+    args: ["[recent-changes|issue|PR]"],
   },
   {
     id: "ak-stitch",
@@ -994,6 +1006,8 @@ export const akEngineerSkills: AkSkillEntry[] = [
     descriptionVi: "Tóm việc đã làm: kết quả, chỗ fail, cách xử lý tạm, quyết định, hành vi, kiến trúc, cách dùng, việc còn lại và bước tiếp. Dùng sau khi implement hoặc khi cần recap kỹ thuật.",
     category: "sessionMgmt",
     isNew: true,
+    argumentHint: "[task|PR|branch|recent]",
+    args: ["[task|PR|branch|recent]"],
   },
   {
     id: "ak-tanstack",
@@ -1066,6 +1080,9 @@ export const akEngineerSkills: AkSkillEntry[] = [
     description: "UI/UX design intelligence for web and mobile: style selection, color systems, typography, layout, accessibility, interaction states, responsive behavior, forms, charts, design systems, and code review across React, Next.js, Vue, Svelte, SwiftUI, React Native, Flutter, Tailwind, shadcn/ui, and HTML/CSS.",
     descriptionVi: "Tư vấn thiết kế UI/UX cho web và mobile: chọn style, hệ màu, chữ, layout, accessibility, trạng thái tương tác, hành vi responsive, form, chart, design system, và rà soát mã trên React, Next.js, Vue, Svelte, SwiftUI, React Native, Flutter, Tailwind, shadcn/ui và HTML/CSS.",
     category: "designFrontend",
+    argumentHint: "[component|page|design-system] [--style <style>] [--framework <fw>]",
+    args: ["[component|page|design-system]"],
+    flags: ["--framework", "--style"],
   },
   {
     id: "ak-use-mcp",
@@ -1085,9 +1102,9 @@ export const akEngineerSkills: AkSkillEntry[] = [
     descriptionVi: "Chạy pipeline vibe từ nhận yêu cầu tới sẵn sàng PR, tùy chọn gộp nhánh và chờ CI khớp sau khi gộp; điều phối worktree, plan, cook/fix, code-review, ship và review-pr, hỗ trợ ship beta rồi ổn định bằng --both và giám sát tư vấn kongming bằng --advice. Dùng khi xử lý GitHub issue, yêu cầu tính năng, sửa lỗi hoặc lần ship tự chạy.",
     category: "essentials",
     order: 2,
-    argumentHint: "[--ship] [--beta] [--both] [--advice] <github-issue-url | feature request>",
+    argumentHint: "[--ship] [--beta] [--both] [--advice] [--ultra] <github-issue-url | feature request>",
     args: ["<github-issue-url | feature request>"],
-    flags: ["--ship", "--beta", "--both", "--advice"],
+    flags: ["--advice", "--beta", "--both", "--ship", "--ultra"],
   },
   {
     id: "ak-watzup",
@@ -1096,6 +1113,8 @@ export const akEngineerSkills: AkSkillEntry[] = [
     description: "Generate short handoff reports from Git branches, remote refs, worktrees, unfinished plans, and roadmap docs. Surfaces priority-ranked next steps with checkbox progress and rationale. Use when the user asks what's in flight, wants progress/next steps, is in a fresh worktree or detached checkout, or needs end-of-session status.",
     descriptionVi: "Tạo báo cáo bàn giao ngắn từ nhánh Git, remote ref, worktree, kế hoạch dở và tài liệu roadmap, đưa ra bước tiếp theo xếp theo ưu tiên kèm checkbox tiến độ và lý do. Dùng khi hỏi việc đang chạy, cần tiến độ hay bước tiếp, đang ở worktree mới hoặc checkout tách, hoặc cần trạng thái cuối phiên.",
     category: "sessionMgmt",
+    argumentHint: "[branch|worktree|status]",
+    args: ["[branch|worktree|status]"],
   },
   {
     id: "ak-web-design-guidelines",
@@ -1134,7 +1153,6 @@ export const akEngineerSkills: AkSkillEntry[] = [
     description: "Build agent-ready websites with WebMCP — expose page features as callable tools to in-browser AI agents via document.modelContext. Use whenever the user wants to make a website or web app agent-actionable, add AI-agent tools to a page, make a form agent-callable, use registerTool/getTools/executeTool, the imperative or declarative WebMCP API, tool annotations, the tools Permissions-Policy, or WebMCP evals. In-browser page tools, NOT stdio/HTTP MCP servers — for an MCP server use ak:mcp-builder, to run MCP tools use ak:use-mcp.",
     descriptionVi: "Làm website sẵn cho agent bằng WebMCP: lộ tính năng trang thành tool in-browser gọi qua document.modelContext. Dùng khi muốn site/app gọi được bởi agent, thêm tool AI vào trang, form gọi được, registerTool/getTools/executeTool, API WebMCP imperative hoặc declarative, annotation, Permissions-Policy tools, hoặc evals WebMCP. Tool trên trang, không phải MCP server stdio/HTTP — server thì ak:mcp-builder, chạy tool MCP thì ak:use-mcp.",
     category: "designFrontend",
-    isBeta: true,
     argumentHint: "[page, form, or feature to expose as a tool]",
     args: ["[page, form, or feature to expose as a tool]"],
   },
@@ -1307,6 +1325,8 @@ export const akMarketingSkills: AkSkillEntry[] = [
     description: "Restate the assistant's last message in simpler, shorter, jargon-free language. Use when the user says ak:bro, simplify that, say it plainly, or explain it like a human.",
     descriptionVi: "Viết lại câu trả lời trước của AI cho gọn, dễ hiểu, bỏ thuật ngữ. Dùng khi muốn nói lại cho dễ, nói thường, hoặc giải thích như người.",
     category: "essentials",
+    argumentHint: "[last message | topic to simplify]",
+    args: ["[last message | topic to simplify]"],
   },
   {
     id: "ak-brand",
@@ -1492,7 +1512,6 @@ export const akMarketingSkills: AkSkillEntry[] = [
     description: "Explain concepts, code, systems, architecture, errors, documents, and technical decisions accurately and at the requested depth. Use whenever the user asks \"explain this\", \"how does this work\", \"why does X happen\", requests a code walkthrough, or needs a complex topic simplified; use --eli5 for plain analogies without losing safety warnings and --html for a visual self-contained explanation.",
     descriptionVi: "Giải thích khái niệm, mã, hệ thống, kiến trúc, lỗi, tài liệu và quyết định kỹ thuật đúng mức sâu được yêu cầu. Dùng khi hỏi explain this, cái này chạy thế nào, sao X xảy ra, walkthrough mã, hoặc cần nói dễ hơn; --eli5 cho ví dụ đời thường vẫn giữ cảnh báo an toàn, --html cho bản giải thích trực quan một file.",
     category: "utilities",
-    isBeta: true,
     argumentHint: "[subject|path|URL] [--html] [--eli5]",
     args: ["[subject|path|URL]"],
     flags: ["--eli5", "--html"],
@@ -1556,6 +1575,8 @@ export const akMarketingSkills: AkSkillEntry[] = [
     description: "Create polished frontend interfaces from designs/screenshots/videos. Use for web components, 3D experiences, replicating UI designs, quick prototypes, immersive interfaces, avoiding AI slop.",
     descriptionVi: "Làm giao diện frontend chỉn chu từ thiết kế, ảnh chụp màn hình hoặc video. Dùng khi dựng component web, trải nghiệm 3D, bắt chước thiết kế UI, prototype nhanh, giao diện đắm chìm, tránh giao diện AI sáo rỗng.",
     category: "designVisual",
+    argumentHint: "[prompt|image-path|component]",
+    args: ["[prompt|image-path|component]"],
   },
   {
     id: "ak-funnel",
@@ -1677,6 +1698,8 @@ export const akMarketingSkills: AkSkillEntry[] = [
     description: "Run and inspect the local Assets, Brand, and Settings dashboard.",
     descriptionVi: "Chạy và rà soát dashboard local gồm Assets, Brand và Settings.",
     category: "seoAnalytics",
+    argumentHint: "[start|stop|status|open]",
+    args: ["[start|stop|status|open]"],
   },
   {
     id: "ak-marketing-ideas",
@@ -1787,9 +1810,10 @@ export const akMarketingSkills: AkSkillEntry[] = [
     descriptionVi: "Tạo kế hoạch thông minh và làm rõ prompt.",
     category: "essentials",
     step: 4,
-    argumentHint: "[archive|ci|cro|fast|hard|parallel|two|validate] [task]",
+    argumentHint: "[archive|ci|cro|fast|hard|parallel|two|validate] [--html] [task]",
     subcommands: ["archive", "ci", "cro", "fast", "hard", "parallel", "two", "validate"],
     args: ["[task]"],
+    flags: ["--html"],
   },
   {
     id: "ak-play",
@@ -1904,6 +1928,8 @@ export const akMarketingSkills: AkSkillEntry[] = [
     description: "Analyze recently implemented work and related issues like a product owner. Use to identify high-impact next steps, challenge weak priorities, and explain what matters now.",
     descriptionVi: "Xem việc vừa làm và issue liên quan như product owner: chọn bước tiếp theo đáng làm, phản biện ưu tiên yếu, và nói rõ điều quan trọng lúc này.",
     category: "strategyResearch",
+    argumentHint: "[recent-changes|issue|PR]",
+    args: ["[recent-changes|issue|PR]"],
   },
   {
     id: "ak-storage",
@@ -1912,6 +1938,9 @@ export const akMarketingSkills: AkSkillEntry[] = [
     description: "S3-compatible object storage integration for marketing assets. Works with Cloudflare R2, AWS S3, MinIO, Backblaze B2, DigitalOcean Spaces.",
     descriptionVi: "Lưu asset marketing lên object storage tương thích S3: Cloudflare R2, AWS S3, MinIO, Backblaze B2, DigitalOcean Spaces.",
     category: "utilities",
+    argumentHint: "[upload|download|list|sync] [file|path] [--bucket <name>]",
+    args: ["[file|path]"],
+    flags: ["--bucket"],
   },
   {
     id: "ak-sumup",
@@ -1920,6 +1949,8 @@ export const akMarketingSkills: AkSkillEntry[] = [
     description: "Summarize completed implementation, failures, workarounds, decisions, behavior, architecture, usage, follow-ups, and next steps. Use after implementation or for a technical recap.",
     descriptionVi: "Tóm việc đã làm: kết quả, chỗ fail, cách xử lý tạm, quyết định, hành vi, kiến trúc, cách dùng, việc còn lại và bước tiếp. Dùng sau khi implement hoặc khi cần recap kỹ thuật.",
     category: "sessionMgmt",
+    argumentHint: "[task|PR|branch|recent]",
+    args: ["[task|PR|branch|recent]"],
   },
   {
     id: "ak-tech-graph",
@@ -1949,6 +1980,9 @@ export const akMarketingSkills: AkSkillEntry[] = [
     description: "UI/UX design intelligence for web and mobile: style selection, color systems, typography, layout, accessibility, interaction states, responsive behavior, forms, charts, design systems, and code review across React, Next.js, Vue, Svelte, SwiftUI, React Native, Flutter, Tailwind, shadcn/ui, and HTML/CSS.",
     descriptionVi: "Tư vấn thiết kế UI/UX cho web và mobile: chọn style, hệ màu, chữ, layout, accessibility, trạng thái tương tác, hành vi responsive, form, chart, design system, và rà soát mã trên React, Next.js, Vue, Svelte, SwiftUI, React Native, Flutter, Tailwind, shadcn/ui và HTML/CSS.",
     category: "designVisual",
+    argumentHint: "[component|page|design-system] [--style <style>] [--framework <fw>]",
+    args: ["[component|page|design-system]"],
+    flags: ["--framework", "--style"],
   },
   {
     id: "ak-use-mcp",
@@ -1978,6 +2012,8 @@ export const akMarketingSkills: AkSkillEntry[] = [
     description: "Generate short handoff reports from Git branches, remote refs, worktrees, unfinished plans, and roadmap docs. Surfaces priority-ranked next steps with checkbox progress and rationale. Use when the user asks what's in flight, wants progress/next steps, is in a fresh worktree or detached checkout, or needs end-of-session status.",
     descriptionVi: "Tạo báo cáo bàn giao ngắn từ nhánh Git, remote ref, worktree, kế hoạch dở và tài liệu roadmap, đưa ra bước tiếp theo xếp theo ưu tiên kèm checkbox tiến độ và lý do. Dùng khi hỏi việc đang chạy, cần tiến độ hay bước tiếp, đang ở worktree mới hoặc checkout tách, hoặc cần trạng thái cuối phiên.",
     category: "sessionMgmt",
+    argumentHint: "[branch|worktree|status]",
+    args: ["[branch|worktree|status]"],
   },
   {
     id: "ak-web-design-guidelines",
@@ -2113,42 +2149,10 @@ export interface AkBetaPreviewItem {
 }
 
 /** Engineer beta-only skills from ak-cli kit.yaml (origin/dev minus origin/main). */
-export const akEngineerBetaPreview: AkBetaPreviewItem[] = [
-  {
-    id: "ak-explain",
-    command: "/ak:explain",
-    commandCodex: "$ak:explain",
-    description: "Explain concepts, code, systems, and decisions at the requested depth. Use --eli5 for plain analogies; --html for a visual page.",
-    descriptionVi: "Giải thích khái niệm, mã, hệ thống và quyết định đúng mức sâu yêu cầu. --eli5 cho ví dụ đời thường; --html cho trang trực quan.",
-    badge: "new",
-    args: ["[subject|path|URL]"],
-    flags: ["--eli5", "--html"],
-  },
-  {
-    id: "ak-webmcp",
-    command: "/ak:webmcp",
-    commandCodex: "$ak:webmcp",
-    description: "Expose page features as in-browser WebMCP tools via document.modelContext. Not an MCP server — use ak:mcp-builder for that.",
-    descriptionVi: "Lộ tính năng trang thành tool WebMCP in-browser qua document.modelContext. Không phải MCP server — server dùng ak:mcp-builder.",
-    badge: "new",
-    args: ["[page, form, or feature to expose as a tool]"],
-  },
-
-];
+export const akEngineerBetaPreview: AkBetaPreviewItem[] = [];
 
 /** Marketing beta-only skills. overrides.skills replaces core; listed only when present in that override. */
-export const akMarketingBetaPreview: AkBetaPreviewItem[] = [
-  {
-    id: "ak-explain",
-    command: "/ak:explain",
-    commandCodex: "$ak:explain",
-    description: "Explain concepts, code, systems, and decisions at the requested depth. Use --eli5 for plain analogies; --html for a visual page.",
-    descriptionVi: "Giải thích khái niệm, mã, hệ thống và quyết định đúng mức sâu yêu cầu. --eli5 cho ví dụ đời thường; --html cho trang trực quan.",
-    badge: "new",
-    args: ["[subject|path|URL]"],
-    flags: ["--eli5", "--html"],
-  },
-];
+export const akMarketingBetaPreview: AkBetaPreviewItem[] = [];
 
 export const akEngineerSkillCount = akEngineerSkills.length;
 export const akMarketingSkillCount = akMarketingSkills.length;

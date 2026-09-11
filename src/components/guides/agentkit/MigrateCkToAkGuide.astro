@@ -1,8 +1,8 @@
 ---
 // Internal sources (do not publish on the page):
-// Authority: AgentKit stable v2.14.0 (405ea37). PreflightRemoteMigrateKit in
+// Authority: AgentKit stable v2.15.0 (c8ce34dc). PreflightRemoteMigrateKit in
 // kitcmd/paid_kit_gate.go does not call ValidateProductLocalKitActivation —
-// logged-in remote migrate of paid kits is the supported path on 2.14.0.
+// logged-in remote migrate of paid kits is the supported path on current stable.
 // - Soft path: ak migrate --from=ck (dry-run default true)
 // - Clean cutover is a separate guide — ck uninstall + ak kit init
 
@@ -169,7 +169,7 @@ Write-Host "Safety copy completed at: $dest"`;
       {isVi ? (
         <>
           Ghi thật cần <AkInlineCode text="--yes" /> (dry-run vẫn mặc định). Kit trả phí (Engineer, …) cài từ registry sau{' '}
-          <AkInlineCode text="ak login" />. Trên stable <AkInlineCode text="2.14.0" />, preflight migrate remote không còn chặn kit trả phí bằng luật local/dev.
+          <AkInlineCode text="ak login" />. Preflight migrate remote không chặn kit trả phí bằng luật local/dev.
           Nếu apply dở: <AkInlineCode text="ak migrate rollback" /> hoặc bản sao thủ công, rồi xem{' '}
           <a class="font-semibold underline-offset-2 hover:underline" href={translatePath('/guides/agentkit/clean-cutover-from-claudekit')}>
             gỡ hẳn ClaudeKit
@@ -179,7 +179,7 @@ Write-Host "Safety copy completed at: $dest"`;
       ) : (
         <>
           Writes need <AkInlineCode text="--yes" /> (dry-run stays the default). Paid kits (Engineer, …) install from the registry after{' '}
-          <AkInlineCode text="ak login" />. On stable <AkInlineCode text="2.14.0" />, remote migrate preflight no longer rejects paid kits with the local/dev rule.
+          <AkInlineCode text="ak login" />. Remote migrate preflight does not reject paid kits with the local/dev rule.
           If apply stops mid-flight: <AkInlineCode text="ak migrate rollback" /> or your manual copy, then see{' '}
           <a class="font-semibold underline-offset-2 hover:underline" href={translatePath('/guides/agentkit/clean-cutover-from-claudekit')}>
             clean cutover
