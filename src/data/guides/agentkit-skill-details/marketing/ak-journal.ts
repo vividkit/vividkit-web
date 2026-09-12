@@ -136,7 +136,7 @@ const data: SkillInfographic = {
       expectedVi: "Có thể gọi journal-writer để viết thẳng thắn hơn, nhưng vẫn lưu qua ak journal create."
     },
     { labelEn: 'Campaign-audit journal', labelVi: 'Journal audit chiến dịch', command: '/ak:journal capture this campaign-audit session',
-      commandVi: '/ak:journal ghi lại phiên kiểm toán chiến dịch này', whenEn: 'A working session should leave a dated technical journal, not a status slide.', whenVi: 'Một session làm việc cần journal kỹ thuật có ngày, không phải slide status.', expectedEn: 'Journal entry with changes, decisions, paths, and next steps.', expectedVi: 'Journal ghi thay đổi, quyết định, path và bước tiếp theo.' }
+      commandVi: '/ak:journal ghi lại phiên kiểm toán chiến dịch này', whenEn: 'A working session should leave a dated technical journal, not a status slide.', whenVi: 'Một session làm việc cần journal kỹ thuật có ngày, không phải slide status.', expectedEn: 'Writes a dated journal entry with changes, decisions, concrete paths, and next steps under plans/journals.', expectedVi: 'Ghi journal có ngày với thay đổi, quyết định, path cụ thể và bước tiếp theo dưới plans/journals.' }
   ],
   reportOutput: {
     titleEn: "Journal result",

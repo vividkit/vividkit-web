@@ -180,7 +180,7 @@ const data: SkillInfographic = {
       expectedVi: "Worktree được tạo với ngữ nghĩa giữ nguyên branch name và hướng dẫn vào thư mục rõ ràng."
     },
     { labelEn: 'Inspect status', labelVi: 'Xem trạng thái', command: '/ak:worktree status',
-      commandVi: '/ak:worktree status', whenEn: 'You need worktree health, dirty state, or base-branch divergence before reuse or cleanup.', whenVi: 'Khi cần sức khỏe worktree, dirty state hoặc độ lệch base branch trước khi reuse hoặc dọn.', expectedEn: 'Health audit with normalized paths, dirty state, and ahead/behind counts.', expectedVi: 'Audit sức khỏe với path chuẩn hóa, dirty state và số ahead/behind.' }
+      commandVi: '/ak:worktree status', whenEn: 'You need worktree health, dirty state, or base-branch divergence before reuse or cleanup.', whenVi: 'Khi cần sức khỏe worktree, dirty state hoặc độ lệch base branch trước khi reuse hoặc dọn.', expectedEn: 'Returns a health audit with normalized paths, dirty state, and ahead/behind counts for each worktree.', expectedVi: 'Trả audit sức khỏe với path chuẩn hóa, dirty state và số ahead/behind cho từng worktree.' }
   ],
   reportOutput: {
     titleEn: "Worktree result",

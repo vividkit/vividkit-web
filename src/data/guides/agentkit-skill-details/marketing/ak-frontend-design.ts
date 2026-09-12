@@ -80,7 +80,7 @@ const data: SkillInfographic = {
     { labelEn: "Screenshot replication", labelVi: "Sao chép screenshot", command: "/ak:frontend-design recreate this screenshot as a working component",
       commandVi: '/ak:frontend-design tái tạo ảnh chụp màn hình này thành một component hoạt động', whenEn: "The supplied screenshot is the visual contract.", whenVi: "Screenshot được cung cấp là contract hình ảnh.", expectedEn: "Uses multimodal analysis, plans implementation, matches the source, verifies against it, and reports fidelity.", expectedVi: "Dùng phân tích multimodal, lập kế hoạch triển khai, khớp nguồn, xác minh đối chiếu và báo fidelity." },
     { labelEn: "3D experience", labelVi: "Trải nghiệm 3D", command: "/ak:frontend-design build a WebGL product hero with subtle motion",
-      commandVi: '/ak:frontend-design xây dựng hero sản phẩm WebGL với chuyển động tinh tế', whenEn: "The request calls for an immersive or Three.js-style experience.", whenVi: "Yêu cầu cần trải nghiệm immersive hoặc kiểu Three.js.", expectedEn: "Routes to 3D workflow, handles motion/reduced-motion, verifies performance and viewport safety.", expectedVi: "Đi theo workflow 3D, xử lý motion/reduced-motion, xác minh hiệu năng và an toàn viewport." },
+      commandVi: '/ak:frontend-design xây dựng hero sản phẩm WebGL với chuyển động tinh tế', whenEn: "The request calls for an immersive or Three.js-style experience.", whenVi: "Yêu cầu cần trải nghiệm immersive hoặc kiểu Three.js.", expectedEn: "Routes to the 3D workflow, handles motion and reduced-motion, then verifies performance and viewport safety on the real surface.", expectedVi: "Đi theo workflow 3D, xử lý motion và reduced-motion, rồi xác minh hiệu năng cùng an toàn viewport trên UI thật." },
   ],
 };
 

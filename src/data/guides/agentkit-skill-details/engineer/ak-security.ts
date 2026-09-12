@@ -122,19 +122,35 @@ const data: SkillInfographic = {
     }
   ],
   "invocation": {
-    "syntax": "/ak:security <scope glob or 'full'> [--fix] [--red-team] [--iterations N]",
+    "syntax": "/ak:security [scope] [--secrets-only] [--deps-only] [--fix] [--red-team] [--iterations N]",
     "arguments": [
       {
-        "token": "<scope glob or 'full'>",
+        "token": "[scope]",
         "titleEn": "Audit scope",
         "titleVi": "Phạm vi audit",
-        "descEn": "File glob, directory, or exact keyword `full` to audit. Keep it bounded to the relevant trust boundary unless a full-project review is intended.",
-        "descVi": "Glob file, thư mục hoặc đúng keyword `full` cần audit. Giữ phạm vi trong ranh giới tin cậy liên quan trừ khi muốn review toàn project.",
-        "required": true,
+        "descEn": "Optional file glob, directory, or `full`. Omit to scan the current project root. Keep it bounded to the relevant trust boundary unless a full-project review is intended.",
+        "descVi": "Glob file, thư mục hoặc `full` tùy chọn. Bỏ trống thì quét root project hiện tại. Giữ phạm vi trong ranh giới tin cậy liên quan trừ khi muốn review toàn project.",
+        "required": false,
         "exampleCommand": "/ak:security src/auth/"
       }
     ],
     "options": [
+      {
+        "token": "--secrets-only",
+        "titleEn": "Secrets only",
+        "titleVi": "Chỉ secret",
+        "descEn": "Limit the pass to hardcoded credentials, API keys, private keys, and similar secret patterns with local context checks.",
+        "descVi": "Giới hạn lượt chạy vào credential hardcode, API key, private key và pattern secret tương tự, kèm kiểm tra ngữ cảnh local.",
+        "exampleCommand": "/ak:security --secrets-only"
+      },
+      {
+        "token": "--deps-only",
+        "titleEn": "Dependencies only",
+        "titleVi": "Chỉ dependency",
+        "descEn": "Limit the pass to supported package-audit tooling for the detected Node.js or Python project. Unavailable tooling is reported as unavailable, not clean.",
+        "descVi": "Giới hạn lượt chạy vào audit package được hỗ trợ cho project Node.js hoặc Python đã phát hiện. Tool không có được báo là không có, không xem là sạch.",
+        "exampleCommand": "/ak:security --deps-only"
+      },
       {
         "token": "--fix",
         "titleEn": "Fix findings",
@@ -162,6 +178,22 @@ const data: SkillInfographic = {
     ]
   },
   "outputFlags": [
+    {
+      "flag": "--secrets-only",
+      "titleEn": "Secrets only",
+      "titleVi": "Chỉ secret",
+      "descEn": "Limits the run to credential and secret-pattern detection.",
+      "descVi": "Giới hạn lượt chạy vào tìm secret và credential.",
+      "exampleCommand": "/ak:security --secrets-only"
+    },
+    {
+      "flag": "--deps-only",
+      "titleEn": "Dependencies only",
+      "titleVi": "Chỉ dependency",
+      "descEn": "Limits the run to supported dependency advisory coverage.",
+      "descVi": "Giới hạn lượt chạy vào lỗ hổng dependency được hỗ trợ.",
+      "exampleCommand": "/ak:security --deps-only"
+    },
     {
       "flag": "--fix",
       "titleEn": "Fix mode",
@@ -224,6 +256,24 @@ const data: SkillInfographic = {
       "whenVi": "Dùng khi được phép sửa finding audit nhưng vòng fix cần số lần lặp tối đa.",
       "expectedEn": "Sorts findings by severity, applies up to 15 targeted fixes one at a time, runs a guard after each fix, and stops with the failure reason if verification breaks.",
       "expectedVi": "Sắp finding theo severity, áp dụng tối đa 15 sửa đổi mục tiêu từng cái một, chạy guard sau mỗi fix và dừng kèm lý do nếu kiểm chứng fail."
+    },
+    {
+      "labelEn": "Secrets only",
+      "labelVi": "Chỉ quét secret",
+      "command": "/ak:security --secrets-only",
+      "whenEn": "Use when the immediate risk is leaked credentials, API keys, private keys, or hardcoded passwords.",
+      "whenVi": "Dùng khi rủi ro trước mắt là credential, API key, private key hoặc mật khẩu hardcode bị lộ.",
+      "expectedEn": "Searches secret-pattern references, verifies placeholders versus real credentials, redacts evidence, and recommends rotation for real secrets.",
+      "expectedVi": "Tìm pattern secret, phân biệt placeholder với credential thật, che evidence và khuyên xoay khóa khi secret là thật."
+    },
+    {
+      "labelEn": "Dependencies only",
+      "labelVi": "Chỉ audit dependency",
+      "command": "/ak:security --deps-only",
+      "whenEn": "Use when you only need dependency advisory coverage for a Node.js or Python project.",
+      "whenVi": "Dùng khi chỉ cần kiểm tra cảnh báo dependency cho dự án Node.js hoặc Python.",
+      "expectedEn": "Runs the applicable package audit, treats unavailable tooling as unavailable rather than clean, and ranks dependency findings by severity.",
+      "expectedVi": "Chạy audit package phù hợp, coi tool không có là không có chứ không phải sạch, và xếp finding dependency theo mức nghiêm trọng."
     }
   ],
   "reportOutput": {

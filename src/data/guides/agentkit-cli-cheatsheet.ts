@@ -1,4 +1,4 @@
-// Auto-curated from AgentKit CLI help (stable v2.14.0). ak onboard is beta-only (v2.15.0-beta.x).
+// Auto-curated from AgentKit CLI help (stable origin/main). ak onboard is on the stable command tree.
 export type AkCliCategory = 'setup' | 'kits' | 'account' | 'inspect' | 'config';
 
 export interface AkCliCommand {
@@ -36,8 +36,8 @@ export const akCliCommandsCheatsheet: AkCliCommand[] = [
   },
   {
     name: "ak onboard",
-    description: "Beta CLI: run only missing first-run setup, login, and Kit install. --yes never force-overwrites.",
-    descriptionVi: "CLI ak beta: chỉ chạy bước còn thiếu (setup, login, cài Kit). --yes không ghi đè hay takeover.",
+    description: "Run only missing first-run setup, login, and Kit install. --yes never force-overwrites.",
+    descriptionVi: "Chỉ chạy bước còn thiếu (setup, login, cài Kit). --yes không ghi đè hay takeover.",
     category: "setup",
     keyFlags: ["--kit", "--target", "--channel", "--global", "--project-dir", "--email", "--yes", "--no-interactive"],
     example: "ak onboard --kit engineer --target codex",
