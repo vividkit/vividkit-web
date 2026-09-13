@@ -718,6 +718,18 @@ export const akEngineerSkills: AkSkillEntry[] = [
     flags: ["--internal", "--resume", "--yes"],
   },
   {
+    id: "ak-page-builder",
+    command: "/ak:page-builder",
+    commandCodex: "$ak:page-builder",
+    description: "Build, extend, or operate a dynamic page builder using a project's components and stack. Use for configurable resizable widgets, responsive touch editors, previews, publishing, and agent interfaces with a project operator skill. Not for one-off page design or a generic API wrapper.",
+    descriptionVi: "Dựng, mở rộng hoặc vận hành page builder động bằng component và stack của project. Dùng cho widget chỉnh kích thước, editor cảm ứng responsive, preview, publish, và giao diện agent kèm skill operator của project. Không dùng cho thiết kế trang một lần hay bọc API chung.",
+    category: "designFrontend",
+    isBeta: true,
+    argumentHint: "[setup|update|operate] [project-path] [request]",
+    subcommands: ["setup", "update", "operate"],
+    args: ["[project-path]", "[request]"],
+  },
+  {
     id: "ak-payment-integration",
     command: "/ak:payment-integration",
     commandCodex: "$ak:payment-integration",
@@ -1434,6 +1446,17 @@ export const akMarketingSkills: AkSkillEntry[] = [
     flags: ["--advice", "--auto", "--fast", "--interactive", "--no-test", "--parallel", "--skip-journal", "--tdd", "--yagni"],
   },
   {
+    id: "ak-copywriting",
+    command: "/ak:copywriting",
+    commandCodex: "$ak:copywriting",
+    description: "Conversion copywriting formulas, headline templates, email copy patterns, landing page structures, CTA optimization, and writing style extraction. Activate for writing high-converting copy, crafting headlines, email campaigns, landing pages, or applying custom writing styles from assets/writing-styles/ directory.",
+    descriptionVi: "Cung cấp công thức copy chuyển đổi, mẫu tiêu đề, mẫu email, cấu trúc landing page, tối ưu CTA, và tách phong cách viết. Dùng khi viết copy chuyển đổi cao, soạn tiêu đề, chiến dịch email, landing page, hoặc áp phong cách tùy chỉnh từ thư mục assets/writing-styles/.",
+    category: "contentCopy",
+    isBeta: true,
+    argumentHint: "[copy-type] [context]",
+    args: ["[copy-type]", "[context]"],
+  },
+  {
     id: "ak-creativity",
     command: "/ak:creativity",
     commandCodex: "$ak:creativity",
@@ -1453,6 +1476,18 @@ export const akMarketingSkills: AkSkillEntry[] = [
     argumentHint: "[subcommand] [args]",
     subcommands: ["check"],
     args: ["[subcommand]", "[args]"],
+  },
+  {
+    id: "ak-debug",
+    command: "/ak:debug",
+    commandCodex: "$ak:debug",
+    description: "Debug systematically with root cause analysis before fixes. Use for bugs, test failures, unexpected behavior, performance issues, call stack tracing, multi-layer validation, log analysis, CI/CD failures, database diagnostics, system investigation.",
+    descriptionVi: "Gỡ lỗi có hệ thống, tìm nguyên nhân gốc trước khi sửa. Dùng khi gặp lỗi, test fail, hành vi lạ, chậm máy, lần call stack, kiểm nhiều lớp, đọc log, CI/CD hỏng, chẩn đoán cơ sở dữ liệu, hoặc điều tra hệ thống.",
+    category: "testDebug",
+    isBeta: true,
+    argumentHint: "[error or issue description] [--ultra]",
+    args: ["[error or issue description]"],
+    flags: ["--ultra"],
   },
   {
     id: "ak-debugging",
@@ -1493,6 +1528,17 @@ export const akMarketingSkills: AkSkillEntry[] = [
     category: "projectTracking",
     argumentHint: "init|update|summarize|agent-context|agents|llms",
     subcommands: ["init", "update", "summarize", "agent-context", "agents", "llms"],
+  },
+  {
+    id: "ak-docs-seeker",
+    command: "/ak:docs-seeker",
+    commandCodex: "$ak:docs-seeker",
+    description: "Search library/framework documentation via llms.txt (context7.com). Use for API docs, GitHub repository analysis, technical documentation lookup, latest library features.",
+    descriptionVi: "Tìm tài liệu thư viện và framework qua llms.txt (context7.com). Dùng khi cần tài liệu API, rà soát kho GitHub, tra cứu tài liệu kỹ thuật, hoặc xem tính năng mới của thư viện.",
+    category: "utilities",
+    isBeta: true,
+    argumentHint: "[library-name] [topic]",
+    args: ["[library-name]", "[topic]"],
   },
   {
     id: "ak-elevenlabs",
@@ -1597,6 +1643,18 @@ export const akMarketingSkills: AkSkillEntry[] = [
     category: "growthCro",
     argumentHint: "[mechanic or campaign]",
     args: ["[mechanic or campaign]"],
+  },
+  {
+    id: "ak-git",
+    command: "/ak:git",
+    commandCodex: "$ak:git",
+    description: "Git operations with conventional commits. Use for staging, committing, pushing, PRs, merges, and stacked PRs. Auto-splits commits by type/scope. Security scans for secrets.",
+    descriptionVi: "Làm thao tác Git với conventional commit, gồm stage, commit, push, PR, merge và stacked PR. Tự tách commit theo type/scope và rà secret.",
+    category: "gitVersionControl",
+    isBeta: true,
+    argumentHint: "cm|cp|pr|merge|merge-pr|stack [args]",
+    subcommands: ["cm", "cp", "pr", "merge", "merge-pr", "stack"],
+    args: ["[args]"],
   },
   {
     id: "ak-google-adk-python",
@@ -1900,6 +1958,18 @@ export const akMarketingSkills: AkSkillEntry[] = [
     args: ["[add|create|fix-logs|optimize|plan|update]", "[skill-name]", "[prompt]"],
   },
   {
+    id: "ak-skill-creator",
+    command: "/ak:skill-creator",
+    commandCodex: "$ak:skill-creator",
+    description: "Create, update, audit, validate, and package agent skills. Use when authoring SKILL.md resources or diagnosing skill routing and behavior. Not for implementing CLI or MCP servers.",
+    descriptionVi: "Tạo, cập nhật, audit, kiểm tra và đóng gói skill agent. Dùng khi soạn tài nguyên SKILL.md hoặc chẩn đoán routing/hành vi skill. Không dùng để viết CLI hay MCP server.",
+    category: "utilities",
+    isBeta: true,
+    argumentHint: "<create|update|audit|optimize> [skill-name|path|kit|--all] [--kit <kit>|--project|--user] [--long-horizon] [--apply] [--from-audit <report>] [--advice]",
+    args: ["[skill-name|path|kit|--all]"],
+    flags: ["--advice", "--all", "--apply", "--from-audit", "--kit", "--long-horizon", "--project", "--user"],
+  },
+  {
     id: "ak-slides",
     command: "/ak:slides",
     commandCodex: "$ak:slides",
@@ -2149,10 +2219,68 @@ export interface AkBetaPreviewItem {
 }
 
 /** Engineer beta-only skills from ak-cli kit.yaml (origin/dev minus origin/main). */
-export const akEngineerBetaPreview: AkBetaPreviewItem[] = [];
+export const akEngineerBetaPreview: AkBetaPreviewItem[] = [
+  {
+    id: "ak-page-builder",
+    command: "/ak:page-builder",
+    commandCodex: "$ak:page-builder",
+    description: "Integrate or extend a project page builder, then operate drafts, previews, and publishing. Not one-off page design.",
+    descriptionVi: "Gắn hoặc mở rộng page builder của project, rồi vận hành draft, preview và publish. Không phải thiết kế trang một lần.",
+    badge: "new",
+    args: ["[setup|update|operate]", "[project-path]", "[request]"],
+  },
+];
 
 /** Marketing beta-only skills. overrides.skills replaces core; listed only when present in that override. */
-export const akMarketingBetaPreview: AkBetaPreviewItem[] = [];
+export const akMarketingBetaPreview: AkBetaPreviewItem[] = [
+  {
+    id: "ak-copywriting",
+    command: "/ak:copywriting",
+    commandCodex: "$ak:copywriting",
+    description: "Conversion copy, headlines, email, landing pages, and writing-style extraction.",
+    descriptionVi: "Copy chuyển đổi, tiêu đề, email, landing page và tách phong cách viết.",
+    badge: "new",
+    args: ["[copy-type]", "[context]"],
+  },
+  {
+    id: "ak-debug",
+    command: "/ak:debug",
+    commandCodex: "$ak:debug",
+    description: "Root-cause debugging before fixes, with optional --ultra.",
+    descriptionVi: "Gỡ lỗi tìm nguyên nhân gốc trước khi sửa, tùy chọn --ultra.",
+    badge: "new",
+    args: ["[error or issue description]"],
+    flags: ["--ultra"],
+  },
+  {
+    id: "ak-docs-seeker",
+    command: "/ak:docs-seeker",
+    commandCodex: "$ak:docs-seeker",
+    description: "Search library docs via llms.txt (context7.com).",
+    descriptionVi: "Tìm tài liệu thư viện qua llms.txt (context7.com).",
+    badge: "new",
+    args: ["[library-name]", "[topic]"],
+  },
+  {
+    id: "ak-git",
+    command: "/ak:git",
+    commandCodex: "$ak:git",
+    description: "Conventional git commits, PRs, merges, and stacked PRs.",
+    descriptionVi: "Commit Git conventional, PR, merge và stacked PR.",
+    badge: "new",
+    args: ["cm|cp|pr|merge|merge-pr|stack", "[args]"],
+  },
+  {
+    id: "ak-skill-creator",
+    command: "/ak:skill-creator",
+    commandCodex: "$ak:skill-creator",
+    description: "Create, update, audit, and package agent skills — not CLI/MCP servers.",
+    descriptionVi: "Tạo, cập nhật, audit và đóng gói skill agent — không phải CLI/MCP server.",
+    badge: "new",
+    args: ["<create|update|audit|optimize>"],
+    flags: ["--advice", "--apply"],
+  },
+];
 
 export const akEngineerSkillCount = akEngineerSkills.length;
 export const akMarketingSkillCount = akMarketingSkills.length;
