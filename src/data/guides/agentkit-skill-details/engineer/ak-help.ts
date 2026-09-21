@@ -5,8 +5,8 @@ const data: SkillInfographic = {
   "command": "/ak:help",
   "kit": "engineer",
   "header": {
-    "titleEn": "Installed Skill Help Router",
-    "titleVi": "Router trợ giúp skill đã cài",
+    "titleEn": "/ak:help — Installed skill help router",
+    "titleVi": "/ak:help — Router trợ giúp skill đã cài",
     "taglineEn": "Open the AgentKit help index, discover the currently installed skills from runtime catalogs or live SKILL.md frontmatter, and route the user to the most specific workflow.",
     "taglineVi": "Mở chỉ mục trợ giúp AgentKit, khám phá skill đang cài từ catalog runtime hoặc frontmatter SKILL.md hiện có, rồi định tuyến user tới workflow cụ thể nhất."
   },
@@ -84,16 +84,17 @@ const data: SkillInfographic = {
     "contentVi": "Skill phải dùng catalog runtime nếu có, hoặc khám phá frontmatter SKILL.md hiện tại; số lượng copy sẵn và danh sách nhớ được không có thẩm quyền."
   },
   "invocation": {
-    "syntax": "/ak:help [help request]",
+    "syntax": "/ak:help [topic|skill|command]",
     "arguments": [
       {
-        "token": "[help request]",
-        "titleEn": "Help request",
-        "titleVi": "Yêu cầu trợ giúp",
-        "descEn": "Optional natural-language task, capability, named skill, or CLI help question to route against the currently installed AgentKit catalog.",
-        "descVi": "Tác vụ, năng lực, skill được nêu tên hoặc câu hỏi help CLI tùy chọn để định tuyến theo catalog AgentKit đang cài.",
+        "token": "[topic|skill|command]",
+        "titleEn": "Topic, skill, or command",
+        "titleVi": "Chủ đề, skill, hoặc lệnh",
+        "descEn": "Optional topic, named skill, or CLI command to route against the currently installed AgentKit catalog. Bare /ak:help opens the help index.",
+        "descVi": "Chủ đề, skill được nêu tên, hoặc lệnh CLI tùy chọn để định tuyến theo catalog AgentKit đang cài. /ak:help không đối số mở chỉ mục trợ giúp.",
         "required": false,
-        "exampleCommand": "/ak:help which workflow should I run for a bug with unknown root cause?"
+        "exampleCommand": "/ak:help which workflow should I run for a bug with unknown root cause?",
+        "exampleCommandVi": "/ak:help which workflow should I run for a bug with unknown root cause?"
       }
     ]
   },
@@ -102,38 +103,42 @@ const data: SkillInfographic = {
       "labelEn": "Open help index",
       "labelVi": "Mở chỉ mục trợ giúp",
       "command": "/ak:help",
+      "commandVi": "/ak:help",
       "whenEn": "The user asks how to use AgentKit or wants a starting point.",
       "whenVi": "Khi user hỏi cách dùng AgentKit hoặc cần điểm bắt đầu.",
-      "expectedEn": "Opens with the installed AgentKit help context, prefers the live skill catalog, and gives a concise index or next best route.",
-      "expectedVi": "Mở bằng ngữ cảnh trợ giúp AgentKit đã cài, ưu tiên catalog skill sống, rồi đưa chỉ mục ngắn gọn hoặc hướng đi phù hợp tiếp theo.",
+      "expectedEn": "Opens with the installed AgentKit help context, prefers the live skill catalog, and gives a concise index or next best route without dumping every skill.",
+      "expectedVi": "Mở bằng ngữ cảnh trợ giúp AgentKit đã cài, ưu tiên catalog skill sống, rồi đưa chỉ mục ngắn gọn hoặc hướng đi phù hợp tiếp theo chứ không dump mọi skill.",
       "recommended": true
     },
     {
-      "labelEn": "Choose workflow",
-      "labelVi": "Chọn workflow",
-      "command": "/ak:help which workflow should I run for a bug with unknown root cause?",
-      "whenEn": "The user describes a task but does not know which installed skill fits.",
-      "whenVi": "Khi user mô tả việc cần làm nhưng chưa biết skill đã cài nào phù hợp.",
-      "expectedEn": "Filters the installed candidates to the task, routes to the most specific debugging or investigation skill, and briefly explains the fit.",
-      "expectedVi": "Lọc các candidate đã cài theo task, định tuyến tới skill debug hoặc điều tra cụ thể nhất, rồi giải thích ngắn gọn vì sao phù hợp."
+      "labelEn": "Choose a topic",
+      "labelVi": "Chọn một chủ đề",
+      "command": "/ak:help debugging unknown root cause",
+      "commandVi": "/ak:help debugging unknown root cause",
+      "whenEn": "The user names a topic but does not know which installed skill fits.",
+      "whenVi": "Khi user nêu một chủ đề nhưng chưa biết skill đã cài nào phù hợp.",
+      "expectedEn": "Filters installed candidates to the debugging topic, routes to the most specific investigation skill, and briefly explains the fit from the live catalog.",
+      "expectedVi": "Lọc candidate đã cài theo chủ đề debugging, định tuyến tới skill điều tra cụ thể nhất, rồi giải thích ngắn gọn sự phù hợp từ catalog sống."
     },
     {
-      "labelEn": "Check skill availability",
-      "labelVi": "Kiểm tra skill có sẵn",
-      "command": "/ak:help do I have a skill for creating project documentation?",
-      "whenEn": "The user asks whether a capability exists in the current installation.",
-      "whenVi": "Khi user hỏi một năng lực có tồn tại trong bản cài hiện tại hay không.",
-      "expectedEn": "Uses the runtime catalog or relevant SKILL.md frontmatter, reports matching installed skills only, and says plainly if none are installed.",
-      "expectedVi": "Dùng catalog runtime hoặc frontmatter SKILL.md liên quan, chỉ báo skill đã cài khớp yêu cầu, và nói thẳng nếu chưa có skill nào."
+      "labelEn": "Check a named skill",
+      "labelVi": "Kiểm tra skill có tên",
+      "command": "/ak:help docs",
+      "commandVi": "/ak:help docs",
+      "whenEn": "The user asks whether a named skill exists in the current installation.",
+      "whenVi": "Khi user hỏi một skill có tên có tồn tại trong bản cài hiện tại hay không.",
+      "expectedEn": "Uses the runtime catalog or relevant SKILL.md frontmatter, reports whether the docs skill is installed, and says plainly if a referenced skill is missing or shadowed.",
+      "expectedVi": "Dùng catalog runtime hoặc frontmatter SKILL.md liên quan, báo skill docs đã cài hay chưa, và nói thẳng nếu skill được nhắc bị thiếu hoặc bị shadow."
     },
     {
       "labelEn": "Need command syntax",
       "labelVi": "Cần cú pháp lệnh",
-      "command": "/ak:help how do I list installed skills from the CLI?",
-      "whenEn": "The user needs an exact command shape rather than a broad skill recommendation.",
-      "whenVi": "Khi user cần cú pháp lệnh chính xác thay vì đề xuất skill tổng quát.",
-      "expectedEn": "Reads current ak help or the relevant subcommand help before giving syntax, and keeps examples scoped to the installed kit.",
-      "expectedVi": "Đọc ak help hiện tại hoặc help của subcommand liên quan trước khi đưa cú pháp, và giữ ví dụ trong phạm vi kit đã cài."
+      "command": "/ak:help ak skills",
+      "commandVi": "/ak:help ak skills",
+      "whenEn": "The user needs an exact CLI command shape rather than a broad skill recommendation.",
+      "whenVi": "Khi user cần cú pháp lệnh CLI chính xác thay vì đề xuất skill tổng quát.",
+      "expectedEn": "Reads current ak help or the relevant command help before giving syntax, and keeps examples scoped to the installed kit instead of treating prose as a registry.",
+      "expectedVi": "Đọc ak help hiện tại hoặc help của lệnh liên quan trước khi đưa cú pháp, và giữ ví dụ trong phạm vi kit đã cài thay vì coi prose như registry."
     }
   ],
   "reportOutput": {

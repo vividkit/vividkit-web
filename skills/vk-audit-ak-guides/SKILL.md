@@ -27,12 +27,11 @@ Only `--check` exists. No `--write-lock`. Does not fetch.
 | `/guides/agentkit/skills` | `vk:audit-ak-skills` | kit.yaml inventory + fingerprints |
 | `/guides/agentkit/skills/[kit]/[skill]` | `vk:audit-ak-skills` | inventory **and** detail/claims runner |
 | `/guides/agentkit/workflows` | `vk:audit-ak-workflows` | workflow index + pins (`--repo --kit-root`) |
-| Every other `/guides/agentkit/*` | `(none)` | **uncovered** |
+| Every other `/guides/agentkit/*` | `vk:audit-ak-pages` | identity registry + backing files + CLI cheatsheet vs cobra `Use` |
 
 `vk-audit-ak` / `vk-sync-ak-guides` are not owners in this project.
 
-Last live shape: 17 identities, EN↔VI parity ok, 14 uncovered, skill-detail
-often `owned-fail` (pre-existing claims). Exit 1 is expected.
+Pages checker does **not** certify migrate/cutover safety copy or Desktop/Helper product claims.
 
 ## New session
 
@@ -50,7 +49,7 @@ git fetch ak-cli first (does not fetch).
 --kit-root /Users/thieunv/projects/contribution/agentkit/ak-cli
 --ak-docs /Users/thieunv/projects/contribution/agentkit/ak-docs
 
-Expect exit 1 while any identity is uncovered or owned-fail.
+Expect exit 1 while any owned checker is red.
 Do not --write-lock. Do not claim the AgentKit guides audit is complete.
 ```
 
@@ -67,7 +66,7 @@ AK_CLI="$AK_CLI" npm run audit:ak-guides
 2. `scripts/check-ak-kit-skill-inventory.mjs --kit-root` (cheatsheet vs kit.yaml + fingerprints).
 3. `skills/vk-audit-ak-skill-details/scripts/run.mjs check` (principles, SKILL.md lock, claims). Not inventory alone.
 4. `vk:audit-ak-workflows --check --repo --kit-root`.
-5. Identities with owner `(none)` stay **uncovered**.
+5. Remaining identities: `scripts/check-ak-guide-pages.mjs` (`vk:audit-ak-pages`).
 6. Exit 1 if uncovered or owned-fail.
 
 `--kit-root` required (or `AK_CLI`). `--ak-docs` optional; forwarded to the detail runner. `--repo` optional (walk from cwd).

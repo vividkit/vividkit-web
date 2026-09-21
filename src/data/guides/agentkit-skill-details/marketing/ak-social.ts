@@ -55,11 +55,11 @@ const data: SkillInfographic = {
   ],
   promptExamples: [
     { labelEn: 'LinkedIn post', labelVi: 'Post LinkedIn', command: '/ak:social linkedin post',
-      commandVi: '/ak:social linkedin bài đăng', whenEn: 'You need a platform-optimized LinkedIn post draft.', whenVi: 'Khi cần draft post LinkedIn tối ưu theo nền tảng.', expectedEn: 'LinkedIn-ready copy with hook, structure, and saved draft.', expectedVi: 'Copy sẵn cho LinkedIn với hook, cấu trúc và draft đã lưu.', recommended: true },
+      commandVi: '/ak:social linkedin bài đăng', whenEn: 'You need a platform-optimized LinkedIn post draft.', whenVi: 'Khi cần draft post LinkedIn tối ưu theo nền tảng.', expectedEn: 'LinkedIn-ready copy carries a strong hook, an organized structure, and a saved draft ready for review.', expectedVi: 'Copy sẵn cho LinkedIn với hook, cấu trúc và draft đã lưu.', recommended: true },
     { labelEn: 'X thread', labelVi: 'Thread X', command: '/ak:social x thread',
-      commandVi: '/ak:social x chuỗi bài', whenEn: 'You need a thread with platform-appropriate hooks and sequence.', whenVi: 'Khi cần thread với hook và chuỗi nội dung đúng platform.', expectedEn: 'Thread draft formatted for X/Twitter.', expectedVi: 'Draft thread format cho X/Twitter.' },
+      commandVi: '/ak:social x chuỗi bài', whenEn: 'You need a thread with platform-appropriate hooks and sequence.', whenVi: 'Khi cần thread với hook và chuỗi nội dung đúng platform.', expectedEn: 'The thread draft is formatted for X/Twitter with a clear post sequence that can be reviewed before sharing.', expectedVi: 'Draft thread được format cho X/Twitter theo thứ tự bài đăng rõ ràng để dễ xem lại trước khi dùng.' },
     { labelEn: 'Schedule campaign', labelVi: 'Lịch campaign', command: '/ak:social schedule campaign "August launch"',
-      commandVi: '/ak:social schedule campaign "ra mắt tháng Tám"', whenEn: 'You need a UTC content calendar from approved posts and owner availability.', whenVi: 'Khi cần lịch content UTC từ post đã duyệt và availability của owner.', expectedEn: 'Local schedule and calendar artifacts with pending external actions named.', expectedVi: 'Artifact lịch và calendar local kèm các external action còn chờ được nêu rõ.' },
+      commandVi: '/ak:social schedule campaign "ra mắt tháng Tám"', whenEn: 'You need a UTC content calendar from approved posts and owner availability.', whenVi: 'Khi cần lịch content UTC từ post đã duyệt và availability của owner.', expectedEn: 'The local schedule and calendar artifacts name every pending external action so the remaining work stays visible.', expectedVi: 'Artifact lịch và calendar local kèm các external action còn chờ được nêu rõ.' },
   ],
   reportOutput: {
     titleEn: 'Social Outputs',

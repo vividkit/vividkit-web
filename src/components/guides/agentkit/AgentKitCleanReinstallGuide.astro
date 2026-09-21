@@ -1,9 +1,9 @@
 ---
 // Clean reinstall of AgentKit stable (ownership-aware kit uninstall → optional state reset → CLI + kits).
-// Stable pointer: https://releases.agentkit.best/channels/stable/binary-update.json (2026-09-10 → 2.15.0).
+// Stable pointer: https://releases.agentkit.best/channels/stable/binary-update.json (2026-09-21 → 2.17.0).
 // Snapshot walk at 405ea37 uses hasParentTraversal (path components).
 // Older 2.7.0 HasPrefix(rel, "..") false-positive on `..*` basenames is fixed.
-// --fresh is still not a public flag on origin/main (2.15.0).
+// --fresh is still not a public flag on origin/main (2.17.0).
 import { getLangFromUrl, useTranslatedPath, type Language } from '@/i18n';
 import AkPageHero from './AkPageHero.astro';
 import AkSection from './AkSection.astro';

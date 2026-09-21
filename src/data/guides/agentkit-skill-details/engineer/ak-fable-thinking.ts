@@ -74,7 +74,7 @@ const data: SkillInfographic = {
   ],
   skillStack: [
     { name: "ak:problem-solving", type: "skill" },
-    { name: "ak:sequential-thinking", type: "skill" },
+    { name: "references/thinking-modes.md", type: "tool" },
     { name: "tools / primary sources", type: "tool" },
   ],
   promptExamples: [
@@ -84,6 +84,8 @@ const data: SkillInfographic = {
       commandVi: '/ak:fable-thinking viết tagline sản phẩm với đúng bảy từ và không có chữ e', whenEn: "Use when exact counts, banned letters, acrostics, or strict formats are the hard part.", whenVi: "Dùng khi số lượng chính xác, chữ cấm, acrostic hoặc format chặt là phần khó.", expectedEn: "Expands the constraint into a mechanical test, drafts privately, verifies the exact output by tool or unit counting, repairs violations, and delivers only the verified text.", expectedVi: "Mở rộng ràng buộc thành phép kiểm cơ học, nháp riêng, xác minh đúng output bằng tool hoặc đếm từng đơn vị, sửa lỗi và chỉ bàn giao text đã kiểm." },
     { labelEn: "High-stakes decision", labelVi: "Quyết định rủi ro cao", command: "/ak:fable-thinking decide whether to rewrite or patch this subsystem before launch",
       commandVi: '/ak:fable-thinking quyết định nên viết lại hay vá subsystem này trước khi ra mắt', whenEn: "Use when architecture, irreversibility, novelty, or contested tradeoffs require Full depth.", whenVi: "Dùng khi kiến trúc, tính khó đảo, độ mới hoặc tradeoff còn tranh cãi cần độ sâu Full.", expectedEn: "Applies proportional depth, writes the five moves when stakes demand it, types claims by evidence level, runs an Attack pass, and names the weakest link before the outcome.", expectedVi: "Chọn độ sâu theo rủi ro, viết đủ năm bước khi cần, phân loại claim theo cấp bằng chứng, chạy Attack và nêu mắt xích yếu nhất trước kết quả." },
+    { labelEn: "Sequential chain", labelVi: "Chuỗi tuần tự", command: "/ak:fable-thinking walk this migration as a sequential chain and revise earlier steps when later evidence changes",
+      commandVi: '/ak:fable-thinking đi chuỗi tuần tự cho migration này và sửa bước trước khi bằng chứng sau đổi', whenEn: "Use when later steps depend on earlier ones and the understanding is likely to be revised.", whenVi: "Dùng khi bước sau phụ thuộc bước trước và cách hiểu có thể phải sửa lại.", expectedEn: "Names sequential mode, walks the dependent chain with visible revisions, then hands that material to Ground and Attack instead of treating the mode as a finished answer.", expectedVi: "Gọi mode tuần tự, đi chuỗi phụ thuộc và hiện các lần sửa, rồi đưa phần đó vào Ground và Attack thay vì coi mode là câu trả lời đã xong." },
     { labelEn: "Review a claim-heavy answer", labelVi: "Review câu trả lời nhiều claim", command: "/ak:fable-thinking review this incident analysis for unsupported claims and missing kill-tests",
       commandVi: '/ak:fable-thinking rà soát phân tích sự cố này về các khẳng định thiếu căn cứ và thiếu kill-tests', whenEn: "Use when a review or analysis may be fluent but needs evidence ranking and adversarial self-checks.", whenVi: "Dùng khi review hoặc phân tích có vẻ trôi chảy nhưng cần xếp hạng bằng chứng và tự phản biện.", expectedEn: "Separates observed, derived, prior, and assumed claims; checks whether cheap contrary evidence was sought; flags scope drift, partial evidence, and any overconfident wording.", expectedVi: "Tách claim thành observed, derived, prior và assumed; kiểm tra bằng chứng phản bác rẻ đã được tìm chưa; chỉ ra lệch phạm vi, bằng chứng thiếu và câu chữ quá tự tin." },
   ],

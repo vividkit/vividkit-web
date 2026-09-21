@@ -119,7 +119,7 @@ const data: SkillInfographic = {
       commandVi: '/ak:motion-design phản hồi CTA động cho trang đích SaaS cao cấp',
       whenEn: "You need the motion decision before handing implementation to frontend-design.",
       whenVi: "Khi cần quyết định motion trước khi bàn giao triển khai cho frontend-design.",
-      expectedEn: "Defines emotion, personality, timing, easing, properties, layers, and handoff notes.",
+      expectedEn: "It defines emotion, personality, timing, easing, properties, layers, and handoff notes for the motion work.",
       expectedVi: "Chốt cảm xúc, personality, timing, easing, property, các lớp motion và ghi chú handoff.",
       recommended: true
     },
@@ -134,7 +134,7 @@ const data: SkillInfographic = {
       expectedVi: "Ánh xạ timing cho hero, social proof, feature và CTA trong khi giữ CTA above-the-fold hiển thị sớm."
     },
     { labelEn: 'Urgent premium hero', labelVi: 'Hero gấp nhưng premium', command: '/ak:motion-design hero animation that feels urgent but premium',
-      commandVi: '/ak:motion-design hoạt ảnh hero mang cảm giác khẩn cấp nhưng cao cấp', whenEn: 'Motion needs an emotional target and timing notes before production.', whenVi: 'Motion cần cảm xúc mục tiêu và ghi chú nhịp trước khi sản xuất.', expectedEn: "Emotion, personality, timing, and do/don't motion direction.", expectedVi: 'Cảm xúc, cá tính, nhịp và hướng motion nên/không nên.' }
+      commandVi: '/ak:motion-design hoạt ảnh hero mang cảm giác khẩn cấp nhưng cao cấp', whenEn: 'Motion needs an emotional target and timing notes before production.', whenVi: 'Motion cần cảm xúc mục tiêu và ghi chú nhịp trước khi sản xuất.', expectedEn: "It states emotion, personality, timing, and a practical do/don't motion direction the animator can follow.", expectedVi: 'Mô tả gồm cảm xúc, cá tính, nhịp và hướng motion nên/không nên cho cảnh cần làm.' }
   ],
   skillStack: [
     {

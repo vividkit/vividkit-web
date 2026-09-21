@@ -126,8 +126,8 @@ const data: SkillInfographic = {
       commandVi: '/ak:youtube blog https://youtube.com/watch?v=VIDEO_ID',
       whenEn: "Use when a video should become an SEO article.",
       whenVi: "Dùng khi video cần chuyển thành bài SEO.",
-      expectedEn: "SEO blog post based on transcript and video summary.",
-      expectedVi: "Bài blog SEO dựa trên transcript và summary của video.",
+      expectedEn: "The SEO blog post is based on the transcript and the video summary so the article reflects the source video.",
+      expectedVi: "Bài blog SEO dựa trên transcript và summary của video nên nội dung bài bám đúng hai nguồn đó.",
       recommended: true
     },
     {
@@ -137,8 +137,8 @@ const data: SkillInfographic = {
       commandVi: '/ak:youtube infographic https://youtube.com/watch?v=VIDEO_ID',
       whenEn: "Use when the video should become a visual summary.",
       whenVi: "Dùng khi video cần thành tóm tắt trực quan.",
-      expectedEn: "Infographic-ready structure and visual points.",
-      expectedVi: "Cấu trúc sẵn cho infographic và các điểm hình ảnh chính."
+      expectedEn: "An infographic-ready structure and clear visual points lay out the main ideas for a graphic treatment.",
+      expectedVi: "Cấu trúc sẵn cho infographic và các điểm hình ảnh chính sắp xếp ý lớn để dựng hình minh họa."
     },
     {
       labelEn: "Social posts",
@@ -147,8 +147,8 @@ const data: SkillInfographic = {
       commandVi: '/ak:youtube social https://youtube.com/watch?v=VIDEO_ID',
       whenEn: "Use to create multi-platform social content from one video.",
       whenVi: "Dùng để tạo nội dung social đa nền tảng từ một video.",
-      expectedEn: "Platform-adapted social post set.",
-      expectedVi: "Bộ bài social đã điều chỉnh theo nền tảng."
+      expectedEn: "The platform-adapted social post set adjusts each post to the channel where it will be published.",
+      expectedVi: "Bộ bài social đã điều chỉnh theo nền tảng để mỗi bài phù hợp kênh đăng tương ứng."
     }
   ],
   reportOutput: {

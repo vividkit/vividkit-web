@@ -134,7 +134,7 @@ const data: SkillInfographic = {
       expectedVi: "Tạo plan theo audience, kênh, thông điệp, lịch và kết quả đo được."
     },
     { labelEn: 'Q4 campaign plan', labelVi: 'Plan campaign Q4', command: '/ak:marketing-planning Q4 content and paid campaign plan',
-      commandVi: '/ak:marketing-planning Kế hoạch nội dung và chiến dịch trả phí Q4', whenEn: 'You need a research-backed plan package, not immediate campaign execution.', whenVi: 'Khi cần gói plan có research, không phải chạy campaign ngay.', expectedEn: 'Strategy, calendar, channel mix, and open questions for Q4.', expectedVi: 'Chiến lược, lịch, mix kênh và câu hỏi còn mở cho Q4.' }
+      commandVi: '/ak:marketing-planning Kế hoạch nội dung và chiến dịch trả phí Q4', whenEn: 'You need a research-backed plan package, not immediate campaign execution.', whenVi: 'Khi cần gói plan có research, không phải chạy campaign ngay.', expectedEn: 'It lays out the strategy, calendar, channel mix, and open questions that still need answers for Q4.', expectedVi: 'Chiến lược, lịch, mix kênh và câu hỏi còn mở cho Q4.' }
   ],
   reportOutput: {
     titleEn: "Marketing plan package",

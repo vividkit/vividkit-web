@@ -209,8 +209,17 @@ ak config
 ak config prefs resolve
 ak config prefs validate
 ak config prefs set hooks.simplify-gate false --scope project
-ak config prefs unset hooks.simplify-gate --scope project`}
+ak config prefs unset hooks.simplify-gate --scope project
+
+# Beta channel only. Tiers: inherit, sonnet, opus, fable, haiku.
+# The value is shape-checked, not locked to the catalog snapshot.
+ak config prefs set agent_models.cursor.sonnet claude-sonnet-4-6`}
     />
+    <AkCallout variant="warn" title={isVi ? 'Chỉ kênh beta — model Cursor theo tier' : 'Beta channel only — Cursor model per tier'}>
+      {isVi
+        ? 'ak config prefs set agent_models.cursor.<tier> <model-id> chỉ có trên kênh beta. Tier là inherit, sonnet, opus, fable hoặc haiku. Giá trị được kiểm hình dạng, không bị khóa vào snapshot catalog. Stable hiện tại chưa có key này.'
+        : 'ak config prefs set agent_models.cursor.<tier> <model-id> exists on the beta channel only. Tiers are inherit, sonnet, opus, fable, and haiku. The value is shape-checked and is not locked to the catalog snapshot. Current stable does not have this key.'}
+    </AkCallout>
   </AkSection>
 
   <AkSection

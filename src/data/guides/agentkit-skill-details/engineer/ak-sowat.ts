@@ -1,20 +1,69 @@
 import type { SkillInfographic, SkillInvocation } from '@/data/guides/how-ck-works';
 
 const invocation: SkillInvocation = {
-  syntax: '/ak:sowat [priority question or evidence]',
+  syntax: '/ak:sowat [recent-changes|issue|PR]',
   arguments: [
     {
-      token: '[priority question or evidence]',
-      titleEn: 'Priority question or evidence',
-      titleVi: 'Câu hỏi ưu tiên hoặc bằng chứng',
+      token: '[recent-changes|issue|PR]',
+      titleEn: 'Evidence focus',
+      titleVi: 'Trọng tâm bằng chứng',
       descEn:
-        'Natural-language product priority request with the intended user outcome, implemented work, verification or shipment evidence, and related issues to evaluate. It guides analysis only; it does not authorize code changes or issue updates.',
+        'Optional focus for the product-owner read: recent implemented changes, one related issue, or a pull request. Omit it to let the skill pick the strongest nearby evidence. The token only scopes analysis; it does not authorize code or issue mutations.',
       descVi:
-        'Yêu cầu ưu tiên sản phẩm bằng ngôn ngữ tự nhiên, gồm outcome người dùng dự định, phần đã triển khai, bằng chứng verification hoặc shipment và issue liên quan cần đánh giá. Nội dung này chỉ định hướng phân tích; không cho phép sửa code hoặc cập nhật issue.',
-      required: true,
-      exampleCommand:
-        '/ak:sowat "Review the completed onboarding changes and related open issues. Tell me what matters now, correct my priority if needed, and give at most three next steps with success signals."',
-          exampleCommandVi: '/ak:sowat "Xem xét các thay đổi onboarding đã hoàn thành và các open issues liên quan. Cho tôi biết điều gì quan trọng lúc này, chỉnh lại độ ưu tiên của tôi nếu cần, và đưa ra tối đa ba next steps kèm success signals."',
+        'Trọng tâm tùy chọn cho lượt đọc kiểu product owner: thay đổi vừa triển khai, một issue liên quan, hoặc một pull request. Bỏ qua để skill chọn bằng chứng mạnh nhất ở gần. Token chỉ phạm vi phân tích; không cho phép sửa code hay issue.',
+      required: false,
+      exampleCommand: '/ak:sowat recent-changes',
+      exampleCommandVi: '/ak:sowat recent-changes',
+    },
+  ],
+  subcommands: [
+    {
+      name: 'recent-changes',
+      syntax: '/ak:sowat recent-changes',
+      titleEn: 'Recent changes',
+      titleVi: 'Thay đổi gần đây',
+      descEn:
+        'Read recently implemented work as the primary evidence, then connect only related issues, regressions, and adoption blockers.',
+      descVi:
+        'Đọc phần vừa triển khai làm bằng chứng chính, rồi chỉ nối issue, regression và blocker adoption thật sự liên quan.',
+      outcomeEn:
+        'A so-what judgment of the recent implementation, optional priority correction, and at most three next steps with success signals.',
+      outcomeVi:
+        'Nhận định so-what về phần vừa làm, chỉnh ưu tiên nếu cần, và tối đa ba bước tiếp kèm tín hiệu thành công.',
+      exampleCommand: '/ak:sowat recent-changes',
+      exampleCommandVi: '/ak:sowat recent-changes',
+    },
+    {
+      name: 'issue',
+      syntax: '/ak:sowat issue',
+      titleEn: 'Related issue',
+      titleVi: 'Issue liên quan',
+      descEn:
+        'Start from one related issue, blocker, or opportunity and judge whether it outranks the current focus.',
+      descVi:
+        'Bắt đầu từ một issue, blocker hoặc cơ hội liên quan và đánh giá nó có đáng ưu tiên hơn trọng tâm hiện tại hay không.',
+      outcomeEn:
+        'Issue-scoped impact judgment with a priority correction only when evidence shows a concrete trade-off.',
+      outcomeVi:
+        'Nhận định tác động theo issue, chỉ chỉnh ưu tiên khi bằng chứng cho thấy một trade-off cụ thể.',
+      exampleCommand: '/ak:sowat issue',
+      exampleCommandVi: '/ak:sowat issue',
+    },
+    {
+      name: 'PR',
+      syntax: '/ak:sowat PR',
+      titleEn: 'Pull request',
+      titleVi: 'Pull request',
+      descEn:
+        'Use a pull request as the implemented-work evidence boundary, then score related follow-ons without mutating the PR.',
+      descVi:
+        'Dùng pull request làm ranh giới bằng chứng phần đã làm, rồi chấm các việc tiếp theo mà không sửa PR.',
+      outcomeEn:
+        'PR-bounded so-what, optional focus correction, and at most three ordered actions with observable success signals.',
+      outcomeVi:
+        'So-what trong ranh giới PR, chỉnh trọng tâm nếu cần, và tối đa ba hành động có tín hiệu thành công quan sát được.',
+      exampleCommand: '/ak:sowat PR',
+      exampleCommandVi: '/ak:sowat PR',
     },
   ],
 };
@@ -109,41 +158,41 @@ const data: SkillInfographic = {
   "invocation": invocation,
   "promptExamples": [
     {
-      "labelEn": "Post-implementation priority call",
-      "labelVi": "Kết luận ưu tiên sau triển khai",
-      "command": "/ak:sowat Review the completed onboarding changes and related open issues. Tell me what matters now, correct my priority if needed, and give at most three next steps with success signals.",
-      "whenEn": "After implementation, when you need the user or business meaning of the work and what matters next.",
-      "whenVi": "Sau implementation, khi cần hiểu ý nghĩa với người dùng/kinh doanh và điều gì quan trọng tiếp theo.",
-      "expectedEn": "Separates implemented, verified, shipped, and still-open evidence; connects only related issues; then returns a brief so-what judgment with up to three ordered next steps and observable success signals.",
-      "expectedVi": "Tách evidence đã implement, đã verify, đã ship và còn mở; chỉ nối issue liên quan; rồi trả judgment “so what” ngắn với tối đa ba bước theo thứ tự và success signal quan sát được.",
+      "labelEn": "Default priority call",
+      "labelVi": "Kết luận ưu tiên mặc định",
+      "command": "/ak:sowat",
+      "whenEn": "After implementation, when you need the product meaning of nearby work and what matters next.",
+      "whenVi": "Sau implementation, khi cần ý nghĩa sản phẩm của phần việc gần đây và điều gì quan trọng tiếp theo.",
+      "expectedEn": "Picks the strongest nearby evidence of implemented, verified, shipped, and still-open work, then returns a brief so-what judgment with at most three ordered next steps and observable success signals.",
+      "expectedVi": "Chọn bằng chứng mạnh nhất ở gần về phần đã làm, đã kiểm, đã ship và còn mở, rồi trả nhận định so-what ngắn với tối đa ba bước theo thứ tự và tín hiệu thành công quan sát được.",
       "recommended": true
     },
     {
-      "labelEn": "Challenge weak focus",
-      "labelVi": "Challenge trọng tâm yếu",
-      "command": "/ak:sowat Are we focusing on the wrong thing after this release, or should the remaining adoption blockers take priority?",
-      "whenEn": "When polish or internal improvements may be distracting from blockers, regressions, or higher-impact outcomes.",
-      "whenVi": "Khi polish hoặc cải tiến nội bộ có thể làm phân tâm khỏi blocker, regression hoặc outcome impact cao hơn.",
-      "expectedEn": "Judges candidates by impact, urgency, confidence, effort, risk, dependency leverage, and learning value, then corrects the current focus only if evidence shows a concrete trade-off.",
-      "expectedVi": "Đánh giá candidate theo impact, urgency, confidence, effort, risk, dependency leverage và learning value, rồi chỉ chỉnh trọng tâm hiện tại nếu evidence cho thấy trade-off cụ thể."
+      "labelEn": "Recent changes",
+      "labelVi": "Thay đổi gần đây",
+      "command": "/ak:sowat recent-changes",
+      "whenEn": "The latest implementation should be the evidence boundary for the priority call.",
+      "whenVi": "Phần vừa triển khai phải là ranh giới bằng chứng cho kết luận ưu tiên.",
+      "expectedEn": "Treats recently implemented work as the primary evidence, connects only related issues or blockers, and deprioritizes polish that does not change the user outcome.",
+      "expectedVi": "Lấy phần vừa triển khai làm bằng chứng chính, chỉ nối issue hoặc blocker liên quan, và hạ ưu tiên polish không làm đổi outcome người dùng."
     },
     {
-      "labelEn": "Rank related issues",
-      "labelVi": "Xếp hạng issue liên quan",
-      "command": "/ak:sowat Compare the follow-on checkout issues with the regression reports and tell me the top product-impact actions to take next.",
-      "whenEn": "When several related dependencies, regressions, blockers, or opportunities compete for attention.",
-      "whenVi": "Khi nhiều dependency, regression, blocker hoặc opportunity liên quan cùng tranh ưu tiên.",
-      "expectedEn": "Connects only genuinely related work, deprioritizes busywork that does not change the outcome, and recommends no more than three actions with why-now rationale and success signals.",
-      "expectedVi": "Chỉ kết nối việc thật sự liên quan, hạ ưu tiên busywork không đổi outcome, và đề xuất tối đa ba hành động kèm lý do làm ngay cùng success signal."
+      "labelEn": "Related issue",
+      "labelVi": "Issue liên quan",
+      "command": "/ak:sowat issue",
+      "whenEn": "One related issue, blocker, or follow-on may deserve attention over the current focus.",
+      "whenVi": "Một issue, blocker hoặc việc tiếp theo liên quan có thể đáng chú ý hơn trọng tâm hiện tại.",
+      "expectedEn": "Starts from the related issue, scores impact versus the current focus, and corrects priority only when evidence shows a concrete trade-off.",
+      "expectedVi": "Bắt đầu từ issue liên quan, chấm tác động so với trọng tâm hiện tại, và chỉ chỉnh ưu tiên khi bằng chứng cho thấy một trade-off cụ thể."
     },
     {
-      "labelEn": "Name missing evidence",
-      "labelVi": "Nêu evidence còn thiếu",
-      "command": "/ak:sowat We shipped the trial upgrade flow, but analytics are incomplete. What can we conclude, what is inference, and what should we do next?",
-      "whenEn": "When shipment, usage, customer, or verification evidence is incomplete but you still need a priority call.",
-      "whenVi": "Khi evidence về shipment, usage, customer hoặc verification chưa đủ nhưng vẫn cần kết luận ưu tiên.",
-      "expectedEn": "Keeps facts separate from inference, refuses to invent product evidence, names what evidence is missing, and frames next steps around observable learning or delivery signals.",
-      "expectedVi": "Tách fact khỏi inference, không bịa product evidence, nêu rõ evidence còn thiếu và định khung bước tiếp theo quanh tín hiệu learning hoặc delivery quan sát được."
+      "labelEn": "Pull request evidence",
+      "labelVi": "Bằng chứng pull request",
+      "command": "/ak:sowat PR",
+      "whenEn": "A pull request is the implemented-work evidence and you need the product so-what without mutating it.",
+      "whenVi": "Pull request là bằng chứng phần đã làm và bạn cần nhận định sản phẩm mà không sửa PR.",
+      "expectedEn": "Uses the pull request as the evidence boundary, separates fact from inference, and returns at most three actions with why-now rationale and success signals.",
+      "expectedVi": "Dùng pull request làm ranh giới bằng chứng, tách sự thật khỏi suy luận, và trả tối đa ba hành động kèm lý do làm ngay cùng tín hiệu thành công."
     }
   ]
 };

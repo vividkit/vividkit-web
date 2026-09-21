@@ -34,13 +34,13 @@ const data: SkillInfographic = {
   expertiseAreasVi: ['Newsletter', 'Cold outreach', 'Email launch', 'Chuỗi nurture', 'Tối ưu tiêu đề', 'Khả năng vào hộp thư đến'],
   promptExamples: [
     { labelEn: 'Automation flow', labelVi: 'Luồng tự động', command: '/ak:email flow post-demo nurture for B2B SaaS',
-      commandVi: '/ak:email luồng nurture sau demo cho B2B SaaS', whenEn: 'You need a complete email automation sequence.', whenVi: 'Cần một chuỗi email tự động hoàn chỉnh.', expectedEn: 'Loads the flow reference and designs the full automation path.', expectedVi: 'Nạp tham chiếu flow và thiết kế toàn bộ đường đi tự động.', recommended: true },
+      commandVi: '/ak:email luồng nurture sau demo cho B2B SaaS', whenEn: 'You need a complete email automation sequence.', whenVi: 'Cần một chuỗi email tự động hoàn chỉnh.', expectedEn: 'The work loads the flow reference and designs the full automation path according to that loaded reference.', expectedVi: 'Nạp tham chiếu flow và thiết kế toàn bộ đường đi tự động.', recommended: true },
     { labelEn: 'Drip sequence', labelVi: 'Chuỗi drip', command: '/ak:email sequence 5-day onboarding for trial users',
       commandVi: '/ak:email chuỗi onboarding 5 ngày cho người dùng trial', whenEn: 'A multi-email drip needs copy and sequencing.', whenVi: 'Cần chuỗi nhiều email có nội dung và thứ tự gửi.', expectedEn: 'Produces a full sequence with subject lines, body copy, CTAs, and timing.', expectedVi: 'Tạo chuỗi đầy đủ với tiêu đề, nội dung, CTA và nhịp gửi.' },
     { labelEn: 'Newsletter', labelVi: 'Newsletter', command: '/ak:email newsletter monthly product update',
-      commandVi: '/ak:email bản tin cập nhật sản phẩm hàng tháng', whenEn: 'You need one newsletter issue.', whenVi: 'Cần viết một số newsletter.', expectedEn: 'Drafts the newsletter with subject options, preview text, body, and CTA.', expectedVi: 'Soạn newsletter với các tiêu đề, preview text, thân email và CTA.' },
+      commandVi: '/ak:email bản tin cập nhật sản phẩm hàng tháng', whenEn: 'You need one newsletter issue.', whenVi: 'Cần viết một số newsletter.', expectedEn: 'It drafts the newsletter with subject options, preview text, body, and a CTA that readers can act on.', expectedVi: 'Soạn newsletter với các tiêu đề, preview text, thân email và CTA.' },
     { labelEn: 'Launch email', labelVi: 'Email ra mắt', command: '/ak:email launch new analytics dashboard',
-      commandVi: '/ak:email ra mắt dashboard phân tích mới', whenEn: 'A product or feature launch needs campaign copy.', whenVi: 'Sản phẩm hoặc tính năng mới cần nội dung email ra mắt.', expectedEn: 'Creates launch-oriented copy and A/B-ready subject-line variants.', expectedVi: 'Tạo nội dung theo mục tiêu ra mắt và các biến thể tiêu đề sẵn sàng A/B test.' },
+      commandVi: '/ak:email ra mắt dashboard phân tích mới', whenEn: 'A product or feature launch needs campaign copy.', whenVi: 'Sản phẩm hoặc tính năng mới cần nội dung email ra mắt.', expectedEn: 'It creates launch-oriented copy and several A/B-ready subject-line variants that can be compared before sending.', expectedVi: 'Tạo nội dung theo mục tiêu ra mắt và các biến thể tiêu đề sẵn sàng A/B test.' },
   ],
   skillStack: [
     { name: 'email-wizard', type: 'agent' },

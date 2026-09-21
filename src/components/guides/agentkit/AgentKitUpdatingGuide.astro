@@ -348,8 +348,8 @@ ak self-update --disable-auto-update`}
     eyebrow="2 · Kits"
     title={isVi ? 'Làm mới nội dung Kit: ak update' : 'Refresh Kit content: ak update'}
     desc={isVi
-      ? 'Chỉ sửa file do AgentKit cài (không đụng file bạn tự tạo). Không --yes trên non-TTY thì chỉ xem trước (exit 3). TTY: wizard từng bước; --yes đồng ý hết.'
-      : 'Only updates files AgentKit installed (not files you created). Without --yes, non-TTY stays preview (exit 3). TTY: step-by-step wizard; --yes accepts every step.'}
+      ? 'Chỉ sửa file do AgentKit cài (không đụng file bạn tự tạo). File kit-owned mà bản kit mới không còn phát hành thì bị gỡ nếu bạn chưa sửa tay; đã sửa thì giữ, trừ --force. Không --yes trên non-TTY thì chỉ xem trước (exit 3). TTY: wizard từng bước; --yes đồng ý hết.'
+      : 'Only updates files AgentKit installed (not files you created). Kit-owned files the new kit no longer ships are removed if still unchanged; edited copies stay unless --force. Without --yes, non-TTY stays preview (exit 3). TTY: step-by-step wizard; --yes accepts every step.'}
   >
     <AkCompare
       left={{
@@ -450,8 +450,8 @@ ak update --kits engineer --yes --json --no-interactive`}
       />
       <AkCallout variant="warn" title={isVi ? 'File còn nguyên vs file bạn đã sửa' : 'Unchanged files vs files you edited'}>
         {isVi
-          ? 'File AgentKit vẫn như lúc cài → được cập nhật. File bạn đã sửa tay → bỏ qua, trừ khi thêm --force. Trước khi ghi, CLI chụp một bản snapshot project (để phòng hờ). Snapshot đó không nằm trong ak backups restore — muốn lấy lại thì copy từ thư mục snapshot.'
-          : 'Files still as AgentKit installed them → get updated. Files you edited by hand → skipped unless you add --force. Before writing, the CLI takes a project snapshot as a safety net. That snapshot is not restored via ak backups restore — copy files back from the snapshot folder if needed.'}
+          ? 'File AgentKit vẫn như lúc cài → được cập nhật. File kit-owned mà kit mới không còn ship → gỡ nếu chưa sửa tay. File bạn đã sửa tay → giữ, trừ khi thêm --force. Kit không nằm trong bản tới không bị đụng. Trước khi ghi, CLI chụp một bản snapshot project (để phòng hờ). Snapshot đó không nằm trong ak backups restore — muốn lấy lại thì copy từ thư mục snapshot.'
+          : 'Files still as AgentKit installed them → get updated. Kit-owned files the new kit no longer ships → removed if unchanged. Files you edited by hand → kept unless you add --force. Kits absent from the incoming set are not touched. Before writing, the CLI takes a project snapshot as a safety net. That snapshot is not restored via ak backups restore — copy files back from the snapshot folder if needed.'}
       </AkCallout>
     </div>
 
@@ -465,8 +465,16 @@ ak update --kits engineer --yes --json --no-interactive`}
 ak update --beta --yes
 ak update --channel stable --yes
 # --beta conflicts with --channel stable
-ak update --dry-run --channel stable`}
+ak update --dry-run --channel stable
+
+# kit init --beta records updates.channel next to kit.channel
+ak kit init engineer --beta --yes`}
       />
+      <p class="text-sm text-slate-600 dark:text-slate-400">
+        {isVi
+          ? 'ak kit init --beta và ak kit install --beta đưa preflight CLI và resolve kit sang kênh beta, rồi ghi updates.channel cạnh kit.channel để lần update sau không gắn cờ vẫn đi đúng kênh đó.'
+          : 'ak kit init --beta and ak kit install --beta send the CLI preflight and kit resolve to the beta channel, then record updates.channel next to kit.channel so a later update without the flag stays on that channel.'}
+      </p>
     </div>
   </AkSection>
 
@@ -500,6 +508,16 @@ ak kit refresh engineer --local --kits-dir ./kits --yes`}
         ? 'Dùng khi audit báo plugin drift, sau khi kit đổi export, hoặc khi cần “viết lại” output của đúng một kit. Snapshot mặc định (trừ --no-backup).'
         : 'Use when audit reports plugin drift, after kit export changes, or when you need to rewrite one kit’s output. Snapshot by default (unless --no-backup).'}
     </p>
+    <AkCallout variant="info" title={isVi ? 'Làm mới sạch và hook không chiếu' : 'Healthy refresh and unprojected hooks'}>
+      {isVi
+        ? 'Làm mới sạch báo 0 attention item. Nhóm hook không được chiếu ra là ghi chú phủ, không phải attention item. Trên tóm tắt kit init, nhóm harness không biểu diễn được ghi “unsupported here”; nhóm bridge không tổng hợp, như sự kiện lifecycle của agent con trên Pi, ghi “deferred by this harness bridge”.'
+        : 'A healthy refresh reports zero attention items. Hook groups that were not projected are a coverage note, not an attention item. On the kit init summary, groups the harness cannot express read “unsupported here”; groups the bridge does not synthesize, such as Pi child-agent lifecycle events, read “deferred by this harness bridge”.'}
+    </AkCallout>
+    <AkCallout variant="warn" title={isVi ? 'Chỉ kênh beta' : 'Beta channel only'}>
+      {isVi
+        ? 'Trên kênh beta, ak kit refresh không tương tác cũng chạy preflight bản CLI. Stable hiện tại chưa làm bước đó.'
+        : 'On the beta channel, a non-interactive ak kit refresh also runs the CLI release preflight. Current stable does not.'}
+    </AkCallout>
   </AkSection>
 
   <AkSection

@@ -10,7 +10,8 @@
     "astro": "astro",
     "audit:ak-workflows": "node .agents/skills/vk-audit-ak-workflows/scripts/detect-workflow-skill-drift.cjs --check",
     "audit:ak-kit-inventory": "node scripts/check-ak-kit-skill-inventory.mjs",
-    "audit:ak-guides": "node skills/vk-audit-ak-guides/scripts/run.mjs check"
+    "audit:ak-guides": "node skills/vk-audit-ak-guides/scripts/run.mjs check",
+    "audit:ak-pages": "node scripts/check-ak-guide-pages.mjs"
   },
   "dependencies": {
     "@fontsource/dm-sans": "^5.2.8",

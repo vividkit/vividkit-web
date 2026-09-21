@@ -63,17 +63,17 @@ const data: SkillInfographic = {
     { flag: "From scratch", modeEn: "Decision procedure", modeVi: "Decision procedure", research: "aesthetic direction menu", redTeam: "Anti-slop bans", validation: "Self-review gate", cookFlag: "brief input" },
   ],
   invocation: {
-    syntax: '/ak:frontend-design [design request and constraints]',
+    syntax: '/ak:frontend-design [prompt|image-path|component]',
     arguments: [
       {
-        token: '[design request and constraints]',
-        titleEn: 'Design request',
-        titleVi: 'Yêu cầu thiết kế',
-        descEn: 'Natural-language brief, screenshot/video replication goal, 3D/WebGL request, quick prototype, or description-only task. Include audience, purpose, content, brand assets, framework, editable files, allowed tools, viewport targets, and approval boundaries for packages, generated assets, browser testing, and documentation updates.',
-        descVi: 'Brief bằng ngôn ngữ tự nhiên, mục tiêu tái tạo screenshot/video, yêu cầu 3D/WebGL, prototype nhanh hoặc tác vụ chỉ mô tả. Nêu audience, mục đích, nội dung, brand asset, framework, file được sửa, công cụ được phép, viewport cần kiểm và ranh giới phê duyệt cho cài package, tạo asset, kiểm thử browser và cập nhật tài liệu.',
-        required: true,
-        exampleCommand: '/ak:frontend-design "Implement the supplied 1440 px landing-page screenshot in the existing stack. Preserve layout and brand assets, include responsive behavior at 375 px, all interaction states, reduced motion, and a visual comparison. Do not install packages, generate assets, or update design guidelines without approval."',
-          exampleCommandVi: '/ak:frontend-design "Implement screenshot landing-page 1440 px được cung cấp trong stack hiện có. Giữ nguyên layout và brand assets, bao gồm responsive behavior ở 375 px, mọi interaction states, reduced motion, và visual comparison. Không install packages, generate assets, hoặc update design guidelines khi chưa được phê duyệt."',
+        token: '[prompt|image-path|component]',
+        titleEn: 'Prompt, image, or component',
+        titleVi: 'Prompt, ảnh, hoặc component',
+        descEn: 'Optional brief, screenshot/image path, or named component to design or replicate. Include audience, purpose, brand assets, stack, viewport targets, and approval boundaries when they change the result. Omit it only when continuing an already scoped surface.',
+        descVi: 'Brief, path ảnh/screenshot, hoặc tên component cần thiết kế hay sao chép, đều tùy chọn. Nêu audience, mục đích, brand asset, stack, viewport và ranh giới phê duyệt khi chúng đổi kết quả. Chỉ bỏ trống khi đang tiếp tục một bề mặt đã có phạm vi.',
+        required: false,
+        exampleCommand: '/ak:frontend-design design and build a distinctive landing page for our observability product',
+        exampleCommandVi: '/ak:frontend-design design and build a distinctive landing page for our observability product',
       },
     ],
   },
@@ -91,12 +91,12 @@ const data: SkillInfographic = {
   promptExamples: [
     { labelEn: "From-scratch interface", labelVi: "Giao diện từ đầu", command: "/ak:frontend-design design and build a distinctive landing page for our observability product",
       commandVi: '/ak:frontend-design thiết kế và xây dựng một trang đích đặc sắc cho sản phẩm quan sát của chúng tôi', whenEn: "Invoke when visual fidelity and polished UI are primary for a new surface.", whenVi: "Dùng khi fidelity hình ảnh và UI chỉn chu là ưu tiên chính cho một bề mặt mới.", expectedEn: "Shows the Design Read, seeded variation, and aesthetic thesis, defines tokenized OKLCH/type/spacing systems, implements real code, then fixes every Self-Review Gate failure before handoff.", expectedVi: "Hiển thị Design Read, seeded variation và aesthetic thesis, định nghĩa hệ token OKLCH/type/spacing, triển khai code thật rồi sửa mọi lỗi Self-Review Gate trước khi bàn giao.", recommended: true },
-    { labelEn: "Screenshot replication", labelVi: "Sao chép screenshot", command: "/ak:frontend-design recreate this screenshot as a working component",
-      commandVi: '/ak:frontend-design tái tạo ảnh chụp màn hình này thành một component hoạt động', whenEn: "Use when a supplied screenshot is the visual contract to match.", whenVi: "Dùng khi screenshot được cung cấp là contract hình ảnh cần khớp.", expectedEn: "Runs the screenshot workflow: analyzes the source with ak:ai-multimodal, plans with the UI design subagent, implements a precise match, verifies against the original, and documents guidelines only if approved.", expectedVi: "Chạy workflow screenshot: phân tích nguồn bằng ak:ai-multimodal, lập kế hoạch với subagent UI design, triển khai bản khớp chính xác, xác minh đối chiếu ảnh gốc và chỉ ghi guideline nếu được duyệt." },
+    { labelEn: "Screenshot replication", labelVi: "Sao chép screenshot", command: "/ak:frontend-design landing-hero.png",
+      commandVi: '/ak:frontend-design landing-hero.png', whenEn: "Use when a supplied screenshot or image path is the visual contract to match.", whenVi: "Dùng khi path screenshot hoặc ảnh được cung cấp là contract hình ảnh cần khớp.", expectedEn: "Runs the screenshot workflow: analyzes landing-hero.png with ak:ai-multimodal, plans with the UI design subagent, implements a precise match, verifies against the original, and documents guidelines only if approved.", expectedVi: "Chạy workflow screenshot: phân tích landing-hero.png bằng ak:ai-multimodal, lập kế hoạch với subagent UI design, triển khai bản khớp chính xác, xác minh đối chiếu ảnh gốc và chỉ ghi guideline nếu được duyệt." },
     { labelEn: "Video or motion match", labelVi: "Khớp video hoặc motion", command: "/ak:frontend-design recreate the interaction in this product demo video",
       commandVi: '/ak:frontend-design tái tạo tương tác trong video demo sản phẩm này', whenEn: "Use when the reference is a video and animation fidelity matters.", whenVi: "Dùng khi nguồn tham chiếu là video và fidelity animation quan trọng.", expectedEn: "Selects the video replication workflow, extracts timing and effects from the reference, implements motivated motion with reduced-motion handling, and compares the result back to the original sequence.", expectedVi: "Chọn workflow sao chép video, trích timing và hiệu ứng từ nguồn, triển khai motion có lý do kèm reduced-motion, rồi so sánh kết quả với chuỗi gốc." },
-    { labelEn: "3D experience", labelVi: "Trải nghiệm 3D", command: "/ak:frontend-design build a Three.js product hero with subtle motion",
-      commandVi: '/ak:frontend-design xây dựng product hero Three.js với chuyển động tinh tế', whenEn: "Use when the request calls for an immersive WebGL or Three.js-style interface.", whenVi: "Dùng khi yêu cầu cần giao diện immersive kiểu WebGL hoặc Three.js.", expectedEn: "Routes to the 3D/WebGL workflow, treats performance, controls, viewport composition, and reduced-motion as implementation constraints, then reports verified behavior and any known limitations.", expectedVi: "Đi theo workflow 3D/WebGL, coi hiệu năng, điều khiển, bố cục viewport và reduced-motion là ràng buộc triển khai, rồi báo hành vi đã xác minh và giới hạn đã biết." },
+    { labelEn: "Named component", labelVi: "Component đặt tên", command: "/ak:frontend-design PricingTable",
+      commandVi: '/ak:frontend-design PricingTable', whenEn: "Use when a named component, not a whole page, is the surface to design or rebuild.", whenVi: "Dùng khi bề mặt cần thiết kế hoặc dựng lại là một component có tên, không phải cả trang.", expectedEn: "Treats PricingTable as the component contract, inspects existing tokens if present, implements complete interaction states, and verifies mobile and desktop layout before handoff.", expectedVi: "Coi PricingTable là contract component, kiểm tra token hiện có nếu có, triển khai đủ interaction state, rồi xác minh layout mobile và desktop trước khi bàn giao." },
   ],
 };
 

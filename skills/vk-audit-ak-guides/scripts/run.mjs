@@ -69,6 +69,9 @@ function classify(identity) {
   if (identity === '/guides/agentkit/workflows') {
     return { owner: 'vk:audit-ak-workflows', checker: 'workflows', kind: 'workflows' };
   }
+  if (identity.startsWith('/guides/agentkit')) {
+    return { owner: 'vk:audit-ak-pages', checker: 'pages', kind: 'pages' };
+  }
   return { owner: '(none)', checker: 'none', kind: 'untracked' };
 }
 
@@ -91,6 +94,12 @@ function runSkillDetails(repo, kitRoot, akDocs) {
   return runNode(repo, args);
 }
 
+
+function runPages(repo, kitRoot) {
+  const script = join(repo, 'scripts/check-ak-guide-pages.mjs');
+  if (!existsSync(script)) return { code: 2, stdout: '', stderr: 'missing check-ak-guide-pages.mjs' };
+  return runNode(repo, [script, '--kit-root', kitRoot, '--repo', repo]);
+}
 
 function runWorkflows(repo, kitRoot) {
   const candidates = [
@@ -142,6 +151,7 @@ function main(argv) {
   const inventory = runInventory(repo, kitRoot);
   const details = runSkillDetails(repo, kitRoot, args.akDocs);
   const workflows = runWorkflows(repo, kitRoot);
+  const pages = runPages(repo, kitRoot);
 
   const rows = enIds.map((identity) => {
     const cls = classify(identity);
@@ -157,6 +167,10 @@ function main(argv) {
       if (workflows.code === 2) status = 'uncovered';
       else if (workflows.code === 0) status = 'owned';
       else status = `owned-fail:${workflows.code}`;
+    } else if (cls.kind === 'pages') {
+      if (pages.code === 2) status = 'uncovered';
+      else if (pages.code === 0) status = 'owned';
+      else status = `owned-fail:${pages.code}`;
     }
 
     return { route: identity, vi: `/vi${identity}`, ...cls, status };
@@ -177,6 +191,7 @@ function main(argv) {
   dump('inventory', inventory);
   dump('skill-details', details);
   dump('workflows', workflows);
+  dump('pages', pages);
 
   const uncovered = rows.filter((r) => r.status === 'uncovered');
   const failedOwned = rows.filter((r) => r.status.startsWith('owned-fail'));

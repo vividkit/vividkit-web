@@ -11,26 +11,121 @@ const data: SkillInfographic = {
     "taglineVi": "Tạo hoặc cập nhật Claude skill qua ghi nhận intent, research, lập progressive disclosure, scaffold, SKILL.md/tài nguyên, eval, tối ưu description, đóng gói và cố vấn Kongming tùy chọn."
   },
   "invocation": {
-    "syntax": "/ak:skill-creator [skill-name or description] [--advice]",
+    "syntax": "/ak:skill-creator <create|update|audit|optimize> [skill-name|path|kit|--all] [--kit <kit>|--project|--user] [--long-horizon] [--apply] [--from-audit <report>] [--advice]",
     "arguments": [
       {
-        "token": "[skill-name or description]",
-        "titleEn": "Skill name or description",
-        "titleVi": "Tên hoặc mô tả Skill",
-        "descEn": "Names the Skill to create or update, or describes the repeatable workflow that should become a Skill. Include scope, triggers, expected output, and non-goals when known.",
-        "descVi": "Nêu Skill cần tạo hoặc cập nhật, hoặc mô tả workflow lặp lại cần chuyển thành Skill. Kèm scope, trigger, output mong đợi và non-goal nếu đã biết.",
+        "token": "<create|update|audit|optimize>",
+        "titleEn": "Workflow",
+        "titleVi": "Workflow",
+        "descEn": "Required skill argument: create a new skill, update an existing one, audit routing/behavior, or optimize description and evals. Not an ak CLI subcommand.",
+        "descVi": "Đối số skill bắt buộc: tạo skill mới, cập nhật skill có sẵn, audit routing/hành vi, hoặc tối ưu description và eval. Không phải subcommand CLI ak.",
+        "required": true,
+        "exampleCommand": "/ak:skill-creator create release-notes"
+      },
+      {
+        "token": "[skill-name|path|kit|--all]",
+        "titleEn": "Target",
+        "titleVi": "Đích",
+        "descEn": "Skill name, path, kit, or --all for audit/optimize across a kit. Combine with --kit, --project, or --user to set install scope.",
+        "descVi": "Tên skill, path, kit, hoặc --all khi audit/optimize cả kit. Kết hợp --kit, --project hoặc --user để chọn scope cài.",
         "required": false,
-        "exampleCommand": "/ak:skill-creator \"Create a project-scoped release-notes Skill that validates headings and never publishes\""
+        "exampleCommand": "/ak:skill-creator audit --all --kit engineer"
+      }
+    ],
+    "subcommands": [
+      {
+        "name": "create",
+        "syntax": "/ak:skill-creator create [skill-name or description] [--kit <kit>|--project|--user] [--long-horizon] [--advice]",
+        "titleEn": "Create",
+        "titleVi": "Tạo",
+        "descEn": "Capture intent, author SKILL.md and resources, evaluate, then package only when requested.",
+        "descVi": "Ghi nhận intent, soạn SKILL.md và tài nguyên, evaluate, rồi chỉ đóng gói khi được yêu cầu.",
+        "exampleCommand": "/ak:skill-creator create release-notes --project"
+      },
+      {
+        "name": "update",
+        "syntax": "/ak:skill-creator update [skill-name|path] [--apply] [--from-audit <report>] [--advice]",
+        "titleEn": "Update",
+        "titleVi": "Cập nhật",
+        "descEn": "Change an existing skill from a request or an audit report. --apply writes accepted edits.",
+        "descVi": "Sửa skill có sẵn từ yêu cầu hoặc báo cáo audit. --apply ghi các sửa đã chấp nhận.",
+        "exampleCommand": "/ak:skill-creator update release-notes --apply"
+      },
+      {
+        "name": "audit",
+        "syntax": "/ak:skill-creator audit [skill-name|path|kit|--all] [--kit <kit>] [--advice]",
+        "titleEn": "Audit",
+        "titleVi": "Audit",
+        "descEn": "Diagnose routing, description, and behavior. Does not rewrite the skill unless you follow with update --apply.",
+        "descVi": "Chẩn đoán routing, description và hành vi. Không viết lại skill trừ khi chạy tiếp update --apply.",
+        "exampleCommand": "/ak:skill-creator audit release-notes"
+      },
+      {
+        "name": "optimize",
+        "syntax": "/ak:skill-creator optimize [skill-name|path|--all] [--apply] [--advice]",
+        "titleEn": "Optimize",
+        "titleVi": "Tối ưu",
+        "descEn": "Tighten trigger metadata, evals, and progressive disclosure. --apply writes the accepted metadata changes.",
+        "descVi": "Siết metadata kích hoạt, eval và progressive disclosure. --apply ghi thay đổi metadata đã chấp nhận.",
+        "exampleCommand": "/ak:skill-creator optimize release-notes --apply"
       }
     ],
     "options": [
+      {
+        "token": "--kit",
+        "titleEn": "Kit scope",
+        "titleVi": "Scope kit",
+        "descEn": "Target a named kit instead of inferring from the current project.",
+        "descVi": "Nhắm một kit theo tên thay vì suy từ project hiện tại.",
+        "exampleCommand": "/ak:skill-creator audit --all --kit engineer"
+      },
+      {
+        "token": "--project",
+        "titleEn": "Project scope",
+        "titleVi": "Scope project",
+        "descEn": "Create or update the skill in the current project, not user-global.",
+        "descVi": "Tạo hoặc cập nhật skill trong project hiện tại, không phải user-global.",
+        "exampleCommand": "/ak:skill-creator create release-notes --project"
+      },
+      {
+        "token": "--user",
+        "titleEn": "User scope",
+        "titleVi": "Scope user",
+        "descEn": "Author into user-global skill storage only when the user explicitly asks for that scope.",
+        "descVi": "Ghi vào kho skill user-global chỉ khi người dùng yêu cầu rõ scope đó.",
+        "exampleCommand": "/ak:skill-creator create release-notes --user"
+      },
+      {
+        "token": "--long-horizon",
+        "titleEn": "Long-horizon create",
+        "titleVi": "Tạo dài hạn",
+        "descEn": "Use the long-horizon creation workflow for skills that must stay durable across many sessions.",
+        "descVi": "Dùng workflow tạo dài hạn cho skill cần bền qua nhiều phiên.",
+        "exampleCommand": "/ak:skill-creator create release-notes --project --long-horizon"
+      },
+      {
+        "token": "--apply",
+        "titleEn": "Write accepted edits",
+        "titleVi": "Ghi sửa đã chấp nhận",
+        "descEn": "Write the accepted update or optimize edits. Without --apply, report the proposed patch only.",
+        "descVi": "Ghi các sửa update hoặc optimize đã chấp nhận. Không có --apply thì chỉ báo patch đề xuất.",
+        "exampleCommand": "/ak:skill-creator update release-notes --apply"
+      },
+      {
+        "token": "--from-audit",
+        "titleEn": "From audit report",
+        "titleVi": "Từ báo cáo audit",
+        "descEn": "Feed an audit report path into update so the patch stays scoped to diagnosed issues.",
+        "descVi": "Đưa path báo cáo audit vào update để patch bám đúng vấn đề đã chẩn đoán.",
+        "exampleCommand": "/ak:skill-creator update release-notes --from-audit plans/reports/skill-audit.md --apply"
+      },
       {
         "token": "--advice",
         "titleEn": "Advisory supervision",
         "titleVi": "Giám sát tư vấn",
         "descEn": "Requests Kongming advisory review after planning, after the SKILL.md draft and evaluation results, before packaging or distribution, or when repeated failures block progress. It does not transfer decisions or bypass validation and security checks.",
         "descVi": "Yêu cầu Kongming review tư vấn sau planning, sau bản nháp SKILL.md cùng kết quả evaluation, trước packaging hoặc distribution, hoặc khi lỗi lặp lại chặn tiến độ. Tùy chọn này không chuyển quyền quyết định và không bỏ qua validation hay kiểm tra bảo mật.",
-        "exampleCommand": "/ak:skill-creator \"Create a project-scoped release-notes Skill that validates headings and never publishes\" --advice"
+        "exampleCommand": "/ak:skill-creator create release-notes --project --advice"
       }
     ]
   },
@@ -138,35 +233,44 @@ const data: SkillInfographic = {
     {
       "labelEn": "Create a project skill",
       "labelVi": "Tạo skill trong dự án",
-      "command": "/ak:skill-creator project-scoped release notes skill",
-      "whenEn": "A repeatable workflow should become a versioned Claude Skill in the current project.",
-      "whenVi": "Một workflow lặp lại cần trở thành Claude Skill được version hóa trong project hiện tại.",
+      "command": "/ak:skill-creator create release-notes --project",
+      "whenEn": "A repeatable workflow should become a versioned skill in the current project.",
+      "whenVi": "Một workflow lặp lại cần trở thành skill được version hóa trong project hiện tại.",
       "expectedEn": "Captures tasks, triggers, outputs, scope, refusal behavior, and test cases; scaffolds the project skill directory, writes concise SKILL.md/resources, validates structure, and packages only when requested.",
       "expectedVi": "Ghi nhận task, trigger, output, scope, refusal behavior và test case; scaffold thư mục skill trong project, viết SKILL.md/tài nguyên ngắn gọn, validate cấu trúc và chỉ đóng gói khi được yêu cầu.",
       "recommended": true
     },
     {
-      "labelEn": "Refine trigger accuracy",
-      "labelVi": "Cải thiện độ chính xác trigger",
-      "command": "/ak:skill-creator improve the deployment skill description",
-      "whenEn": "An existing skill undertriggers, overtriggers, or has vague discovery metadata.",
-      "whenVi": "Một skill hiện có kích hoạt thiếu, kích hoạt quá rộng hoặc có discovery metadata mơ hồ.",
-      "expectedEn": "Audits when-to-use language, sharpens pushy description wording, adds clear use and non-use boundaries, preserves progressive disclosure, and checks eval coverage against the intended trigger contexts.",
-      "expectedVi": "Audit ngôn ngữ when-to-use, làm rõ description kích hoạt mạnh, thêm ranh giới dùng/không dùng, giữ progressive disclosure và kiểm tra coverage eval theo trigger context mong muốn."
+      "labelEn": "Update from an audit",
+      "labelVi": "Cập nhật từ audit",
+      "command": "/ak:skill-creator update release-notes --from-audit plans/reports/skill-audit.md --apply",
+      "whenEn": "An audit report already diagnosed routing or instruction issues that should be written back.",
+      "whenVi": "Báo cáo audit đã chẩn đoán lỗi routing hoặc hướng dẫn cần ghi lại vào skill.",
+      "expectedEn": "Reads the audit report, patches only diagnosed issues, writes accepted edits because --apply is set, and leaves unrelated skill files unchanged.",
+      "expectedVi": "Đọc báo cáo audit, chỉ vá vấn đề đã chẩn đoán, ghi sửa đã chấp nhận vì có --apply, và không đụng file skill không liên quan."
     },
     {
-      "labelEn": "Add packaging readiness",
-      "labelVi": "Bổ sung sẵn sàng đóng gói",
-      "command": "/ak:skill-creator package the data-cleaning skill for Claude Code distribution",
-      "whenEn": "A skill needs validation evidence and a reviewable distribution zip.",
-      "whenVi": "Một skill cần bằng chứng validation và file zip phân phối có thể review.",
-      "expectedEn": "Runs the bundled quick validator, reviews metadata, token use, script dependencies, structure, portability, placeholder files, and output destination before producing or replacing any distribution archive.",
-      "expectedVi": "Chạy quick validator đi kèm, review metadata, token, dependency script, cấu trúc, tính portable, file placeholder và nơi xuất trước khi tạo hoặc thay archive phân phối."
+      "labelEn": "Audit one skill",
+      "labelVi": "Audit một skill",
+      "command": "/ak:skill-creator audit release-notes",
+      "whenEn": "Routing, description, or behavior looks wrong and you need a diagnosis before rewriting.",
+      "whenVi": "Routing, description hoặc hành vi trông sai và cần chẩn đoán trước khi viết lại.",
+      "expectedEn": "Reports routing, description, and behavior findings without rewriting SKILL.md unless a later update --apply is requested.",
+      "expectedVi": "Báo finding về routing, description và hành vi mà không viết lại SKILL.md trừ khi sau đó chạy update --apply."
+    },
+    {
+      "labelEn": "Optimize metadata",
+      "labelVi": "Tối ưu metadata",
+      "command": "/ak:skill-creator optimize release-notes --apply",
+      "whenEn": "An existing skill undertriggers, overtriggers, or has vague discovery metadata.",
+      "whenVi": "Skill hiện có kích hoạt thiếu, kích hoạt quá rộng hoặc metadata khám phá còn mơ hồ.",
+      "expectedEn": "Tightens when-to-use language and eval coverage, writes accepted metadata changes because --apply is set, and keeps progressive disclosure intact.",
+      "expectedVi": "Siết ngôn ngữ when-to-use và coverage eval, ghi metadata đã chấp nhận vì có --apply, và giữ progressive disclosure."
     },
     {
       "labelEn": "Advised authoring",
       "labelVi": "Tạo skill có cố vấn",
-      "command": "/ak:skill-creator browser automation skill --advice",
+      "command": "/ak:skill-creator create release-notes --project --advice",
       "whenEn": "The skill design, eval results, packaging step, or distribution target needs advisory supervision.",
       "whenVi": "Thiết kế skill, kết quả eval, bước đóng gói hoặc mục tiêu phân phối cần cố vấn giám sát.",
       "expectedEn": "Adds advisory-only Kongming checkpoints after intent capture and planning, after the SKILL.md draft and eval results, before packaging or distribution, and when repeated failures block progress.",
@@ -180,7 +284,7 @@ const data: SkillInfographic = {
       "titleVi": "Cố vấn Kongming",
       "descEn": "Adds advisory-only checkpoints during planning, draft/eval review, packaging, and stuck states.",
       "descVi": "Thêm các điểm cố vấn chỉ tư vấn khi lập plan, review draft/eval, đóng gói và lúc bị kẹt.",
-      "exampleCommand": "/ak:skill-creator data-cleaning skill --advice"
+      "exampleCommand": "/ak:skill-creator create release-notes --project --advice"
     }
   ]
 };

@@ -25,7 +25,7 @@ uncovered or owned-fail. Skills/workflows are modules.
 | `/guides/agentkit/skills` | `vk:audit-ak-skills` | Inventory + fingerprints |
 | `/guides/agentkit/skills/:kit/:skill` | `vk:audit-ak-skills` | Inventory **and** detail/claims runner |
 | `/guides/agentkit/workflows` | `vk:audit-ak-workflows` | Operational if the module is linked |
-| All other `/guides/agentkit/*` | `(none)` | **Uncovered** |
+| All other `/guides/agentkit/*` | `vk:audit-ak-pages` | Registry + files + CLI cheatsheet vs cobra `Use` |
 
 Do not treat a skills-only check as a complete AgentKit guide audit.
 

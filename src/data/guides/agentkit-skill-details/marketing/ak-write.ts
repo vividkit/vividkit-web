@@ -164,8 +164,8 @@ const data: SkillInfographic = {
       commandVi: '/ak:write fast tweet ra mắt cho ứng dụng ghi chú AI',
       whenEn: "Use for a quick creative draft.",
       whenVi: "Dùng khi cần bản nháp sáng tạo nhanh.",
-      expectedEn: "Concise copy produced through the fast route.",
-      expectedVi: "Copy ngắn gọn được tạo theo tuyến fast.",
+      expectedEn: "Concise copy is produced through the fast route when a short, direct message is needed quickly.",
+      expectedVi: "Copy ngắn gọn được tạo theo tuyến fast và giữ thông điệp đi thẳng vào ý chính ngay từ đầu.",
       recommended: true
     },
     {
@@ -175,8 +175,8 @@ const data: SkillInfographic = {
       commandVi: '/ak:write blog công cụ MCP cho đội ngũ marketing',
       whenEn: "Use for SEO-optimized long-form content.",
       whenVi: "Dùng cho nội dung dài tối ưu SEO.",
-      expectedEn: "SEO article draft following the blog reference.",
-      expectedVi: "Bản nháp bài SEO theo reference blog."
+      expectedEn: "The SEO article draft follows the blog reference and keeps the article structure aligned with that source.",
+      expectedVi: "Bản nháp bài SEO theo reference blog giữ cấu trúc và hướng nội dung bám sát tài liệu blog đã cho."
     },
     {
       labelEn: "YouTube to blog",
@@ -185,8 +185,8 @@ const data: SkillInfographic = {
       commandVi: '/ak:write blog-youtube https://youtube.com/watch?v=VIDEO_ID',
       whenEn: "Use to turn a YouTube source into an SEO blog article.",
       whenVi: "Dùng để chuyển nguồn YouTube thành bài blog SEO.",
-      expectedEn: "Blog article adapted from the video source.",
-      expectedVi: "Bài blog được chuyển thể từ nguồn video."
+      expectedEn: "The blog article is adapted from the video source so the written piece preserves the original video material.",
+      expectedVi: "Bài blog được chuyển thể từ nguồn video để phần viết giữ lại nội dung chính của video gốc."
     },
     {
       labelEn: "Publish polish",
@@ -195,8 +195,8 @@ const data: SkillInfographic = {
       commandVi: '/ak:write xuất bản nội dung trang landing',
       whenEn: "Use when content should be audited, fixed, and returned ready to publish.",
       whenVi: "Dùng khi nội dung cần được audit, sửa và trả về bản sẵn đăng.",
-      expectedEn: "Final content with quality issues fixed.",
-      expectedVi: "Nội dung cuối đã sửa các lỗi chất lượng."
+      expectedEn: "The final content has the quality issues fixed and is ready as the completed version of the piece.",
+      expectedVi: "Nội dung cuối đã sửa các lỗi chất lượng và trở thành bản hoàn chỉnh sau khi rà soát."
     }
   ],
   reportOutput: {

@@ -46,11 +46,11 @@ const data: SkillInfographic = {
   ],
   promptExamples: [
     { labelEn: 'Create deck', labelVi: 'Tạo deck', command: '/ak:slides create Product launch narrative 12',
-      commandVi: '/ak:slides create câu chuyện ra mắt sản phẩm 12', whenEn: 'You need a strategic HTML deck around a launch story.', whenVi: 'Khi cần deck HTML chiến lược cho câu chuyện launch.', expectedEn: 'Deck direction, narrative, responsive HTML slides, and design preflight.', expectedVi: 'Định hướng deck, narrative, slide HTML responsive và design preflight.', recommended: true },
+      commandVi: '/ak:slides create câu chuyện ra mắt sản phẩm 12', whenEn: 'You need a strategic HTML deck around a launch story.', whenVi: 'Khi cần deck HTML chiến lược cho câu chuyện launch.', expectedEn: 'The slide work defines deck direction, narrative flow, responsive HTML slides, and a design preflight before delivery.', expectedVi: 'Phần này xác định định hướng deck, narrative, slide HTML responsive và design preflight trước khi hoàn thiện.', recommended: true },
     { labelEn: 'Topic + count', labelVi: 'Topic + số slide', command: '/ak:slides create Pricing strategy update 8',
-      commandVi: '/ak:slides create Cập nhật chiến lược giá 8', whenEn: 'You have a topic and target deck length.', whenVi: 'Khi có topic và độ dài deck mong muốn.', expectedEn: 'Strategic slide plan and HTML presentation.', expectedVi: 'Kế hoạch slide chiến lược và presentation HTML.' },
+      commandVi: '/ak:slides create Cập nhật chiến lược giá 8', whenEn: 'You have a topic and target deck length.', whenVi: 'Khi có topic và độ dài deck mong muốn.', expectedEn: 'This item provides a strategic slide plan and the accompanying HTML presentation built from that plan.', expectedVi: 'Kế hoạch slide chiến lược và presentation HTML được soạn thành một bộ trình bày hoàn chỉnh cho buổi thuyết trình.' },
     { labelEn: 'Data deck', labelVi: 'Deck có data', command: '/ak:slides create Q3 marketing performance 10',
-      commandVi: '/ak:slides create Hiệu suất marketing Q3 10', whenEn: 'You need charts, metrics, comparisons, or trends in a presentation.', whenVi: 'Khi cần chart, metric, so sánh hoặc trend trong presentation.', expectedEn: 'Data-driven HTML slides with Chart.js visualizations where useful.', expectedVi: 'Slide HTML dựa trên dữ liệu, dùng Chart.js khi hữu ích.' },
+      commandVi: '/ak:slides create Hiệu suất marketing Q3 10', whenEn: 'You need charts, metrics, comparisons, or trends in a presentation.', whenVi: 'Khi cần chart, metric, so sánh hoặc trend trong presentation.', expectedEn: 'It creates data-driven HTML slides and adds Chart.js visualizations wherever those charts make the message clearer.', expectedVi: 'Slide HTML dựa trên dữ liệu và dùng Chart.js khi hữu ích để thể hiện số liệu ngay trên từng slide.' },
   ],
 };
 
