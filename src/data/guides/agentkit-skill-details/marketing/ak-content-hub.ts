@@ -34,11 +34,11 @@ const data: SkillInfographic = {
   expertiseAreasVi: ["Gallery asset", "Bộ lọc", "Sidebar brand", "Preview và edit", "Quét manifest", "Metadata sẵn sàng cho R2"],
   promptExamples: [
     { labelEn: "Open hub", labelVi: "Mở hub", command: "/ak:content-hub open",
-      commandVi: '/ak:content-hub mở', whenEn: "Use when you want the browser gallery.", whenVi: "Dùng khi muốn mở gallery trên trình duyệt.", expectedEn: "A local visual grid of assets with sidebar context.", expectedVi: "Lưới asset local kèm ngữ cảnh trong sidebar.", recommended: true },
+      commandVi: '/ak:content-hub mở', whenEn: "Use when you want the browser gallery.", whenVi: "Dùng khi muốn mở gallery trên trình duyệt.", expectedEn: "A local visual grid of assets is shown with sidebar context beside each asset in the grid.", expectedVi: "Lưới asset local kèm ngữ cảnh trong sidebar trình bày từng asset cùng phần ngữ cảnh đặt ở sidebar.", recommended: true },
     { labelEn: "Browse assets", labelVi: "Duyệt asset", command: "/ak:content-hub browse",
-      commandVi: '/ak:content-hub browse', whenEn: "Use when exploring the asset library by type or category.", whenVi: "Dùng khi khám phá thư viện asset theo loại hoặc danh mục.", expectedEn: "Filtered browsing through local marketing assets.", expectedVi: "Duyệt asset marketing local qua bộ lọc." },
+      commandVi: '/ak:content-hub browse', whenEn: "Use when exploring the asset library by type or category.", whenVi: "Dùng khi khám phá thư viện asset theo loại hoặc danh mục.", expectedEn: "Filtered browsing through local marketing assets narrows which local marketing assets remain visible while browsing continues.", expectedVi: "Duyệt asset marketing local qua bộ lọc giúp thu hẹp những asset marketing local còn lại trên màn hình." },
     { labelEn: "Search library", labelVi: "Tìm trong thư viện", command: "/ak:content-hub search banners",
-      commandVi: '/ak:content-hub tìm kiếm banner', whenEn: "Use when looking for matching assets by keyword.", whenVi: "Dùng khi cần tìm asset theo từ khóa.", expectedEn: "Matching assets and paths from the gallery index.", expectedVi: "Asset và đường dẫn phù hợp từ index của gallery." },
+      commandVi: '/ak:content-hub tìm kiếm banner', whenEn: "Use when looking for matching assets by keyword.", whenVi: "Dùng khi cần tìm asset theo từ khóa.", expectedEn: "Matching assets and paths are drawn from the gallery index so each match stays linked to that index.", expectedVi: "Asset và đường dẫn phù hợp đến từ index của gallery nên mỗi kết quả khớp vẫn gắn với index đó." },
   ],
   skillStack: [
     { name: "content-creator", type: "agent" },

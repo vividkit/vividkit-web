@@ -81,46 +81,116 @@ const data: SkillInfographic = {
     "ưu tiên follow-up"
   ],
   "invocation": {
-    "syntax": "/ak:sumup [recap request]",
+    "syntax": "/ak:sumup [task|PR|branch|recent]",
     "arguments": [
       {
-        "token": "[recap request]",
-        "titleEn": "Recap focus",
-        "titleVi": "Trọng tâm tóm tắt",
-        "descEn": "Natural-language implementation period, feature, or question to recap. Include the evidence boundary or emphasis you want; it does not trigger implementation, deployment, or a live status check.",
-        "descVi": "Khoảng implementation, feature hoặc câu hỏi cần tóm tắt bằng ngôn ngữ tự nhiên. Nêu ranh giới bằng chứng hoặc trọng tâm mong muốn; phần này không kích hoạt triển khai, deploy hay live status check.",
-        "exampleCommand": "/ak:sumup \"Recap the implementation we just completed. Separate verified work from untested or unresolved work, explain the main flow, and keep next steps last.\""
+        "token": "[task|PR|branch|recent]",
+        "titleEn": "Recap scope",
+        "titleVi": "Phạm vi tóm tắt",
+        "descEn": "Optional evidence boundary: one task, a pull request, a branch, or recent work. Omit it to recap the strongest nearby implementation evidence. It does not implement, deploy, or replace a live status check.",
+        "descVi": "Ranh giới bằng chứng tùy chọn: một task, một pull request, một branch, hoặc phần việc gần đây. Bỏ qua để tóm tắt bằng chứng triển khai mạnh nhất ở gần. Không triển khai, không deploy và không thay live status check.",
+        "required": false,
+        "exampleCommand": "/ak:sumup recent",
+        "exampleCommandVi": "/ak:sumup recent"
+      }
+    ],
+    "subcommands": [
+      {
+        "name": "task",
+        "syntax": "/ak:sumup task",
+        "titleEn": "Task recap",
+        "titleVi": "Tóm tắt task",
+        "descEn": "Recap one completed task: outcome, verified changes, failures, decisions, and remaining work.",
+        "descVi": "Tóm tắt một task đã xong: outcome, thay đổi đã kiểm, lỗi, quyết định và việc còn mở.",
+        "outcomeEn": "A concise task recap with evidence boundaries and unresolved items last.",
+        "outcomeVi": "Bản tóm tắt task gọn với ranh giới bằng chứng và phần còn mở ở cuối.",
+        "exampleCommand": "/ak:sumup task",
+        "exampleCommandVi": "/ak:sumup task"
+      },
+      {
+        "name": "PR",
+        "syntax": "/ak:sumup PR",
+        "titleEn": "Pull request recap",
+        "titleVi": "Tóm tắt pull request",
+        "descEn": "Recap the implemented work bounded by a pull request without claiming it is deployed.",
+        "descVi": "Tóm tắt phần đã triển khai trong ranh giới pull request mà không tuyên bố đã deploy.",
+        "outcomeEn": "PR-bounded highlights, verification state, and follow-ups without a deployment claim.",
+        "outcomeVi": "Điểm nhấn trong ranh giới PR, trạng thái verification và follow-up, không tuyên bố deploy.",
+        "exampleCommand": "/ak:sumup PR",
+        "exampleCommandVi": "/ak:sumup PR"
+      },
+      {
+        "name": "branch",
+        "syntax": "/ak:sumup branch",
+        "titleEn": "Branch recap",
+        "titleVi": "Tóm tắt branch",
+        "descEn": "Recap implemented work on the named or current branch using diff, tests, and accepted decisions.",
+        "descVi": "Tóm tắt phần đã làm trên branch đã nêu hoặc branch hiện tại bằng diff, test và quyết định đã chấp nhận.",
+        "outcomeEn": "Branch-scoped outcome, key changes, failures, and remaining blockers with evidence named.",
+        "outcomeVi": "Outcome theo branch, thay đổi chính, lỗi và blocker còn lại, kèm bằng chứng được nêu rõ.",
+        "exampleCommand": "/ak:sumup branch",
+        "exampleCommandVi": "/ak:sumup branch"
+      },
+      {
+        "name": "recent",
+        "syntax": "/ak:sumup recent",
+        "titleEn": "Recent work recap",
+        "titleVi": "Tóm tắt việc gần đây",
+        "descEn": "Recap the most recent implementation period without replaying the whole session.",
+        "descVi": "Tóm tắt khoảng triển khai gần nhất mà không xem lại cả phiên làm việc.",
+        "outcomeEn": "Recent-work recap that separates verified results from untested or unresolved items.",
+        "outcomeVi": "Tóm tắt việc gần đây, tách kết quả đã kiểm khỏi phần chưa test hoặc còn mở.",
+        "exampleCommand": "/ak:sumup recent",
+        "exampleCommandVi": "/ak:sumup recent"
       }
     ]
   },
   "promptExamples": [
     {
-      "labelEn": "Implementation recap",
-      "labelVi": "Tóm tắt triển khai",
-      "command": "/ak:sumup summarize the auth refactor and remaining blockers",
-      "whenEn": "Use after implementation when a human needs the outcome without replaying the work session.",
-      "whenVi": "Dùng sau khi triển khai khi người đọc cần hiểu kết quả mà không xem lại toàn bộ phiên làm việc.",
-      "expectedEn": "Produces a concise recap with outcome, strongest evidence, key implemented changes, verification boundaries, unresolved blockers, and actionable next steps.",
-      "expectedVi": "Tạo bản tóm tắt gọn gồm outcome, bằng chứng mạnh nhất, thay đổi đã triển khai, ranh giới verification, blocker còn mở và bước tiếp có thể hành động.",
+      "labelEn": "Default recap",
+      "labelVi": "Tóm tắt mặc định",
+      "command": "/ak:sumup",
+      "whenEn": "After implementation, when a human needs the outcome without replaying the work session.",
+      "whenVi": "Sau khi triển khai, khi người đọc cần hiểu kết quả mà không xem lại toàn bộ phiên làm việc.",
+      "expectedEn": "Produces a concise recap with outcome, strongest nearby evidence, key implemented changes, verification boundaries, unresolved blockers, and actionable next steps last.",
+      "expectedVi": "Tạo bản tóm tắt gọn gồm outcome, bằng chứng mạnh nhất ở gần, thay đổi đã triển khai, ranh giới verification, blocker còn mở và bước tiếp có thể hành động ở cuối.",
       "recommended": true
     },
     {
-      "labelEn": "Failure and workaround recap",
-      "labelVi": "Tóm tắt lỗi và workaround",
-      "command": "/ak:sumup recap what failed during the queue worker implementation and what remains",
-      "whenEn": "Use when failed attempts, workaround choices, or unresolved blockers need to be preserved clearly.",
-      "whenVi": "Dùng khi cần giữ lại rõ ràng các lần thử lỗi, lựa chọn workaround hoặc blocker chưa giải quyết.",
-      "expectedEn": "Separates resolved recovery steps from unresolved failures, names the evidence for each result, and keeps remaining blockers last.",
-      "expectedVi": "Tách các bước phục hồi đã xong khỏi lỗi còn mở, nêu bằng chứng cho từng kết quả và đặt blocker còn lại ở cuối."
+      "labelEn": "Task recap",
+      "labelVi": "Tóm tắt task",
+      "command": "/ak:sumup task",
+      "whenEn": "One completed task needs an evidence-bounded recap of what changed and what remains.",
+      "whenVi": "Một task đã xong cần bản tóm tắt có ranh giới bằng chứng về phần đã đổi và phần còn lại.",
+      "expectedEn": "Summarizes that task's outcome, verified changes, failures and workarounds, decisions, and remaining blockers without implementing anything new.",
+      "expectedVi": "Tóm tắt outcome của task, thay đổi đã kiểm, lỗi và workaround, quyết định và blocker còn lại mà không triển khai thêm gì."
     },
     {
-      "labelEn": "Behavior or architecture recap",
-      "labelVi": "Tóm tắt hành vi hoặc kiến trúc",
-      "command": "/ak:sumup explain how the new queue worker works and how to use it",
-      "whenEn": "Use when changed behavior, user flow, architecture, database, or UI/UX benefits from a compact explanation.",
-      "whenVi": "Dùng khi hành vi, user flow, kiến trúc, database hoặc UI/UX đã đổi và cần giải thích ngắn gọn.",
-      "expectedEn": "Explains only applicable operation details, includes a compact clarifying visual when useful, and adds minimal usage steps or commands.",
-      "expectedVi": "Chỉ giải thích các chi tiết vận hành có liên quan, thêm visual ngắn khi hữu ích và đưa bước hoặc lệnh sử dụng tối thiểu."
+      "labelEn": "Pull request recap",
+      "labelVi": "Tóm tắt pull request",
+      "command": "/ak:sumup PR",
+      "whenEn": "The pull request is the evidence boundary and must not be treated as a live deploy.",
+      "whenVi": "Pull request là ranh giới bằng chứng và không được coi như đã deploy.",
+      "expectedEn": "Recaps PR-bounded implemented work, separates verified from untested changes, and refuses to claim deployment without runtime evidence.",
+      "expectedVi": "Tóm tắt phần đã làm trong ranh giới PR, tách phần đã kiểm khỏi phần chưa test, và từ chối tuyên bố deploy khi chưa có bằng chứng runtime."
+    },
+    {
+      "labelEn": "Branch recap",
+      "labelVi": "Tóm tắt branch",
+      "command": "/ak:sumup branch",
+      "whenEn": "You need the implemented story of the current or named branch without a live status check.",
+      "whenVi": "Cần câu chuyện phần đã làm trên branch hiện tại hoặc đã nêu, không phải live status check.",
+      "expectedEn": "Uses branch diff, tests, and accepted decisions as evidence, explains how the result works when useful, and keeps unresolved items last.",
+      "expectedVi": "Dùng diff branch, test và quyết định đã chấp nhận làm bằng chứng, giải thích cách kết quả hoạt động khi hữu ích, và để phần còn mở ở cuối."
+    },
+    {
+      "labelEn": "Recent work recap",
+      "labelVi": "Tóm tắt việc gần đây",
+      "command": "/ak:sumup recent",
+      "whenEn": "The latest implementation period should be recapped without replaying the whole session.",
+      "whenVi": "Khoảng triển khai gần nhất cần được tóm tắt mà không xem lại cả phiên.",
+      "expectedEn": "Gathers recent conversation, diff, and test evidence, omits empty sections, and adds a compact visual only when it clarifies behavior or architecture.",
+      "expectedVi": "Gom bằng chứng hội thoại, diff và test gần đây, bỏ mục rỗng, và chỉ thêm visual ngắn khi nó làm rõ hành vi hoặc kiến trúc."
     }
   ]
 };

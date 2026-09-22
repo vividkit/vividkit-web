@@ -22,8 +22,8 @@ const data: SkillInfographic = {
       "number": 2,
       "titleEn": "Resolve destination",
       "titleVi": "Xác định nơi ghi",
-      "descEn": "Use plans/reports/handoff-<YYYYMMDD-HHmm>-<slug>.md by default, or a workspace-local explicit output path; ask before writing if no plans root exists.",
-      "descVi": "Mặc định dùng plans/reports/handoff-<YYYYMMDD-HHmm>-<slug>.md, hoặc path output chỉ định nằm trong workspace; hỏi trước khi ghi nếu không có plans root."
+      "descEn": "Write plans/handoffs/<slug>-<YYYYMMDD-HHmm>.md under an existing plans root, or a workspace-local --output path. Ask before writing if no plans root exists. Also scan legacy plans/reports/handoff-*.md.",
+      "descVi": "Ghi plans/handoffs/<slug>-<YYYYMMDD-HHmm>.md khi đã có plans root, hoặc path --output trong workspace. Hỏi trước khi ghi nếu chưa có plans root. Vẫn quét file cũ plans/reports/handoff-*.md."
     },
     {
       "number": 3,
@@ -70,10 +70,10 @@ const data: SkillInfographic = {
   ],
   "hardGate": {
     "type": "critical",
-    "titleEn": "Capture only: no runtime launch, no code mutation",
-    "titleVi": "Chỉ capture: không chạy runtime, không sửa code",
-    "contentEn": "ak:handoff never launches an agent, edits code, commits, deletes, or writes outside the workspace. It also refuses credential-looking task focus text and existing outputs without --force.",
-    "contentVi": "ak:handoff không bao giờ launch agent, sửa code, commit, xóa hoặc ghi ngoài workspace. Nó cũng từ chối task focus giống credential và output đã tồn tại nếu thiếu --force."
+    "titleEn": "Capture only, unless --dispatch",
+    "titleVi": "Chỉ capture, trừ khi --dispatch",
+    "contentEn": "Without --dispatch, ak:handoff never launches a runtime, edits code, commits, deletes, or writes outside the workspace. With --dispatch it captures the artifact, then hands that one job to ak:orchestrate. Credential-looking task text is refused, and an existing output still needs --force.",
+    "contentVi": "Không có --dispatch thì ak:handoff không chạy runtime, không sửa code, không commit, không xóa và không ghi ngoài workspace. Có --dispatch thì skill ghi artifact rồi giao đúng một job cho ak:orchestrate. Chuỗi giống credential bị từ chối, và file đã có vẫn cần --force."
   },
   "corePrinciplesEn": [
     "Write a continuation contract, not a transcript dump.",
@@ -98,7 +98,7 @@ const data: SkillInfographic = {
     "Artifact Markdown nằm trong workspace"
   ],
   "invocation": {
-    "syntax": "/ak:handoff [task focus] [--output PATH] [--include-diff] [--include-status] [--force]",
+    "syntax": "/ak:handoff [task focus] [--output PATH] [--include-diff] [--include-status] [--force] [--dispatch --agent <id> [--handoff PATH] [--cwd PATH] [--model NAME] [--yes]]",
     "arguments": [
       {
         "token": "[task focus]",
@@ -141,6 +141,54 @@ const data: SkillInfographic = {
         "descEn": "Explicitly allow overwriting an existing handoff target. Without it, an existing file is refused with guidance.",
         "descVi": "Cho phép ghi đè target handoff đã tồn tại một cách rõ ràng. Nếu thiếu cờ này, file có sẵn sẽ bị từ chối kèm hướng dẫn.",
         "exampleCommand": "/ak:handoff --force --output plans/handoffs/oauth-callback.md"
+      },
+      {
+        "token": "--dispatch",
+        "titleEn": "Dispatch after capture",
+        "titleVi": "Giao sau khi ghi",
+        "descEn": "After a valid capture, hand that one artifact to ak:orchestrate. Requires --agent. Stops after capture when ak:orchestrate is not installed.",
+        "descVi": "Sau khi ghi hợp lệ, giao đúng artifact đó cho ak:orchestrate. Bắt buộc có --agent. Dừng sau bước ghi nếu kit không có ak:orchestrate.",
+        "exampleCommand": "/ak:handoff --dispatch --agent claude-code \"continue the OAuth callback fix\""
+      },
+      {
+        "token": "--agent <id>",
+        "titleEn": "Selected runtime",
+        "titleVi": "Runtime được chọn",
+        "descEn": "Required with --dispatch. Must match a catalog runtime id. No default and no silent substitution.",
+        "descVi": "Bắt buộc khi có --dispatch. Phải khớp một id runtime trong catalog. Không có mặc định và không tự thay.",
+        "exampleCommand": "/ak:handoff --dispatch --agent codex"
+      },
+      {
+        "token": "--handoff PATH",
+        "titleEn": "Reuse artifact",
+        "titleVi": "Dùng lại artifact",
+        "descEn": "Dispatch an existing handoff file instead of capturing a new one. The file must exist and pass section and redaction checks.",
+        "descVi": "Giao một file handoff đã có thay vì ghi file mới. File phải tồn tại và qua kiểm tra mục và redaction.",
+        "exampleCommand": "/ak:handoff --dispatch --agent cursor --handoff plans/handoffs/oauth-callback.md"
+      },
+      {
+        "token": "--cwd PATH",
+        "titleEn": "Dispatch workspace",
+        "titleVi": "Workspace của job",
+        "descEn": "Workspace root passed to the orchestrate job. Defaults to the current workspace. --cwd . on a clean tree keeps isolation off worktree.",
+        "descVi": "Workspace root đưa vào job orchestrate. Mặc định là workspace hiện tại. --cwd . trên cây sạch thì không tách worktree.",
+        "exampleCommand": "/ak:handoff --dispatch --agent codex --cwd ."
+      },
+      {
+        "token": "--model NAME",
+        "titleEn": "CLI model override",
+        "titleVi": "Đổi model CLI",
+        "descEn": "Overrides the model for a CLI runtime job. Rejected when --agent is internal.",
+        "descVi": "Đổi model cho job runtime CLI. Bị từ chối khi --agent là internal.",
+        "exampleCommand": "/ak:handoff --dispatch --agent opencode --model anthropic/claude-sonnet-5 --yes"
+      },
+      {
+        "token": "--yes",
+        "titleEn": "Inherit write approval",
+        "titleVi": "Kế thừa duyệt ghi",
+        "descEn": "Sets the dispatched job approval from require to inherit. Destructive scope classifications stay require.",
+        "descVi": "Đổi approval của job được giao từ require sang inherit. Phân loại phạm vi phá hủy vẫn giữ require.",
+        "exampleCommand": "/ak:handoff --dispatch --agent opencode --yes"
       }
     ]
   },
@@ -224,6 +272,15 @@ const data: SkillInfographic = {
       "expectedVi": "Ghi đúng path nằm trong workspace và tạo thư mục cha nếu cần; nếu target đã tồn tại, skill từ chối kèm hướng dẫn mtime trừ khi thêm --force rõ ràng."
     },
     {
+      "labelEn": "Dispatch one runtime",
+      "labelVi": "Giao một runtime",
+      "command": "/ak:handoff --dispatch --agent claude-code \"continue the OAuth callback fix\"",
+      "whenEn": "The captured contract should be handed to one selected coding runtime, not left as a file.",
+      "whenVi": "Khi hợp đồng vừa ghi cần được giao cho đúng một runtime đã chọn, không chỉ để lại file.",
+      "expectedEn": "Captures and validates the handoff, builds one orchestrate job, dispatches that runtime, and prints the artifact path, run directory, resolved runtime, and job result.",
+      "expectedVi": "Ghi và kiểm tra handoff, dựng một job orchestrate, giao runtime đó, rồi in đường dẫn artifact, thư mục run, runtime đã phân giải và kết quả job."
+    },
+    {
       "labelEn": "Dirty-worktree evidence",
       "labelVi": "Bằng chứng worktree bẩn",
       "command": "/ak:handoff --include-diff --include-status",
@@ -238,8 +295,8 @@ const data: SkillInfographic = {
     "titleVi": "Output report handoff",
     "patternEn": "One fenced Markdown block in the response, matching the content saved to the timestamped report.",
     "patternVi": "Một fenced Markdown block trong response, khớp với nội dung được lưu vào report có timestamp.",
-    "locationEn": "plans/reports/handoff-YYYYMMDD-HHmm-<slug>.md by default.",
-    "locationVi": "Mặc định là plans/reports/handoff-YYYYMMDD-HHmm-<slug>.md.",
+    "locationEn": "plans/handoffs/<slug>-YYYYMMDD-HHmm.md by default.",
+    "locationVi": "Mặc định là plans/handoffs/<slug>-YYYYMMDD-HHmm.md.",
     "descEn": "The response block and saved report must match, and redacted values must not be reconstructable.",
     "descVi": "Block trong response và report đã lưu phải khớp nhau, và giá trị đã redact không được khôi phục ngược."
   }

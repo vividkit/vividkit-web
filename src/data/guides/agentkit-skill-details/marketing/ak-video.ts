@@ -144,7 +144,7 @@ const data: SkillInfographic = {
       commandVi: '/ak:video create demo sản phẩm cho một ứng dụng viết AI',
       whenEn: "Use when the requested output is an AI-generated video.",
       whenVi: "Dùng khi output cần là video tạo bằng AI.",
-      expectedEn: "Veo 3.1 generation workflow with prompt, specs, and quality review.",
+      expectedEn: "The Veo 3.1 generation workflow includes the prompt, the specs, and a quality review as its core steps.",
       expectedVi: "Workflow tạo bằng Veo 3.1 gồm prompt, spec và review chất lượng.",
       recommended: true
     },
@@ -155,7 +155,7 @@ const data: SkillInfographic = {
       commandVi: '/ak:video script-create Video giải thích YouTube về công cụ MCP',
       whenEn: "Use when a production-ready script is needed before filming or generation.",
       whenVi: "Dùng khi cần script sẵn sản xuất trước khi quay hoặc generate.",
-      expectedEn: "Structured script using templates, platform constraints, and SEO guidance.",
+      expectedEn: "A structured script is written with templates, platform constraints, and SEO guidance so the video copy stays aligned.",
       expectedVi: "Script có cấu trúc theo template, ràng buộc nền tảng và hướng dẫn SEO."
     },
     {
@@ -165,8 +165,8 @@ const data: SkillInfographic = {
       commandVi: '/ak:video storyboard-create Teaser ra mắt TikTok',
       whenEn: "Use when visual shot planning is the deliverable.",
       whenVi: "Dùng khi sản phẩm bàn giao là kế hoạch shot hình ảnh.",
-      expectedEn: "Storyboard with art direction and production-ready sequence.",
-      expectedVi: "Storyboard có art direction và chuỗi cảnh sẵn để sản xuất."
+      expectedEn: "The storyboard includes art direction and a production-ready sequence that lays out the scenes in order.",
+      expectedVi: "Storyboard có art direction và chuỗi cảnh sẵn để sản xuất, sắp xếp từng cảnh theo hướng hình ảnh đã chốt."
     }
   ],
   reportOutput: {

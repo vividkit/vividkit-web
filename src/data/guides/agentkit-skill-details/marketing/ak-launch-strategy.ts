@@ -114,11 +114,11 @@ const data: SkillInfographic = {
       commandVi: '/ak:launch-strategy Ra mắt Product Hunt cho ứng dụng ghi chú AI của chúng tôi',
       whenEn: "You are considering Product Hunt and need preparation before launch day.",
       whenVi: "Khi định launch Product Hunt và cần chuẩn bị trước ngày launch.",
-      expectedEn: "Covers listing optimization, supporter relationships, launch-day engagement, and traffic capture.",
+      expectedEn: "It covers listing optimization, supporter relationships, launch-day engagement, and traffic capture throughout the public launch.",
       expectedVi: "Bao quát tối ưu listing, xây quan hệ supporter, trực ngày launch và capture traffic."
     },
     { labelEn: 'Product Hunt launch', labelVi: 'Launch Product Hunt', command: '/ak:launch-strategy Product Hunt launch for an AI writing tool',
-      commandVi: '/ak:launch-strategy Ra mắt Product Hunt cho công cụ viết AI', whenEn: 'A dated launch needs channels, assets, timeline, and Product Hunt-specific moves.', whenVi: 'Một launch có ngày cần kênh, asset, timeline và bước riêng cho Product Hunt.', expectedEn: 'Launch plan covering audience, channels, assets, timeline, and PH checklist.', expectedVi: 'Plan launch gồm audience, kênh, asset, timeline và checklist Product Hunt.' }
+      commandVi: '/ak:launch-strategy Ra mắt Product Hunt cho công cụ viết AI', whenEn: 'A dated launch needs channels, assets, timeline, and Product Hunt-specific moves.', whenVi: 'Một launch có ngày cần kênh, asset, timeline và bước riêng cho Product Hunt.', expectedEn: 'The launch plan covers audience, channels, assets, timeline, and the PH checklist for the release.', expectedVi: 'Plan launch gồm audience, kênh, asset, timeline và checklist Product Hunt cho ngày công bố sản phẩm.' }
   ],
   reportOutput: {
     titleEn: "Launch strategy plan",

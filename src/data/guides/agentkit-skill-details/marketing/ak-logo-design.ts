@@ -130,7 +130,7 @@ const data: SkillInfographic = {
       expectedVi: "Dùng search theo style, màu và ngành trước khi chọn prompt tạo ảnh."
     },
     { labelEn: 'Fintech wordmark', labelVi: 'Wordmark fintech', command: '/ak:logo-design wordmark for a calm fintech brand named Harbor',
-      commandVi: '/ak:logo-design wordmark cho thương hiệu fintech bình yên tên Harbor', whenEn: 'A new logo needs industry, audience, personality, and style before generation.', whenVi: 'Logo mới cần ngành, audience, cá tính và style trước khi sinh.', expectedEn: 'Style direction and generation-ready logo options on a white background.', expectedVi: 'Hướng style và các phương án logo sẵn sinh trên nền trắng.' }
+      commandVi: '/ak:logo-design wordmark cho thương hiệu fintech bình yên tên Harbor', whenEn: 'A new logo needs industry, audience, personality, and style before generation.', whenVi: 'Logo mới cần ngành, audience, cá tính và style trước khi sinh.', expectedEn: 'It sets the style direction and generation-ready logo options rendered on a white background for review.', expectedVi: 'Hướng style và các phương án logo sẵn sinh trên nền trắng.' }
   ],
   skillStack: [
     {

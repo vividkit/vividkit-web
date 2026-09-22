@@ -11,16 +11,87 @@ const data: SkillInfographic = {
     "taglineVi": "Cung cấp trí tuệ thiết kế UI/UX đóng gói, có thể tìm kiếm cho độ hợp product, style, palette màu, typography, cấu trúc landing, chart, accessibility, tương tác, responsive, polish app và hướng dẫn stack React Native."
   },
   "invocation": {
-    "syntax": "/ak:ui-ux-pro-max [UI/UX task brief]",
+    "syntax": "/ak:ui-ux-pro-max [component|page|design-system] [--style <style>] [--framework <fw>]",
     "arguments": [
       {
-        "token": "[UI/UX task brief]",
-        "titleEn": "UI/UX task brief",
-        "titleVi": "Brief tác vụ UI/UX",
-        "descEn": "Optional natural-language brief describing the visible experience to design, review, fix, improve, or turn into a design system. Include product type, audience, stack, page or component, style keywords, constraints, and desired artifact when known.",
-        "descVi": "Brief ngôn ngữ tự nhiên tùy chọn mô tả trải nghiệm hiển thị cần thiết kế, review, sửa, cải thiện hoặc chuyển thành design system. Nên nêu loại sản phẩm, người dùng, stack, page hoặc component, từ khóa phong cách, ràng buộc và artifact mong muốn khi biết.",
+        "token": "[component|page|design-system]",
+        "titleEn": "UI target",
+        "titleVi": "Đối tượng UI",
+        "descEn": "Optional target: one component, one page, or a reusable design-system. Omit it to analyze the visible experience from the surrounding brief.",
+        "descVi": "Đối tượng tùy chọn: một component, một page, hoặc design-system tái dùng. Bỏ qua để phân tích trải nghiệm hiển thị từ brief xung quanh.",
         "required": false,
-        "exampleCommand": "/ak:ui-ux-pro-max design an accessible mobile-first checkout system for a subscription app with dark mode"
+        "exampleCommand": "/ak:ui-ux-pro-max page",
+        "exampleCommandVi": "/ak:ui-ux-pro-max page"
+      }
+    ],
+    "options": [
+      {
+        "token": "--style <style>",
+        "titleEn": "Style keyword",
+        "titleVi": "Từ khóa style",
+        "descEn": "Bias packaged style search toward a named look such as minimal, dark-mode, or glassmorphism. It does not skip accessibility or touch checks.",
+        "descVi": "Thiên search style đóng gói về một look đã nêu như minimal, dark-mode hoặc glassmorphism. Không bỏ kiểm accessibility hay touch.",
+        "exampleCommand": "/ak:ui-ux-pro-max --style dark-mode",
+        "exampleCommandVi": "/ak:ui-ux-pro-max --style dark-mode"
+      },
+      {
+        "token": "--framework <fw>",
+        "titleEn": "Framework",
+        "titleVi": "Framework",
+        "descEn": "Prefer stack guidance for a named framework such as react, nextjs, vue, or react-native. It does not invent undocumented stacks.",
+        "descVi": "Ưu tiên hướng dẫn stack cho framework đã nêu như react, nextjs, vue hoặc react-native. Không bịa stack chưa được tài liệu hóa.",
+        "exampleCommand": "/ak:ui-ux-pro-max --framework react",
+        "exampleCommandVi": "/ak:ui-ux-pro-max --framework react"
+      }
+    ],
+    "subcommands": [
+      {
+        "name": "component",
+        "syntax": "/ak:ui-ux-pro-max component [--style <style>] [--framework <fw>]",
+        "titleEn": "Component",
+        "titleVi": "Component",
+        "descEn": "Design or review one UI component: states, tokens, interaction, and accessibility.",
+        "descVi": "Thiết kế hoặc review một UI component: state, token, tương tác và accessibility.",
+        "options": [
+          { "token": "--style <style>", "titleEn": "Style keyword", "titleVi": "Từ khóa style", "descEn": "Bias the component recommendation toward a named style.", "descVi": "Thiên khuyến nghị component về một style đã nêu." },
+          { "token": "--framework <fw>", "titleEn": "Framework", "titleVi": "Framework", "descEn": "Prefer component patterns for the named framework.", "descVi": "Ưu tiên pattern component cho framework đã nêu." }
+        ],
+        "outcomeEn": "Component-level tokens, states, anti-patterns, and accessibility requirements before code.",
+        "outcomeVi": "Token, state, anti-pattern và yêu cầu accessibility cấp component trước khi viết code.",
+        "exampleCommand": "/ak:ui-ux-pro-max component",
+        "exampleCommandVi": "/ak:ui-ux-pro-max component"
+      },
+      {
+        "name": "page",
+        "syntax": "/ak:ui-ux-pro-max page [--style <style>] [--framework <fw>]",
+        "titleEn": "Page",
+        "titleVi": "Page",
+        "descEn": "Design or review one page: hierarchy, responsive layout, states, and interaction.",
+        "descVi": "Thiết kế hoặc review một page: hierarchy, layout responsive, state và tương tác.",
+        "options": [
+          { "token": "--style <style>", "titleEn": "Style keyword", "titleVi": "Từ khóa style", "descEn": "Bias page look and density toward a named style.", "descVi": "Thiên look và mật độ page về một style đã nêu." },
+          { "token": "--framework <fw>", "titleEn": "Framework", "titleVi": "Framework", "descEn": "Prefer page patterns for the named framework.", "descVi": "Ưu tiên pattern page cho framework đã nêu." }
+        ],
+        "outcomeEn": "Page structure, responsive rules, component states, and a pre-delivery checklist for that screen.",
+        "outcomeVi": "Cấu trúc page, luật responsive, state component và checklist trước bàn giao cho màn đó.",
+        "exampleCommand": "/ak:ui-ux-pro-max page",
+        "exampleCommandVi": "/ak:ui-ux-pro-max page"
+      },
+      {
+        "name": "design-system",
+        "syntax": "/ak:ui-ux-pro-max design-system [--style <style>] [--framework <fw>]",
+        "titleEn": "Design system",
+        "titleVi": "Design system",
+        "descEn": "Generate a reasoned baseline: product fit, style, color, typography, layout, and anti-patterns.",
+        "descVi": "Sinh baseline có lý do: độ hợp product, style, màu, typography, layout và anti-pattern.",
+        "options": [
+          { "token": "--style <style>", "titleEn": "Style keyword", "titleVi": "Từ khóa style", "descEn": "Bias the system search toward a named style family.", "descVi": "Thiên search hệ thống về một họ style đã nêu." },
+          { "token": "--framework <fw>", "titleEn": "Framework", "titleVi": "Framework", "descEn": "Prefer token and component guidance for the named framework.", "descVi": "Ưu tiên hướng dẫn token và component cho framework đã nêu." }
+        ],
+        "outcomeEn": "Selected and rejected directions, semantic tokens, type and spacing scales, and accessibility requirements.",
+        "outcomeVi": "Hướng được chọn và bị loại, token ngữ nghĩa, thang type/spacing và yêu cầu accessibility.",
+        "exampleCommand": "/ak:ui-ux-pro-max design-system",
+        "exampleCommandVi": "/ak:ui-ux-pro-max design-system"
       }
     ]
   },
@@ -125,41 +196,50 @@ const data: SkillInfographic = {
   ],
   "promptExamples": [
     {
-      "labelEn": "Generate a design system",
-      "labelVi": "Sinh design system",
-      "command": "/ak:ui-ux-pro-max design an accessible mobile-first checkout system for a subscription app with dark mode, reduced motion, and implementation-ready tokens",
-      "whenEn": "Use when a new page or product area needs reasoned style, palette, typography, layout, states, and anti-pattern guidance before code.",
-      "whenVi": "Dùng khi trang mới hoặc khu vực product cần style, palette, typography, layout, state và anti-pattern có lý do trước khi viết code.",
-      "expectedEn": "Frames product context, starts from the bundled design-system search, and returns selected plus rejected directions, semantic tokens, type and spacing scales, responsive rules, component states, and accessibility requirements.",
-      "expectedVi": "Định khung product context, bắt đầu từ search design-system đóng gói, rồi trả hướng được chọn và bị loại, token ngữ nghĩa, thang type/spacing, luật responsive, state component và yêu cầu accessibility.",
+      "labelEn": "Default design brief",
+      "labelVi": "Brief thiết kế mặc định",
+      "command": "/ak:ui-ux-pro-max",
+      "whenEn": "A visible experience needs style, tokens, and accessibility guidance before writing UI code.",
+      "whenVi": "Một trải nghiệm hiển thị cần hướng dẫn style, token và accessibility trước khi viết UI code.",
+      "expectedEn": "Analyzes product context from nearby work, starts from packaged design intelligence, and returns selected directions, semantic tokens, states, and a pre-delivery accessibility checklist.",
+      "expectedVi": "Phân tích product context từ việc gần đây, bắt đầu từ trí tuệ thiết kế đóng gói, rồi trả hướng được chọn, token ngữ nghĩa, state và checklist accessibility trước bàn giao.",
       "recommended": true
     },
     {
-      "labelEn": "Review an existing UI",
-      "labelVi": "Review UI hiện có",
-      "command": "/ak:ui-ux-pro-max review this checkout page for accessibility, trust, loading, error, empty states, and mobile interaction",
-      "whenEn": "Use when an existing page, component, navigation pattern, form, animation, or mobile interaction needs prioritized UX and accessibility review.",
-      "whenVi": "Dùng khi page, component, navigation pattern, form, animation hoặc mobile interaction hiện có cần review UX và accessibility theo mức ưu tiên.",
-      "expectedEn": "Applies the priority categories from accessibility and touch through performance, layout, forms, navigation, and charts, then reports concrete anti-patterns, fixes, and evidence still needed.",
-      "expectedVi": "Áp dụng các nhóm ưu tiên từ accessibility và touch đến performance, layout, form, navigation và chart, rồi báo anti-pattern cụ thể, cách sửa và bằng chứng còn cần kiểm."
+      "labelEn": "Component with style",
+      "labelVi": "Component kèm style",
+      "command": "/ak:ui-ux-pro-max component --style minimal",
+      "whenEn": "One component needs tokens, states, and interaction rules biased toward a named look.",
+      "whenVi": "Một component cần token, state và luật tương tác thiên về một look đã nêu.",
+      "expectedEn": "Scopes work to that component, biases packaged style search toward minimal, and still requires contrast, touch targets, and keyboard reachability before delivery.",
+      "expectedVi": "Giới hạn việc vào component đó, thiên search style đóng gói về minimal, và vẫn đòi contrast, vùng chạm và khả năng dùng keyboard trước khi bàn giao."
     },
     {
-      "labelEn": "Persist approved rules",
-      "labelVi": "Lưu rule đã duyệt",
-      "command": "/ak:ui-ux-pro-max create a master design system for a wellness booking app and add page-specific checkout overrides",
-      "whenEn": "Use when a project needs a reusable master design system and page-specific exceptions instead of one-off terminal guidance.",
-      "whenVi": "Dùng khi project cần master design system có thể tái dùng và ngoại lệ theo page thay vì hướng dẫn terminal một lần.",
-      "expectedEn": "Uses the persist workflow only for approved rules, explains the MASTER.md plus pages override hierarchy, and calls out names, paths, tokens, and migration risks before writing.",
-      "expectedVi": "Chỉ dùng workflow persist cho rule đã duyệt, giải thích phân cấp MASTER.md và override trong pages, đồng thời nêu tên, path, token và rủi ro migration trước khi ghi."
+      "labelEn": "Page with framework",
+      "labelVi": "Page kèm framework",
+      "command": "/ak:ui-ux-pro-max page --framework react",
+      "whenEn": "One page needs hierarchy, responsive layout, and stack-specific React guidance.",
+      "whenVi": "Một page cần hierarchy, layout responsive và hướng dẫn stack React cụ thể.",
+      "expectedEn": "Reviews that page for layout, states, and interaction, then applies React-oriented stack guidance without inventing undocumented frameworks.",
+      "expectedVi": "Review page đó về layout, state và tương tác, rồi áp hướng dẫn stack theo React mà không bịa framework chưa được tài liệu hóa."
     },
     {
-      "labelEn": "Choose chart guidance",
-      "labelVi": "Chọn hướng chart",
-      "command": "/ak:ui-ux-pro-max recommend accessible charts for realtime analytics with keyboard tooltips, legends, empty states, and failure states",
-      "whenEn": "Use when a data-heavy screen needs chart types matched to user tasks, device constraints, and accessibility requirements.",
-      "whenVi": "Dùng khi màn hình nhiều dữ liệu cần loại chart khớp task của user, ràng buộc thiết bị và yêu cầu accessibility.",
-      "expectedEn": "Matches chart types to trend, comparison, proportion, or funnel tasks and includes responsive simplification, legends, tooltips, keyboard reachability, contrast, table or text alternatives, and error handling.",
-      "expectedVi": "Ghép loại chart với task trend, comparison, proportion hoặc funnel và kèm giản lược responsive, legend, tooltip, khả năng dùng bằng keyboard, contrast, bảng hoặc text thay thế và xử lý lỗi."
+      "labelEn": "Guideline review",
+      "labelVi": "Rà guideline",
+      "command": "/ak:ui-ux-pro-max review the checkout form against UI and accessibility guidelines",
+      "whenEn": "Existing interface code needs a guideline review rather than a new visual direction.",
+      "whenVi": "Khi mã giao diện đã có cần rà guideline, không phải một hướng hình ảnh mới.",
+      "expectedEn": "Reviews the existing interface for accessibility, touch targets, labels, and visual consistency, and reports concrete violations instead of inventing a new design system.",
+      "expectedVi": "Rà giao diện hiện có về accessibility, vùng chạm, nhãn và sự nhất quán hình ảnh, rồi báo vi phạm cụ thể thay vì bịa một design system mới."
+    },
+    {
+      "labelEn": "Design system",
+      "labelVi": "Design system",
+      "command": "/ak:ui-ux-pro-max design-system",
+      "whenEn": "A product area needs a reusable baseline of style, color, type, and anti-patterns before code.",
+      "whenVi": "Một khu vực product cần baseline tái dùng về style, màu, type và anti-pattern trước khi viết code.",
+      "expectedEn": "Runs the design-system path, returns selected plus rejected directions, semantic tokens, type and spacing scales, and accessibility requirements that are not proven by palette alone.",
+      "expectedVi": "Chạy nhánh design-system, trả hướng được chọn và bị loại, token ngữ nghĩa, thang type/spacing và yêu cầu accessibility mà palette đơn thuần chưa chứng minh."
     }
   ],
   "specialOperations": [
@@ -167,8 +247,8 @@ const data: SkillInfographic = {
       "id": "bundled-cli-design-system",
       "titleEn": "Bundled CLI design-system search",
       "titleVi": "Search design-system của CLI đóng gói",
-      "descEn": "The Skill has no documented top-level mode flags. Its bundled search CLI can combine packaged product, style, color, landing, typography, and reasoning data for a baseline recommendation.",
-      "descVi": "Skill không có mode flag top-level được tài liệu hóa. CLI search đi kèm có thể kết hợp dữ liệu product, style, màu, landing, typography và reasoning đóng gói để tạo khuyến nghị baseline.",
+      "descEn": "Skill-level flags are only --style and --framework. Bundled search CLI flags stay off the slash command unless those two tokens are used.",
+      "descVi": "Flag cấp skill chỉ là --style và --framework. Flag CLI search đóng gói không lên slash command trừ khi dùng đúng hai token đó.",
       "color": "purple"
     },
     {

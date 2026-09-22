@@ -15,8 +15,8 @@ const data: SkillInfographic = {
       "number": 1,
       "titleEn": "Confirm fit",
       "titleVi": "Xác nhận đúng fit",
-      "descEn": "Use HyperFrames for short 1080×1920 vertical/social videos, product-launch clips, promo loops, and HTML-authored motion graphics; route React-first, Remotion, and encode-only work elsewhere.",
-      "descVi": "Dùng HyperFrames cho video dọc/social 1080×1920 ngắn, clip launch, promo loop và motion graphics viết bằng HTML; chuyển React-first, Remotion và encode-only sang nơi khác."
+      "descEn": "Use HyperFrames for short 1080×1920 vertical/social videos, product-launch clips, promo loops, and HTML-authored motion graphics. Use nexu-io/html-video only when that binary or a matching template catalog already exists; otherwise stay on HyperFrames. Route React-first, Remotion, and encode-only work elsewhere.",
+      "descVi": "Dùng HyperFrames cho video dọc/social 1080×1920 ngắn, clip launch, promo loop và motion graphics viết bằng HTML. Chỉ dùng nexu-io/html-video khi máy đã có binary đó hoặc catalog mẫu khớp; không thì ở lại HyperFrames. Chuyển React-first, Remotion và encode-only sang nơi khác."
     },
     {
       "number": 2,
@@ -154,6 +154,15 @@ const data: SkillInfographic = {
       "whenVi": "Khi đã có composition HTML HyperFrames và cần remote render bằng HEYGEN_API_KEY.",
       "expectedEn": "Checks prerequisites and HEYGEN_API_KEY, keeps cloud render as a separate top-level command, lints first, renders with --output, and verifies the video artifact.",
       "expectedVi": "Kiểm prerequisite và HEYGEN_API_KEY, giữ cloud render là lệnh top-level riêng, lint trước, render với --output và kiểm artifact video."
+    },
+    {
+      "labelEn": "Existing html-video catalog",
+      "labelVi": "Catalog html-video sẵn có",
+      "command": "/ak:hyperframes render this promo from the html-video template catalog already on this machine",
+      "whenEn": "A template-driven HTML-to-MP4 clip should use an html-video checkout or binary that is already installed.",
+      "whenVi": "Khi clip HTML-to-MP4 theo mẫu nên dùng checkout hoặc binary html-video đã có trên máy.",
+      "expectedEn": "Stays off HyperFrames only because html-video is already available, follows that reference for setup and render, and does not vendor the engine into the project.",
+      "expectedVi": "Rời HyperFrames chỉ vì html-video đã có sẵn, theo reference đó để cài và render, và không nhét engine vào project."
     },
     {
       "labelEn": "Troubleshoot bad MP4",

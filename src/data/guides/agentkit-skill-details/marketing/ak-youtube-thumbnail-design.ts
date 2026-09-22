@@ -131,7 +131,7 @@ const data: SkillInfographic = {
       commandVi: '/ak:youtube-thumbnail-design facecam công nghệ',
       whenEn: "Use for a tech video thumbnail with presenter/emotion emphasis.",
       whenVi: "Dùng cho thumbnail video tech nhấn vào người dẫn/cảm xúc.",
-      expectedEn: "Niche/style-guided thumbnail variants with short baked-in text and CTR rationale.",
+      expectedEn: "Niche/style-guided thumbnail variants include short baked-in text and a CTR rationale explaining why each option should earn clicks.",
       expectedVi: "Các biến thể thumbnail theo niche/style, chữ ngắn render sẵn và rationale CTR.",
       recommended: true
     },
@@ -142,8 +142,8 @@ const data: SkillInfographic = {
       commandVi: '/ak:youtube-thumbnail-design sơ đồ giáo dục',
       whenEn: "Use for explanatory videos where the visual concept matters more than a face.",
       whenVi: "Dùng cho video giải thích khi concept hình ảnh quan trọng hơn khuôn mặt.",
-      expectedEn: "Diagram-style thumbnail options readable at mobile and sidebar sizes.",
-      expectedVi: "Các option thumbnail kiểu diagram đọc được trên mobile và sidebar."
+      expectedEn: "Diagram-style thumbnail options stay readable at mobile and sidebar sizes so the diagram remains clear in both layouts.",
+      expectedVi: "Các option thumbnail kiểu diagram đọc được trên mobile và sidebar để hình vẫn rõ ở cả hai kích thước."
     },
     {
       labelEn: "Cooking mystery",
@@ -152,7 +152,7 @@ const data: SkillInfographic = {
       commandVi: '/ak:youtube-thumbnail-design bí ẩn nấu ăn',
       whenEn: "Use for reveal, secret, or curiosity-driven content.",
       whenVi: "Dùng cho nội dung reveal, bí mật hoặc kích thích tò mò.",
-      expectedEn: "High-contrast mystery style with simple composition and no fake UI.",
+      expectedEn: "The high-contrast mystery style uses a simple composition and includes no fake UI anywhere in the thumbnail.",
       expectedVi: "Style mystery tương phản mạnh, bố cục đơn giản và không fake UI."
     }
   ],

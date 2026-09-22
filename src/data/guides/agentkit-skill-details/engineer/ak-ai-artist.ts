@@ -2,7 +2,7 @@ import type { SkillInfographic, SkillInvocation } from '@/data/guides/how-ck-wor
 
 const invocation: SkillInvocation = {
   syntax:
-    '/ak:ai-artist [concept] [--mode search|creative|wild|all] [--provider auto|google|openrouter] [--size 1K|2K|4K] [--skip]',
+    '/ak:ai-artist [concept] [--mode search|creative|wild|all] [--provider auto|google|openrouter] [--skip]',
   arguments: [
     {
       token: '[concept]',
@@ -52,17 +52,7 @@ const invocation: SkillInvocation = {
       exampleCommand: '/ak:ai-artist "product showcase" -ar 1:1',
           exampleCommandVi: '/ak:ai-artist "trưng bày sản phẩm" -ar 1:1',
     },
-    {
-      token: '--size 1K|2K|4K',
-      titleEn: 'Image size',
-      titleVi: 'Kích thước ảnh',
-      descEn:
-        'Select provider image size. The documented default is 2K, and provider availability still applies.',
-      descVi:
-        'Chọn kích thước ảnh của provider. Mặc định được document là 2K, và vẫn phụ thuộc khả năng provider.',
-      exampleCommand: '/ak:ai-artist "hero image" --size 2K',
-          exampleCommandVi: '/ak:ai-artist "hình ảnh hero" --size 2K',
-    },
+
     {
       token: '--model',
       titleEn: 'Model alias',

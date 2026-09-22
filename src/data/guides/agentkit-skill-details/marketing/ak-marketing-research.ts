@@ -123,11 +123,11 @@ const data: SkillInfographic = {
       commandVi: '/ak:marketing-research đối thủ cạnh tranh cho SaaS phân tích ưu tiên quyền riêng tư',
       whenEn: "You need competitive landscape boundaries and positioning opportunities.",
       whenVi: "Khi cần xác định ranh giới cạnh tranh và cơ hội positioning.",
-      expectedEn: "Finds key competitors, current trends, best practices, risks, and implementation recommendations.",
+      expectedEn: "Research finds key competitors, current trends, best practices, risks, and implementation recommendations for the team to apply.",
       expectedVi: "Tìm đối thủ chính, trend hiện tại, best practice, rủi ro và khuyến nghị triển khai."
     },
     { labelEn: 'ICP and competitors', labelVi: 'ICP và đối thủ', command: '/ak:marketing-research ICP and competitors for AI bookkeeping',
-      commandVi: '/ak:marketing-research ICP và đối thủ cạnh tranh cho kế toán AI', whenEn: 'You need actionable market research with a defined segment and competitive set.', whenVi: 'Khi cần nghiên cứu thị trường hành động được với segment và tập đối thủ rõ.', expectedEn: 'ICP, competitor map, benchmarks, and recommended next research or GTM move.', expectedVi: 'ICP, bản đồ đối thủ, benchmark và bước research hoặc GTM tiếp theo.' }
+      commandVi: '/ak:marketing-research ICP và đối thủ cạnh tranh cho kế toán AI', whenEn: 'You need actionable market research with a defined segment and competitive set.', whenVi: 'Khi cần nghiên cứu thị trường hành động được với segment và tập đối thủ rõ.', expectedEn: 'It summarizes the ICP, competitor map, benchmarks, and the recommended next research or GTM move.', expectedVi: 'ICP, bản đồ đối thủ, benchmark và bước research hoặc GTM tiếp theo.' }
   ],
   skillStack: [
     {

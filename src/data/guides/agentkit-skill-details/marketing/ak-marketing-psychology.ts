@@ -113,7 +113,7 @@ const data: SkillInfographic = {
       expectedVi: "Dùng activation energy, BJ Fogg, goal-gradient, commitment và tín hiệu progress để giảm friction bắt đầu."
     },
     { labelEn: 'Trial-to-paid friction', labelVi: 'Ma sát trial sang paid', command: '/ak:marketing-psychology increase trial-to-paid on the pricing page',
-      commandVi: '/ak:marketing-psychology tăng trial-to-paid trên trang định giá', whenEn: 'A conversion behavior is stuck and needs a mental-model diagnosis.', whenVi: 'Một hành vi chuyển đổi đang kẹt và cần chẩn đoán bằng mental model.', expectedEn: 'Relevant models, current blockers, and copy/UX changes to test.', expectedVi: 'Model phù hợp, blocker hiện tại và thay đổi copy/UX nên test.' }
+      commandVi: '/ak:marketing-psychology tăng trial-to-paid trên trang định giá', whenEn: 'A conversion behavior is stuck and needs a mental-model diagnosis.', whenVi: 'Một hành vi chuyển đổi đang kẹt và cần chẩn đoán bằng mental model.', expectedEn: 'It names relevant models, current blockers, and the copy/UX changes to test in the next pass.', expectedVi: 'Model phù hợp, blocker hiện tại và thay đổi copy/UX nên test.' }
   ],
   guardrails: [
     {

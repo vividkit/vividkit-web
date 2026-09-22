@@ -144,10 +144,10 @@ const data: SkillInfographic = {
       whenEn: "A rendered video needs real dimensions, codec, FPS, and duration validation.",
       whenVi: "Khi video đã render cần xác thực dimension, codec, FPS và duration thật.",
       expectedEn: "Runs the heavy MP4 probe helper and fails loud if the render lies.",
-      expectedVi: "Chạy helper probe MP4 và fail rõ nếu render không đúng."
+      expectedVi: "Quy trình chạy helper probe MP4 và fail rõ nếu render không đúng trong bước kiểm tra."
     },
     { labelEn: '9:16 explainer', labelVi: 'Explainer 9:16', command: '/ak:motion-graphics 15s product explainer in 9:16',
-      commandVi: '/ak:motion-graphics video giải thích sản phẩm 15s ở tỷ lệ 9:16', whenEn: 'A video/motion request should be routed to the right installed tool.', whenVi: 'Một yêu cầu video/motion cần được điều hướng đúng tool đã cài.', expectedEn: 'Route (Remotion, Veo, HTML video, etc.) plus a production brief.', expectedVi: 'Route (Remotion, Veo, HTML video, ...) kèm brief sản xuất.' }
+      commandVi: '/ak:motion-graphics video giải thích sản phẩm 15s ở tỷ lệ 9:16', whenEn: 'A video/motion request should be routed to the right installed tool.', whenVi: 'Một yêu cầu video/motion cần được điều hướng đúng tool đã cài.', expectedEn: 'It selects a route (Remotion, Veo, HTML video, etc.) plus a production brief for delivery.', expectedVi: 'Phần trả lời chọn route (Remotion, Veo, HTML video, ...) kèm brief sản xuất đầy đủ chi tiết.' }
   ],
   skillStack: [
     {

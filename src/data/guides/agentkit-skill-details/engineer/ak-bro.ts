@@ -46,7 +46,21 @@ const data: SkillInfographic = {
     'Cần ngắn, nhưng việc cần làm tiếp vẫn phải giữ.',
   ],
   invocation: {
-    syntax: '/ak:bro [last message | topic to simplify]',
+    syntax: '/ak:bro [last message]',
+    arguments: [
+      {
+        token: '[last message]',
+        titleEn: 'Last message',
+        titleVi: 'Tin nhắn trước',
+        descEn:
+          'Optional topic inside the immediately previous assistant message, or the text to restate when no previous assistant message exists. When a previous reply exists, this only narrows that source; it does not replace it.',
+        descVi:
+          'Chủ đề tùy chọn nằm trong câu trả lời AI ngay trước, hoặc đoạn cần viết lại khi không có tin trước. Khi vẫn có câu trước, phần này chỉ thu hẹp nguồn đó; không thay nguồn.',
+        required: false,
+        exampleCommand: '/ak:bro the last error explanation',
+        exampleCommandVi: '/ak:bro the last error explanation',
+      },
+    ],
   },
   promptExamples: [
     { labelEn: 'Default restatement', labelVi: 'Viết lại mặc định', command: '/ak:bro',

@@ -49,7 +49,7 @@ const data: SkillInfographic = {
   ],
   promptExamples: [
     { labelEn: 'Google Search', labelVi: 'Google Search', command: '/ak:paid-ads Google Search',
-      commandVi: '/ak:paid-ads Tìm kiếm Google', whenEn: 'You need bottom-of-funnel keyword campaigns for people actively searching.', whenVi: 'Khi cần campaign keyword cuối phễu cho người đang chủ động tìm kiếm.', expectedEn: 'Platform fit, campaign structure, keyword/ad copy approach, tracking, and optimization plan.', expectedVi: 'Độ phù hợp nền tảng, cấu trúc campaign, hướng keyword/ad copy, tracking và kế hoạch tối ưu.', recommended: true },
+      commandVi: '/ak:paid-ads Tìm kiếm Google', whenEn: 'You need bottom-of-funnel keyword campaigns for people actively searching.', whenVi: 'Khi cần campaign keyword cuối phễu cho người đang chủ động tìm kiếm.', expectedEn: 'The deliverable explains platform fit, campaign structure, keyword and ad copy approach, tracking setup, and the optimization plan for paid ads.', expectedVi: 'Độ phù hợp nền tảng, cấu trúc campaign, hướng keyword/ad copy, tracking và kế hoạch tối ưu.', recommended: true },
     { labelEn: 'Meta retargeting', labelVi: 'Retargeting Meta', command: '/ak:paid-ads Meta retargeting',
       commandVi: '/ak:paid-ads retargeting Meta', whenEn: 'You have site visitors, engagers, trial users, or abandoned carts to bring back.', whenVi: 'Khi có visitor, người tương tác, trial user hoặc cart abandoner cần kéo quay lại.', expectedEn: 'Audience windows, exclusions, messages by funnel stage, creative tests, and reporting metrics.', expectedVi: 'Cửa sổ audience, loại trừ, thông điệp theo stage, test creative và chỉ số báo cáo.' },
     { labelEn: 'LinkedIn lead gen', labelVi: 'Lead gen LinkedIn', command: '/ak:paid-ads LinkedIn Lead Gen',

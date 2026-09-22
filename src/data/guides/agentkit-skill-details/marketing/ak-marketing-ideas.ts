@@ -118,7 +118,7 @@ const data: SkillInfographic = {
       expectedVi: "Ưu tiên waitlist, early access, chuẩn bị Product Hunt, content hoặc community nếu phù hợp."
     },
     { labelEn: 'Seed-stage B2B ideas', labelVi: 'Ý tưởng B2B seed', command: '/ak:marketing-ideas B2B SaaS, seed stage, $2k/month, need 100 trials',
-      commandVi: '/ak:marketing-ideas B2B SaaS, giai đoạn seed, $2k/tháng, cần 100 lượt dùng thử', whenEn: 'You want a short list of context-fit tactics, not a dump of 140 ideas.', whenVi: 'Khi muốn danh sách ngắn tactic khớp ngữ cảnh, không phải 140 ý tưởng đổ đống.', expectedEn: '3-5 ranked ideas with why they fit stage, budget, and goal.', expectedVi: '3-5 ý tưởng xếp hạng kèm lý do khớp giai đoạn, ngân sách và mục tiêu.' }
+      commandVi: '/ak:marketing-ideas B2B SaaS, giai đoạn seed, $2k/tháng, cần 100 lượt dùng thử', whenEn: 'You want a short list of context-fit tactics, not a dump of 140 ideas.', whenVi: 'Khi muốn danh sách ngắn tactic khớp ngữ cảnh, không phải 140 ý tưởng đổ đống.', expectedEn: 'It offers 3-5 ranked ideas with why they fit the stage, the budget, and the goal.', expectedVi: '3-5 ý tưởng xếp hạng kèm lý do khớp giai đoạn, ngân sách và mục tiêu.' }
   ],
   reportOutput: {
     titleEn: "Recommended marketing ideas",

@@ -11,7 +11,7 @@ const data: SkillInfographic = {
     taglineVi: 'Chạy pipeline phát triển tự động từ issue hoặc yêu cầu feature qua worktree, plan, triển khai, review, PR, label sẵn sàng và tùy chọn merge/đưa CI về xanh.',
   },
   invocation: {
-    syntax: '/ak:vibe [--ship] [--beta] [--both] [--advice] <github-issue-url | feature request>',
+    syntax: '/ak:vibe [--ship] [--beta] [--both] [--advice] [--ultra] <github-issue-url | feature request>',
     arguments: [
       {
         token: '<github-issue-url | feature request>',
@@ -51,6 +51,15 @@ const data: SkillInfographic = {
         descVi: 'Chạy trọn stage beta trước, gồm merge và CI xanh, rồi mới chạy stage stable; flag này ngầm bật --ship và ưu tiên hơn --beta khi cả hai cùng xuất hiện.',
         exampleCommand: '/ak:vibe --both https://github.com/acme/app/issues/42',
           exampleCommandVi: '/ak:vibe --both https://github.com/acme/app/issues/42',
+      },
+      {
+        token: '--ultra',
+        titleEn: 'Plan and review verifier',
+        titleVi: 'Verifier plan và review',
+        descEn: 'Runs /ak:plan and /ak:code-review in ultra verifier mode (best-of-5). Opt-in only; it increases cost and time and does not apply ultra to cook, fix, or ship.',
+        descVi: 'Chạy /ak:plan và /ak:code-review ở mode verifier ultra (best-of-5). Chỉ khi chọn rõ; tốn thêm chi phí/thời gian và không áp ultra cho cook, fix hay ship.',
+        exampleCommand: '/ak:vibe --ultra --ship https://github.com/acme/app/issues/42',
+          exampleCommandVi: '/ak:vibe --ultra --ship https://github.com/acme/app/issues/42',
       },
       {
         token: '--advice',
@@ -119,6 +128,8 @@ const data: SkillInfographic = {
           exampleCommandVi: '/ak:vibe --beta https://github.com/acme/app/issues/42' },
     { flag: '--both', titleEn: 'Beta then stable', titleVi: 'Beta rồi stable', descEn: 'Run the complete beta stage first, require beta CI green, then run the stable stage; supersedes beta and implies ship.', descVi: 'Chạy trọn stage beta trước, yêu cầu CI beta xanh, rồi chạy stage stable; supersedes beta và ngầm bật ship.', exampleCommand: '/ak:vibe --both https://github.com/acme/app/issues/42',
           exampleCommandVi: '/ak:vibe --both https://github.com/acme/app/issues/42' },
+    { flag: '--ultra', titleEn: 'Plan and review verifier', titleVi: 'Verifier plan và review', descEn: 'Runs /ak:plan and /ak:code-review in ultra verifier mode only. Opt-in; extra cost/time. Does not ultra cook, fix, or ship.', descVi: 'Chạy /ak:plan và /ak:code-review ở mode verifier ultra. Chỉ khi chọn rõ; tốn thêm. Không ultra cook, fix hay ship.', exampleCommand: '/ak:vibe --ultra --ship https://github.com/acme/app/issues/42',
+          exampleCommandVi: '/ak:vibe --ultra --ship https://github.com/acme/app/issues/42' },
     { flag: '--advice', titleEn: 'Kongming advisory supervision', titleVi: 'Giám sát tư vấn Kongming', descEn: 'Ask kongming for counsel at phase checkpoints, stuck points, high-stakes decisions, and post-PR green-check gates.', descVi: 'Nhờ kongming tư vấn ở checkpoint từng phase, lúc kẹt, quyết định rủi ro cao và gate sau khi PR đã xanh check.', exampleCommand: '/ak:vibe --advice --ship https://github.com/acme/app/issues/42',
           exampleCommandVi: '/ak:vibe --advice --ship https://github.com/acme/app/issues/42' },
   ],
@@ -136,6 +147,8 @@ const data: SkillInfographic = {
       commandVi: '/ak:vibe --beta https://github.com/acme/app/issues/42', whenEn: 'The request should ship through the beta or dev target without automatic merge.', whenVi: 'Yêu cầu cần ship qua đích beta hoặc dev nhưng chưa tự merge.', expectedEn: 'Ships a reviewed beta-target PR, applies ready-to-ship beta, and leaves merge disabled.', expectedVi: 'Ship PR đích beta đã review, gắn ready-to-ship beta và để merge ở trạng thái tắt.' },
     { labelEn: 'Beta then stable', labelVi: 'Beta rồi stable', command: '/ak:vibe --both https://github.com/acme/app/issues/42',
       commandVi: '/ak:vibe --both https://github.com/acme/app/issues/42', whenEn: 'The repo requires a beta/dev promotion before stable release.', whenVi: 'Repo yêu cầu qua beta/dev trước khi release stable.', expectedEn: 'Completes beta merge and green CI before starting the stable stage and stable PR review.', expectedVi: 'Hoàn tất merge beta và CI xanh trước khi bắt đầu stage stable cùng review PR stable.' },
+    { labelEn: 'Ultra plan and review', labelVi: 'Plan và review ultra', command: '/ak:vibe --ultra --ship https://github.com/acme/app/issues/42',
+      commandVi: '/ak:vibe --ultra --ship https://github.com/acme/app/issues/42', whenEn: 'Use when plan and code-review quality justify a best-of-5 verifier pass despite extra cost.', whenVi: 'Dùng khi chất lượng plan và code-review đáng một lượt verifier best-of-5 dù tốn thêm.', expectedEn: 'Passes --ultra only into /ak:plan and /ak:code-review, keeps cook/fix/ship on their normal gates, then continues merge and CI when --ship is set.', expectedVi: 'Chỉ chuyển --ultra vào /ak:plan và /ak:code-review, giữ cook/fix/ship theo gate thường, rồi tiếp tục merge và CI khi có --ship.' },
     { labelEn: 'Advisory supervision', labelVi: 'Có giám sát tư vấn', command: '/ak:vibe --advice --ship https://github.com/acme/app/issues/42',
       commandVi: '/ak:vibe --advice --ship https://github.com/acme/app/issues/42', whenEn: 'A high-stakes pipeline needs extra counsel without surrendering ownership.', whenVi: 'Pipeline rủi ro cao cần thêm tư vấn nhưng không chuyển quyền sở hữu.', expectedEn: 'Adds kongming counsel at required checkpoints while still honoring every pipeline gate and owner decision.', expectedVi: 'Thêm tư vấn kongming tại các checkpoint bắt buộc nhưng vẫn giữ mọi gate pipeline và quyết định của owner.' },
   ],

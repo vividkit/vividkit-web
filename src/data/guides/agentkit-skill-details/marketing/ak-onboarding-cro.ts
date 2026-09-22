@@ -137,7 +137,7 @@ const data: SkillInfographic = {
       expectedVi: "Tạo checklist 3-7 mục xếp theo value, có hint lợi ích và action bắt đầu nhanh."
     },
     { labelEn: 'Empty-state first run', labelVi: 'Empty state lần đầu', command: '/ak:onboarding-cro first-run empty state for a new workspace',
-      commandVi: '/ak:onboarding-cro trạng thái trống lần chạy đầu cho không gian làm việc mới', whenEn: 'Activation is weak because the first empty state does not show a path to value.', whenVi: 'Activation yếu vì empty state đầu tiên không chỉ đường tới giá trị.', expectedEn: 'First-run friction map, copy/layout changes, and the activation metric to watch.', expectedVi: 'Bản đồ ma sát first-run, thay đổi copy/layout và metric activation cần theo.' }
+      commandVi: '/ak:onboarding-cro trạng thái trống lần chạy đầu cho không gian làm việc mới', whenEn: 'Activation is weak because the first empty state does not show a path to value.', whenVi: 'Activation yếu vì empty state đầu tiên không chỉ đường tới giá trị.', expectedEn: 'It provides a first-run friction map, copy/layout changes, and the activation metric to watch closely.', expectedVi: 'Bản đồ ma sát first-run, thay đổi copy/layout và metric activation cần theo.' }
   ],
   reportOutput: {
     titleEn: "Onboarding CRO deliverable",
