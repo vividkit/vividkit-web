@@ -29,18 +29,11 @@ Only `--check` exists. No `--write-lock`. Does not fetch.
 | `/guides/agentkit/workflows` | `vk:audit-ak-workflows` | workflow index + pins (`--repo --kit-root`) |
 | Every other `/guides/agentkit/*` | `vk:audit-ak-pages` | identity registry + backing files + CLI cheatsheet vs cobra `Use` |
 
-`vk-audit-ak` / `vk-sync-ak-guides` are not owners in this project.
-
 Pages checker does **not** certify migrate/cutover safety copy or Desktop/Helper product claims.
 
 ## New session
 
-```bash
-ln -sfn ../../skills/vk-audit-ak-guides .claude/skills/vk-audit-ak-guides
-ln -sfn ../../skills/vk-audit-ak-guides .agents/skills/vk-audit-ak-guides
-```
-
-Restart Claude / Codex.
+Setup after a fresh clone (symlinks into `.claude/skills/` / `.agents/skills/`): see `README.md` in this directory.
 
 ```text
 /vk:audit-ak-guides --check
@@ -57,7 +50,7 @@ Codex: `$vk:audit-ak-guides --check`.
 
 ```bash
 git -C "$AK_CLI" fetch
-AK_CLI="$AK_CLI" npm run audit:ak-guides
+AK_CLI="$AK_CLI" pnpm run audit:ak-guides
 ```
 
 ## `--check`
@@ -69,7 +62,14 @@ AK_CLI="$AK_CLI" npm run audit:ak-guides
 5. Remaining identities: `scripts/check-ak-guide-pages.mjs` (`vk:audit-ak-pages`).
 6. Exit 1 if uncovered or owned-fail.
 
-`--kit-root` required (or `AK_CLI`). `--ak-docs` optional; forwarded to the detail runner. `--repo` optional (walk from cwd).
+`--kit-root` required (or `AK_CLI`). `--ak-docs` optional; forwarded to the detail runner. `--repo` optional (default: walk up from this skill's directory).
+
+## Reading a red result
+
+- `uncovered` also appears when an owner checker exits 2 (missing script, missing `--kit-root`, bad argument). Read that checker's stderr in the dump below the table before concluding a page has no owner.
+- `owned-fail` on `/skills` or `/skills/[kit]/[skill]`: run `/vk:audit-ak-skills --report` and act on its inventory table. The lock is written there, after the user reviews the drift — never from this umbrella.
+- `owned-fail` on `/workflows`: run `/vk:audit-ak-workflows --report`; `--sync` only after review.
+- `owned-fail` on any other page: fix the page or its registry entry per `vk:audit-ak-pages`, then re-run.
 
 ## Stop
 

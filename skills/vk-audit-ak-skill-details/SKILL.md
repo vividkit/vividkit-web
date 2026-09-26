@@ -38,15 +38,7 @@ editing a detail TS file.
 
 ## New session
 
-Runtimes discover this skill from `.claude/skills/` and `.agents/skills/`, not
-from `skills/` alone. Those dirs are gitignored. After clone, once:
-
-```bash
-ln -sfn ../../skills/vk-audit-ak-skill-details .claude/skills/vk-audit-ak-skill-details
-ln -sfn ../../skills/vk-audit-ak-skill-details .agents/skills/vk-audit-ak-skill-details
-```
-
-Restart Claude Code / Codex. Then:
+Setup after a fresh clone (symlinks into `.claude/skills/` / `.agents/skills/`): see `README.md` in this directory.
 
 | Runtime | Invoke |
 | --- | --- |
@@ -101,7 +93,7 @@ Narrow one kit with `--kit engineer` or `--kit marketing`.
 Inventory-only (no detail-page claims):
 
 ```text
-git fetch ak-cli, then AK_CLI=<ak-cli> npm run audit:ak-kit-inventory
+git fetch ak-cli, then AK_CLI=<ak-cli> pnpm run audit:ak-kit-inventory
 Report onlyKit, onlyCatalog, beta-only, contract-updated, package-updated.
 Do not write the lock.
 ```
@@ -113,7 +105,7 @@ Do not write the lock.
 | `--kit-root` | **Required.** ak-cli **git** checkout with `origin/main` (stable) and `origin/dev` (beta) |
 | `--ak-docs` | Optional. Without it, `--report`/`--update` skip `check-ak-skill-detail-ak-docs.mjs`; claims skip docs Option/Mode tables |
 | `--kit` | `engineer` \| `marketing` \| `all` (default `all`) |
-| `--repo` | VividKit root (default: walk from cwd) |
+| `--repo` | VividKit root (default: walk up from this skill's directory) |
 
 `--kit-root` working tree can sit on `main`; inventory reads **git refs**, not the dirty tree.
 
@@ -121,14 +113,20 @@ Do not write the lock.
 
 ### `--check` (default)
 
-Fails on the first non-zero. Does not write `src/` or locks.
+Runner — the subcommand is bare (`check` / `report` / `update`); `--check` is rejected with exit 2:
+
+```bash
+node skills/vk-audit-ak-skill-details/scripts/run.mjs check --kit-root <ak-cli> [--ak-docs <ak-docs>] [--kit engineer|marketing|all] [--repo <vividkit>]
+```
+
+Runs every step below (each checker's `--self-test` first) without stopping on failure, then exits with the last non-zero code. Does not write `src/` or locks.
 
 1. `scripts/check-ak-kit-skill-inventory.mjs --kit-root <ak-cli>`
 2. `scripts/check-ak-skill-detail-principles.mjs`
 3. `scripts/check-ak-skill-details.mjs --kit-root <ak-cli>`
 4. `scripts/check-ak-skill-detail-claims.mjs --kit-root <ak-cli> [--ak-docs] --kit <kit>`
 
-Known: claims currently fail on ~13 pre-existing pages. That is not inventory drift.
+A red claims checker is a real finding unless the latest `reference/changelog-reports/*-ak-skill-details-audit.md` already lists the same page. Claims failures are not inventory drift.
 
 ### `--report`
 
