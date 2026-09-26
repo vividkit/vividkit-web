@@ -49,6 +49,6 @@ Code chips: `bg-slate-100 dark:bg-slate-800/90`,
 ## After edits
 
 1. Re-run the four checkers from the skill `--check` path
-2. `npm run build` when many TS files changed
+2. `pnpm run build` when many TS files changed
 3. Browser EN+VI on a 3/4/5-principle page and one composable-flags page
 4. `--write-lock` only after the dirty inventory is re-authored

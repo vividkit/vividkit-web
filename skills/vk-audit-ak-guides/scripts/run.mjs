@@ -198,7 +198,7 @@ function main(argv) {
   if (uncovered.length) {
     process.stderr.write(
       `\nUNCOVERED ${uncovered.length}/${rows.length} AgentKit identities (no operational owner). ` +
-        'vk-sync-ak-guides / vk-audit-ak are not in this project.\n',
+        'An owner checker that exits 2 (missing script, missing --kit-root, bad argument) also lands here — read its stderr above.\n',
     );
   }
   if (failedOwned.length) {
