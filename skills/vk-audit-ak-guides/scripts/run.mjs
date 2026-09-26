@@ -103,6 +103,7 @@ function runPages(repo, kitRoot) {
 
 function runWorkflows(repo, kitRoot) {
   const candidates = [
+    join(repo, 'skills/vk-audit-ak-workflows/scripts/detect-workflow-skill-drift.cjs'),
     join(repo, '.claude/skills/vk-audit-ak-workflows/scripts/detect-workflow-skill-drift.cjs'),
     join(repo, '.agents/skills/vk-audit-ak-workflows/scripts/detect-workflow-skill-drift.cjs'),
   ];
