@@ -382,6 +382,18 @@ export const akEngineerSkills: AkSkillEntry[] = [
     args: ["<docx|pdf|pptx|xlsx>", "[path]", "[action]"],
   },
   {
+    id: "ak-enhance-ux-ax",
+    command: "/ak:enhance-ux-ax",
+    commandCodex: "$ak:enhance-ux-ax",
+    description: "Combined UX + AI-experience (AX) review of an existing site or app: scores brand recall, punchy content, motion and responsive layouts, scans SEO/GEO discovery surfaces (sitemap, robots, llms.txt, per-URL markdown, schema, social cards, copy/share/send-to-AI actions), and writes ranked proposals with an explicit DONE contract. --auto implements them; --loop [N] repeats review-to-verify rounds with screenshot vision checks. For a UI-polish-only audit or new UI use ak:frontend-design; for an SEO/GEO-only audit or keyword research use ak:seo.",
+    descriptionVi: "Review kết hợp UX và trải nghiệm AI (AX) cho site hoặc app sẵn có: chấm điểm độ nhớ thương hiệu, nội dung sắc, motion và layout responsive, quét các bề mặt SEO/GEO (sitemap, robots, llms.txt, bản markdown từng URL, schema, social card, nút copy/chia sẻ/gửi cho AI), rồi viết đề xuất xếp hạng kèm DONE contract rõ ràng. --auto sẽ sửa theo đề xuất; --loop [N] lặp vòng review tới xác minh có kiểm ảnh chụp bằng vision. Chỉ audit độ chỉn chu UI hoặc làm UI mới thì dùng ak:frontend-design; chỉ audit SEO/GEO hoặc nghiên cứu từ khoá thì dùng ak:seo.",
+    category: "designFrontend",
+    isBeta: true,
+    argumentHint: "[url|path|focus] [--auto] [--loop [N]]",
+    args: ["[url|path|focus]"],
+    flags: ["--auto", "--loop"],
+  },
+  {
     id: "ak-excalidraw",
     command: "/ak:excalidraw",
     commandCodex: "$ak:excalidraw",
@@ -1433,6 +1445,18 @@ export const akMarketingSkills: AkSkillEntry[] = [
     args: ["[text-or-file]"],
   },
   {
+    id: "ak-enhance-ux-ax",
+    command: "/ak:enhance-ux-ax",
+    commandCodex: "$ak:enhance-ux-ax",
+    description: "Combined UX + AI-experience (AX) review of an existing site or app: scores brand recall, punchy content, motion and responsive layouts, scans SEO/GEO discovery surfaces (sitemap, robots, llms.txt, per-URL markdown, schema, social cards, copy/share/send-to-AI actions), and writes ranked proposals with an explicit DONE contract. --auto implements them; --loop [N] repeats review-to-verify rounds with screenshot vision checks. For a UI-polish-only audit or new UI use ak:frontend-design; for an SEO/GEO-only audit or keyword research use ak:seo.",
+    descriptionVi: "Review kết hợp UX và trải nghiệm AI (AX) cho site hoặc app sẵn có: chấm điểm độ nhớ thương hiệu, nội dung sắc, motion và layout responsive, quét các bề mặt SEO/GEO (sitemap, robots, llms.txt, bản markdown từng URL, schema, social card, nút copy/chia sẻ/gửi cho AI), rồi viết đề xuất xếp hạng kèm DONE contract rõ ràng. --auto sẽ sửa theo đề xuất; --loop [N] lặp vòng review tới xác minh có kiểm ảnh chụp bằng vision. Chỉ audit độ chỉn chu UI hoặc làm UI mới thì dùng ak:frontend-design; chỉ audit SEO/GEO hoặc nghiên cứu từ khoá thì dùng ak:seo.",
+    category: "designVisual",
+    isBeta: true,
+    argumentHint: "[url|path|focus] [--auto] [--loop [N]]",
+    args: ["[url|path|focus]"],
+    flags: ["--auto", "--loop"],
+  },
+  {
     id: "ak-explain",
     command: "/ak:explain",
     commandCodex: "$ak:explain",
@@ -1546,6 +1570,17 @@ export const akMarketingSkills: AkSkillEntry[] = [
     argumentHint: "[task focus] [--output PATH] [--include-diff] [--include-status] [--force] [--dispatch --agent <id> [--handoff PATH] [--cwd PATH] [--model NAME] [--yes]]",
     args: ["[next-session focus]"],
     flags: ["--agent", "--cwd", "--dispatch", "--force", "--handoff", "--include-diff", "--include-status", "--model", "--output", "--yes"],
+  },
+  {
+    id: "ak-hyperframes",
+    command: "/ak:hyperframes",
+    commandCodex: "$ak:hyperframes",
+    description: "Wrap HeyGen HyperFrames CLI for HTML-first programmatic video generation. Use for short vertical/social videos, product-launch clips, motion graphics rendered from HTML composition. See also the installed remotion skill for a React-based alternative.",
+    descriptionVi: "Bọc CLI HeyGen HyperFrames để dựng video theo chương trình, lấy HTML làm nguồn. Dùng khi làm video dọc/mạng xã hội ngắn, clip ra mắt sản phẩm, hoặc motion graphic render từ composition HTML. Muốn làm bằng React thì xem skill remotion đã cài.",
+    category: "videoMedia",
+    isBeta: true,
+    argumentHint: "[composition or command]",
+    args: ["[composition or command]"],
   },
   {
     id: "ak-init",
@@ -1680,6 +1715,15 @@ export const akMarketingSkills: AkSkillEntry[] = [
     flags: ["--list", "--propose", "--verify"],
   },
   {
+    id: "ak-motion-video",
+    command: "/ak:motion-video",
+    commandCodex: "$ak:motion-video",
+    description: "Produce beat-synced 1080p motion-graphic videos in HyperFrames (HTML + GSAP) with an AI voice-over, Vietnamese karaoke captions, SFX and generated music, in any of ~60 named style profiles (glass keynote, comic, Apple-like cinematic, Swiss, cyberpunk, Nike-like and more) or a per-scene mix of them. Use when the user asks for a launch/release/feature video, motion graphic, animated explainer or promo clip, or a restyle of an existing one.",
+    descriptionVi: "Làm video motion graphic 1080p khớp beat bằng HyperFrames (HTML + GSAP), có voice-over AI, phụ đề karaoke tiếng Việt, SFX và nhạc tự tạo, theo một trong khoảng 60 style profile có tên (glass keynote, comic, điện ảnh kiểu Apple, Swiss, cyberpunk, kiểu Nike và nhiều nữa) hoặc trộn theo từng cảnh. Dùng khi cần video ra mắt/release/tính năng, motion graphic, video giải thích có hoạt ảnh, clip quảng bá, hoặc đổi style một video có sẵn.",
+    category: "videoMedia",
+    isBeta: true,
+  },
+  {
     id: "ak-onboarding-cro",
     command: "/ak:onboarding-cro",
     commandCodex: "$ak:onboarding-cro",
@@ -1753,6 +1797,17 @@ export const akMarketingSkills: AkSkillEntry[] = [
     category: "growthCro",
     argumentHint: "[product or program-type]",
     args: ["[product or program-type]"],
+  },
+  {
+    id: "ak-remotion",
+    command: "/ak:remotion",
+    commandCodex: "$ak:remotion",
+    description: "Build video content with Remotion in React. Use for programmatic video creation, animated sequences, data-driven video rendering.",
+    descriptionVi: "Làm video bằng Remotion trong React. Dùng khi tạo video bằng code, chuỗi hoạt ảnh hoặc render video theo dữ liệu.",
+    category: "videoMedia",
+    isBeta: true,
+    argumentHint: "[video or component]",
+    args: ["[video or component]"],
   },
   {
     id: "ak-research-prompt",
@@ -2027,10 +2082,58 @@ export interface AkBetaPreviewItem {
 }
 
 /** Engineer beta-only skills from ak-cli kit.yaml (origin/dev minus origin/main). */
-export const akEngineerBetaPreview: AkBetaPreviewItem[] = [];
+export const akEngineerBetaPreview: AkBetaPreviewItem[] = [
+  {
+    id: "ak-enhance-ux-ax",
+    command: "/ak:enhance-ux-ax",
+    commandCodex: "$ak:enhance-ux-ax",
+    description: "One review for people (UX) and AI agents or search engines (AX), with ranked proposals and a DONE contract.",
+    descriptionVi: "Một lần review cho người dùng (UX) lẫn agent AI và công cụ tìm kiếm (AX), kèm đề xuất xếp hạng và DONE contract.",
+    badge: "new",
+    args: ["[url|path|focus]"],
+    flags: ["--auto", "--loop"],
+  },
+];
 
 /** Marketing beta-only skills. Marketing inherits core and adds appends.skills. */
-export const akMarketingBetaPreview: AkBetaPreviewItem[] = [];
+export const akMarketingBetaPreview: AkBetaPreviewItem[] = [
+  {
+    id: "ak-enhance-ux-ax",
+    command: "/ak:enhance-ux-ax",
+    commandCodex: "$ak:enhance-ux-ax",
+    description: "One review for people (UX) and AI agents or search engines (AX), with ranked proposals and a DONE contract.",
+    descriptionVi: "Một lần review cho người dùng (UX) lẫn agent AI và công cụ tìm kiếm (AX), kèm đề xuất xếp hạng và DONE contract.",
+    badge: "new",
+    args: ["[url|path|focus]"],
+    flags: ["--auto", "--loop"],
+  },
+  {
+    id: "ak-hyperframes",
+    command: "/ak:hyperframes",
+    commandCodex: "$ak:hyperframes",
+    description: "HTML-first programmatic video through the pinned HeyGen HyperFrames CLI.",
+    descriptionVi: "Video lập trình lấy HTML làm nguồn qua CLI HeyGen HyperFrames đã pin.",
+    badge: "new",
+    args: ["[composition or command]"],
+  },
+  {
+    id: "ak-motion-video",
+    command: "/ak:motion-video",
+    commandCodex: "$ak:motion-video",
+    description: "Beat-synced 1080p motion-graphic videos with AI voice-over, captions, SFX, and music in named style profiles.",
+    descriptionVi: "Video motion graphic 1080p khớp beat, có voice-over AI, phụ đề, SFX và nhạc theo style profile có tên.",
+    badge: "new",
+  },
+  {
+    id: "ak-remotion",
+    command: "/ak:remotion",
+    commandCodex: "$ak:remotion",
+    description: "Programmatic video with Remotion in React.",
+    descriptionVi: "Video lập trình bằng Remotion trong React.",
+    badge: "new",
+    args: ["[video or component]"],
+  },
+];
 
 export const akEngineerSkillCount = akEngineerSkills.length;
 export const akMarketingSkillCount = akMarketingSkills.length;
