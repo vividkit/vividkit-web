@@ -132,10 +132,10 @@ See `.agents/skills/vk-*/SKILL.md` for per-skill details.
 
 | Command | Action |
 |---------|--------|
-| `npm install` | Install dependencies |
-| `npm run dev` | Start local dev server at `localhost:4321` |
-| `npm run build` | Build production site to `./dist/` |
-| `npm run preview` | Preview build locally |
+| `pnpm install` | Install dependencies |
+| `pnpm run dev` | Start local dev server at `localhost:4321` |
+| `pnpm run build` | Build production site to `./dist/` |
+| `pnpm run preview` | Preview build locally |
 
 ## 📁 Project Structure
 
