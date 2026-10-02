@@ -119,12 +119,13 @@ Repo-specific skills that keep VividKit guides in sync with upstream ClaudeKit. 
 
 ### Conventions
 
+- **Tracked skills** live in `skills/` (and `commands/vk/`); runtimes read them through symlinks. After a fresh clone, link each one once, e.g. `ln -sfn ../../skills/vk-changelog-sync .claude/skills/vk-changelog-sync` and `ln -sfn ../../../commands/vk/update-how-ck-works.md .claude/commands/vk/update-how-ck-works.md`.
 - **Reference repos** are cloned under `reference/` (claudekit, claudekit-cli) — not committed; treated as source of truth during audits.
 - **Marker files** (`reference/.last-sync*`) store the commit SHA of the last successful sync.
 - **Reports** are written to `reference/changelog-reports/` (skill-generated).
 - Skills only **propose** changes — always review before applying them to `src/components/guides/*` or `src/data/guides/*`.
 
-See `.agents/skills/vk-*/SKILL.md` for per-skill details.
+See `skills/vk-*/SKILL.md` for per-skill details (`vk-audit-ck-cli` and `vk-audit-ck-hooks` still live in `.claude/skills/`).
 
 ---
 

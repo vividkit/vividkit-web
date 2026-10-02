@@ -1,6 +1,6 @@
 // CCS CLI cheatsheet — categorized command reference
 // Source-of-truth: reference/ccs/src/commands/command-catalog.ts
-// Audit synced via .claude/skills/vk-audit-ccs (see reference/.last-sync-ccs).
+// Audit synced via skills/vk-audit-ccs (see reference/.last-sync-ccs).
 import type { Language } from "@/i18n";
 
 export interface CCSCheatsheetCommand {
