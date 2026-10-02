@@ -56,8 +56,8 @@ const data: SkillInfographic = {
         "syntax": "/ak:skill-creator audit [skill-name|path|kit|--all] [--kit <kit>] [--advice]",
         "titleEn": "Audit",
         "titleVi": "Audit",
-        "descEn": "Diagnose routing, description, and behavior. Does not rewrite the skill unless you follow with update --apply.",
-        "descVi": "Chẩn đoán routing, description và hành vi. Không viết lại skill trừ khi chạy tiếp update --apply.",
+        "descEn": "Diagnose routing, description, and behavior, using measured usage from local sessions without printing their content. Does not rewrite the skill unless you follow with update --apply.",
+        "descVi": "Chẩn đoán routing, description và hành vi, dựa trên số liệu sử dụng đo từ các session local mà không in nội dung của chúng. Không viết lại skill trừ khi chạy tiếp update --apply.",
         "exampleCommand": "/ak:skill-creator audit release-notes"
       },
       {

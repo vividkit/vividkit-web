@@ -8,9 +8,9 @@ const data: SkillInfographic = {
     titleEn: '/ak:motion-video — Beat-synced motion video',
     titleVi: '/ak:motion-video — Video motion khớp beat',
     taglineEn:
-      'Produce a 1920×1080, 30 fps HyperFrames motion-graphic video with AI voice-over, Vietnamese karaoke captions, SFX, and music cut to the beat, in one of about 60 named style profiles or a per-scene mix. It produces the file and never publishes it.',
+      'Produce a 1920×1080, 30 fps HyperFrames motion-graphic video with AI voice-over, Vietnamese karaoke captions, SFX, and music cut to the beat, in one of about 60 named style profiles or a per-scene mix, with production-grade motion and fast 1:1 / 9:16 editions. It produces the files and never publishes them.',
     taglineVi:
-      'Làm video motion graphic HyperFrames 1920×1080, 30 fps có voice-over AI, phụ đề karaoke tiếng Việt, SFX và nhạc cắt đúng beat, theo một trong khoảng 60 style profile có tên hoặc trộn theo từng cảnh. Skill chỉ xuất file, không bao giờ tự đăng.',
+      'Làm video motion graphic HyperFrames 1920×1080, 30 fps có voice-over AI, phụ đề karaoke tiếng Việt, SFX và nhạc cắt đúng beat, theo một trong khoảng 60 style profile có tên hoặc trộn theo từng cảnh, với chuyển động chất lượng production và bản 1:1 / 9:16 làm nhanh. Skill chỉ xuất file, không bao giờ tự đăng.',
   },
   hardGate: {
     type: 'warning',
@@ -22,12 +22,12 @@ const data: SkillInfographic = {
       'Yêu cầu voice, SFX, nhạc và alignment đi qua multix tới Gemini và ElevenLabs, và mỗi lần tạo lại cảnh hay nhạc lại phát sinh thêm request. Duyệt từng bước tạo theo chính sách provider, quota và chi phí của bạn. Credential nằm trong config của multix, không bao giờ in ra hay copy vào file project, plan hoặc report.',
   },
   processFlow: [
-    { number: 1, titleEn: 'Pin the outcome', titleVi: 'Chốt kết quả', descEn: 'Record topic and sources, base style and any layers, duration, voice language (English voice-over with Vietnamese captions by default), ending, and signature. Ask only when the style or facts source is unknown.', descVi: 'Ghi lại chủ đề và nguồn, style gốc cùng các lớp trộn, thời lượng, ngôn ngữ giọng (mặc định voice-over tiếng Anh, phụ đề tiếng Việt), đoạn kết và chữ ký. Chỉ hỏi khi chưa rõ style hoặc nguồn dữ kiện.' },
+    { number: 1, titleEn: 'Pin the outcome', titleVi: 'Chốt kết quả', descEn: 'Record topic and sources, base style and any layers, duration, voice language (English voice-over with Vietnamese captions by default), ending, and signature. Ask only when the style or facts source is unknown. By default a director subagent writes the creative direction before any audio is generated; --poor runs everything in one session.', descVi: 'Ghi lại chủ đề và nguồn, style gốc cùng các lớp trộn, thời lượng, ngôn ngữ giọng (mặc định voice-over tiếng Anh, phụ đề tiếng Việt), đoạn kết và chữ ký. Chỉ hỏi khi chưa rõ style hoặc nguồn dữ kiện. Mặc định một subagent director viết creative direction trước khi tạo audio; --poor chạy toàn bộ trong một session.' },
     { number: 2, titleEn: 'Scaffold the project', titleVi: 'Dựng project', descEn: 'Create assets/videos/<slug>/ and a plan, then copy the template scripts, example data, hyperframes.json, and the composition skeleton. A finished edition is never overwritten; a restyle is a new directory.', descVi: 'Tạo assets/videos/<slug>/ và một plan, rồi copy script mẫu, dữ liệu ví dụ, hyperframes.json và khung composition. Không bao giờ ghi đè bản đã xong; bản đổi style là thư mục mới.' },
     { number: 3, titleEn: 'Generate and align audio', titleVi: 'Tạo và căn audio', descEn: 'Write facts and script from primary sources, then use multix for Gemini TTS voice, ElevenLabs SFX and music, and ElevenLabs forced alignment of spoken words.', descVi: 'Viết dữ kiện và kịch bản từ nguồn gốc, rồi dùng multix để tạo giọng Gemini TTS, SFX và nhạc ElevenLabs, và căn thời gian từng từ bằng forced alignment của ElevenLabs.' },
     { number: 4, titleEn: 'Fit beat and arrange music', titleVi: 'Khớp beat và xếp nhạc', descEn: 'fit-beat-grid.py reports BPM and a per-bar table; bars are spliced so drops land where the script needs them, and verify-arrangement.py checks every splice.', descVi: 'fit-beat-grid.py báo BPM và bảng theo từng ô nhịp; các ô nhịp được ghép để đoạn drop rơi đúng chỗ kịch bản cần, và verify-arrangement.py kiểm từng mối ghép.' },
-    { number: 5, titleEn: 'Build timeline and composition', titleVi: 'Dựng timeline và composition', descEn: 'build-timeline renders the ducked, loudness-normalized mix; index.html follows the composition contract and resolved style, then passes hyperframes lint, check, and scene snapshot review.', descVi: 'build-timeline xuất bản mix đã duck và chuẩn hoá loudness; index.html theo composition contract và style đã resolve, rồi phải qua hyperframes lint, check và review snapshot từng cảnh.' },
-    { number: 6, titleEn: 'Render, remux, encode', titleVi: 'Render, remux, encode', descEn: 'HyperFrames renders the video, the measured mix is remuxed back in, and an optional social encode produces a smaller file. Posting stays with you.', descVi: 'HyperFrames render video, bản mix đã đo được remux lại vào, và có thể encode thêm bản nhẹ cho social. Việc đăng bài do bạn tự làm.' },
+    { number: 5, titleEn: 'Build timeline and composition', titleVi: 'Dựng timeline và composition', descEn: 'build-timeline renders the ducked, loudness-normalized mix; index.html follows the composition contract and resolved style, then passes hyperframes lint, check, scene snapshot review, and the director\'s pass on every scene (focal point, depth, overlapping choreography, follow-through, transitions).', descVi: 'build-timeline xuất bản mix đã duck và chuẩn hoá loudness; index.html theo composition contract và style đã resolve, rồi phải qua hyperframes lint, check, review snapshot từng cảnh và director\'s pass cho mọi cảnh (điểm nhấn, chiều sâu, chuyển động chồng lớp, follow-through, chuyển cảnh).' },
+    { number: 6, titleEn: 'Render, remux, encode', titleVi: 'Render, remux, encode', descEn: 'HyperFrames renders the video, the measured mix is remuxed back in, and an optional social encode produces a smaller file. Square or vertical editions come from scripts/reframe.py with data-ratio overrides, reusing the master\'s audio and timing. Posting stays with you.', descVi: 'HyperFrames render video, bản mix đã đo được remux lại vào, và có thể encode thêm bản nhẹ cho social. Bản vuông hoặc dọc được tạo bằng scripts/reframe.py với override data-ratio, dùng lại audio và timing của bản master. Việc đăng bài do bạn tự làm.' },
   ],
   corePrinciplesEn: [
     'Scene cuts land on music beats and reveals land on spoken words; the mix is measured, not guessed.',
@@ -42,16 +42,26 @@ const data: SkillInfographic = {
     'Xong nghĩa là các con số đo được đều đạt, không phải bản render trông ổn.',
   ],
   invocation: {
-    syntax: '/ak:motion-video [video brief]',
+    syntax: '/ak:motion-video [brief or project] [--poor]',
     arguments: [
       {
-        token: '[video brief]',
-        titleEn: 'Video brief',
-        titleVi: 'Brief video',
-        descEn: 'Natural-language request: topic and facts source, style or style mix, duration, voice language, and where to stop. It is not a fixed parser command.',
-        descVi: 'Yêu cầu bằng ngôn ngữ tự nhiên: chủ đề và nguồn dữ kiện, style hoặc cách trộn style, thời lượng, ngôn ngữ giọng và điểm dừng. Đây không phải lệnh parser cố định.',
+        token: '[brief or project]',
+        titleEn: 'Brief or project',
+        titleVi: 'Brief hoặc project',
+        descEn: 'Natural-language brief (topic and facts source, style or style mix, duration, voice language, where to stop) or an existing project to restyle, rework, or reframe. It is not a fixed parser command.',
+        descVi: 'Brief bằng ngôn ngữ tự nhiên (chủ đề và nguồn dữ kiện, style hoặc cách trộn style, thời lượng, ngôn ngữ giọng, điểm dừng) hoặc một project có sẵn cần đổi style, làm lại hay đổi tỉ lệ. Đây không phải lệnh parser cố định.',
         required: false,
         exampleCommand: '/ak:motion-video "Make a 60-second release video for our v3.4 notes in the glass-keynote style, using only facts from CHANGELOG.md"',
+      },
+    ],
+    options: [
+      {
+        token: '--poor',
+        titleEn: 'Lean single session',
+        titleVi: 'Một session tiết kiệm',
+        descEn: 'One session and no subagents, with lean reads, a compact brief, and one review round for the lowest token spend. It never skips a check.',
+        descVi: 'Một session, không dùng subagent, đọc gọn, brief ngắn và một vòng review để tốn ít token nhất. Không bao giờ bỏ qua check nào.',
+        exampleCommand: '/ak:motion-video "45-second changelog video in the glass-keynote style from CHANGELOG.md" --poor',
       },
     ],
   },
@@ -87,14 +97,34 @@ const data: SkillInfographic = {
       expectedEn: 'Re-fits the beat grid and arrangement, reruns the timeline and remux, verifies every splice within ±2 ms, and writes a smaller social MP4 without regenerating the voice-over.',
       expectedVi: 'Khớp lại lưới beat và cách xếp nhạc, chạy lại timeline và remux, kiểm mọi mối ghép trong ±2 ms, rồi xuất bản MP4 nhẹ cho social mà không tạo lại voice-over.',
     },
+    {
+      labelEn: 'Square and vertical editions',
+      labelVi: 'Bản vuông và dọc',
+      command: '/ak:motion-video "Make 9:16 and 1:1 editions of assets/videos/v3-4-launch for Reels and the feed"',
+      commandVi: '/ak:motion-video "Làm bản 9:16 và 1:1 của assets/videos/v3-4-launch cho Reels và feed"',
+      whenEn: 'Use when a finished master needs a vertical or square version without regenerating audio.',
+      whenVi: 'Dùng khi bản master đã xong cần thêm bản dọc hoặc vuông mà không tạo lại audio.',
+      expectedEn: 'Adds data-ratio overrides in the master, runs scripts/reframe.py for each ratio, and renders each edition after it passes the same lint, check, ffprobe frame size, loudness, and blackdetect checks.',
+      expectedVi: 'Thêm override data-ratio trong bản master, chạy scripts/reframe.py cho từng tỉ lệ, và chỉ render mỗi bản sau khi qua đủ các check lint, check, kích thước khung ffprobe, loudness và blackdetect.',
+    },
+    {
+      labelEn: 'Lean run',
+      labelVi: 'Chạy tiết kiệm',
+      command: '/ak:motion-video "45-second changelog video in the glass-keynote style from CHANGELOG.md" --poor',
+      commandVi: '/ak:motion-video "Video changelog 45 giây theo style glass-keynote từ CHANGELOG.md" --poor',
+      whenEn: 'Use when token spend matters more than the full director and executor split.',
+      whenVi: 'Dùng khi chi phí token quan trọng hơn việc tách đủ director và executor.',
+      expectedEn: 'Runs the whole pipeline in one session with a compact brief and one review round, and still reports every lint, check, splice, mix, and ffprobe number.',
+      expectedVi: 'Chạy toàn bộ pipeline trong một session với brief ngắn và một vòng review, và vẫn báo đủ số liệu lint, check, mối ghép, mix và ffprobe.',
+    },
   ],
   reportOutput: {
     titleEn: 'Motion video evidence',
     titleVi: 'Bằng chứng video motion',
     patternEn: 'Project path, style table, lint and check results, splice drift, music-under-speech dB, ffprobe streams, LUFS and peak, blackdetect result, render paths.',
     patternVi: 'Path project, bảng style, kết quả lint và check, độ lệch mối ghép, dB nhạc dưới giọng, stream từ ffprobe, LUFS và peak, kết quả blackdetect, path các bản render.',
-    descEn: 'Done only when lint and check pass, every splice is within ±2 ms, music sits about 4–6 dB under speech, ffprobe shows 1920×1080 30 fps AAC 48 kHz stereo, and loudness is about −14 LUFS with peak at or below −1 dBFS.',
-    descVi: 'Chỉ xong khi lint và check pass, mọi mối ghép trong ±2 ms, nhạc thấp hơn giọng khoảng 4–6 dB, ffprobe báo 1920×1080 30 fps AAC 48 kHz stereo, và loudness khoảng −14 LUFS với peak không quá −1 dBFS.',
+    descEn: 'Done only when lint and check pass, every scene passed the director\'s pass, every requested 1:1 or 9:16 edition passes the same checks, every splice is within ±2 ms, music sits about 4–6 dB under speech, ffprobe shows 1920×1080 30 fps AAC 48 kHz stereo, and loudness is about −14 LUFS with peak at or below −1 dBFS.',
+    descVi: 'Chỉ xong khi lint và check pass, mọi cảnh qua director\'s pass, mỗi bản 1:1 hoặc 9:16 được yêu cầu đều qua cùng các check, mọi mối ghép trong ±2 ms, nhạc thấp hơn giọng khoảng 4–6 dB, ffprobe báo 1920×1080 30 fps AAC 48 kHz stereo, và loudness khoảng −14 LUFS với peak không quá −1 dBFS.',
   },
 };
 
