@@ -42,7 +42,7 @@ AK_CLI=/path/to/ak-cli
 git -C "$AK_CLI" fetch
 
 # Inventory + fingerprints only
-AK_CLI="$AK_CLI" npm run audit:ak-kit-inventory
+AK_CLI="$AK_CLI" pnpm run audit:ak-kit-inventory
 # same:
 node scripts/check-ak-kit-skill-inventory.mjs --kit-root "$AK_CLI"
 
@@ -94,7 +94,7 @@ Inventory-only (no detail-page claims):
 ```text
 Run skill tracking against ak-cli kit.yaml.
 git fetch <ak-cli>, then:
-AK_CLI=<ak-cli> npm run audit:ak-kit-inventory
+AK_CLI=<ak-cli> pnpm run audit:ak-kit-inventory
 Report onlyKit, onlyCatalog, beta-only, contract-updated, package-updated.
 Do not write the lock.
 ```

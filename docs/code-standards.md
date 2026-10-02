@@ -784,7 +784,7 @@ try {
 
 Before committing, verify:
 
-- [ ] TypeScript strict mode passes (`npm run build`)
+- [ ] TypeScript strict mode passes (`pnpm run build`)
 - [ ] No `any` types used
 - [ ] Components have typed `Props` interface
 - [ ] i18n keys are valid and consistent
@@ -806,10 +806,10 @@ Before committing, verify:
 
 ### Development
 ```bash
-npm run dev          # Start dev server (localhost:4321)
-npm run build        # Build production
-npm run preview      # Preview build locally
-npm run astro        # Astro CLI access
+pnpm run dev          # Start dev server (localhost:4321)
+pnpm run build        # Build production
+pnpm run preview      # Preview build locally
+pnpm run astro        # Astro CLI access
 ```
 
 ### Validation

@@ -301,13 +301,13 @@ Reference: `.env.example` for default values.
 7. Vercel deploys to edge
 
 ### Development Server
-- **Command:** `npm run dev`
+- **Command:** `pnpm run dev`
 - **Port:** localhost:4321
 - **Hot reload:** Changes reflected instantly
 - **Type checking:** Background TypeScript validation
 
 ### Production Build
-- **Command:** `npm run build`
+- **Command:** `pnpm run build`
 - **Output:** `dist/` directory (static files)
 - **Size:** Optimized, tree-shaken, minified
 - **Time:** <60 seconds for full build
