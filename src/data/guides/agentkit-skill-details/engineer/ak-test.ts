@@ -99,8 +99,8 @@ const data: SkillInfographic = {
         "syntax": "/ak:test optimize [scope] [--advice] [--ultra] [--interview]",
         "titleEn": "Optimize suite",
         "titleVi": "Tối ưu suite",
-        "descEn": "Analyzes CI, git history, code, and docs to reduce test time or cost while preserving safety-critical coverage.",
-        "descVi": "Phân tích CI, lịch sử git, code và docs để giảm thời gian hoặc chi phí test mà vẫn giữ coverage quan trọng về an toàn.",
+        "descEn": "Analyzes CI, git history, code, and docs to reduce test time or cost while preserving safety-critical coverage. For repository-owned manifests it uses ak test optimize for deterministic ranked test selection; mandatory policy checks always stay.",
+        "descVi": "Phân tích CI, lịch sử git, code và docs để giảm thời gian hoặc chi phí test mà vẫn giữ coverage quan trọng về an toàn. Với manifest do repo quản lý, dùng ak test optimize để chọn test theo thứ hạng một cách tất định; các check bắt buộc theo policy luôn được giữ.",
         "arguments": [
           {
             "token": "[scope]",

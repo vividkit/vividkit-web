@@ -78,12 +78,14 @@ const data: SkillInfographic = {
   corePrinciplesEn: [
     "Route by subcommand before creating content.",
     "Production quality combines creative direction, platform constraints, script/storyboard structure, and review.",
-    "Veo generation, captions, analysis, and platform optimization are separate script-backed operations."
+    "Veo generation, captions, analysis, and platform optimization are separate script-backed operations.",
+    "A beat-synced HyperFrames motion graphic with voice-over, captions, and music belongs to ak:motion-video."
   ],
   corePrinciplesVi: [
     "Định tuyến theo subcommand trước khi tạo nội dung.",
     "Chất lượng sản xuất là tổng hợp của creative direction, ràng buộc nền tảng, cấu trúc script/storyboard và review.",
-    "Tạo bằng Veo, caption, phân tích và tối ưu nền tảng là các thao tác riêng có script hỗ trợ."
+    "Tạo bằng Veo, caption, phân tích và tối ưu nền tảng là các thao tác riêng có script hỗ trợ.",
+    "Video motion graphic HyperFrames khớp beat có voice-over, phụ đề và nhạc thuộc về ak:motion-video."
   ],
   workflowModes: [
     {

@@ -32,8 +32,8 @@ const data: SkillInfographic = {
   header: {
     titleEn: '/ak:web-frameworks — Modern React web apps',
     titleVi: '/ak:web-frameworks — App React hiện đại',
-    taglineEn: 'Build modern React web apps with Next.js App Router, RSC, SSR/SSG/ISR, Turborepo monorepos, shared packages, caching, and RemixIcon UI polish.',
-    taglineVi: 'Xây app React hiện đại với Next.js App Router, RSC, SSR/SSG/ISR, monorepo Turborepo, package dùng chung, cache và polish UI bằng RemixIcon.',
+    taglineEn: 'Build modern React web apps with Next.js App Router, RSC, SSR/SSG/ISR, Turborepo monorepos, shared packages, caching, SEO/GEO surfaces, and RemixIcon UI polish.',
+    taglineVi: 'Xây app React hiện đại với Next.js App Router, RSC, SSR/SSG/ISR, monorepo Turborepo, package dùng chung, cache, bề mặt SEO/GEO và polish UI bằng RemixIcon.',
   },
   processFlow: [
     { number: 1, titleEn: 'Choose shape', titleVi: 'Chọn mô hình', descEn: 'Decide between a single Next.js app and a Turborepo monorepo based on shared apps, packages, and team needs.', descVi: 'Chọn app Next.js đơn lẻ hay monorepo Turborepo dựa trên nhu cầu nhiều app, package dùng chung và đội nhóm.' },
@@ -41,7 +41,7 @@ const data: SkillInfographic = {
     { number: 3, titleEn: 'Lay out routes', titleVi: 'Dựng route', descEn: 'Use App Router layouts, pages, loading states, error states, and metadata for the application structure.', descVi: 'Dùng layout, page, loading state, error state và metadata của App Router để dựng cấu trúc ứng dụng.' },
     { number: 4, titleEn: 'Split packages', titleVi: 'Tách package', descEn: 'For monorepos, separate apps from ui, config, types, and API-client packages with clear workspace dependencies.', descVi: 'Với monorepo, tách apps khỏi các package ui, config, types và API client bằng dependency workspace rõ ràng.' },
     { number: 5, titleEn: 'Design data flow', titleVi: 'Thiết kế dữ liệu', descEn: 'Select Server Components by default, use Client Components only when needed, and define fetch caching/revalidation behavior.', descVi: 'Mặc định chọn Server Components, chỉ dùng Client Components khi cần, và định nghĩa hành vi cache/revalidate cho fetch.' },
-    { number: 6, titleEn: 'Optimize assets', titleVi: 'Tối ưu asset', descEn: 'Apply Next.js image, font, script, bundle, SEO, and performance optimization patterns.', descVi: 'Áp các pattern tối ưu image, font, script, bundle, SEO và hiệu năng của Next.js.' },
+    { number: 6, titleEn: 'Optimize assets', titleVi: 'Tối ưu asset', descEn: 'Apply Next.js image, font, script, bundle, and performance optimization patterns, and ship SEO/GEO surfaces (sitemap, robots, llms.txt, .md page variants, social cards, JSON-LD, copy/share/open-in-AI actions) from one content source.', descVi: 'Áp các pattern tối ưu image, font, script, bundle và hiệu năng của Next.js, và xuất các bề mặt SEO/GEO (sitemap, robots, llms.txt, bản .md của trang, social card, JSON-LD, nút copy/chia sẻ/mở trong AI) từ cùng một nguồn nội dung.' },
     { number: 7, titleEn: 'Configure pipeline', titleVi: 'Cấu hình pipeline', descEn: 'For Turborepo, define task dependencies, outputs, persistent dev tasks, filters, and remote caching.', descVi: 'Với Turborepo, định nghĩa dependency task, outputs, task dev chạy lâu, filter và remote cache.' },
     { number: 8, titleEn: 'Ship safely', titleVi: 'Ship an toàn', descEn: 'Keep production apps on patched stable Next.js releases and wire CI/CD for build, test, lint, and deployment.', descVi: 'Giữ app production trên bản Next.js stable đã vá lỗi và nối CI/CD cho build, test, lint và deploy.' },
   ],

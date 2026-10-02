@@ -15,8 +15,8 @@ const data: SkillInfographic = {
       number: 1,
       titleEn: "Classify intent",
       titleVi: "Phân loại intent",
-      descEn: "Read the request shape: Remotion, HTML video, HyperFrames, Veo/video, shader, WebGL, ffmpeg, Mermaid, or pack-specific template.",
-      descVi: "Đọc dạng yêu cầu: Remotion, HTML video, HyperFrames, Veo/video, shader, WebGL, ffmpeg, Mermaid hoặc template của pack ngoài."
+      descEn: "Read the request shape: Remotion, HTML video, HyperFrames, beat-synced motion video, Veo/video, shader, WebGL, ffmpeg, Mermaid, or pack-specific template.",
+      descVi: "Đọc dạng yêu cầu: Remotion, HTML video, HyperFrames, video motion khớp beat, Veo/video, shader, WebGL, ffmpeg, Mermaid hoặc template của pack ngoài."
     },
     {
       number: 2,
@@ -29,8 +29,8 @@ const data: SkillInfographic = {
       number: 3,
       titleEn: "Prefer in-repo",
       titleVi: "Ưu tiên nội bộ",
-      descEn: "Route to installed in-repo skills first: remotion, html-video, hyperframes, video, shader, threejs, media-processing, or mermaidjs-v11.",
-      descVi: "Route tới skill nội bộ đã cài trước: remotion, html-video, hyperframes, video, shader, threejs, media-processing hoặc mermaidjs-v11."
+      descEn: "Route to installed in-repo skills first: remotion, motion-video (beat-synced launch or explainer with voice-over, captions, and music), hyperframes, video, shader, threejs, media-processing, or mermaidjs-v11.",
+      descVi: "Route tới skill nội bộ đã cài trước: remotion, motion-video (video ra mắt hoặc giải thích khớp beat có voice-over, phụ đề và nhạc), hyperframes, video, shader, threejs, media-processing hoặc mermaidjs-v11."
     },
     {
       number: 4,
