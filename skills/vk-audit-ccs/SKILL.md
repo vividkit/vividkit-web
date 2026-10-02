@@ -9,7 +9,7 @@ argument-hint: "[--inventory | --check | --report | --sync | --validate | --comm
 
 Track upstream `kaitranntt/ccs` changes and propose VividKit CCS Guide updates.
 
-v2 expands beyond per-provider profile snapshots: it now also audits the **CLI command surface**, **subsystem architecture**, **per-provider runtime capabilities** (OAuth flow, callback ports, model-prefix routing, quota tracking), and **config schemas**. Each pass produces its own report; `--validate` aggregates drift across every dimension into a single CI gate.
+Besides per-provider profile snapshots, it audits the **CLI command surface**, **subsystem architecture**, **per-provider runtime capabilities** (OAuth flow, callback ports, model-prefix routing, quota tracking), and **config schemas**. Each pass produces its own report; `--validate` aggregates drift across every dimension into a single CI gate.
 
 ## Audit Dimensions
 
@@ -255,7 +255,7 @@ node skills/vk-audit-ccs/scripts/detect-ccs-changes.cjs --sync
 # Already pulled manually — just report
 node skills/vk-audit-ccs/scripts/detect-ccs-changes.cjs --report --no-fetch
 
-# CI drift gate — exits non-zero on any of the 8 drift categories
+# CI drift gate — exits non-zero on any drift category
 node skills/vk-audit-ccs/scripts/detect-ccs-changes.cjs --validate
 ```
 
@@ -284,6 +284,5 @@ Marker is updated to current `HEAD` SHA only on `--sync`.
 
 ## Security
 
-Read-only against `reference/ccs/` upstream mirror — script only fetches/resets, never writes back.
-Never modifies CCS Guide source files; report-only output for human review.
-Refuses requests to auto-apply guide updates or bypass the marker workflow.
+Read-only against the `reference/ccs/` upstream mirror — the script only fetches/resets there, never writes back.
+Guide source is report-only, with one exception: `--sync` bumps the `CCS_SYNCED_VERSION` / `CCS_SYNCED_DATE` literals in `src/data/guides/ccs-cheatsheet-data.ts`. Every other guide change goes through human review of the report — don't auto-apply them or bypass the marker workflow.

@@ -4,7 +4,7 @@
 Outputs: reference/skills-registry.json
 
 Sources per branch:
-- skills:   parsed from scout JSONs in plans/reports/ (LLM-extracted body+frontmatter)
+- skills:   parsed directly from `skills/*/SKILL.md` YAML frontmatter
 - commands: parsed directly from `commands/**/*.md` YAML frontmatter
 - agents:   parsed directly from `agents/*.md` YAML frontmatter
 
@@ -18,7 +18,6 @@ import subprocess
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-REPORTS = ROOT / "plans" / "reports"
 OUTPUT = ROOT / "reference" / "skills-registry.json"
 INDEX_OUTPUT = ROOT / "reference" / "skills-registry-index.json"
 
@@ -31,14 +30,6 @@ BRANCH_LAYOUT = {
     "marketing-stable": {"repo": "marketing-stable", "base": "claude"},
     "marketing-beta":   {"repo": "marketing-beta",   "base": "claude"},
 }
-
-SKILL_SCOUT_FILES = {
-    "stable": "scout-260804-1700-skills-stable.json",
-    "beta": "scout-260804-1700-skills-beta.json",
-    "marketing-stable": "scout-260804-1700-skills-marketing-stable.json",
-    "marketing-beta": "scout-260804-1700-skills-marketing-beta.json",
-}
-
 
 # ---------- Helpers ----------
 
@@ -94,6 +85,11 @@ def parse_frontmatter(text: str) -> dict:
     return out
 
 
+def first_sentence(text: str) -> str:
+    """Return the first sentence: up to the first period followed by whitespace."""
+    return re.split(r"(?<=\.)\s+", text.strip(), maxsplit=1)[0]
+
+
 def get_sha(branch: str) -> str | None:
     repo = ROOT / "reference" / BRANCH_LAYOUT[branch]["repo"]
     try:
@@ -108,34 +104,41 @@ def kit_for(name: str) -> str:
     return "marketer" if name.startswith("ckm:") else "engineer"
 
 
-# ---------- Skills (from scout JSONs) ----------
+# ---------- Skills (from skills/*/SKILL.md) ----------
 
 def build_skills() -> list[dict]:
+    """Walk every branch's skills/ tree and read each SKILL.md frontmatter.
+
+    `version` usually sits under `metadata:`; the flat parser still picks it up
+    because it strips indentation from nested keys.
+    """
     skills: dict[str, dict] = {}
-    for branch, filename in SKILL_SCOUT_FILES.items():
-        path = REPORTS / filename
-        if not path.exists():
-            print(f"WARN: missing skill scout {path}")
+    for branch, layout in BRANCH_LAYOUT.items():
+        skill_root = ROOT / "reference" / layout["repo"] / layout["base"] / "skills"
+        if not skill_root.is_dir():
+            print(f"WARN: missing skills dir {skill_root}")
             continue
-        for entry in json.loads(path.read_text()):
-            name = entry["name"]
-            hint = entry.get("argumentHint", "")
-            if isinstance(hint, list):
-                hint = " ".join(str(x) for x in hint)
+        for md in sorted(skill_root.glob("*/SKILL.md")):
+            fm = parse_frontmatter(md.read_text(errors="ignore"))
+            name = fm.get("name") or md.parent.name
+            hint = fm.get("argument-hint", "")
             args, flags = parse_argument_hint(hint)
+            full_description = fm.get("description", "")
+            deprecated = "deprecated" in full_description.lower() or "archived" in full_description.lower()
+            description = first_sentence(full_description)
             sk = skills.setdefault(
                 name,
                 {"name": name, "kit": kit_for(name), "channels": {}, "deprecated": False},
             )
             sk["channels"][branch] = {
-                "version": entry.get("version"),
+                "version": fm.get("version") or None,
                 "argumentHint": hint,
                 "args": args,
                 "flags": flags,
-                "deprecated": bool(entry.get("deprecated", False)),
-                "description": entry.get("description", ""),
+                "deprecated": deprecated,
+                "description": description,
             }
-            if entry.get("deprecated"):
+            if deprecated:
                 sk["deprecated"] = True
     return sorted(skills.values(), key=lambda s: s["name"])
 

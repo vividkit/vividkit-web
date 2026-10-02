@@ -29,10 +29,10 @@ Detect changes in ClaudeKit reference repos, generate infographic data for the h
 |-----|--------|------|-----------------|
 | Engineer | stable | `reference/stable/` | `claude/skills/` |
 | Engineer | beta | `reference/beta/` | `claude/skills/` |
-| Marketer | stable | `reference/marketing-stable/` | `.claude/skills/` (note leading dot) |
+| Marketer | stable | `reference/marketing-stable/` | `claude/skills/` |
 | Marketer | beta | `reference/marketing-beta/` | `claude/skills/` |
 
-**IMPORTANT:** Layout is inconsistent across upstream branches. `marketing-stable` uses the hidden `.claude/` directory while the other three use plain `claude/`. Hard-code these paths — do not assume uniform layout.
+All four clones keep kit files under plain `claude/` (no leading dot). Upstream has changed this layout before, so if a lookup comes back empty, re-check with `ls reference/<branch>/` instead of assuming.
 
 ## Workflow
 
@@ -43,7 +43,7 @@ Read existing state files:
 reference/.skill-audit-state.json   # This skill's own state (SHAs + metadata)
 ```
 
-**IMPORTANT:** Do NOT read or write `reference/.last-sync` — that file belongs to `/vk:changelog-sync`. Using it would break changelog-sync's ability to detect non-skill changes (hooks, rules, agents, etc.).
+Do not read or write `reference/.last-sync` — that file belongs to `/vk:changelog-sync`. Using it would break changelog-sync's ability to detect non-skill changes (hooks, rules, agents, etc.).
 
 If `.skill-audit-state.json` doesn't exist, create with empty state and use `HEAD~20` as baseline for first run.
 
@@ -66,13 +66,13 @@ Categorize changes:
 - **Deleted (D)**: Removed skill files
 - **Renamed (R)**: Skill directory renamed — git shows `R<similarity>  <old-path>  <new-path>`. Treat as: (a) the new path is M for VividKit purposes (content likely changed); (b) any UI files referencing the old slug (e.g. `infographic-<slug>-quick-ref.astro`, scenario IDs, anchors in `HowCkWorksGuide.astro`) MUST be flagged for manual rename. Do NOT auto-rename UI files — too risky without user review.
 
-**IMPORTANT — skill-name vs directory-name mismatch.** Skill `name:` in frontmatter does NOT always match its directory. Examples in engineer-stable:
+**Skill name vs directory name.** Skill `name:` in frontmatter does NOT always match its directory. Examples in engineer-stable:
 - `ck:plan` lives at `claude/skills/ck-plan/` (not `plan/`)
 - `ck:cook` lives at `claude/skills/cook/`
-- `ck:code-review` lives at `claude/skills/ck-code-review/` (renamed from `code-review/` in 2026-05)
+- `ck:code-review` lives at `claude/skills/ck-code-review/`
 - `ck:fix` lives at `claude/skills/fix/`
 
-Build the mapping by reading `name:` from each `SKILL.md` frontmatter — never assume `<slug>/` matches `ck:<slug>`. When the user requests `--check <skill-name>`, resolve the directory by grepping `name: <skill-name>` across the branch, not by string-matching the slug to a directory name. This bug bit the May 2026 audit run (cf. `reference/.skill-audit-state.json` notes for ck:plan v1.1.0).
+Build the mapping by reading `name:` from each `SKILL.md` frontmatter — never assume `<slug>/` matches `ck:<slug>`. When the user requests `--check <skill-name>`, resolve the directory by grepping `name: <skill-name>` across the branch, not by string-matching the slug to a directory name.
 
 ### Step 3: Extract Metadata (for --report and --sync)
 
@@ -110,14 +110,14 @@ For each extracted skill, generate entry matching `SkillInfographic` interface:
 }
 ```
 
-**Flag/arg additions (MANDATORY enrichment):** when a skill's `argument-hint` gains a flag/arg/sub-command, do NOT stop at the version bump. Mode-style flags → `workflowModes` row + `promptExamples`. Output/publish flags (`--html`/`--github`/`--wiki`) → `outputFlags` entry (rendered by every quick-ref + the fallback). New hard gate/step → bump `hardGate` `(N)` + `processFlow`. **Also enrich the matching scenario PIPELINE** in `workflow-visualizer-scenarios.ts`: update the relevant `steps[]` entry's `descEn/Vi`, `explainEn/Vi`, `codeSnippet` (output flags belong in the terminal `output` step, after the gates). EN field added → natural-Vietnamese twin required.
+**Flag/arg additions:** when a skill's `argument-hint` gains a flag/arg/sub-command, do NOT stop at the version bump. Mode-style flags → `workflowModes` row + `promptExamples`. Output/publish flags (`--html`/`--github`/`--wiki`) → `outputFlags` entry (rendered by every quick-ref + the fallback). New hard gate/step → bump `hardGate` `(N)` + `processFlow`. **Also enrich the matching scenario PIPELINE** in `workflow-visualizer-scenarios.ts`: update the relevant `steps[]` entry's `descEn/Vi`, `explainEn/Vi`, `codeSnippet` (output flags belong in the terminal `output` step, after the gates). EN field added → natural-Vietnamese twin required.
 
 Update `src/data/guides/how-ck-works/skill-infographics.ts`:
 - Add new entries
 - Update modified entries
 - Remove deleted entries (mark deprecated or comment out)
 
-**IMPORTANT — quick-ref components also need an audit pass.** `skill-infographics.ts` is data only; the actual user-facing copy in How-CK-Works is rendered by per-skill astro components that HARD-CODE mode descriptions, prompts, and rule cards:
+**Quick-ref components also need an audit pass.** `skill-infographics.ts` is data only; the actual user-facing copy in How-CK-Works is rendered by per-skill astro components that HARD-CODE mode descriptions, prompts, and rule cards:
 
 | Skill | Quick-ref component | Hard-coded content to verify |
 |-------|---------------------|------------------------------|
@@ -126,9 +126,9 @@ Update `src/data/guides/how-ck-works/skill-infographics.ts`:
 | `ck:cook` + `ck:fix` | `infographic-execution-quick-ref.astro` | mode tables (both skills), ruleCards, guardrails, prompts |
 | `ck:team` | `infographic-team-quick-ref.astro` | 3 hard-gate cards (TeamCreate-first / env+CLI lock / Opus 4.6 lock), 4 template cards (research/cook/review/debug) with default N + sample prompts + use-when + output, principles grid |
 
-For every Modified skill that has a quick-ref component, **grep the component for any strings that contradict the new SKILL.md** (mode flag descriptions, score thresholds, hard-gate language, references to artifacts/validators). Patch in place. Without this step, `skill-infographics.ts` and `docs/ck-architecture/*.md` can be perfectly in sync while the rendered guide page still shows obsolete content (the May 2026 cook sync missed `score >= 9.5` in the quick-ref this way).
+For every Modified skill that has a quick-ref component, **grep the component for any strings that contradict the new SKILL.md** (mode flag descriptions, score thresholds, hard-gate language, references to artifacts/validators). Patch in place. Without this step, `skill-infographics.ts` and `docs/ck-architecture/*.md` can be perfectly in sync while the rendered guide page still shows obsolete content.
 
-#### Canonical Quick-Ref styling & structure (NON-NEGOTIABLE for new components)
+#### Canonical Quick-Ref styling & structure (new components)
 
 Every per-skill Quick Ref component MUST follow the same visual language and section order so the guide reads consistently across skills. Use `infographic-brainstorm-quick-ref.astro` and `infographic-plan-quick-ref.astro` as the structural reference; `infographic-team-quick-ref.astro` is the most recent example for multi-template skills.
 
@@ -162,7 +162,7 @@ When auditing a Modified skill, verify the Quick Ref still matches this contract
 
 ### Step 5: Auto-Chain to add-scenario (for NEW skills only)
 
-**IMPORTANT:** For each **Added (A)** skill detected:
+For each **Added (A)** skill detected:
 
 1. Check if scenario already exists in `workflow-visualizer-scenarios.ts`
 2. If NOT exists, auto-run `/vk:add-scenario <skill-name>` logic:
@@ -199,7 +199,7 @@ For each **Modified (M)** skill detected, re-generate `docs/ck-architecture/ck-<
 
 **Runs as a standalone mode OR alongside `--sync`.** Updates `reference/skills-registry.json` — the source-of-truth used to verify VividKit Guides UI content (commands grid, beta-preview section, workflow cards) against upstream. Tracks **three asset types**: skills, commands (legacy slash-commands, marketer-only), and agents.
 
-#### CRITICAL: Context-bloat protocol
+#### Context-bloat protocol
 
 The full registry is ~8000 lines. **Never `Read` it into LLM context.** Two files exist:
 
@@ -222,14 +222,8 @@ The full registry is ~8000 lines. **Never `Read` it into LLM context.** Two file
 
 #### Procedure
 
-1. **Spawn 4 parallel `Explore` (haiku) scouts** — one per branch (filtered by `--branch` if set):
-   - Each scout reads every `SKILL.md` under its branch's skills directory (paths from the table above — note marketing-stable's hidden `.claude/`)
-   - Each scout extracts per-skill: `name`, `argumentHint` (verbatim), `version`, `description` (first sentence), `deprecated` (bool), `args` (bracketed positional from argument-hint), `flags` (raw `--flag` patterns)
-   - Each scout writes to `plans/reports/scout-{date}-{time}-skills-{branch}.json` as a pure JSON array
-   - Skip `_shared/`, `common/`, `document-skills/` subdirs
-
-2. **Run merge script:** `python3 scripts/build-skills-registry.py`
-   - **Skills:** merges per-branch scout JSONs. Re-parses flags **only from `argument-hint`** (body flags are noise from code examples).
+1. **Run the registry script:** `python3 scripts/build-skills-registry.py` (filtered by `--branch` if set)
+   - **Skills:** parses each branch's `claude/skills/*/SKILL.md` frontmatter directly with the same `parse_frontmatter` used for commands and agents — `name`, `argumentHint` (verbatim), `version`, `description` (first sentence), `deprecated`, `args` (bracketed positionals from argument-hint), `flags`. Flags come **only from `argument-hint`** (body flags are noise from code examples). Directories without a `SKILL.md` (such as `_shared/` and `common/`) are skipped; `document-skills/` is included where it ships a `SKILL.md`.
    - **Commands:** walks `commands/**/*.md` directly (no scout needed). Name suffix-mapped from path: `commands/ckm/plan/archive.md` → `ckm:plan:archive` with `parent: "ckm:plan"`. Reads `description` + `argument-hint` from frontmatter.
    - **Agents:** walks `agents/*.md` directly. Reads `name`, `description`, `tools`, `model`, `memory` from frontmatter. Deduped by `(kit, name)` — same agent name can exist in both engineer and marketer kits independently.
    - All three: merges branches into per-asset `channels: { stable | beta | marketing-stable | marketing-beta }` map.
@@ -237,12 +231,12 @@ The full registry is ~8000 lines. **Never `Read` it into LLM context.** Two file
    - Captures upstream SHAs for each branch.
    - Writes `reference/skills-registry.json`.
 
-3. **Verify drift vs UI data files** (read-only):
+2. **Verify drift vs UI data files** (read-only):
    - Compare registry skill list against `src/data/guides/commands-engineer-kit.ts` and `commands-marketing-kit.ts`
    - Flag missing/extra skills, version drift, missing flags in UI
    - Output drift report to `plans/reports/registry-drift-{date}.md`
 
-4. **Do NOT auto-fix UI files.** Drift report is advisory — manual fixes preserve curated descriptions/translations.
+3. **Do NOT auto-fix UI files.** Drift report is advisory — manual fixes preserve curated descriptions/translations.
 
 #### Registry schema
 
@@ -298,7 +292,7 @@ npx astro check 2>&1 | head -30
 
 Fix any TypeScript errors before completing.
 
-**Pre-existing noise:** the repo has ~23k pre-existing TS errors (mostly `deals-scheduled-draw-state.ts` and similar untyped lookup helpers). Don't try to fix them — just confirm none of the newly reported errors point at files you touched in this run. If `head -30` shows your edits clean and the bulk count matches roughly the pre-existing baseline, that's a pass.
+**Pre-existing noise:** the repo carries a large pre-existing TS error baseline (mostly untyped lookup helpers such as `deals-scheduled-draw-state.ts`). Don't try to fix them — just confirm none of the newly reported errors point at files you touched in this run. If `head -30` shows your edits clean and the bulk count matches roughly the pre-existing baseline, that's a pass.
 
 ### Step 8: Report Summary
 
@@ -346,7 +340,7 @@ Files updated:
 ## Security
 
 - Read-only access to reference repos (no git push)
-- Only writes to `src/data/`, `docs/ck-architecture/`, `reference/.audit-state.json`
+- Only writes to `src/data/`, quick-ref components in `src/components/guides/how-ck-works/`, `docs/ck-architecture/`, `reference/.skill-audit-state.json`, `reference/skills-registry*.json`, and `plans/reports/`
 - Never modifies source SKILL.md files in reference repos
 - Never modifies `~/.claude/settings.json`
 

@@ -1,6 +1,6 @@
 {
   "$comment": "Slim index of reference/skills-registry.json. Read THIS into LLM context, query the full registry via `jq` only when entry detail is needed.",
-  "lastBuilt": "2026-08-04T10:00:33Z",
+  "lastBuilt": "2026-10-02T21:32:05Z",
   "upstreamShas": {
     "stable": "ed8a1fa7a9dbc7135311fdd334c762dbe63e2c91",
     "beta": "7aaf382cb98ed379e5463756435174c04530ae3e",

@@ -21,27 +21,13 @@ Read a ClaudeKit `/ck:<command>` source SKILL.md, generate architecture doc in `
 
 ### Step 1: Read Source Skill
 
-Read the authoritative source files:
+Read the source skill from the reference clones — the same files Step 9 hashes for staleness:
 ```
-~/.claude/skills/<command>/SKILL.md
-~/.claude/skills/<command>/references/workflow-standard.md  (if exists)
-~/.claude/skills/<command>/references/workflow-quick.md     (if exists)
-~/.claude/skills/<command>/references/workflow-deep.md      (if exists)
-~/.claude/skills/<command>/references/complexity-assessment.md (if exists)
-~/.claude/skills/<command>/references/skill-activation-matrix.md (if exists)
+reference/<branch>/claude/skills/<dir>/SKILL.md
+reference/<branch>/claude/skills/<dir>/references/*.md   (all, if present)
 ```
 
-If `~/.claude/skills/<command>/SKILL.md` does not exist, check alternate locations in order:
-1. `~/.claude/skills/ck-<command>/SKILL.md` (Engineer Kit prefixed variant)
-2. `~/.claude/skills/ckm-<command>/SKILL.md` (Marketer Kit prefixed variant)
-3. **Project reference folders** (fallback for skills not installed globally):
-   - `reference/marketing-stable/.claude/skills/<command>/SKILL.md`
-   - `reference/marketing-beta/.claude/skills/<command>/SKILL.md`
-   - `reference/stable/.claude/skills/<command>/SKILL.md`
-   - `reference/beta/.claude/skills/<command>/SKILL.md`
-
-If found at `ckm-` path or `marketing-*` reference, auto-set `kit: 'marketer'`.
-If still not found → **STOP** and report error.
+Resolve `<dir>` via the lookup in "Mapping: Command Name → Skill Directory" below. If no clone has the skill, stop and report the error.
 
 ### Step 2: Read Existing Guide Context
 
@@ -59,10 +45,10 @@ Pick ONE existing scenario closest in nature to the new command as a template.
 ### Step 3: Read Hooks Config
 
 ```
-~/.claude/settings.json → hooks section
+reference/<branch>/claude/settings.json → hooks section
 ```
 
-Identify which hooks are relevant to this command's flow.
+These are the kit's own hook registrations. Identify which hooks are relevant to this command's flow.
 
 ### Step 4: Generate Architecture Doc
 
@@ -71,7 +57,7 @@ Create `docs/ck-architecture/ck-<command>.md` following the established pattern:
 ```markdown
 # /ck:<command> — <Short Description>
 
-Source: `~/.claude/skills/<command>/SKILL.md`
+Source: `reference/<branch>/claude/skills/<dir>/SKILL.md`
 
 ## Authoritative Flow
 
@@ -212,26 +198,14 @@ Report what was created:
 
 ## Mapping: Command Name → Skill Directory
 
-### Kit Prefix Convention
+Directory names don't reliably match command names (`ck:plan` lives in `ck-plan/`, `ck:cook` in `cook/`), so resolve by frontmatter, not by slug:
 
-- **Engineer Kit** (`ck:`): skills prefixed with `ck-` (e.g. `ck-fix`, `ck-plan`)
-- **Marketer Kit** (`ckm:`): skills prefixed with `ckm-` (e.g. `ckm-copywriting`, `ckm-seo`)
+```bash
+grep -l '^name: ck:<command>$' reference/{stable,beta}/claude/skills/*/SKILL.md
+grep -l '^name: ckm:<command>$' reference/marketing-{stable,beta}/claude/skills/*/SKILL.md
+```
 
-### Resolution Order
-
-For a given `<command>`, try these locations in order:
-
-| # | Pattern | Example | Kit |
-|---|---------|---------|-----|
-| 1 | `~/.claude/skills/<command>/` | `~/.claude/skills/fix/` | auto |
-| 2 | `~/.claude/skills/ck-<command>/` | `~/.claude/skills/ck-fix/` | engineer |
-| 3 | `~/.claude/skills/ckm-<command>/` | `~/.claude/skills/ckm-copywriting/` | marketer |
-| 4 | `reference/marketing-stable/.claude/skills/<command>/` | `reference/marketing-stable/.claude/skills/write/` | marketer |
-| 5 | `reference/marketing-beta/.claude/skills/<command>/` | (beta variant) | marketer |
-| 6 | `reference/stable/.claude/skills/<command>/` | (engineer stable) | engineer |
-| 7 | `reference/beta/.claude/skills/<command>/` | (engineer beta) | engineer |
-
-Kit is auto-detected from path. `marketing-*` or `ckm-` → `marketer`, otherwise `engineer`.
+Prefer the stable clone over beta. A hit under `marketing-*` sets `kit: 'marketer'`; otherwise `engineer`.
 
 ### Kit Detection from Command Prefix
 

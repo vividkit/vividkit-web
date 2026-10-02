@@ -76,9 +76,9 @@ Otherwise select by:
 
 Default batch: top `--limit` candidates. For high-risk UI work, process one skill at a time.
 
-## Mandatory Per-Skill Scouts
+## Per-Skill Scouts
 
-Spawn one sub-agent per selected skill. Each sub-agent owns one skill only.
+When the batch has more than one skill, give each skill its own scout sub-agent so source reading stays out of the main context. For a single `--target`, scout inline.
 
 Scout prompt:
 
