@@ -1,6 +1,6 @@
 {
   "$schema": "./skills-registry.schema.json",
-  "lastBuilt": "2026-08-04T10:00:33Z",
+  "lastBuilt": "2026-10-02T21:32:05Z",
   "upstreamShas": {
     "stable": "ed8a1fa7a9dbc7135311fdd334c762dbe63e2c91",
     "beta": "7aaf382cb98ed379e5463756435174c04530ae3e",
@@ -345,7 +345,7 @@
           ],
           "flags": [],
           "deprecated": false,
-          "description": "Build robust backend systems with modern technologies (Node.js, Python, Go, Rust), frameworks (NestJS, FastAPI, Django), databases (PostgreSQL, MongoDB, Redis), APIs (REST, GraphQL, gRPC), authentication (OAuth 2.1, JWT), testing strategies, security best practices (OWASP Top 10), performance optimi"
+          "description": "Build robust backend systems with modern technologies (Node.js, Python, Go, Rust), frameworks (NestJS, FastAPI, Django), databases (PostgreSQL, MongoDB, Redis), APIs (REST, GraphQL, gRPC), authentication (OAuth 2.1, JWT), testing strategies, security best practices (OWASP Top 10), performance optimization, scalability patterns (microservices, caching, sharding), DevOps practices (Docker, Kubernetes, CI/CD), and monitoring."
         },
         "marketing-beta": {
           "version": "1.0.0",
@@ -356,7 +356,7 @@
           ],
           "flags": [],
           "deprecated": false,
-          "description": "Build robust backend systems with modern technologies (Node.js, Python, Go, Rust), frameworks (NestJS, FastAPI, Django), databases (PostgreSQL, MongoDB, Redis), APIs (REST, GraphQL, gRPC), authentication (OAuth 2.1, JWT), testing strategies, security best practices (OWASP Top 10), performance optimi"
+          "description": "Build robust backend systems with modern technologies (Node.js, Python, Go, Rust), frameworks (NestJS, FastAPI, Django), databases (PostgreSQL, MongoDB, Redis), APIs (REST, GraphQL, gRPC), authentication (OAuth 2.1, JWT), testing strategies, security best practices (OWASP Top 10), performance optimization, scalability patterns (microservices, caching, sharding), DevOps practices (Docker, Kubernetes, CI/CD), and monitoring."
         }
       },
       "deprecated": false
@@ -3432,7 +3432,7 @@
           "args": [],
           "flags": [],
           "deprecated": false,
-          "description": "UI/UX design intelligence for web and mobile: style selection, color systems, typography, layout, accessibility, interaction states, responsive behavior, forms, charts, design systems, and code review across React, Next.js, Vue, Svelte, SwiftUI, React Native, Flutter, Tailwind, shadcn/ui, and HTML/C"
+          "description": "UI/UX design intelligence for web and mobile: style selection, color systems, typography, layout, accessibility, interaction states, responsive behavior, forms, charts, design systems, and code review across React, Next.js, Vue, Svelte, SwiftUI, React Native, Flutter, Tailwind, shadcn/ui, and HTML/CSS."
         },
         "beta": {
           "version": "1.1.0",
@@ -3440,7 +3440,7 @@
           "args": [],
           "flags": [],
           "deprecated": false,
-          "description": "UI/UX design intelligence for web and mobile: style selection, color systems, typography, layout, accessibility, interaction states, responsive behavior, forms, charts, design systems, and code review across React, Next.js, Vue, Svelte, SwiftUI, React Native, Flutter, Tailwind, shadcn/ui, and HTML/C"
+          "description": "UI/UX design intelligence for web and mobile: style selection, color systems, typography, layout, accessibility, interaction states, responsive behavior, forms, charts, design systems, and code review across React, Next.js, Vue, Svelte, SwiftUI, React Native, Flutter, Tailwind, shadcn/ui, and HTML/CSS."
         },
         "marketing-stable": {
           "version": "1.1.0",
@@ -4099,7 +4099,7 @@
           ],
           "flags": [],
           "deprecated": false,
-          "description": "Activate when users ask about Claude Code installation, slash commands (/plan, /fix, /content, /docs, /design, /git), creating/managing Agent Skills, configuring MCP servers, setting up hooks/plugins, IDE integration (VS Code, JetBrains), CI/CD workflows, enterprise deployment (SSO, RBAC, sandboxing"
+          "description": "Activate when users ask about Claude Code installation, slash commands (/plan, /fix, /content, /docs, /design, /git), creating/managing Agent Skills, configuring MCP servers, setting up hooks/plugins, IDE integration (VS Code, JetBrains), CI/CD workflows, enterprise deployment (SSO, RBAC, sandboxing), troubleshooting authentication/performance issues, or advanced features (extended thinking, caching, checkpointing)."
         },
         "marketing-beta": {
           "version": "1.0.0",
@@ -4109,7 +4109,7 @@
           ],
           "flags": [],
           "deprecated": false,
-          "description": "Activate when users ask about Claude Code installation, slash commands (/plan, /fix, /content, /docs, /design, /git), creating/managing Agent Skills, configuring MCP servers, setting up hooks/plugins, IDE integration (VS Code, JetBrains), CI/CD workflows, enterprise deployment (SSO, RBAC, sandboxing"
+          "description": "Activate when users ask about Claude Code installation, slash commands (/plan, /fix, /content, /docs, /design, /git), creating/managing Agent Skills, configuring MCP servers, setting up hooks/plugins, IDE integration (VS Code, JetBrains), CI/CD workflows, enterprise deployment (SSO, RBAC, sandboxing), troubleshooting authentication/performance issues, or advanced features (extended thinking, caching, checkpointing)."
         }
       },
       "deprecated": false
@@ -4306,7 +4306,7 @@
           ],
           "flags": [],
           "deprecated": false,
-          "description": "Comprehensive design skill: brand identity, design tokens, UI styling, logo generation (55 styles, Gemini AI), corporate identity program (50 deliverables, CIP mockups), HTML presentations (Chart.js), banner design (22 styles, social/ads/web/print), icon design (15 styles, SVG, Gemini 3.1 Pro), soci"
+          "description": "Comprehensive design skill: brand identity, design tokens, UI styling, logo generation (55 styles, Gemini AI), corporate identity program (50 deliverables, CIP mockups), HTML presentations (Chart.js), banner design (22 styles, social/ads/web/print), icon design (15 styles, SVG, Gemini 3.1 Pro), social photos (HTML→screenshot, multi-platform), poster design (20-30 styles, 4 recombinable axes, model-agnostic prompt emission)."
         },
         "marketing-beta": {
           "version": "2.2.0",
@@ -4317,7 +4317,7 @@
           ],
           "flags": [],
           "deprecated": false,
-          "description": "Comprehensive design skill: brand identity, design tokens, UI styling, logo generation (55 styles, Gemini AI), corporate identity program (50 deliverables, CIP mockups), HTML presentations (Chart.js), banner design (22 styles, social/ads/web/print), icon design (15 styles, SVG, Gemini 3.1 Pro), soci"
+          "description": "Comprehensive design skill: brand identity, design tokens, UI styling, logo generation (55 styles, Gemini AI), corporate identity program (50 deliverables, CIP mockups), HTML presentations (Chart.js), banner design (22 styles, social/ads/web/print), icon design (15 styles, SVG, Gemini 3.1 Pro), social photos (HTML→screenshot, multi-platform), poster design (20-30 styles, 4 recombinable axes, model-agnostic prompt emission)."
         }
       },
       "deprecated": false

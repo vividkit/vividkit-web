@@ -121,9 +121,10 @@ Skills riêng cho repo này, dùng để giữ guides đồng bộ với upstrea
 - **Reference repos** clone tại `reference/` (claudekit, claudekit-cli) — không commit; là source of truth khi audit.
 - **Marker files** (`reference/.last-sync*`) ghi commit SHA của lần sync gần nhất.
 - **Reports** xuất ra `reference/changelog-reports/` (skill tự tạo).
+- **Skill được track** nằm ở `skills/` (và `commands/vk/`); runtime đọc chúng qua symlink. Sau khi clone mới, tạo link một lần cho mỗi skill, ví dụ `ln -sfn ../../skills/vk-changelog-sync .claude/skills/vk-changelog-sync` và `ln -sfn ../../../commands/vk/update-how-ck-works.md .claude/commands/vk/update-how-ck-works.md`.
 - Skill chỉ **đề xuất** thay đổi — luôn review trước khi apply vào `src/components/guides/*` hoặc `src/data/guides/*`.
 
-Chi tiết từng skill xem `.claude/skills/vk-*/SKILL.md`.
+Chi tiết từng skill xem `skills/vk-*/SKILL.md` (`vk-audit-ck-cli` và `vk-audit-ck-hooks` vẫn nằm ở `.claude/skills/`).
 
 ---
 

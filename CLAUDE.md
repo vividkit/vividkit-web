@@ -114,7 +114,7 @@ When a skill is **beta-exclusive** (exists in beta branch only, not yet in stabl
 1. **Beta Preview section** (`commands-categories-grid.astro` beta array) — surfaces the forward-looking signal
 2. **Stable category group** (`commands-engineer-kit.ts`) with `isBeta: true` flag — renders a purple BETA badge inline next to the command name, keeping it discoverable in its natural category
 
-When the skill graduates to stable: remove `isBeta: true` flag AND remove the Beta Preview entry. See `.claude/skills/vk-changelog-sync/SKILL.md` → "Universal Beta-Badge Rule" for the full decision matrix.
+When the skill graduates to stable: remove `isBeta: true` flag AND remove the Beta Preview entry. See `skills/vk-changelog-sync/SKILL.md` → "Universal Beta-Badge Rule" for the full decision matrix.
 
 ### Beta → Stable Promotion Checklist
 
