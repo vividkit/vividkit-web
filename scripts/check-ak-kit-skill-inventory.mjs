@@ -80,6 +80,18 @@ function betaFlagIds(text) {
   return ids;
 }
 
+/** Beta Preview entries split by badge: "new" must equal kit beta-only; "enhanced" must be cataloged skills. */
+function previewIdsByBadge(text) {
+  const out = { new: [], enhanced: [] };
+  const re = /\n  \{\n    id: "(ak-[^"]+)"([\s\S]*?)\n  \},/g;
+  let m;
+  while ((m = re.exec(text))) {
+    const badge = /\n\s*badge:\s*"enhanced"/.test(m[2]) ? 'enhanced' : 'new';
+    out[badge].push(m[1]);
+  }
+  return out;
+}
+
 function sameSet(a, b) {
   if (a.length !== b.length) return false;
   const sb = new Set(b);
@@ -176,7 +188,8 @@ function cheatsheetDrift(snapshot) {
     const kit = uniqueSorted([...s.stable, ...s.beta]);
     const catalog = uniqueSorted(idsIn(slices[surface]));
     const flagged = betaFlagIds(slices[surface]);
-    const preview = uniqueSorted(idsIn(slices[`${surface}Preview`]));
+    const previewByBadge = previewIdsByBadge(slices[`${surface}Preview`]);
+    const preview = uniqueSorted(previewByBadge.new);
     const catalogSet = new Set(catalog);
     const kitSet = new Set(kit);
     const onlyKit = kit.filter((id) => !catalogSet.has(id));
@@ -192,6 +205,10 @@ function cheatsheetDrift(snapshot) {
       lines.push(
         `${surface} Beta Preview [${preview.join(', ') || 'none'}] != kit beta-only [${wantBeta.join(', ') || 'none'}]`,
       );
+    }
+    const enhancedMissing = previewByBadge.enhanced.filter((id) => !catalogSet.has(id));
+    if (enhancedMissing.length) {
+      lines.push(`${surface} Beta Preview enhanced (not in cheatsheet catalog): ${enhancedMissing.join(', ')}`);
     }
     if (!sameSet(flagged, wantBeta)) {
       lines.push(

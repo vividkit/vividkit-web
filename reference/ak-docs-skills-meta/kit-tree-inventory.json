@@ -5,7 +5,7 @@
   "stableRef": "origin/main",
   "betaRef": "origin/dev",
   "stableCommit": "1f79164e6dd197c957d2155a850cce0ca03a0adb",
-  "betaCommit": "b3951ed093b9a433b03fe29f9c514ca4d27f9ae3",
+  "betaCommit": "89119dcee265d75f8b9112a2b65e0590607604a1",
   "stableVersion": "0.0.0",
   "betaVersion": "0.0.0",
   "kits": {
@@ -1005,8 +1005,8 @@
         "skillMd": "f33846457c64eb12623870fed85ac49ae3c49984"
       },
       "beta": {
-        "tree": "d505d4c7e90d2ea96ceea6d773a01faec82250e7",
-        "skillMd": "f33846457c64eb12623870fed85ac49ae3c49984"
+        "tree": "fae466b32e30d4aef3b3e762dbc99763c1bca688",
+        "skillMd": "684abe884ddfb414a0a9d3a9bd840246adba5d21"
       }
     },
     "core/ak-design": {
@@ -1057,8 +1057,8 @@
         "skillMd": "0e153718178fa9d9d4c1f8be73cf132e9eae8de3"
       },
       "beta": {
-        "tree": "d3694a1faa18c536271dc2a4606dd9c4cbe605fc",
-        "skillMd": "0e153718178fa9d9d4c1f8be73cf132e9eae8de3"
+        "tree": "5dcada564c64f028553a0d4f4fbac423a43f4927",
+        "skillMd": "bd874ed8cb1144730a607a4a7dc4482b355c4be4"
       }
     },
     "core/ak-docs-seeker": {
@@ -1551,8 +1551,8 @@
         "skillMd": "4e9a19f124152ad3ab974d022990d7c15029e885"
       },
       "beta": {
-        "tree": "e6edcb02442b64688978554b4d38fd3e0559a6f4",
-        "skillMd": "4e9a19f124152ad3ab974d022990d7c15029e885"
+        "tree": "b67e3d6e1635423383741b2bb769a2131d54f582",
+        "skillMd": "a55c2c1cbab41590194eeef6e98fef75368bd6ef"
       }
     },
     "core/ak-sowat": {
@@ -1655,8 +1655,8 @@
         "skillMd": "1ab5b4e2a01bbca08438aa1c799f9982aa767749"
       },
       "beta": {
-        "tree": "b99740eca1ec6b7cd424ea1b9b7d4d30ccbac5b6",
-        "skillMd": "1ab5b4e2a01bbca08438aa1c799f9982aa767749"
+        "tree": "d436aa40e0fd404f62c989ac2e74c1e826b7e150",
+        "skillMd": "0e8609241fc613cbd1e8d161c5538dfa603e23ab"
       }
     },
     "core/ak-ui-ux-pro-max": {
@@ -1853,8 +1853,8 @@
         "skillMd": "621edfa35738f6a607ef8d5ee6a5d3480bdf6529"
       },
       "beta": {
-        "tree": "380c770ac626d2fda6e7b429e6c60c532dc48364",
-        "skillMd": "621edfa35738f6a607ef8d5ee6a5d3480bdf6529"
+        "tree": "fe7838489a30415ffd1f1295c3229e6ae30e8d2e",
+        "skillMd": "18dbe927d7ef87d2937e91dc401830b0e6f89297"
       }
     },
     "engineer/ak-better-auth": {
@@ -2933,8 +2933,8 @@
         "skillMd": "5aa55a853f1e23fb67d70223637a129014080284"
       },
       "beta": {
-        "tree": "19114b6dffbb66c7f164a50d024e8658c9a0471d",
-        "skillMd": "5aa55a853f1e23fb67d70223637a129014080284"
+        "tree": "57f3f01ed39b293e8c766d226632cfd8ff1dc1b9",
+        "skillMd": "fb5e4105e153a3134f7f5d6b94be13bef0dffdab"
       }
     },
     "engineer/ak-shader": {
@@ -3677,8 +3677,8 @@
         "skillMd": "4d6689820cac5b2306741d686106a125af651f0d"
       },
       "beta": {
-        "tree": "292563a54310e00afcd36998a40a680a65777cee",
-        "skillMd": "4d6689820cac5b2306741d686106a125af651f0d"
+        "tree": "137a27ed65e26f55b2161a2f47eca87e99ef16ef",
+        "skillMd": "1f874202141e8b99df7d47eda7d341d81e15e633"
       }
     },
     "marketing/ak-free-tool-strategy": {
@@ -3893,8 +3893,8 @@
         "skillMd": "1fdfbe3726477b744e3f7c5876817114f9510929"
       },
       "beta": {
-        "tree": "1318cf893562beca5b1df567e252d1baa2b56a47",
-        "skillMd": "1fdfbe3726477b744e3f7c5876817114f9510929"
+        "tree": "75393d19b37774a00190930cb96d38fa85034481",
+        "skillMd": "10d64358dea41581d0151b35eb8a78c3edfb5c95"
       }
     },
     "marketing/ak-marketing-research": {
@@ -4085,8 +4085,8 @@
         "skillMd": "66abd4f4d14554579d2d78ee572b2c7abec18698"
       },
       "beta": {
-        "tree": "f731777accb98a135fab1cc3cec7d51132df04a3",
-        "skillMd": "66abd4f4d14554579d2d78ee572b2c7abec18698"
+        "tree": "e8abac43842cc6f397b981ebf1c7a626fb14e4de",
+        "skillMd": "f18741372e69fdb9c0adf946298577f4718b7327"
       }
     },
     "marketing/ak-referral-program-building": {

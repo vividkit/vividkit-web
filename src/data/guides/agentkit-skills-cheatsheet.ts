@@ -2080,11 +2080,43 @@ export interface AkBetaPreviewItem {
   flags?: string[];
 }
 
-/** Engineer beta-only skills from ak-cli kit.yaml (origin/dev minus origin/main). */
-export const akEngineerBetaPreview: AkBetaPreviewItem[] = [];
+/**
+ * Engineer Beta Preview: beta-only skills (origin/dev minus origin/main) plus core skills with
+ * notable beta-only changes (v2.20.0-beta.1). Drop "enhanced" entries once the change reaches stable.
+ */
+export const akEngineerBetaPreview: AkBetaPreviewItem[] = [
+  {
+    id: "ak-docs",
+    command: "/ak:docs",
+    commandCodex: "$ak:docs",
+    description: "New philosophy mode (runs only when you ask for it): reads the repo and this project's past sessions, interviews you about product principles, then writes only the exact change you approve. Ordinary docs runs never read session history.",
+    descriptionVi: "Thêm chế độ philosophy (chỉ chạy khi bạn gọi rõ): đọc repo và các session cũ của chính project này, phỏng vấn bạn về nguyên tắc sản phẩm, rồi chỉ ghi đúng phần thay đổi bạn đã duyệt. Các lệnh docs thông thường không đọc lịch sử session.",
+    badge: "enhanced",
+    args: ["philosophy"],
+  },
+  {
+    id: "ak-test",
+    command: "/ak:test",
+    commandCodex: "$ak:test",
+    description: "Verification-first rework: before adding tests it states what must hold, the risk, and which existing check already covers it; reuses earlier results only when code, config and environment still match; decides when to add, merge or retire tests; never weakens tests or gates to get a green run. optimize and audit no longer fan out parallel scouts by default.",
+    descriptionVi: "Làm lại theo hướng kiểm chứng trước: trước khi thêm test sẽ nêu rõ điều cần đúng, rủi ro và check nào đã có sẵn; chỉ dùng lại kết quả cũ khi code, cấu hình và môi trường không đổi; quyết định khi nào thêm, gộp hay bỏ test; không nới lỏng test hay gate để có kết quả xanh. optimize và audit không còn mặc định chạy nhiều scout song song.",
+    badge: "enhanced",
+  },
+  {
+    id: "ak-skill-creator",
+    command: "/ak:skill-creator",
+    commandCodex: "$ak:skill-creator",
+    description: "Leaner skill guidance: first checks whether a new skill is really needed or an existing skill, reference or script is enough; keeps SKILL.md focused on outcome, limits and known failure modes; moves catalogs and examples into references.",
+    descriptionVi: "Hướng dẫn viết skill gọn hơn: trước tiên kiểm tra có thật cần skill mới không, hay mở rộng skill, tài liệu tham khảo hoặc script sẵn có là đủ; giữ SKILL.md tập trung vào kết quả, giới hạn và lỗi hay gặp; chuyển danh mục và ví dụ sang references.",
+    badge: "enhanced",
+  },
+];
 
-/** Marketing beta-only skills. Marketing inherits core and adds appends.skills. */
-export const akMarketingBetaPreview: AkBetaPreviewItem[] = [];
+/**
+ * Marketing Beta Preview. Marketing inherits core, so it reuses the engineer "enhanced" entries
+ * (all core skills today). Add marketing beta-only skills here explicitly.
+ */
+export const akMarketingBetaPreview: AkBetaPreviewItem[] = akEngineerBetaPreview.filter((item) => item.badge === "enhanced");
 
 export const akEngineerSkillCount = akEngineerSkills.length;
 export const akMarketingSkillCount = akMarketingSkills.length;
