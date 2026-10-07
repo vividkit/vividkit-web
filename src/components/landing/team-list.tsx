@@ -13,7 +13,7 @@ export function Bot({
   type: BotAvatarType;
   token: string;
   size?: number;
-  /** Moves only while the teammate is working (08 §1: only what runs moves). */
+  /** Hops while working; otherwise plays the idle animation, so the landing page feels alive. */
   working?: boolean;
 }) {
   const ref = useRef<HTMLSpanElement>(null);
@@ -39,7 +39,6 @@ export function Bot({
           shading="plastic"
           saturation={1.1}
           brightness={1.1}
-          paused={!working}
         />
       ) : (
         <span className="vk-team-dot" style={{ background: `var(--${token})` }} />
@@ -48,7 +47,7 @@ export function Bot({
   );
 }
 
-/** Home page team row: a bot starts working while you point at it. */
+/** Home page team row: every bot idles, and starts working while you point at it. */
 export function TeamShowcase({ lang }: { lang: Lang }) {
   const [active, setActive] = useState<string | null>(null);
   return (
