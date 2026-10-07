@@ -16,9 +16,9 @@ const COPY = {
     stopped: 'Stopped · copy, log and evidence kept',
     blocked: ['.env', '~/.ssh', 'Claude sign-in', 'unknown hosts'],
     v: [
-      ['Button inside 390px', 'Unchanged'],
-      ['Desktop unchanged', 'Changed'],
-      ['Tap opens the form', 'New'],
+      ['Button fits on a phone screen', 'Unchanged'],
+      ['Button moves to the page bottom', 'Changed'],
+      ['Tapping it opens the contact form', 'New'],
     ],
   },
   vi: {
@@ -35,9 +35,9 @@ const COPY = {
     stopped: 'Đã dừng · giữ bản sao, nhật ký, bằng chứng',
     blocked: ['.env', '~/.ssh', 'Đăng nhập Claude', 'máy chủ lạ'],
     v: [
-      ['Nút gọn trong 390px', 'Không đổi'],
-      ['Máy tính không đổi', 'Đã đổi'],
-      ['Bấm mở form', 'Mới'],
+      ['Nút hiện trọn trên điện thoại', 'Không đổi'],
+      ['Nút chuyển xuống cuối trang', 'Đã đổi'],
+      ['Bấm nút thì mở form liên hệ', 'Mới'],
     ],
   },
 } as const;

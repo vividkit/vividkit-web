@@ -60,7 +60,7 @@ const en: LandingContent = {
     lead: 'VividKit Builder is a desktop app for one person to direct a team of AI teammates. You say what you want; the team works in a private copy, VividKit collects evidence, and the work is done only when you accept it.',
     soon: 'Coming soon',
     soonWhen: 'October',
-    runsOn: 'Runs on your machine with Claude Code, AgentKit, git and Cloudflare Pages.',
+    runsOn: 'Runs on your machine with Claude Code, AgentKit, Git and Cloudflare Pages.',
   },
   why: {
     eyebrow: 'Why VividKit',
@@ -91,7 +91,7 @@ const en: LandingContent = {
   audience: {
     eyebrow: 'Who it is for',
     title: 'For people with [an app to build], not a team to manage',
-    lead: 'You do not need to know git or write code. You need an idea, or an app that needs work.',
+    lead: 'You do not need to know Git or write code. You need an idea, or an app that needs work.',
     people: [
       { icon: 'rocket', title: 'Founders', body: 'Turn an idea into a working first version, one checked change at a time.' },
       { icon: 'store', title: 'Shop owners', body: 'Keep your site current: new products, fixes and pages, without waiting on a developer.' },
@@ -156,7 +156,7 @@ const en: LandingContent = {
     needs: [
       'Claude Code, signed in on a Pro or Max plan',
       'AgentKit with an Engineer Kit license',
-      'A project in a git folder, or an empty folder for a new app',
+      'A project in a Git folder, or an empty folder for a new app',
     ],
     systemsTitle: 'Systems',
     systems: [
@@ -217,7 +217,7 @@ const vi: LandingContent = {
     lead: 'VividKit Builder là app máy tính để một người điều hành đội đồng đội AI. Bạn nói điều mình muốn; đội làm trên bản sao riêng, VividKit thu bằng chứng, và việc chỉ xong khi bạn chấp nhận.',
     soon: 'Sắp ra mắt',
     soonWhen: 'tháng 10',
-    runsOn: 'Chạy ngay trên máy bạn với Claude Code, AgentKit, git và Cloudflare Pages.',
+    runsOn: 'Chạy ngay trên máy bạn với Claude Code, AgentKit, Git và Cloudflare Pages.',
   },
   why: {
     eyebrow: 'Vì sao có VividKit',
@@ -248,7 +248,7 @@ const vi: LandingContent = {
   audience: {
     eyebrow: 'Dành cho ai',
     title: 'Cho người có [ứng dụng cần làm], không phải có đội cần quản',
-    lead: 'Bạn không cần biết git hay viết code. Bạn cần một ý tưởng, hoặc một ứng dụng đang cần làm thêm.',
+    lead: 'Bạn không cần biết Git hay viết code. Bạn cần một ý tưởng, hoặc một ứng dụng đang cần làm thêm.',
     people: [
       { icon: 'rocket', title: 'Người lập dự án', body: 'Biến ý tưởng thành bản đầu tiên chạy được, từng thay đổi một, có kiểm chứng.' },
       { icon: 'store', title: 'Chủ tiệm', body: 'Giữ site luôn mới: sản phẩm, trang và chỗ sửa, không phải chờ lập trình viên.' },
@@ -313,7 +313,7 @@ const vi: LandingContent = {
     needs: [
       'Claude Code, đăng nhập gói Pro hoặc Max',
       'AgentKit với giấy phép Engineer Kit',
-      'Một dự án trong thư mục git, hoặc thư mục trống cho ứng dụng mới',
+      'Một dự án trong thư mục Git, hoặc thư mục trống cho ứng dụng mới',
     ],
     systemsTitle: 'Hệ điều hành',
     systems: [
