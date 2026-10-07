@@ -91,6 +91,7 @@ export const common = {
   'footer.links.license': 'Giấy Phép',
   // Footer component
   'footer.claudekit_discord': 'ClaudeKit Discord',
+  'footer.agentkit_discord': 'AgentKit Discord',
   'footer.get_started': 'Bắt Đầu',
   'footer.claudekit_discount': 'AgentKit (Giảm 30%)',
   'footer.required_for_vividkit': 'VividKit Builder cần giấy phép AgentKit Engineer Kit',

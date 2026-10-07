@@ -91,6 +91,7 @@ export const common = {
   'footer.links.license': 'License',
   // Footer component
   'footer.claudekit_discord': 'ClaudeKit Discord',
+  'footer.agentkit_discord': 'AgentKit Discord',
   'footer.get_started': 'Get Started',
   'footer.claudekit_discount': 'AgentKit (30% OFF)',
   'footer.required_for_vividkit': 'VividKit Builder needs an AgentKit Engineer Kit license',

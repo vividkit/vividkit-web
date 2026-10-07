@@ -34,7 +34,7 @@ export interface LandingContent {
   team: Section;
   workflows: Section & { items: { name: string; when: string; inBeta: boolean }[]; laterTag: string };
   safety: Section & { autoTitle: string; autoBody: string };
-  runtimes: Section & { verified: string[]; note: string };
+  runtimes: Section & { verified: string[] };
   start: Section & {
     needsTitle: string;
     needs: string[];
@@ -146,7 +146,6 @@ const en: LandingContent = {
     title: 'Works with the coding agents you already use',
     lead: 'Each teammate can run on a different runtime. VividKit finds the ones installed on your machine and uses your own sign-in.',
     verified: ['Claude Code', 'Codex', 'OpenCode', 'GitHub Copilot CLI', 'Cursor Agent', 'Grok', 'Oh My Pi'],
-    note: 'Each of these has run a full issue end to end. The app lists more runtimes and marks them "Not tested yet".',
   },
   start: {
     eyebrow: 'Before you begin',
@@ -162,8 +161,8 @@ const en: LandingContent = {
     systems: [
       { name: 'Linux x86-64', status: 'Supported (.deb, AppImage)', ok: true },
       { name: 'macOS, Apple silicon', status: 'Supported', ok: true },
-      { name: 'macOS, Intel', status: 'Not yet', ok: false },
-      { name: 'Windows', status: 'Not yet', ok: false },
+      { name: 'macOS, Intel', status: 'Coming soon', ok: false },
+      { name: 'Windows', status: 'Coming soon', ok: false },
     ],
   },
   faq: {
@@ -304,7 +303,6 @@ const vi: LandingContent = {
     title: 'Dùng được với các agent lập trình bạn đang có',
     lead: 'Mỗi đồng đội có thể chạy trên một runtime khác nhau. VividKit tìm các runtime đã cài trên máy và dùng chính tài khoản bạn đã đăng nhập.',
     verified: ['Claude Code', 'Codex', 'OpenCode', 'GitHub Copilot CLI', 'Cursor Agent', 'Grok', 'Oh My Pi'],
-    note: 'Mỗi runtime ở đây đã chạy thật trọn một issue. App còn liệt kê thêm runtime khác, ghi "Chưa kiểm thật".',
   },
   start: {
     eyebrow: 'Trước khi bắt đầu',
@@ -320,8 +318,8 @@ const vi: LandingContent = {
     systems: [
       { name: 'Linux x86-64', status: 'Hỗ trợ (.deb, AppImage)', ok: true },
       { name: 'macOS, Apple silicon', status: 'Hỗ trợ', ok: true },
-      { name: 'macOS, Intel', status: 'Chưa có', ok: false },
-      { name: 'Windows', status: 'Chưa có', ok: false },
+      { name: 'macOS, Intel', status: 'Sắp ra mắt', ok: false },
+      { name: 'Windows', status: 'Sắp ra mắt', ok: false },
     ],
   },
   faq: {
