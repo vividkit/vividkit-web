@@ -2,6 +2,7 @@
 import Logo from '@/components/ui/Logo.astro';
 import { getLangFromUrl, languages, useTranslatedPath, type Language } from '@/i18n';
 import { useTranslations } from '@/i18n/utils';
+import { landingContent, BUILDER_LINKS } from '@/data/landing-content';
 
 interface Props {
   class?: string;
@@ -14,6 +15,7 @@ const { class: className = '', lang = 'en' } = Astro.props;
 const currentLang = getLangFromUrl(Astro.url);
 const t = useTranslations(currentLang);
 const translatePath = useTranslatedPath(currentLang);
+const nav = landingContent[currentLang].nav;
 ---
 
 <header class="fixed top-6 left-6 right-6 z-50 transition-all duration-300" id="main-header">
@@ -28,10 +30,11 @@ const translatePath = useTranslatedPath(currentLang);
         <!-- Centered Navigation -->
         <nav class="hidden lg:flex items-center justify-center flex-1">
           <ul class="flex items-center gap-3 xl:gap-5 px-3 xl:px-4 py-1.5 rounded-full bg-white/50 dark:bg-white/5 border border-white/20 dark:border-white/5 shadow-inner">
-            <li><a href={translatePath('/#hero')} class="nav-link text-[10px] xl:text-xs font-semibold uppercase tracking-wide px-1.5 xl:px-2 py-1 whitespace-nowrap">{t('nav.home')}</a></li>
-            <li><a href={translatePath('/#features')} class="nav-link text-[10px] xl:text-xs font-semibold uppercase tracking-wide px-1.5 xl:px-2 py-1 whitespace-nowrap">{t('nav.features')}</a></li>
-            <li><a href={translatePath('/#pricing')} class="nav-link text-[10px] xl:text-xs font-semibold uppercase tracking-wide px-1.5 xl:px-2 py-1 whitespace-nowrap">{t('nav.pricing')}</a></li>
-            <li><a href={translatePath('/guides')} class="nav-link text-[10px] xl:text-xs font-semibold uppercase tracking-wide px-1.5 xl:px-2 py-1 whitespace-nowrap">{t('nav.guides')}</a></li>
+            <li><a href={translatePath('/#how')} class="nav-link text-[10px] xl:text-xs font-semibold uppercase tracking-wide px-1.5 xl:px-2 py-1 whitespace-nowrap">{nav.how}</a></li>
+            <li><a href={translatePath('/#team')} class="nav-link text-[10px] xl:text-xs font-semibold uppercase tracking-wide px-1.5 xl:px-2 py-1 whitespace-nowrap">{nav.team}</a></li>
+            <li><a href={translatePath('/#safety')} class="nav-link text-[10px] xl:text-xs font-semibold uppercase tracking-wide px-1.5 xl:px-2 py-1 whitespace-nowrap">{nav.safety}</a></li>
+            <li><a href={BUILDER_LINKS.docs[currentLang]} target="_blank" rel="noopener noreferrer" class="nav-link text-[10px] xl:text-xs font-semibold uppercase tracking-wide px-1.5 xl:px-2 py-1 whitespace-nowrap">{nav.docs}</a></li>
+            <li><a href={translatePath('/guides')} class="nav-link text-[10px] xl:text-xs font-semibold uppercase tracking-wide px-1.5 xl:px-2 py-1 whitespace-nowrap">{nav.guides}</a></li>
           </ul>
         </nav>
 
@@ -67,12 +70,9 @@ const translatePath = useTranslatedPath(currentLang);
             </svg>
           </button>
 
-          <a href={translatePath('/#waitlist')} class="hidden lg:flex items-center gap-2 px-4 xl:px-5 py-2 rounded-full cta-button font-bold text-[10px] xl:text-xs cursor-pointer whitespace-nowrap">
-            <span>{t('hero.cta.primary')}</span>
-            <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
-            </svg>
-          </a>
+          <span aria-disabled="true" class="hidden lg:flex items-center gap-2 px-4 xl:px-5 py-2 rounded-full bg-blue-600/10 text-blue-700 dark:bg-blue-400/15 dark:text-blue-300 font-bold text-[10px] xl:text-xs whitespace-nowrap">
+            <span>{nav.cta}</span>
+          </span>
 
           <!-- Mobile Menu Button -->
           <button id="mobile-menu-toggle" class="lg:hidden p-2 text-slate-600 dark:text-slate-300 cursor-pointer" aria-label={currentLang === 'vi' ? 'Mở menu' : 'Open menu'}>
@@ -86,12 +86,11 @@ const translatePath = useTranslatedPath(currentLang);
   <!-- Mobile Menu -->
   <div id="mobile-menu" class="hidden lg:hidden absolute top-full left-4 right-4 mt-2 glass-card rounded-2xl p-4 shadow-xl">
     <nav class="flex flex-col gap-2">
-      <a href={translatePath('/#hero')} class="px-4 py-3 rounded-xl hover:bg-slate-100 dark:hover:bg-white/10 text-slate-600 dark:text-slate-300 font-medium transition-colors">{t('nav.home')}</a>
-      <a href={translatePath('/#features')} class="px-4 py-3 rounded-xl hover:bg-slate-100 dark:hover:bg-white/10 text-slate-600 dark:text-slate-300 font-medium transition-colors">{t('nav.features')}</a>
-      <a href={translatePath('/#pricing')} class="px-4 py-3 rounded-xl hover:bg-slate-100 dark:hover:bg-white/10 text-slate-600 dark:text-slate-300 font-medium transition-colors">{t('nav.pricing')}</a>
-      <a href={translatePath('/#claudekit')} class="px-4 py-3 rounded-xl hover:bg-slate-100 dark:hover:bg-white/10 text-slate-600 dark:text-slate-300 font-medium transition-colors">{t('nav.claudekit')}</a>
-      <a href={translatePath('/#commands')} class="px-4 py-3 rounded-xl hover:bg-slate-100 dark:hover:bg-white/10 text-slate-600 dark:text-slate-300 font-medium transition-colors">{t('nav.commands')}</a>
-      <a href={translatePath('/guides')} class="px-4 py-3 rounded-xl hover:bg-slate-100 dark:hover:bg-white/10 text-slate-600 dark:text-slate-300 font-medium transition-colors">{t('nav.guides')}</a>
+      <a href={translatePath('/#how')} class="px-4 py-3 rounded-xl hover:bg-slate-100 dark:hover:bg-white/10 text-slate-600 dark:text-slate-300 font-medium transition-colors">{nav.how}</a>
+      <a href={translatePath('/#team')} class="px-4 py-3 rounded-xl hover:bg-slate-100 dark:hover:bg-white/10 text-slate-600 dark:text-slate-300 font-medium transition-colors">{nav.team}</a>
+      <a href={translatePath('/#safety')} class="px-4 py-3 rounded-xl hover:bg-slate-100 dark:hover:bg-white/10 text-slate-600 dark:text-slate-300 font-medium transition-colors">{nav.safety}</a>
+      <a href={BUILDER_LINKS.docs[currentLang]} target="_blank" rel="noopener noreferrer" class="px-4 py-3 rounded-xl hover:bg-slate-100 dark:hover:bg-white/10 text-slate-600 dark:text-slate-300 font-medium transition-colors">{nav.docs}</a>
+      <a href={translatePath('/guides')} class="px-4 py-3 rounded-xl hover:bg-slate-100 dark:hover:bg-white/10 text-slate-600 dark:text-slate-300 font-medium transition-colors">{nav.guides}</a>
       <div class="h-px bg-slate-200 dark:bg-slate-700 my-2"></div>
       <a
         href={translatePath(Astro.url.pathname, currentLang === 'en' ? 'vi' : 'en')}
@@ -102,7 +101,7 @@ const translatePath = useTranslatedPath(currentLang);
         <span>{currentLang === 'en' ? 'Tiếng Việt' : 'English'}</span>
       </a>
       <div class="h-px bg-slate-200 dark:bg-slate-700 my-2"></div>
-      <a href={translatePath('/#waitlist')} class="px-4 py-3 rounded-xl bg-blue-600 text-white font-medium text-center">{t('hero.cta.primary')}</a>
+      <span aria-disabled="true" class="px-4 py-3 rounded-xl bg-blue-600/10 text-blue-700 dark:bg-blue-400/15 dark:text-blue-300 font-medium text-center">{nav.cta}</span>
     </nav>
   </div>
 </header>

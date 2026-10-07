@@ -1,0 +1,26 @@
+---
+import { landingContent } from '@/data/landing-content';
+import type { Language } from '@/i18n';
+
+interface Props { lang: Language }
+const { lang } = Astro.props;
+const c = landingContent[lang].runtimes;
+---
+
+<section id="runtimes" class="vkl-section">
+  <div class="vkl-wrap">
+    <p class="vkl-eyebrow">{c.eyebrow}</p>
+    <h2 class="vkl-h2">{c.title}</h2>
+    <p class="vkl-lead">{c.lead}</p>
+
+    <ul class="mt-10 flex flex-wrap gap-2">
+      {c.verified.map((r) => (
+        <li class="inline-flex items-center gap-2 h-10 px-4 rounded-[10px] bg-[var(--vk-panel)] shadow-[var(--vk-shadow-raise)] text-[14px] font-semibold">
+          <svg viewBox="0 0 16 16" class="w-3.5 h-3.5 text-[var(--vk-ok)]" aria-hidden="true"><path d="M3.5 8.2l3 3 6-6.4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          {r}
+        </li>
+      ))}
+    </ul>
+    <p class="mt-4 text-[13px] text-[var(--vk-ink3)] max-w-[60ch]">{c.moreNote}</p>
+  </div>
+</section>

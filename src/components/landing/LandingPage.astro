@@ -1,0 +1,40 @@
+---
+import MainLayout from '@/layouts/MainLayout.astro';
+import Header from '@/components/layout/Header.astro';
+import Footer from '@/components/layout/Footer.astro';
+import LandingHero from './LandingHero.astro';
+import LandingHow from './LandingHow.astro';
+import LandingTeam from './LandingTeam.astro';
+import LandingWorkflows from './LandingWorkflows.astro';
+import LandingSafety from './LandingSafety.astro';
+import LandingRuntimes from './LandingRuntimes.astro';
+import LandingStart from './LandingStart.astro';
+import { landingContent } from '@/data/landing-content';
+import type { Language } from '@/i18n';
+import '@/styles/landing.css';
+
+interface Props { lang: Language }
+const { lang } = Astro.props;
+const meta = landingContent[lang].meta;
+---
+
+<MainLayout title={meta.title} description={meta.description} canonical={lang === 'vi' ? '/vi/' : '/'} lang={lang}>
+  <div class="vkl min-h-screen">
+    <Header lang={lang} />
+    <main>
+      <LandingHero lang={lang} />
+      <LandingHow lang={lang} />
+      <LandingTeam lang={lang} />
+      <LandingWorkflows lang={lang} />
+      <LandingSafety lang={lang} />
+      <LandingRuntimes lang={lang} />
+      <LandingStart lang={lang} />
+    </main>
+  </div>
+  <Footer lang={lang} />
+
+  <script>
+    import { initSmoothScroll } from '@/scripts/smooth-scroll';
+    initSmoothScroll();
+  </script>
+</MainLayout>

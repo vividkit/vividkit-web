@@ -62,8 +62,8 @@ export const common = {
   // fix_logs — translations moved to inline in FixLogsGuide.astro
   // footer
   // Footer
-  'footer.tagline': 'Build anything without terminal friction. Guides for AgentKit and ClaudeKit.',
-  'footer.copyright': '© 2025 VividKit. All rights reserved.',
+  'footer.tagline': 'A desktop app to run an AI team that builds your app. Plus guides for AgentKit and ClaudeKit.',
+  'footer.copyright': '© 2026 VividKit. All rights reserved.',
   'footer.sponsor': 'Sponsor on GitHub',
   // Footer links
   'footer.product': 'Product',
@@ -71,6 +71,10 @@ export const common = {
   'footer.company': 'Company',
   'footer.legal': 'Legal',
   'footer.links.features': 'Features',
+  'footer.links.how': 'How it works',
+  'footer.links.docs': 'Docs',
+  'footer.links.download': 'Download the beta',
+  'footer.links.feedback': 'Report a problem',
   'footer.links.pricing': 'Pricing',
   'footer.links.commands': 'Commands',
   'footer.links.waitlist': 'Waitlist',
@@ -92,7 +96,7 @@ export const common = {
   'footer.claudekit_discord': 'ClaudeKit Discord',
   'footer.get_started': 'Get Started',
   'footer.claudekit_discount': 'AgentKit (30% OFF)',
-  'footer.required_for_vividkit': 'Works with AgentKit or ClaudeKit',
+  'footer.required_for_vividkit': 'VividKit Builder needs an AgentKit Engineer Kit license',
   // form
   // Waitlist form
   'form.name': 'Your name',

@@ -1,0 +1,28 @@
+---
+import { landingContent } from '@/data/landing-content';
+import type { Language } from '@/i18n';
+
+interface Props { lang: Language }
+const { lang } = Astro.props;
+const c = landingContent[lang].workflows;
+---
+
+<section id="workflows" class="vkl-section">
+  <div class="vkl-wrap">
+    <p class="vkl-eyebrow">{c.eyebrow}</p>
+    <h2 class="vkl-h2">{c.title}</h2>
+    <p class="vkl-lead">{c.lead}</p>
+
+    <ul class="mt-12 vkl-panel divide-y divide-[var(--vk-line-strong)] overflow-hidden">
+      {c.items.map((w) => (
+        <li class={`flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-6 px-5 py-4 ${w.inBeta ? '' : 'opacity-70'}`}>
+          <div class="sm:w-56 shrink-0 flex items-center gap-2">
+            <h3 class="text-[15px] font-semibold">{w.name}</h3>
+            {!w.inBeta && <span class="vkl-pill vkl-pill-muted">{c.laterTag}</span>}
+          </div>
+          <p class="text-[14px] leading-relaxed text-[var(--vk-ink2)]">{w.when}</p>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>

@@ -1,0 +1,39 @@
+---
+import AppMockup from './AppMockup.astro';
+import { landingContent, BUILDER_LINKS } from '@/data/landing-content';
+import type { Language } from '@/i18n';
+
+interface Props { lang: Language }
+const { lang } = Astro.props;
+const c = landingContent[lang].hero;
+---
+
+<section id="hero" class="pt-32 md:pt-40 pb-16 md:pb-24">
+  <div class="vkl-wrap">
+    <div class="max-w-3xl">
+      <span class="vkl-pill vkl-pill-acc">
+        {c.badge}
+      </span>
+      <h1 class="mt-6 text-[clamp(36px,6vw,64px)] font-bold leading-[1.05] tracking-[-0.035em] text-[var(--vk-ink)]">
+        {c.title}
+      </h1>
+      <p class="mt-6 text-lg md:text-xl leading-relaxed text-[var(--vk-ink2)] max-w-[62ch]">
+        {c.subtitle}
+      </p>
+      <div class="mt-8 flex flex-col sm:flex-row gap-3">
+        <span class="vkl-btn vkl-btn-soon" aria-disabled="true">
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+          {c.ctaPrimary}
+        </span>
+        <a href={BUILDER_LINKS.docs[lang]} target="_blank" rel="noopener noreferrer" class="vkl-btn vkl-btn-quiet">
+          {c.ctaSecondary}
+        </a>
+      </div>
+      <p class="mt-4 text-[13px] text-[var(--vk-ink3)]">{c.note}</p>
+    </div>
+
+    <div class="mt-14 md:mt-16">
+      <AppMockup lang={lang} />
+    </div>
+  </div>
+</section>
