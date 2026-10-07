@@ -69,9 +69,12 @@ const nav = landingContent[currentLang].nav;
             </svg>
           </button>
 
-          <span aria-disabled="true" class="hidden lg:flex items-center gap-2 px-4 xl:px-5 py-2 rounded-full bg-blue-600/10 text-blue-700 dark:bg-blue-400/15 dark:text-blue-300 font-bold text-[10px] xl:text-xs whitespace-nowrap">
+          <a href={translatePath('/#waitlist')} class="hidden lg:flex items-center gap-2 px-4 xl:px-5 py-2 rounded-full cta-button font-bold text-[10px] xl:text-xs cursor-pointer whitespace-nowrap">
             <span>{nav.cta}</span>
-          </span>
+            <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+            </svg>
+          </a>
 
           <!-- Mobile Menu Button -->
           <button id="mobile-menu-toggle" class="lg:hidden p-2 text-slate-600 dark:text-slate-300 cursor-pointer" aria-label={currentLang === 'vi' ? 'Mở menu' : 'Open menu'}>
@@ -99,7 +102,7 @@ const nav = landingContent[currentLang].nav;
         <span>{currentLang === 'en' ? 'Tiếng Việt' : 'English'}</span>
       </a>
       <div class="h-px bg-slate-200 dark:bg-slate-700 my-2"></div>
-      <span aria-disabled="true" class="px-4 py-3 rounded-xl bg-blue-600/10 text-blue-700 dark:bg-blue-400/15 dark:text-blue-300 font-medium text-center">{nav.cta}</span>
+      <a href={translatePath('/#waitlist')} class="px-4 py-3 rounded-xl bg-blue-600 text-white font-medium text-center">{nav.cta}</a>
     </nav>
   </div>
 </header>

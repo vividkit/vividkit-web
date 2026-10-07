@@ -44,6 +44,23 @@ export interface LandingContent {
   };
   faq: Section & { items: { q: string; a: string }[] };
   cta: { title: string; lead: string };
+  waitlist: {
+    join: string;
+    name: string;
+    email: string;
+    role: string;
+    rolePlaceholder: string;
+    roles: { value: string; label: string }[];
+    message: string;
+    messagePlaceholder: string;
+    submit: string;
+    sending: string;
+    successTitle: string;
+    successBody: string;
+    errorFallback: string;
+    privacy: string;
+    errors: { name: string; email: string; role: string; message: string };
+  };
   guides: { title: string; body: string; cta: string };
 }
 
@@ -53,7 +70,7 @@ const en: LandingContent = {
     description:
       'VividKit Builder is a desktop app for one person to direct a team of AI teammates. Say what you want, confirm the Requirement, read the evidence, then Apply and Publish. Beta coming soon for Linux and Apple silicon Macs.',
   },
-  nav: { how: 'How it works', team: 'Team', safety: 'Safety', guides: 'Guides', cta: 'Coming soon' },
+  nav: { how: 'How it works', team: 'Team', safety: 'Safety', guides: 'Guides', cta: 'Join the waitlist' },
   hero: {
     badge: 'Beta coming soon · Linux and Apple silicon',
     title: ['Run an ', 'AI team', ' that builds your apps'],
@@ -195,7 +212,36 @@ const en: LandingContent = {
   },
   cta: {
     title: 'Bring an app. [Meet your team.]',
-    lead: 'The beta is coming soon. When it lands, add a project and tell Cora about the first small thing to fix.',
+    lead: 'The beta is coming soon. Join the waitlist and we will email you when it is ready to download.',
+  },
+  waitlist: {
+    join: 'Join the waitlist',
+    name: 'Name',
+    email: 'Email',
+    role: 'You are',
+    rolePlaceholder: 'Choose one',
+    roles: [
+      { value: 'founder', label: 'Founder' },
+      { value: 'shop-owner', label: 'Shop owner' },
+      { value: 'freelancer', label: 'Freelancer' },
+      { value: 'small-team', label: 'Part of a small team' },
+      { value: 'developer', label: 'Developer' },
+      { value: 'other', label: 'Other' },
+    ],
+    message: 'What would you build first?',
+    messagePlaceholder: 'Optional',
+    submit: 'Join the waitlist',
+    sending: 'Sending…',
+    successTitle: 'You are on the list.',
+    successBody: 'We will email you when the beta is ready to download.',
+    errorFallback: 'Something went wrong. Please try again.',
+    privacy: 'We only use your email to tell you about VividKit Builder. No spam.',
+    errors: {
+      name: 'Please enter at least 2 characters.',
+      email: 'Please enter a valid email address.',
+      role: 'Please choose one.',
+      message: 'Please keep it under 500 characters.',
+    },
   },
   guides: {
     title: 'Learning AgentKit or ClaudeKit?',
@@ -210,7 +256,7 @@ const vi: LandingContent = {
     description:
       'VividKit Builder là app máy tính để một người điều hành đội đồng đội AI. Nói điều bạn muốn, xác nhận Requirement, đọc bằng chứng, rồi Áp dụng và Xuất bản. Bản beta sắp ra mắt cho Linux và Mac Apple silicon.',
   },
-  nav: { how: 'Cách làm', team: 'Đội', safety: 'An toàn', guides: 'Hướng dẫn', cta: 'Sắp ra mắt' },
+  nav: { how: 'Cách làm', team: 'Đội', safety: 'An toàn', guides: 'Hướng dẫn', cta: 'Đăng ký chờ' },
   hero: {
     badge: 'Bản beta sắp ra mắt · Linux và Apple silicon',
     title: ['Điều hành một ', 'đội AI', ' làm ứng dụng cho bạn'],
@@ -352,7 +398,36 @@ const vi: LandingContent = {
   },
   cta: {
     title: 'Mang ứng dụng tới. [Gặp đội của bạn.]',
-    lead: 'Bản beta sắp ra mắt. Khi có bản, hãy thêm một dự án và kể cho Cora việc nhỏ đầu tiên cần sửa.',
+    lead: 'Bản beta sắp ra mắt. Đăng ký chờ, chúng tôi sẽ email cho bạn khi có bản để tải.',
+  },
+  waitlist: {
+    join: 'Đăng ký chờ',
+    name: 'Tên',
+    email: 'Email',
+    role: 'Bạn là',
+    rolePlaceholder: 'Chọn một',
+    roles: [
+      { value: 'founder', label: 'Người lập dự án' },
+      { value: 'shop-owner', label: 'Chủ tiệm' },
+      { value: 'freelancer', label: 'Freelancer' },
+      { value: 'small-team', label: 'Thành viên team nhỏ' },
+      { value: 'developer', label: 'Lập trình viên' },
+      { value: 'other', label: 'Khác' },
+    ],
+    message: 'Bạn muốn làm gì đầu tiên?',
+    messagePlaceholder: 'Không bắt buộc',
+    submit: 'Đăng ký chờ',
+    sending: 'Đang gửi…',
+    successTitle: 'Bạn đã có tên trong danh sách.',
+    successBody: 'Chúng tôi sẽ email cho bạn khi bản beta sẵn sàng để tải.',
+    errorFallback: 'Có lỗi xảy ra. Bạn thử lại nhé.',
+    privacy: 'Email của bạn chỉ dùng để báo tin về VividKit Builder. Không spam.',
+    errors: {
+      name: 'Nhập ít nhất 2 ký tự.',
+      email: 'Nhập email hợp lệ.',
+      role: 'Chọn một mục.',
+      message: 'Viết ngắn hơn 500 ký tự.',
+    },
   },
   guides: {
     title: 'Đang học AgentKit hay ClaudeKit?',

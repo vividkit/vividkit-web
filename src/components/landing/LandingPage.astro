@@ -26,6 +26,7 @@ import {
   X,
 } from 'lucide-astro';
 import Highlight from './Highlight.astro';
+import WaitlistForm from './WaitlistForm.astro';
 import { AgentConsole } from './agent-console';
 import { HomeBento } from './home-bento';
 import { TeamShowcase } from './team-list';
@@ -69,6 +70,10 @@ const PATH_ICONS = [FolderGit2, Lightbulb];
             </h1>
             <p class="vk-lead">{c.hero.lead}</p>
             <div class="vk-actions">
+              <a href="#waitlist" class="vk-btn-primary">
+                {c.waitlist.join}
+                <ArrowRight size={16} />
+              </a>
               <span class="vk-btn-soon">
                 <Clock size={16} />
                 {c.hero.soon}
@@ -252,17 +257,15 @@ const PATH_ICONS = [FolderGit2, Lightbulb];
       </section>
 
       <!-- Closing band -->
-      <section class="vk-stage vk-cta" data-theme="dark">
+      <section id="waitlist" class="vk-stage vk-cta" data-theme="dark">
         <div class="vk-stage-glow" aria-hidden="true"></div>
+        <span class="vk-badge">
+          <span class="vk-live-dot"></span>
+          {c.hero.soon} · {c.hero.soonWhen}
+        </span>
         <h2><Highlight text={c.cta.title} /></h2>
         <p>{c.cta.lead}</p>
-        <div class="vk-actions">
-          <span class="vk-btn-soon">
-            <Clock size={16} />
-            {c.hero.soon}
-            <small>· {c.hero.soonWhen}</small>
-          </span>
-        </div>
+        <WaitlistForm lang={lang} />
       </section>
 
       <section class="vk-note">

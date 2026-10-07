@@ -1,0 +1,116 @@
+---
+// Beta waitlist. Submits to Web3Forms (PUBLIC_WEB3FORMS_KEY) with the same fields as the
+// original vividkit.dev waitlist: name, email, role, message.
+import { landingContent } from '@/data/landing-content';
+import type { Language } from '@/i18n';
+
+interface Props { lang: Language }
+const { lang } = Astro.props;
+const w = landingContent[lang].waitlist;
+---
+
+<form
+  id="waitlist-form"
+  class="vk-wl"
+  novalidate
+  data-errors={JSON.stringify(w.errors)}
+  data-fallback={w.errorFallback}
+>
+  <div class="vk-wl-grid">
+    <label class="vk-wl-field">
+      <span>{w.name}</span>
+      <input id="name" name="name" type="text" autocomplete="name" required />
+      <small id="name-error" hidden></small>
+    </label>
+    <label class="vk-wl-field">
+      <span>{w.email}</span>
+      <input id="email" name="email" type="email" autocomplete="email" required />
+      <small id="email-error" hidden></small>
+    </label>
+  </div>
+  <label class="vk-wl-field">
+    <span>{w.role}</span>
+    <select id="role" name="role" required>
+      <option value="" selected disabled>{w.rolePlaceholder}</option>
+      {w.roles.map((r) => <option value={r.value}>{r.label}</option>)}
+    </select>
+    <small id="role-error" hidden></small>
+  </label>
+  <label class="vk-wl-field">
+    <span>{w.message}</span>
+    <textarea id="message" name="message" rows="3" placeholder={w.messagePlaceholder}></textarea>
+    <small id="message-error" hidden></small>
+  </label>
+
+  <button id="waitlist-submit" type="submit" class="vk-btn-primary vk-wl-submit">
+    <span id="waitlist-submit-text">{w.submit}</span>
+    <span id="waitlist-submit-loading" hidden>{w.sending}</span>
+  </button>
+
+  <p id="waitlist-error" class="vk-wl-status" data-kind="error" role="alert" hidden></p>
+  <p class="vk-wl-privacy">{w.privacy}</p>
+</form>
+
+<div id="waitlist-success" class="vk-wl-done" role="status" hidden>
+  <b>{w.successTitle}</b>
+  <span>{w.successBody}</span>
+</div>
+
+<script>
+  import { submitWaitlistForm, validateForm, type ValidationMessages } from '@/scripts/form-handler';
+
+  const form = document.getElementById('waitlist-form') as HTMLFormElement | null;
+  if (form) {
+    const fields = ['name', 'email', 'role', 'message'] as const;
+    const messages = JSON.parse(form.dataset.errors || '{}') as ValidationMessages;
+    const submit = document.getElementById('waitlist-submit') as HTMLButtonElement;
+    const text = document.getElementById('waitlist-submit-text') as HTMLSpanElement;
+    const loading = document.getElementById('waitlist-submit-loading') as HTMLSpanElement;
+    const errorBox = document.getElementById('waitlist-error') as HTMLParagraphElement;
+    const success = document.getElementById('waitlist-success') as HTMLDivElement;
+
+    const setError = (id: string, message?: string) => {
+      const el = document.getElementById(`${id}-error`);
+      const input = document.getElementById(id);
+      if (el) {
+        el.textContent = message ?? '';
+        el.hidden = !message;
+      }
+      input?.toggleAttribute('aria-invalid', Boolean(message));
+    };
+
+    fields.forEach((id) => document.getElementById(id)?.addEventListener('input', () => setError(id)));
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      errorBox.hidden = true;
+      const fd = new FormData(form);
+      const data = {
+        name: String(fd.get('name') ?? ''),
+        email: String(fd.get('email') ?? ''),
+        role: String(fd.get('role') ?? ''),
+        message: String(fd.get('message') ?? ''),
+      };
+      const { valid, errors } = validateForm(data, messages);
+      fields.forEach((id) => setError(id, errors[id]));
+      if (!valid) return;
+
+      submit.disabled = true;
+      text.hidden = true;
+      loading.hidden = false;
+      try {
+        await submitWaitlistForm(data);
+        form.hidden = true;
+        success.hidden = false;
+      } catch (error) {
+        console.error('Waitlist submission error:', error);
+        errorBox.textContent = form.dataset.fallback ?? '';
+        errorBox.hidden = false;
+      } finally {
+        submit.disabled = false;
+        text.hidden = false;
+        loading.hidden = true;
+      }
+    });
+  }
+</script>

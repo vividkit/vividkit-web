@@ -492,3 +492,120 @@
 .vkh [data-theme='dark'] .vk-hl {
   background-image: var(--vk-brand-text);
 }
+
+/* ---------- Waitlist (inside the dark closing band) ---------- */
+
+.vk-cta .vk-badge {
+  margin-bottom: 18px;
+}
+.vk-wl,
+.vk-wl-done {
+  width: 100%;
+  max-width: 560px;
+  margin-top: 28px;
+  text-align: left;
+}
+.vk-wl {
+  display: grid;
+  gap: 14px;
+  padding: 22px;
+  border-radius: 20px;
+  background: color-mix(in srgb, var(--vk-panel) 88%, transparent);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.08),
+    0 30px 80px -30px rgba(37, 99, 235, 0.45);
+  backdrop-filter: blur(12px);
+}
+.vk-wl[hidden],
+.vk-wl-done[hidden] {
+  display: none;
+}
+.vk-wl-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+.vk-wl-field {
+  display: grid;
+  gap: 6px;
+}
+.vk-wl-field > span {
+  color: var(--vk-ink2);
+  font-size: 13px;
+  font-weight: 600;
+}
+.vk-wl-field input,
+.vk-wl-field select,
+.vk-wl-field textarea {
+  width: 100%;
+  min-height: 42px;
+  padding: 10px 12px;
+  border: 0;
+  border-radius: var(--vk-radius-md);
+  background: var(--vk-inset);
+  box-shadow: inset 0 0 0 1px var(--vk-line-strong);
+  color: var(--vk-ink);
+  font: inherit;
+  font-size: 14.5px;
+  transition: box-shadow var(--vk-dur-quick) var(--vk-ease);
+}
+.vk-wl-field textarea {
+  resize: vertical;
+}
+.vk-wl-field select:has(option[value='']:checked) {
+  color: var(--vk-ink3);
+}
+.vk-wl-field input:focus,
+.vk-wl-field select:focus,
+.vk-wl-field textarea:focus {
+  outline: none;
+  box-shadow: inset 0 0 0 1px var(--vk-acc), 0 0 0 3px var(--vk-acc-soft);
+}
+.vk-wl-field [aria-invalid] {
+  box-shadow: inset 0 0 0 1px var(--vk-danger);
+}
+.vk-wl-field small,
+.vk-cta .vk-wl-status {
+  margin: 0;
+  color: var(--vk-danger);
+  font-size: 12.5px;
+}
+.vk-wl-submit {
+  justify-content: center;
+  width: 100%;
+  border: 0;
+  cursor: pointer;
+}
+.vk-wl-submit:disabled {
+  opacity: 0.7;
+  cursor: progress;
+}
+.vk-cta .vk-wl-privacy {
+  max-width: none;
+  margin: 0;
+  color: var(--vk-ink3);
+  font-size: 12.5px;
+  text-align: center;
+}
+.vk-wl-done {
+  display: grid;
+  gap: 4px;
+  padding: 22px;
+  border-radius: 20px;
+  background: color-mix(in srgb, var(--vk-ok) 14%, var(--vk-panel));
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--vk-ok) 40%, transparent);
+  text-align: center;
+}
+.vk-wl-done b {
+  color: var(--vk-ok);
+  font-size: 16px;
+}
+.vk-wl-done span {
+  color: var(--vk-ink2);
+  font-size: 14px;
+}
+@media (max-width: 760px) {
+  .vk-wl-grid {
+    grid-template-columns: 1fr;
+  }
+}
