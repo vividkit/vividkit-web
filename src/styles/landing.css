@@ -1,0 +1,494 @@
+/*
+ * Landing page for VividKit Builder: the app's tokens and fonts, then the home page styles
+ * shared with vividkit.app. Fonts are imported per weight (400.css…): each file declares every
+ * subset with its unicode-range, so Vietnamese letters come from the vietnamese subset. Per-subset
+ * files (latin-400.css) have no unicode-range and the last one declared would win for all text.
+ */
+@import '@fontsource/plus-jakarta-sans/400.css';
+@import '@fontsource/plus-jakarta-sans/500.css';
+@import '@fontsource/plus-jakarta-sans/600.css';
+@import '@fontsource/plus-jakarta-sans/700.css';
+@import '@fontsource/plus-jakarta-sans/800.css';
+@import '@fontsource/jetbrains-mono/400.css';
+@import '@fontsource/jetbrains-mono/500.css';
+@import './vk-tokens.css';
+@import './vk-home.css';
+
+.vkh {
+  min-height: 100vh;
+  padding-top: 112px;
+  background:
+    radial-gradient(900px 520px at 50% -10%, color-mix(in srgb, var(--vk-brand-a) 10%, transparent), transparent 70%),
+    radial-gradient(700px 480px at 100% 55%, color-mix(in srgb, var(--vk-brand-b) 7%, transparent), transparent 70%),
+    radial-gradient(700px 480px at 0% 85%, color-mix(in srgb, var(--vk-brand-a) 7%, transparent), transparent 70%),
+    var(--vk-chrome);
+  color: var(--vk-ink);
+  font-family: var(--vk-font-sans);
+  word-spacing: 0.07em;
+}
+.vkh h1,
+.vkh h2,
+.vkh h3 {
+  font-family: var(--vk-font-sans);
+}
+.vkh code {
+  font-family: var(--vk-font-mono);
+  word-spacing: normal;
+}
+.vkh section[id] {
+  scroll-margin-top: 112px;
+}
+
+/* Not released yet: shaped like the primary action, but inert. */
+.vk-btn-soon {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 44px;
+  padding: 0 20px;
+  border-radius: var(--vk-radius-md);
+  background: rgba(255, 255, 255, 0.06);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--vk-brand-b) 45%, transparent);
+  color: var(--vk-ink);
+  font-size: 14.5px;
+  font-weight: 650;
+  cursor: default;
+}
+.vk-btn-soon small {
+  color: var(--vk-ink3);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.vkh a:focus-visible {
+  outline: 2px solid var(--vk-acc);
+  outline-offset: 2px;
+}
+
+/* Bot avatars (from the vividkit.app global styles): a dot until the bot has its colour. */
+.vk-team-bot {
+  display: grid;
+  flex: none;
+  place-items: center;
+}
+.vk-team-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+
+/* ---------- Introduction sections (beyond the vividkit.app home) ---------- */
+
+.vk-eyebrow {
+  margin: 0 0 10px;
+  color: var(--vk-acc);
+  font-size: 13.5px;
+  font-weight: 650;
+  text-align: center;
+}
+.vk-eyebrow.vk-left {
+  text-align: left;
+}
+.vkh .vk-section-title {
+  max-width: 780px;
+  margin-inline: auto;
+  text-wrap: balance;
+}
+
+.vk-btn-quiet {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  gap: 8px;
+  height: 40px;
+  padding: 0 16px;
+  border-radius: var(--vk-radius-md);
+  background: var(--vk-inset);
+  box-shadow: var(--vk-shadow-raise);
+  color: var(--vk-ink);
+  font-size: 14px;
+  font-weight: 650;
+  transition: background var(--vk-dur-quick) var(--vk-ease);
+}
+.vk-btn-quiet:hover {
+  background: var(--vk-sunken);
+}
+
+/* Why: the old way, struck through, above what VividKit does instead */
+.vk-why {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  margin: 36px 0 0;
+  padding: 0;
+  list-style: none;
+}
+.vk-why li {
+  overflow: hidden;
+  border-radius: 20px;
+  background: var(--vk-panel);
+  box-shadow: var(--vk-shadow-card);
+}
+.vk-why-before {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 14px 20px;
+  background: var(--vk-inset);
+  border-bottom: 1px solid var(--vk-line);
+  color: var(--vk-ink3);
+  font-size: 13.5px;
+}
+.vk-why-before svg {
+  flex: none;
+  margin-top: 3px;
+  color: var(--vk-danger);
+}
+.vk-why-before span {
+  text-decoration: line-through;
+  text-decoration-color: color-mix(in srgb, var(--vk-danger) 45%, transparent);
+}
+.vk-why-before small {
+  display: block;
+  margin-bottom: 2px;
+  font-size: 11.5px;
+  font-weight: 600;
+}
+.vk-why-after {
+  padding: 20px 20px 24px;
+}
+.vk-why-after h3,
+.vk-people h3,
+.vk-path h3,
+.vk-workflows h3,
+.vk-note h3 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 650;
+  letter-spacing: -0.01em;
+}
+.vk-why-after h3 {
+  margin-top: 4px;
+}
+.vk-why-after p,
+.vk-people p,
+.vk-path p,
+.vk-workflows p,
+.vk-note p {
+  margin: 6px 0 0;
+  color: var(--vk-ink2);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+/* Audience */
+.vk-people {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+  margin: 36px 0 0;
+  padding: 0;
+  list-style: none;
+}
+.vk-people li {
+  padding: 22px 20px;
+  border-radius: 20px;
+  background: var(--vk-panel);
+  box-shadow: var(--vk-shadow-card);
+}
+.vk-people li > svg {
+  margin-bottom: 12px;
+  color: var(--vk-acc);
+}
+.vk-paths {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 16px;
+}
+.vk-path {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  padding: 22px 24px;
+  border-radius: 20px;
+  background:
+    radial-gradient(420px 160px at 0% 0%, color-mix(in srgb, var(--vk-brand-a) 13%, transparent), transparent),
+    var(--vk-panel);
+  box-shadow: var(--vk-shadow-card);
+}
+.vk-path-icon {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  background: var(--vk-brand);
+  color: #fff;
+  box-shadow: 0 10px 24px -10px rgba(37, 99, 235, 0.7);
+}
+
+/* Workflows */
+.vk-workflows {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 12px;
+  margin: 36px 0 0;
+  padding: 0;
+  list-style: none;
+}
+.vk-workflows li {
+  position: relative;
+  padding: 18px 20px 20px 22px;
+  border-radius: 16px;
+  background: var(--vk-panel);
+  box-shadow: var(--vk-shadow-card);
+}
+.vk-workflows li::before {
+  content: '';
+  position: absolute;
+  top: 18px;
+  bottom: 18px;
+  left: 0;
+  width: 3px;
+  border-radius: 0 3px 3px 0;
+  background: var(--vk-brand);
+}
+.vk-workflows li[data-later] {
+  background: transparent;
+  box-shadow: inset 0 0 0 1px var(--vk-line-strong);
+}
+.vk-workflows li[data-later]::before {
+  background: var(--vk-line-strong);
+}
+.vk-workflows h3 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.vk-tag {
+  padding: 1px 8px;
+  border-radius: var(--vk-radius-pill);
+  background: var(--vk-sunken);
+  color: var(--vk-ink3);
+  font-size: 11.5px;
+  font-weight: 600;
+}
+
+/* A wide row with text on the left and one action on the right */
+.vk-note {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px 24px;
+  margin-top: 16px;
+  padding: 22px 24px;
+  border-radius: 20px;
+  background: var(--vk-panel);
+  box-shadow: var(--vk-shadow-card);
+}
+.vk-note > div {
+  flex: 1 1 420px;
+}
+
+/* Runtimes and requirements */
+.vk-split {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+.vk-split-card {
+  padding: 32px;
+  border-radius: 24px;
+  background:
+    radial-gradient(520px 220px at 100% 0%, color-mix(in srgb, var(--vk-brand-b) 12%, transparent), transparent),
+    var(--vk-panel);
+  box-shadow: var(--vk-shadow-card);
+}
+.vk-card-title {
+  margin: 0;
+  font-size: clamp(22px, 2.4vw, 28px);
+  font-weight: 750;
+  letter-spacing: -0.03em;
+  line-height: 1.2;
+}
+.vk-card-lead {
+  margin: 10px 0 0;
+  color: var(--vk-ink2);
+  font-size: 15px;
+  line-height: 1.6;
+}
+.vk-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 22px 0 0;
+  padding: 0;
+  list-style: none;
+}
+.vk-chips li {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  height: 36px;
+  padding: 0 13px;
+  border-radius: var(--vk-radius-md);
+  background: var(--vk-inset);
+  box-shadow: var(--vk-shadow-raise);
+  font-size: 14px;
+  font-weight: 600;
+}
+.vk-chips svg,
+.vk-needs svg {
+  flex: none;
+  color: var(--vk-ok);
+}
+.vk-fine {
+  margin: 14px 0 0;
+  color: var(--vk-ink3);
+  font-size: 13px;
+  line-height: 1.55;
+}
+.vk-mini-label {
+  margin: 22px 0 8px;
+  color: var(--vk-ink3);
+  font-size: 12.5px;
+  font-weight: 600;
+}
+.vk-needs {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.vk-needs li {
+  display: flex;
+  gap: 10px;
+  font-size: 14.5px;
+  line-height: 1.5;
+}
+.vk-needs svg {
+  margin-top: 3px;
+}
+.vk-systems {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  border-radius: var(--vk-radius-md);
+  background: var(--vk-inset);
+  box-shadow: inset 0 0 0 1px var(--vk-line);
+  list-style: none;
+}
+.vk-systems li {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 9px 14px;
+  font-size: 14px;
+}
+.vk-systems li + li {
+  border-top: 1px solid var(--vk-line);
+}
+.vk-systems span {
+  font-weight: 600;
+}
+.vk-systems em {
+  color: var(--vk-ink3);
+  font-style: normal;
+}
+.vk-systems li[data-ok='true'] em {
+  color: var(--vk-ok);
+}
+.vk-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 18px;
+  color: var(--vk-acc);
+  font-size: 14px;
+  font-weight: 650;
+}
+.vk-link:hover {
+  text-decoration: underline;
+}
+
+/* FAQ */
+.vk-faq {
+  display: grid;
+  gap: 10px;
+  max-width: 820px;
+  margin: 32px auto 0;
+}
+.vk-faq details {
+  border-radius: 16px;
+  background: var(--vk-panel);
+  box-shadow: var(--vk-shadow-card);
+}
+.vk-faq summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 18px 22px;
+  cursor: pointer;
+  font-size: 15.5px;
+  font-weight: 650;
+  list-style: none;
+}
+.vk-faq summary::-webkit-details-marker {
+  display: none;
+}
+.vk-faq summary svg {
+  flex: none;
+  color: var(--vk-ink3);
+  transition: transform var(--vk-dur-fast) var(--vk-ease);
+}
+.vk-faq details[open] summary svg {
+  transform: rotate(180deg);
+}
+.vk-faq details p {
+  margin: 0;
+  padding: 0 22px 20px;
+  color: var(--vk-ink2);
+  font-size: 14.5px;
+  line-height: 1.65;
+}
+
+@media (max-width: 1024px) {
+  .vk-why,
+  .vk-split {
+    grid-template-columns: 1fr;
+  }
+  .vk-people {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 760px) {
+  .vk-people,
+  .vk-paths {
+    grid-template-columns: 1fr;
+  }
+  .vk-split-card {
+    padding: 24px 20px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .vk-faq summary svg {
+    transition: none;
+  }
+}
+
+/* Key phrase in a section title: the logo gradient, deep enough to read on light panels. */
+.vk-hl {
+  background: linear-gradient(100deg, #1d4ed8 10%, #0891b2 90%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.dark .vkh .vk-hl,
+.vkh [data-theme='dark'] .vk-hl {
+  background-image: var(--vk-brand-text);
+}

@@ -1,0 +1,281 @@
+---
+// VividKit Builder landing page. The dark stages, console replay, safety bento and team row come
+// from the vividkit.app home page; the rest introduces the product in more depth. The console and
+// the team row are React islands so the bots and the run log move as they do on vividkit.app.
+import MainLayout from '@/layouts/MainLayout.astro';
+import Header from '@/components/layout/Header.astro';
+import Footer from '@/components/layout/Footer.astro';
+import {
+  ArrowRight,
+  BadgeCheck,
+  Briefcase,
+  Check,
+  ChevronDown,
+  Clock,
+  Eye,
+  FileCheck2,
+  FolderGit2,
+  GitBranch,
+  Lightbulb,
+  MessageSquareText,
+  MessagesSquare,
+  Rocket,
+  ShieldCheck,
+  Store,
+  Users,
+  X,
+} from 'lucide-astro';
+import Highlight from './Highlight.astro';
+import { AgentConsole } from './agent-console';
+import { HomeBento } from './home-bento';
+import { TeamShowcase } from './team-list';
+import { landingContent, type AudienceIcon, type FlowIcon, type WhyIcon } from '@/data/landing-content';
+import { useTranslatedPath, type Language } from '@/i18n';
+import '@/styles/landing.css';
+
+interface Props { lang: Language }
+const { lang } = Astro.props;
+const c = landingContent[lang];
+const translatePath = useTranslatedPath(lang);
+
+const FLOW_ICONS: Record<FlowIcon, typeof Eye> = {
+  message: MessageSquareText,
+  file: FileCheck2,
+  branch: GitBranch,
+  eye: Eye,
+  shield: ShieldCheck,
+};
+const WHY_ICONS: Record<WhyIcon, typeof Eye> = { chat: MessagesSquare, evidence: BadgeCheck, shield: ShieldCheck };
+const AUDIENCE_ICONS: Record<AudienceIcon, typeof Eye> = { store: Store, rocket: Rocket, briefcase: Briefcase, users: Users };
+const PATH_ICONS = [FolderGit2, Lightbulb];
+---
+
+<MainLayout title={c.meta.title} description={c.meta.description} canonical={lang === 'vi' ? '/vi/' : '/'} lang={lang}>
+  <div class="vkh">
+    <Header lang={lang} />
+
+    <main class="vk-home">
+      <!-- Hero -->
+      <section id="hero" class="vk-stage" data-theme="dark">
+        <div class="vk-stage-glow" aria-hidden="true"></div>
+        <div class="vk-hero">
+          <div class="vk-hero-text">
+            <span class="vk-badge">
+              <span class="vk-live-dot"></span>
+              {c.hero.badge}
+            </span>
+            <h1>
+              {c.hero.title[0]}<span class="vk-gradient-text">{c.hero.title[1]}</span>{c.hero.title[2]}
+            </h1>
+            <p class="vk-lead">{c.hero.lead}</p>
+            <div class="vk-actions">
+              <span class="vk-btn-soon">
+                <Clock size={16} />
+                {c.hero.soon}
+                <small>· {c.hero.soonWhen}</small>
+              </span>
+            </div>
+            <p class="vk-runs-on">{c.hero.runsOn}</p>
+          </div>
+          <AgentConsole client:visible lang={lang} />
+        </div>
+      </section>
+
+      <!-- Why -->
+      <section id="why" class="vk-section">
+        <p class="vk-eyebrow">{c.why.eyebrow}</p>
+        <h2 class="vk-section-title"><Highlight text={c.why.title} /></h2>
+        <p class="vk-section-lead">{c.why.lead}</p>
+        <ul class="vk-why">
+          {c.why.items.map((w) => {
+            const Icon = WHY_ICONS[w.icon];
+            return (
+              <li>
+                <div class="vk-why-before">
+                  <X size={14} />
+                  <div><small>{c.why.beforeLabel}</small><span>{w.before}</span></div>
+                </div>
+                <div class="vk-why-after">
+                  <span class="vk-flow-icon"><Icon size={18} /></span>
+                  <h3>{w.title}</h3>
+                  <p>{w.body}</p>
+                </div>
+              </li>
+            );
+          })}
+        </ul>
+      </section>
+
+      <!-- Audience -->
+      <section id="who" class="vk-section">
+        <p class="vk-eyebrow">{c.audience.eyebrow}</p>
+        <h2 class="vk-section-title"><Highlight text={c.audience.title} /></h2>
+        <p class="vk-section-lead">{c.audience.lead}</p>
+        <ul class="vk-people">
+          {c.audience.people.map((p) => {
+            const Icon = AUDIENCE_ICONS[p.icon];
+            return (
+              <li>
+                <Icon size={20} />
+                <h3>{p.title}</h3>
+                <p>{p.body}</p>
+              </li>
+            );
+          })}
+        </ul>
+        <div class="vk-paths">
+          {c.audience.paths.map((p, i) => {
+            const Icon = PATH_ICONS[i];
+            return (
+              <div class="vk-path">
+                <span class="vk-path-icon"><Icon size={20} /></span>
+                <div>
+                  <h3>{p.title}</h3>
+                  <p>{p.body}</p>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </section>
+
+      <!-- How it works -->
+      <section id="how" class="vk-section">
+        <p class="vk-eyebrow">{c.flow.eyebrow}</p>
+        <h2 class="vk-section-title"><Highlight text={c.flow.title} /></h2>
+        <p class="vk-section-lead">{c.flow.lead}</p>
+        <ol class="vk-flowline">
+          {c.flow.steps.map(([icon, title, body]) => {
+            const Icon = FLOW_ICONS[icon];
+            return (
+              <li>
+                <span class="vk-flow-icon"><Icon size={18} /></span>
+                <b>{title}</b>
+                <small>{body}</small>
+              </li>
+            );
+          })}
+        </ol>
+      </section>
+
+      <!-- Team -->
+      <section id="team" class="vk-section">
+        <p class="vk-eyebrow">{c.team.eyebrow}</p>
+        <h2 class="vk-section-title"><Highlight text={c.team.title} /></h2>
+        <p class="vk-section-lead">{c.team.lead}</p>
+        <TeamShowcase client:visible lang={lang} />
+      </section>
+
+      <!-- Workflows -->
+      <section id="workflows" class="vk-section">
+        <p class="vk-eyebrow">{c.workflows.eyebrow}</p>
+        <h2 class="vk-section-title"><Highlight text={c.workflows.title} /></h2>
+        <p class="vk-section-lead">{c.workflows.lead}</p>
+        <ul class="vk-workflows">
+          {c.workflows.items.map((w) => (
+            <li data-later={!w.inBeta || undefined}>
+              <h3>
+                {w.name}
+                {!w.inBeta && <span class="vk-tag">{c.workflows.laterTag}</span>}
+              </h3>
+              <p>{w.when}</p>
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      <!-- Safety -->
+      <section id="safety" class="vk-section">
+        <p class="vk-eyebrow">{c.safety.eyebrow}</p>
+        <h2 class="vk-section-title"><Highlight text={c.safety.title} /></h2>
+        <p class="vk-section-lead">{c.safety.lead}</p>
+        <HomeBento lang={lang} />
+        <div class="vk-note">
+          <div>
+            <h3>{c.safety.autoTitle}</h3>
+            <p>{c.safety.autoBody}</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Runtimes and requirements -->
+      <section id="runtimes" class="vk-section">
+        <div class="vk-split">
+          <div class="vk-split-card">
+            <p class="vk-eyebrow vk-left">{c.runtimes.eyebrow}</p>
+            <h2 class="vk-card-title"><Highlight text={c.runtimes.title} /></h2>
+            <p class="vk-card-lead">{c.runtimes.lead}</p>
+            <ul class="vk-chips">
+              {c.runtimes.verified.map((r) => (
+                <li><Check size={14} />{r}</li>
+              ))}
+            </ul>
+          </div>
+          <div class="vk-split-card">
+            <p class="vk-eyebrow vk-left">{c.start.eyebrow}</p>
+            <h2 class="vk-card-title"><Highlight text={c.start.title} /></h2>
+            <p class="vk-card-lead">{c.start.lead}</p>
+            <h3 class="vk-mini-label">{c.start.needsTitle}</h3>
+            <ul class="vk-needs">
+              {c.start.needs.map((n) => (
+                <li><Check size={15} />{n}</li>
+              ))}
+            </ul>
+            <h3 class="vk-mini-label">{c.start.systemsTitle}</h3>
+            <ul class="vk-systems">
+              {c.start.systems.map((s) => (
+                <li data-ok={s.ok}>
+                  <span>{s.name}</span>
+                  <em>{s.status}</em>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- FAQ -->
+      <section id="faq" class="vk-section">
+        <p class="vk-eyebrow">{c.faq.eyebrow}</p>
+        <h2 class="vk-section-title"><Highlight text={c.faq.title} /></h2>
+        <div class="vk-faq">
+          {c.faq.items.map((f) => (
+            <details>
+              <summary>
+                {f.q}
+                <ChevronDown size={18} />
+              </summary>
+              <p>{f.a}</p>
+            </details>
+          ))}
+        </div>
+      </section>
+
+      <!-- Closing band -->
+      <section class="vk-stage vk-cta" data-theme="dark">
+        <div class="vk-stage-glow" aria-hidden="true"></div>
+        <h2><Highlight text={c.cta.title} /></h2>
+        <p>{c.cta.lead}</p>
+        <div class="vk-actions">
+          <span class="vk-btn-soon">
+            <Clock size={16} />
+            {c.hero.soon}
+            <small>· {c.hero.soonWhen}</small>
+          </span>
+        </div>
+      </section>
+
+      <section class="vk-note">
+        <div>
+          <h3>{c.guides.title}</h3>
+          <p>{c.guides.body}</p>
+        </div>
+        <a href={translatePath('/guides')} class="vk-btn-quiet">
+          {c.guides.cta}
+          <ArrowRight size={16} />
+        </a>
+      </section>
+    </main>
+  </div>
+  <Footer lang={lang} />
+</MainLayout>

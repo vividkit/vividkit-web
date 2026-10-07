@@ -1,0 +1,149 @@
+/*
+ * VividKit Builder design tokens, copied from vividkit-builder packages/ui/src/tokens/tokens.css
+ * (only --vk-* and --person-*; the unprefixed aliases there would clash with Tailwind's theme).
+ * Scoped to the landing root. The site toggles dark mode with `.dark` on <html>; sections with
+ * data-theme="dark" are always dark, like the app's own dark stages.
+ */
+.vkh {
+  color-scheme: light;
+  --vk-chrome: #f3f3f3;
+  --vk-panel: #fdfdfd;
+  --vk-sunken: #f2f2f2;
+  --vk-inset: #f8f8f8;
+  --vk-ink: #0d0d0d;
+  --vk-ink2: #555555;
+  --vk-ink3: #6b6b6b;
+  --vk-line: rgba(0, 0, 0, 0.06);
+  --vk-line2: rgba(0, 0, 0, 0.06);
+  --vk-line-strong: rgba(0, 0, 0, 0.12);
+  --vk-acc: #0067d1;
+  --vk-acc-fill: #0067d1;
+  --vk-acc-line: rgba(0, 103, 209, 0.35);
+  --vk-acc-soft: rgba(0, 103, 209, 0.12);
+  --vk-on-acc: #ffffff;
+  --vk-badge-disc: #ffffff;
+  --vk-warn: #b4430c;
+  --vk-warn-soft: rgba(180, 67, 12, 0.1);
+  --vk-warn-bg: #fff5ec;
+  --vk-warn-line: rgba(180, 67, 12, 0.24);
+  --vk-ok: #167347;
+  --vk-danger: #b42318;
+  --vk-log-bg: #f6f6f7;
+  --vk-log-bar: #efeff1;
+  --vk-log-line: rgba(0, 0, 0, 0.07);
+  --vk-log-ink: #1f1f23;
+  --vk-log-dim: #66666f;
+  --vk-log-ok: #167347;
+  --vk-log-acc: #0067d1;
+  --vk-log-warn: #b4430c;
+  --vk-log-mask: #e3e3e8;
+  --vk-log-hover: rgba(0, 0, 0, 0.07);
+  --vk-log-soft: rgba(0, 0, 0, 0.04);
+  --vk-person-1: #5a55c4;
+  --vk-person-2: #2b7466;
+  --vk-person-3: #a8406f;
+  --vk-person-4: #2d62a8;
+  --vk-person-5: #8e5418;
+  --vk-person-6: #5e6b2a;
+  --vk-person-you: #3b4048;
+  --person-1: var(--vk-person-1);
+  --person-2: var(--vk-person-2);
+  --person-3: var(--vk-person-3);
+  --person-4: var(--vk-person-4);
+  --person-5: var(--vk-person-5);
+  --person-6: var(--vk-person-6);
+  --person-you: var(--vk-person-you);
+  --vk-radius-xs: 4px;
+  --vk-radius-sm: 8px;
+  --vk-radius-md: 10px;
+  --vk-radius-lg: 14px;
+  --vk-radius-xl: 16px;
+  --vk-radius-pill: 999px;
+  --vk-shadow-raise: 0 1px 2px rgba(0, 0, 0, 0.05), 0 0 0 1px rgba(0, 0, 0, 0.06);
+  --vk-shadow-float:
+  --vk-shadow-card: 0 0 0 1px rgba(0, 0, 0, 0.05), 0 2px 10px rgba(0, 0, 0, 0.04);
+  --vk-ring: inset 0 0 0 1px rgba(0, 0, 0, 0.07);
+  --vk-ring-strong: inset 0 0 0 1px rgba(0, 0, 0, 0.11);
+  --vk-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.25);
+  --vk-focus: 0 0 0 2px #fdfdfd, 0 0 0 4px #0067d1;
+  --vk-sidebar-w: 236px;
+  --vk-header-h: 48px;
+  --vk-inspector-w: 312px;
+  --vk-panel-gap: 8px;
+  --vk-row-h: 28px;
+  --vk-relay-card-h: 46px;
+  --vk-log-drawer-h: 380px;
+  --vk-bot-min: 28px;
+  --vk-dur-micro: 80ms;
+  --vk-dur-quick: 150ms;
+  --vk-dur-fast: 250ms;
+  --vk-dur-slow: 400ms;
+  --vk-dur-beam: 2.6s;
+  --vk-dur-spin: 0.9s;
+  --vk-dur-prep: 3.2s;
+  --vk-dur-shimmer: 2.4s;
+  --vk-dur-listen: 1.8s;
+  --vk-dur-caret: 1.1s;
+  --vk-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --vk-font-sans: 'Plus Jakarta Sans', 'Be Vietnam Pro', system-ui, sans-serif;
+  --vk-font-mono: 'JetBrains Mono', ui-monospace, monospace;
+}
+
+.dark .vkh,
+.vkh [data-theme='dark'] {
+  color-scheme: dark;
+  --vk-chrome: #0e0e0e;
+  --vk-panel: #141414;
+  --vk-sunken: #1d1d1d;
+  --vk-inset: #111111;
+  --vk-ink: #fbfbfb;
+  --vk-ink2: #cdcdcd;
+  --vk-ink3: #9a9a9a;
+  --vk-line: rgba(255, 255, 255, 0.06);
+  --vk-line2: rgba(255, 255, 255, 0.05);
+  --vk-line-strong: rgba(255, 255, 255, 0.1);
+  --vk-acc: #7db4ff;
+  --vk-acc-fill: #0b6cd8;
+  --vk-acc-line: rgba(125, 180, 255, 0.38);
+  --vk-acc-soft: rgba(0, 113, 252, 0.2);
+  --vk-on-acc: #ffffff;
+  --vk-badge-disc: #ffffff;
+  --vk-warn: #f59a5b;
+  --vk-warn-soft: rgba(245, 154, 91, 0.14);
+  --vk-warn-bg: #1f1711;
+  --vk-warn-line: rgba(245, 154, 91, 0.3);
+  --vk-ok: #5ccb8f;
+  --vk-danger: #ff8a80;
+  --vk-log-bg: #0c0c0d;
+  --vk-log-bar: #151517;
+  --vk-log-line: rgba(255, 255, 255, 0.07);
+  --vk-log-ink: #d9d9de;
+  --vk-log-dim: #7a7a85;
+  --vk-log-ok: #5ccb8f;
+  --vk-log-acc: #7db4ff;
+  --vk-log-warn: #f59a5b;
+  --vk-log-mask: #2a2a30;
+  --vk-log-hover: rgba(255, 255, 255, 0.1);
+  --vk-log-soft: rgba(255, 255, 255, 0.04);
+  --vk-person-1: #5a55c4;
+  --vk-person-2: #2b7466;
+  --vk-person-3: #a8406f;
+  --vk-person-4: #2d62a8;
+  --vk-person-5: #8e5418;
+  --vk-person-6: #5e6b2a;
+  --vk-person-you: #3b4048;
+  --person-1: var(--vk-person-1);
+  --person-2: var(--vk-person-2);
+  --person-3: var(--vk-person-3);
+  --person-4: var(--vk-person-4);
+  --person-5: var(--vk-person-5);
+  --person-6: var(--vk-person-6);
+  --person-you: var(--vk-person-you);
+  --vk-shadow-raise:
+  --vk-shadow-float:
+  --vk-shadow-card:
+  --vk-ring: inset 0 0 0 1px rgba(255, 255, 255, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  --vk-ring-strong: inset 0 0 0 1px rgba(255, 255, 255, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  --vk-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.22);
+  --vk-focus: 0 0 0 2px #141414, 0 0 0 4px #7db4ff;
+}

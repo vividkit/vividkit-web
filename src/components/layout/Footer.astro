@@ -3,6 +3,7 @@ import { Heart } from 'lucide-astro';
 import Logo from '@/components/ui/Logo.astro';
 import { useTranslations } from '@/i18n/utils';
 import { getLangFromUrl, useTranslatedPath, type Language } from '@/i18n';
+import { BUILDER_LINKS } from '@/data/landing-content';
 
 interface Props {
   class?: string;
@@ -30,9 +31,7 @@ const translatePath = useTranslatedPath(currentLang);
       <div>
         <h4 class="font-heading font-semibold mb-4">{t('footer.product')}</h4>
         <ul class="space-y-2 text-sm text-slate-600 dark:text-slate-400">
-          <li><a href={translatePath('/#hero')} class="hover:text-slate-900 dark:hover:text-slate-200 transition-colors cursor-pointer">{t('footer.links.features')}</a></li>
-          <li><a href={translatePath('/#pricing')} class="hover:text-slate-900 dark:hover:text-slate-200 transition-colors cursor-pointer">{t('footer.links.pricing')}</a></li>
-          <li><a href={translatePath('/#waitlist')} class="hover:text-slate-900 dark:hover:text-slate-200 transition-colors cursor-pointer">{t('footer.links.waitlist')}</a></li>
+          <li><a href={translatePath('/#how')} class="hover:text-slate-900 dark:hover:text-slate-200 transition-colors cursor-pointer">{t('footer.links.how')}</a></li>
         </ul>
       </div>
 
@@ -41,14 +40,14 @@ const translatePath = useTranslatedPath(currentLang);
         <ul class="space-y-2 text-sm text-slate-600 dark:text-slate-400">
           <li><a href={translatePath('/guides')} class="hover:text-slate-900 dark:hover:text-slate-200 transition-colors cursor-pointer">{t('footer.links.guides')}</a></li>
           <li><a href={translatePath('/guides/promotions')} class="hover:text-slate-900 dark:hover:text-slate-200 transition-colors cursor-pointer">{t('footer.links.promotions')}</a></li>
-          <li><a href="https://claudekit.cc/discord" target="_blank" class="hover:text-slate-900 dark:hover:text-slate-200 transition-colors cursor-pointer">{t('footer.claudekit_discord')}</a></li>
+          <li><a href="https://agentkit.best/discord" target="_blank" class="hover:text-slate-900 dark:hover:text-slate-200 transition-colors cursor-pointer">{t('footer.agentkit_discord')}</a></li>
           <li><a href={translatePath('/guides/donate')} class="hover:text-slate-900 dark:hover:text-slate-200 transition-colors cursor-pointer">{t('footer.links.donate')}</a></li>
         </ul>
       </div>
 
       <div>
         <h4 class="font-heading font-semibold mb-4">{t('footer.get_started')}</h4>
-        <a href="https://agentkit.best/?ref=OMG49S8R" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl cta-button font-medium text-sm text-white mb-3 cursor-pointer">
+        <a href={BUILDER_LINKS.agentkit} target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl cta-button font-medium text-sm text-white mb-3 cursor-pointer">
           {t('footer.claudekit_discount')}
         </a>
         <p class="text-xs text-slate-500">{t('footer.required_for_vividkit')}</p>

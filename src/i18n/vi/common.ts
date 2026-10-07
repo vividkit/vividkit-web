@@ -62,8 +62,8 @@ export const common = {
   // fix_logs — translations moved to inline in FixLogsGuide.astro
   // footer
   // Footer
-  'footer.tagline': 'Xây dựng mọi thứ không cần terminal friction. Hướng dẫn cho AgentKit và ClaudeKit.',
-  'footer.copyright': '© 2025 VividKit. All rights reserved.',
+  'footer.tagline': 'App máy tính để điều hành đội AI làm ứng dụng cho bạn. Kèm hướng dẫn cho AgentKit và ClaudeKit.',
+  'footer.copyright': '© 2026 VividKit. All rights reserved.',
   'footer.sponsor': 'Ủng hộ trên GitHub',
   // Footer links
   'footer.product': 'Sản Phẩm',
@@ -71,6 +71,7 @@ export const common = {
   'footer.company': 'Công Ty',
   'footer.legal': 'Pháp Lý',
   'footer.links.features': 'Tính Năng',
+  'footer.links.how': 'Cách làm',
   'footer.links.pricing': 'Bảng Giá',
   'footer.links.commands': 'Lệnh',
   'footer.links.waitlist': 'Danh Sách Chờ',
@@ -90,9 +91,10 @@ export const common = {
   'footer.links.license': 'Giấy Phép',
   // Footer component
   'footer.claudekit_discord': 'ClaudeKit Discord',
+  'footer.agentkit_discord': 'AgentKit Discord',
   'footer.get_started': 'Bắt Đầu',
   'footer.claudekit_discount': 'AgentKit (Giảm 30%)',
-  'footer.required_for_vividkit': 'Hoạt động với AgentKit hoặc ClaudeKit',
+  'footer.required_for_vividkit': 'VividKit Builder cần giấy phép AgentKit Engineer Kit',
   // form
   // Waitlist form
   'form.name': 'Tên của bạn',

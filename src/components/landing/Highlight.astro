@@ -1,0 +1,7 @@
+---
+// Renders a title whose key phrase is wrapped in [brackets] with the accent gradient.
+interface Props { text: string }
+const parts = Astro.props.text.split(/(\[[^\]]+\])/).filter(Boolean);
+---
+
+{parts.map((p) => (p.startsWith('[') ? <span class="vk-hl">{p.slice(1, -1)}</span> : p))}
