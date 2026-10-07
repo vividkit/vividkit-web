@@ -28,14 +28,13 @@ import {
 import { AgentConsole } from './agent-console';
 import { HomeBento } from './home-bento';
 import { TeamShowcase } from './team-list';
-import { landingContent, BUILDER_LINKS, type AudienceIcon, type FlowIcon, type WhyIcon } from '@/data/landing-content';
+import { landingContent, type AudienceIcon, type FlowIcon, type WhyIcon } from '@/data/landing-content';
 import { useTranslatedPath, type Language } from '@/i18n';
 import '@/styles/landing.css';
 
 interface Props { lang: Language }
 const { lang } = Astro.props;
 const c = landingContent[lang];
-const docs = BUILDER_LINKS.docs[lang];
 const translatePath = useTranslatedPath(lang);
 
 const FLOW_ICONS: Record<FlowIcon, typeof Eye> = {
@@ -69,10 +68,6 @@ const PATH_ICONS = [FolderGit2, Lightbulb];
             </h1>
             <p class="vk-lead">{c.hero.lead}</p>
             <div class="vk-actions">
-              <a href={`${docs}/getting-started/quick-start`} target="_blank" rel="noopener noreferrer" class="vk-btn-primary">
-                {c.hero.start}
-                <ArrowRight size={16} />
-              </a>
               <span class="vk-btn-soon">
                 <Clock size={16} />
                 {c.hero.soon}
@@ -199,10 +194,6 @@ const PATH_ICONS = [FolderGit2, Lightbulb];
             <h3>{c.safety.autoTitle}</h3>
             <p>{c.safety.autoBody}</p>
           </div>
-          <a href={`${docs}/guide/safety`} target="_blank" rel="noopener noreferrer" class="vk-btn-quiet">
-            {c.safety.more}
-            <ArrowRight size={16} />
-          </a>
         </div>
       </section>
 
@@ -239,10 +230,6 @@ const PATH_ICONS = [FolderGit2, Lightbulb];
                 </li>
               ))}
             </ul>
-            <a href={`${docs}/getting-started/requirements`} target="_blank" rel="noopener noreferrer" class="vk-link">
-              {c.start.install}
-              <ArrowRight size={15} />
-            </a>
           </div>
         </div>
       </section>
@@ -275,10 +262,6 @@ const PATH_ICONS = [FolderGit2, Lightbulb];
             {c.hero.soon}
             <small>· {c.hero.soonWhen}</small>
           </span>
-          <a href={`${docs}/introduction`} target="_blank" rel="noopener noreferrer" class="vk-btn-glass">
-            {c.cta.docs}
-            <ArrowRight size={16} />
-          </a>
         </div>
       </section>
 

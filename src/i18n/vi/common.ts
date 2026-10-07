@@ -72,7 +72,6 @@ export const common = {
   'footer.legal': 'Pháp Lý',
   'footer.links.features': 'Tính Năng',
   'footer.links.how': 'Cách làm',
-  'footer.links.docs': 'Tài liệu',
   'footer.links.pricing': 'Bảng Giá',
   'footer.links.commands': 'Lệnh',
   'footer.links.waitlist': 'Danh Sách Chờ',

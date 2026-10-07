@@ -1,11 +1,10 @@
 // Landing page copy for VividKit Builder, EN + VI. The hero, flow, safety bento and team row
 // follow the vividkit.app home page (vividkit-builder apps/docs/app/[lang]/(home)/page.tsx);
 // the rest introduces the product in more depth. Product facts must match the Builder docs.
-// Downloads stay off until the beta ships: every download button reads "Coming soon".
+// Downloads and links to the Builder docs stay off until the beta ships: the actions read "Coming soon".
 import type { Language } from '@/i18n';
 
 export const BUILDER_LINKS = {
-  docs: { en: 'https://vividkit.app/docs/en', vi: 'https://vividkit.app/docs/vi' },
   agentkit: 'https://agentkit.best/?ref=OMG49S8R',
 } as const;
 
@@ -17,12 +16,11 @@ interface Section { eyebrow: string; title: string; lead: string }
 
 export interface LandingContent {
   meta: { title: string; description: string };
-  nav: { how: string; team: string; safety: string; guides: string; docs: string; cta: string };
+  nav: { how: string; team: string; safety: string; guides: string; cta: string };
   hero: {
     badge: string;
     title: [string, string, string];
     lead: string;
-    start: string;
     soon: string;
     soonWhen: string;
     runsOn: string;
@@ -35,17 +33,16 @@ export interface LandingContent {
   flow: Section & { steps: [FlowIcon, string, string][] };
   team: Section;
   workflows: Section & { items: { name: string; when: string; inBeta: boolean }[]; laterTag: string };
-  safety: Section & { autoTitle: string; autoBody: string; more: string };
+  safety: Section & { autoTitle: string; autoBody: string };
   runtimes: Section & { verified: string[]; note: string };
   start: Section & {
     needsTitle: string;
     needs: string[];
     systemsTitle: string;
     systems: { name: string; status: string; ok: boolean }[];
-    install: string;
   };
   faq: Section & { items: { q: string; a: string }[] };
-  cta: { title: string; lead: string; docs: string };
+  cta: { title: string; lead: string };
   guides: { title: string; body: string; cta: string };
 }
 
@@ -55,12 +52,11 @@ const en: LandingContent = {
     description:
       'VividKit Builder is a desktop app for one person to direct a team of AI teammates. Say what you want, confirm the Requirement, read the evidence, then Apply and Publish. Beta coming soon for Linux and Apple silicon Macs.',
   },
-  nav: { how: 'How it works', team: 'Team', safety: 'Safety', guides: 'Guides', docs: 'Docs', cta: 'Coming soon' },
+  nav: { how: 'How it works', team: 'Team', safety: 'Safety', guides: 'Guides', cta: 'Coming soon' },
   hero: {
     badge: 'Beta coming soon · Linux and Apple silicon',
     title: ['Run an ', 'AI team', ' that builds your apps'],
     lead: 'VividKit Builder is a desktop app for one person to direct a team of AI teammates. You say what you want; the team works in a private copy, VividKit collects evidence, and the work is done only when you accept it.',
-    start: 'Get started',
     soon: 'Coming soon',
     soonWhen: 'October',
     runsOn: 'Runs on your machine with Claude Code, AgentKit, git and Cloudflare Pages.',
@@ -144,7 +140,6 @@ const en: LandingContent = {
     lead: 'Agents move fast. VividKit makes every step visible, reversible and yours to accept.',
     autoTitle: 'About auto mode',
     autoBody: 'Auto mode is on by default so the team can finish the job: if the tools on your machine allow it, teammates may push, open pull requests, merge and publish. VividKit still keeps a restore point and offers Roll back. Turn it off and they only propose.',
-    more: 'Read the safety guide',
   },
   runtimes: {
     eyebrow: 'Runtimes',
@@ -170,7 +165,6 @@ const en: LandingContent = {
       { name: 'macOS, Intel', status: 'Not yet', ok: false },
       { name: 'Windows', status: 'Not yet', ok: false },
     ],
-    install: 'Read the requirements',
   },
   faq: {
     eyebrow: 'Questions',
@@ -201,8 +195,7 @@ const en: LandingContent = {
   },
   cta: {
     title: 'Bring an app. Meet your team.',
-    lead: 'The beta is coming soon. Read the docs now, then add a project and tell Cora about the first small thing to fix.',
-    docs: 'Read the docs',
+    lead: 'The beta is coming soon. When it lands, add a project and tell Cora about the first small thing to fix.',
   },
   guides: {
     title: 'Learning AgentKit or ClaudeKit?',
@@ -217,12 +210,11 @@ const vi: LandingContent = {
     description:
       'VividKit Builder là app máy tính để một người điều hành đội đồng đội AI. Nói điều bạn muốn, xác nhận Requirement, đọc bằng chứng, rồi Áp dụng và Xuất bản. Bản beta sắp ra mắt cho Linux và Mac Apple silicon.',
   },
-  nav: { how: 'Cách làm', team: 'Đội', safety: 'An toàn', guides: 'Hướng dẫn', docs: 'Tài liệu', cta: 'Sắp ra mắt' },
+  nav: { how: 'Cách làm', team: 'Đội', safety: 'An toàn', guides: 'Hướng dẫn', cta: 'Sắp ra mắt' },
   hero: {
     badge: 'Bản beta sắp ra mắt · Linux và Apple silicon',
     title: ['Điều hành một ', 'đội AI', ' làm ứng dụng cho bạn'],
     lead: 'VividKit Builder là app máy tính để một người điều hành đội đồng đội AI. Bạn nói điều mình muốn; đội làm trên bản sao riêng, VividKit thu bằng chứng, và việc chỉ xong khi bạn chấp nhận.',
-    start: 'Bắt đầu',
     soon: 'Sắp ra mắt',
     soonWhen: 'tháng 10',
     runsOn: 'Chạy ngay trên máy bạn với Claude Code, AgentKit, git và Cloudflare Pages.',
@@ -306,7 +298,6 @@ const vi: LandingContent = {
     lead: 'Agent làm rất nhanh. VividKit làm cho mỗi bước đều thấy được, quay lại được, và chỉ xong khi bạn chấp nhận.',
     autoTitle: 'Về chế độ tự động',
     autoBody: 'Chế độ tự động mặc định bật để đội làm trọn việc: nếu công cụ trên máy cho phép, đồng đội được đẩy nhánh, mở PR, merge và xuất bản. VividKit vẫn giữ điểm khôi phục và cho Đổi về bản trước. Tắt đi thì đội chỉ đề xuất.',
-    more: 'Đọc hướng dẫn an toàn',
   },
   runtimes: {
     eyebrow: 'Runtime',
@@ -332,7 +323,6 @@ const vi: LandingContent = {
       { name: 'macOS, Intel', status: 'Chưa có', ok: false },
       { name: 'Windows', status: 'Chưa có', ok: false },
     ],
-    install: 'Xem yêu cầu chi tiết',
   },
   faq: {
     eyebrow: 'Câu hỏi',
@@ -363,8 +353,7 @@ const vi: LandingContent = {
   },
   cta: {
     title: 'Mang ứng dụng tới. Gặp đội của bạn.',
-    lead: 'Bản beta sắp ra mắt. Đọc tài liệu trước, rồi thêm một dự án và kể cho Cora việc nhỏ đầu tiên cần sửa.',
-    docs: 'Đọc tài liệu',
+    lead: 'Bản beta sắp ra mắt. Khi có bản, hãy thêm một dự án và kể cho Cora việc nhỏ đầu tiên cần sửa.',
   },
   guides: {
     title: 'Đang học AgentKit hay ClaudeKit?',

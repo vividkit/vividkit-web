@@ -2,7 +2,7 @@
 import Logo from '@/components/ui/Logo.astro';
 import { getLangFromUrl, languages, useTranslatedPath, type Language } from '@/i18n';
 import { useTranslations } from '@/i18n/utils';
-import { landingContent, BUILDER_LINKS } from '@/data/landing-content';
+import { landingContent } from '@/data/landing-content';
 
 interface Props {
   class?: string;
@@ -33,7 +33,6 @@ const nav = landingContent[currentLang].nav;
             <li><a href={translatePath('/#how')} class="nav-link text-[10px] xl:text-xs font-semibold uppercase tracking-wide px-1.5 xl:px-2 py-1 whitespace-nowrap">{nav.how}</a></li>
             <li><a href={translatePath('/#team')} class="nav-link text-[10px] xl:text-xs font-semibold uppercase tracking-wide px-1.5 xl:px-2 py-1 whitespace-nowrap">{nav.team}</a></li>
             <li><a href={translatePath('/#safety')} class="nav-link text-[10px] xl:text-xs font-semibold uppercase tracking-wide px-1.5 xl:px-2 py-1 whitespace-nowrap">{nav.safety}</a></li>
-            <li><a href={BUILDER_LINKS.docs[currentLang]} target="_blank" rel="noopener noreferrer" class="nav-link text-[10px] xl:text-xs font-semibold uppercase tracking-wide px-1.5 xl:px-2 py-1 whitespace-nowrap">{nav.docs}</a></li>
             <li><a href={translatePath('/guides')} class="nav-link text-[10px] xl:text-xs font-semibold uppercase tracking-wide px-1.5 xl:px-2 py-1 whitespace-nowrap">{nav.guides}</a></li>
           </ul>
         </nav>
@@ -89,7 +88,6 @@ const nav = landingContent[currentLang].nav;
       <a href={translatePath('/#how')} class="px-4 py-3 rounded-xl hover:bg-slate-100 dark:hover:bg-white/10 text-slate-600 dark:text-slate-300 font-medium transition-colors">{nav.how}</a>
       <a href={translatePath('/#team')} class="px-4 py-3 rounded-xl hover:bg-slate-100 dark:hover:bg-white/10 text-slate-600 dark:text-slate-300 font-medium transition-colors">{nav.team}</a>
       <a href={translatePath('/#safety')} class="px-4 py-3 rounded-xl hover:bg-slate-100 dark:hover:bg-white/10 text-slate-600 dark:text-slate-300 font-medium transition-colors">{nav.safety}</a>
-      <a href={BUILDER_LINKS.docs[currentLang]} target="_blank" rel="noopener noreferrer" class="px-4 py-3 rounded-xl hover:bg-slate-100 dark:hover:bg-white/10 text-slate-600 dark:text-slate-300 font-medium transition-colors">{nav.docs}</a>
       <a href={translatePath('/guides')} class="px-4 py-3 rounded-xl hover:bg-slate-100 dark:hover:bg-white/10 text-slate-600 dark:text-slate-300 font-medium transition-colors">{nav.guides}</a>
       <div class="h-px bg-slate-200 dark:bg-slate-700 my-2"></div>
       <a
