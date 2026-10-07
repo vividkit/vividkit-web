@@ -73,8 +73,6 @@ export const common = {
   'footer.links.features': 'Features',
   'footer.links.how': 'How it works',
   'footer.links.docs': 'Docs',
-  'footer.links.download': 'Download the beta',
-  'footer.links.feedback': 'Report a problem',
   'footer.links.pricing': 'Pricing',
   'footer.links.commands': 'Commands',
   'footer.links.waitlist': 'Waitlist',

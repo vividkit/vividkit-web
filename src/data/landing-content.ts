@@ -1,6 +1,7 @@
-// Landing page copy for VividKit Builder (the desktop app), EN + VI.
-// Product facts come from the Builder docs at vividkit.app/docs: keep claims
-// in sync with them (beta scope, workflows, safety, verified runtimes).
+// Landing page copy for VividKit Builder, EN + VI. The hero, flow, safety bento and team row
+// follow the vividkit.app home page (vividkit-builder apps/docs/app/[lang]/(home)/page.tsx);
+// the rest introduces the product in more depth. Product facts must match the Builder docs.
+// Downloads stay off until the beta ships: every download button reads "Coming soon".
 import type { Language } from '@/i18n';
 
 export const BUILDER_LINKS = {
@@ -8,142 +9,119 @@ export const BUILDER_LINKS = {
   agentkit: 'https://agentkit.best/?ref=OMG49S8R',
 } as const;
 
-export type TeammateId = 'cora' | 'ada' | 'dee' | 'ben' | 'tess' | 'ivy';
+export type FlowIcon = 'message' | 'file' | 'branch' | 'eye' | 'shield';
+export type WhyIcon = 'chat' | 'evidence' | 'shield';
+export type AudienceIcon = 'store' | 'rocket' | 'briefcase' | 'users';
 
-export const TEAMMATE_COLORS: Record<TeammateId, string> = {
-  cora: 'var(--vk-person-1)',
-  ada: 'var(--vk-person-2)',
-  dee: 'var(--vk-person-3)',
-  ben: 'var(--vk-person-4)',
-  tess: 'var(--vk-person-5)',
-  ivy: 'var(--vk-person-6)',
-};
-
-interface Teammate { id: TeammateId; name: string; role: string; does: string; optional?: boolean }
-interface Step { who: TeammateId | 'you'; title: string; body: string }
-interface Workflow { name: string; when: string; inBeta: boolean }
-interface SafetyItem { title: string; body: string }
+interface Section { eyebrow: string; title: string; lead: string }
 
 export interface LandingContent {
   meta: { title: string; description: string };
   nav: { how: string; team: string; safety: string; guides: string; docs: string; cta: string };
   hero: {
     badge: string;
-    title: string;
-    subtitle: string;
-    ctaPrimary: string;
-    ctaSecondary: string;
-    note: string;
-  };
-  mock: {
-    inbox: string;
-    projects: string;
-    team: string;
-    project: string;
-    issueId: string;
-    issueTitle: string;
-    state: string;
-    stages: { name: string; sub: string; state: 'done' | 'working' | 'next' }[];
-    gate: string;
-    askLabel: string;
-    askFrom: string;
-    askText: string;
-    options: string[];
-    running: string;
-    runTitle: string;
-    log: { time: string; text: string }[];
-    stop: string;
-    teamStatus: Record<TeammateId, string>;
-  };
-  how: { eyebrow: string; title: string; lead: string; steps: Step[] };
-  team: { eyebrow: string; title: string; lead: string; members: Teammate[]; optionalTag: string };
-  workflows: { eyebrow: string; title: string; lead: string; items: Workflow[]; laterTag: string };
-  safety: { eyebrow: string; title: string; lead: string; items: SafetyItem[]; autoTitle: string; autoBody: string; more: string };
-  runtimes: { eyebrow: string; title: string; lead: string; verified: string[]; moreNote: string };
-  start: {
-    title: string;
+    title: [string, string, string];
     lead: string;
+    start: string;
+    soon: string;
+    soonWhen: string;
+    runsOn: string;
+  };
+  why: Section & { items: { icon: WhyIcon; before: string; title: string; body: string }[]; beforeLabel: string };
+  audience: Section & {
+    people: { icon: AudienceIcon; title: string; body: string }[];
+    paths: { title: string; body: string }[];
+  };
+  flow: Section & { steps: [FlowIcon, string, string][] };
+  team: Section;
+  workflows: Section & { items: { name: string; when: string; inBeta: boolean }[]; laterTag: string };
+  safety: Section & { autoTitle: string; autoBody: string; more: string };
+  runtimes: Section & { verified: string[]; note: string };
+  start: Section & {
     needsTitle: string;
     needs: string[];
     systemsTitle: string;
     systems: { name: string; status: string; ok: boolean }[];
-    ctaPrimary: string;
-    ctaSecondary: string;
+    install: string;
   };
+  faq: Section & { items: { q: string; a: string }[] };
+  cta: { title: string; lead: string; docs: string };
   guides: { title: string; body: string; cta: string };
 }
 
 const en: LandingContent = {
   meta: {
-    title: 'Run an AI team that builds your app',
+    title: 'Run an AI team that builds your apps',
     description:
-      'A desktop app for one person and a team of AI teammates. Say what you want, confirm the Requirement, read the evidence, then Apply and Publish. Beta coming in October for Linux and Apple silicon Macs.',
+      'VividKit Builder is a desktop app for one person to direct a team of AI teammates. Say what you want, confirm the Requirement, read the evidence, then Apply and Publish. Beta coming soon for Linux and Apple silicon Macs.',
   },
-  nav: { how: 'How it works', team: 'Team', safety: 'Safety', guides: 'Guides', docs: 'Docs', cta: 'Coming in October' },
+  nav: { how: 'How it works', team: 'Team', safety: 'Safety', guides: 'Guides', docs: 'Docs', cta: 'Coming soon' },
   hero: {
-    badge: 'Beta coming in October · Linux and Apple silicon Macs',
-    title: 'Run an AI team that builds your app',
-    subtitle:
-      'VividKit Builder is a desktop app for one person and six AI teammates. You say what you want and answer their questions. They work in a private copy and bring evidence for every criterion. A teammate saying "done" is not done: only you accept.',
-    ctaPrimary: 'Coming in October',
-    ctaSecondary: 'Read the docs',
-    note: 'Needs Claude Code on a paid plan and an AgentKit Engineer Kit license.',
+    badge: 'Beta coming soon · Linux and Apple silicon',
+    title: ['Run an ', 'AI team', ' that builds your apps'],
+    lead: 'VividKit Builder is a desktop app for one person to direct a team of AI teammates. You say what you want; the team works in a private copy, VividKit collects evidence, and the work is done only when you accept it.',
+    start: 'Get started',
+    soon: 'Coming soon',
+    soonWhen: 'October',
+    runsOn: 'Runs on your machine with Claude Code, AgentKit, git and Cloudflare Pages.',
   },
-  mock: {
-    inbox: 'Inbox',
-    projects: 'Projects',
-    team: 'Team',
-    project: 'Kettle & Crumb',
-    issueId: 'KC-14',
-    issueTitle: 'Contact button misaligned on phones',
-    state: 'In progress',
-    stages: [
-      { name: 'Locate', sub: 'Ben · done', state: 'done' },
-      { name: 'Find cause', sub: 'You confirmed', state: 'done' },
-      { name: 'Fix', sub: 'Ben · Builder is fixing', state: 'working' },
-      { name: 'Check', sub: 'Tess · Tester', state: 'next' },
-      { name: 'Code review', sub: 'Ada · Architect', state: 'next' },
+  why: {
+    eyebrow: 'Why VividKit',
+    title: 'Coding agents are powerful. Directing them should not need a terminal.',
+    lead: 'Tools like Claude Code can build real software, but they expect you to type commands, read diffs and trust a "done". VividKit puts a calm desk around them, so you manage outcomes instead of tools.',
+    beforeLabel: 'Without VividKit',
+    items: [
+      {
+        icon: 'chat',
+        before: 'Prompts, flags and terminal sessions',
+        title: 'You talk, the team works',
+        body: 'Describe the change in plain words. Cora picks the right workflow, Ada asks what is unclear, and teammates take turns until there is something to review.',
+      },
+      {
+        icon: 'evidence',
+        before: 'An agent saying it is done',
+        title: 'Evidence for every criterion',
+        body: 'Each Requirement has criteria you can check. VividKit screenshots pages at phone and desktop size and records checks, so you accept what you can see.',
+      },
+      {
+        icon: 'shield',
+        before: 'An agent loose in your real folder',
+        title: 'Your project stays yours',
+        body: 'The team works in a private copy, behind the operating system’s isolation. A restore point comes before every run, and real changes go through a trusted window.',
+      },
     ],
-    gate: 'You review · Apply · Publish',
-    askLabel: 'Needs your answer',
-    askFrom: 'Ada · Architect',
-    askText: 'On phones, should the button span the full width, or keep its desktop size?',
-    options: ['Full width', 'Keep desktop size'],
-    running: 'Running · 1',
-    runTitle: 'Ben · Fix',
-    log: [
-      { time: '14:02', text: 'Read src/components/Contact.astro' },
-      { time: '14:03', text: 'Edit styles for small screens' },
-      { time: '14:04', text: 'Build the site' },
-    ],
-    stop: 'Stop Ben',
-    teamStatus: { cora: 'Idle', ada: 'Waiting', dee: 'Idle', ben: 'Working', tess: 'Queued', ivy: 'Idle' },
   },
-  how: {
-    eyebrow: 'How a change travels',
-    title: 'From your words to your live site',
+  audience: {
+    eyebrow: 'Who it is for',
+    title: 'For people with an app to build, not a team to manage',
+    lead: 'You do not need to know git or write code. You need an idea, or an app that needs work.',
+    people: [
+      { icon: 'rocket', title: 'Founders', body: 'Turn an idea into a working first version, one checked change at a time.' },
+      { icon: 'store', title: 'Shop owners', body: 'Keep your site current: new products, fixes and pages, without waiting on a developer.' },
+      { icon: 'briefcase', title: 'Freelancers', body: 'Hand routine work to the team and spend your time on the parts clients notice.' },
+      { icon: 'users', title: 'Small teams', body: 'One shared AI team for every project, with a clear record of what changed and why.' },
+    ],
+    paths: [
+      { title: 'Take over an app you have', body: 'The team scans it read-only, explains how it works, and suggests what to do next.' },
+      { title: 'Start one from an idea', body: 'Ada helps you shape the first version and a technical direction before anything is built.' },
+    ],
+  },
+  flow: {
+    eyebrow: 'How it works',
+    title: 'From one sentence to a published change',
     lead: 'You decide at each checkpoint. The team does the work in between, and every step is visible.',
     steps: [
-      { who: 'cora', title: 'Tell Cora', body: 'Describe the change in plain words, like "the Contact button is misaligned on phones". Cora sorts it, picks a workflow and puts an issue in your Inbox.' },
-      { who: 'ada', title: 'Confirm the Requirement', body: 'Ada asks what is unclear and writes the outcome plus a short list of criteria you can check. You confirm it, then press Start.' },
-      { who: 'ben', title: 'The team works in a private copy', body: 'Teammates take turns in a Relay, each in a private copy of your project. Watch, send a message, or press Stop at any time.' },
-      { who: 'tess', title: 'Review the evidence', body: 'Every criterion gets evidence: screenshots VividKit takes, check results and notes. You Accept, or Send back with a note.' },
-      { who: 'you', title: 'Apply and publish', body: 'A separate trusted window shows exactly what will change in your real project. Confirm there. You can Undo an Apply and roll back a release.' },
+      ['message', 'Tell Cora', 'Say what you want in plain words. Cora sorts it and opens an issue in your Inbox.'],
+      ['file', 'Confirm the Requirement', 'Ada asks what is unclear and turns it into criteria you can check.'],
+      ['branch', 'The team works', 'Teammates take turns in a relay, in a private copy. Watch or Stop anytime.'],
+      ['eye', 'Review evidence', 'Screenshots and check results for each criterion. Accept, or send it back.'],
+      ['shield', 'Apply and publish', 'Confirm the exact files in the trusted window. Undo and roll back stay possible.'],
     ],
   },
   team: {
     eyebrow: 'The team',
-    title: 'Six teammates, one workspace',
-    lead: 'One team serves every project. Each teammate has a fixed role and does one thing at a time. Rename them, change the picture, the runtime or the permission whenever you like.',
-    optionalTag: 'Optional',
-    members: [
-      { id: 'cora', name: 'Cora', role: 'Coordinator', does: 'Sorts your request, picks the workflow, opens the issue.' },
-      { id: 'ada', name: 'Ada', role: 'Architect', does: 'Asks questions, writes the Requirement and the plan, reviews the code.' },
-      { id: 'dee', name: 'Dee', role: 'Designer', does: 'Layout and look, when the change has new screens.' },
-      { id: 'ben', name: 'Ben', role: 'Builder', does: 'Sets up, builds and fixes inside the private copy.' },
-      { id: 'tess', name: 'Tess', role: 'Tester', does: 'Brings evidence for every criterion, before and after.' },
-      { id: 'ivy', name: 'Ivy', role: 'Investigator', does: 'Finds the cause of a bug with evidence. Reads only.', optional: true },
-    ],
+    title: 'Your team, shared by every project',
+    lead: 'Six teammates with fixed roles, each doing one thing at a time. Rename them, change their runtime, or add more.',
   },
   workflows: {
     eyebrow: 'Workflows',
@@ -155,38 +133,31 @@ const en: LandingContent = {
       { name: 'Quick fix', when: 'A one-file change. If it turns out bigger, the team stops and proposes another path.', inBeta: true },
       { name: 'New feature', when: 'Add or change something people see. You can approve the plan first.', inBeta: true },
       { name: 'New project', when: 'Start from an idea in an empty folder. You confirm the technical direction.', inBeta: true },
-      { name: 'Take over a project', when: 'Bring an app you already have. A read-only scan, a report, then suggested work.', inBeta: true },
+      { name: 'Take over a project', when: 'Bring an app you already have: a read-only scan, a report, then suggested work.', inBeta: true },
       { name: 'Investigation', when: 'Understand a problem before deciding to fix it. Ends with a report.', inBeta: false },
       { name: 'Improvement', when: 'Make something measurable better, with numbers before and after.', inBeta: false },
     ],
   },
   safety: {
     eyebrow: 'Safety',
-    title: 'You stay in charge of the real project',
-    lead: 'These hold even with auto mode on.',
-    items: [
-      { title: 'A private copy per issue', body: 'The team starts in its own copy. Secret files such as .env are left out, and keys or tokens never go into prompts, logs or evidence.' },
-      { title: 'Isolated by the system', body: 'Each run is sandboxed: the team cannot write outside its copy or read your sign-ins. No isolation on the machine means no Start, unless you turn on Full access yourself.' },
-      { title: 'A restore point before every run', body: 'VividKit records your main branch and the live site first, compares again after, and offers Roll back if anything changed.' },
-      { title: 'Your actions need the trusted window', body: 'Apply, Undo, Publish, Roll back and Create preview only run after you confirm in a separate window.' },
-      { title: 'Stop means stop', body: 'Every run has a Stop button and it never asks twice. Stop all runs is one shortcut away.' },
-      { title: 'No guessed numbers', body: 'Anything VividKit does not know shows as Unknown. Old evidence is marked Stale and kept, never deleted.' },
-    ],
+    title: 'Built so you stay in charge',
+    lead: 'Agents move fast. VividKit makes every step visible, reversible and yours to accept.',
     autoTitle: 'About auto mode',
-    autoBody: 'Auto mode is on by default so the team can finish the job: if the tools on your machine allow it, teammates may push, open pull requests, merge and publish. Turn it off and they only propose.',
+    autoBody: 'Auto mode is on by default so the team can finish the job: if the tools on your machine allow it, teammates may push, open pull requests, merge and publish. VividKit still keeps a restore point and offers Roll back. Turn it off and they only propose.',
     more: 'Read the safety guide',
   },
   runtimes: {
     eyebrow: 'Runtimes',
-    title: 'Runs on the coding agents you already use',
-    lead: 'Each teammate can use a different runtime. VividKit finds the ones installed on your machine and uses your own sign-in.',
+    title: 'Works with the coding agents you already use',
+    lead: 'Each teammate can run on a different runtime. VividKit finds the ones installed on your machine and uses your own sign-in.',
     verified: ['Claude Code', 'Codex', 'OpenCode', 'GitHub Copilot CLI', 'Cursor Agent', 'Grok', 'Oh My Pi'],
-    moreNote: 'Tested end to end with a full issue. More runtimes are listed in the app and marked "Not tested yet".',
+    note: 'Each of these has run a full issue end to end. The app lists more runtimes and marks them "Not tested yet".',
   },
   start: {
-    title: 'Beta coming in October',
-    lead: 'Built for founders, shop owners, freelancers and small teams. Take over an app you already have, or start one from an idea. Web apps work best in the beta.',
-    needsTitle: 'You need',
+    eyebrow: 'Before you begin',
+    title: 'What you need',
+    lead: 'VividKit checks these for you when it starts, and tells you what is missing.',
+    needsTitle: 'On your machine',
     needs: [
       'Claude Code, signed in on a Pro or Max plan',
       'AgentKit with an Engineer Kit license',
@@ -195,12 +166,43 @@ const en: LandingContent = {
     systemsTitle: 'Systems',
     systems: [
       { name: 'Linux x86-64', status: 'Supported (.deb, AppImage)', ok: true },
-      { name: 'macOS, Apple silicon', status: 'Supported, unsigned build', ok: true },
-      { name: 'macOS, Intel', status: 'No build yet', ok: false },
-      { name: 'Windows', status: 'Not supported yet', ok: false },
+      { name: 'macOS, Apple silicon', status: 'Supported', ok: true },
+      { name: 'macOS, Intel', status: 'Not yet', ok: false },
+      { name: 'Windows', status: 'Not yet', ok: false },
     ],
-    ctaPrimary: 'Coming in October',
-    ctaSecondary: 'Install guide',
+    install: 'Read the requirements',
+  },
+  faq: {
+    eyebrow: 'Questions',
+    title: 'Good to know',
+    lead: '',
+    items: [
+      {
+        q: 'Do I need to know how to code?',
+        a: 'No. You describe what you want, answer questions, read the evidence and press Accept, Apply and Publish. Technical details stay one click away for when you want them.',
+      },
+      {
+        q: 'Can the team break my real project?',
+        a: 'The team starts in a private copy of your project. VividKit records a restore point before every run, reports any change to the real project or site afterwards, and offers Roll back. Turn auto mode off and only you can apply or publish.',
+      },
+      {
+        q: 'Which AI does it use, and who pays for it?',
+        a: 'Your own. VividKit runs the coding agents installed on your machine with your sign-in, so runs use your existing plans. Claude Code on a Pro or Max plan is required for the beta.',
+      },
+      {
+        q: 'Is it only for websites?',
+        a: 'No. VividKit tells web apps from other apps. Web apps get the most: page screenshots as evidence and publishing to Cloudflare Pages. For other apps the evidence comes from tests, builds and runs, and publishing is not available yet.',
+      },
+      {
+        q: 'Where do my project files and notes live?',
+        a: 'On your machine. Requirements, plans, reports and the changelog are written into your project folder, so you can read them without VividKit.',
+      },
+    ],
+  },
+  cta: {
+    title: 'Bring an app. Meet your team.',
+    lead: 'The beta is coming soon. Read the docs now, then add a project and tell Cora about the first small thing to fix.',
+    docs: 'Read the docs',
   },
   guides: {
     title: 'Learning AgentKit or ClaudeKit?',
@@ -211,75 +213,77 @@ const en: LandingContent = {
 
 const vi: LandingContent = {
   meta: {
-    title: 'Điều hành đội AI làm ứng dụng cho bạn',
+    title: 'Điều hành một đội AI làm ứng dụng cho bạn',
     description:
-      'App máy tính để một người điều hành đội đồng đội AI. Nói điều bạn muốn, xác nhận Requirement, đọc bằng chứng, rồi Áp dụng và Xuất bản. Bản beta ra mắt tháng 10 cho Linux và Mac Apple silicon.',
+      'VividKit Builder là app máy tính để một người điều hành đội đồng đội AI. Nói điều bạn muốn, xác nhận Requirement, đọc bằng chứng, rồi Áp dụng và Xuất bản. Bản beta sắp ra mắt cho Linux và Mac Apple silicon.',
   },
-  nav: { how: 'Cách làm', team: 'Đội', safety: 'An toàn', guides: 'Hướng dẫn', docs: 'Tài liệu', cta: 'Ra mắt tháng 10' },
+  nav: { how: 'Cách làm', team: 'Đội', safety: 'An toàn', guides: 'Hướng dẫn', docs: 'Tài liệu', cta: 'Sắp ra mắt' },
   hero: {
-    badge: 'Bản beta ra mắt tháng 10 · Linux và Mac Apple silicon',
-    title: 'Điều hành đội AI làm ứng dụng cho bạn',
-    subtitle:
-      'VividKit Builder là app máy tính cho một người và sáu đồng đội AI. Bạn nói điều mình muốn và trả lời câu hỏi. Đội làm trên bản sao riêng và mang bằng chứng cho từng tiêu chí. Đồng đội báo "xong" chưa phải là xong: chỉ bạn chấp nhận.',
-    ctaPrimary: 'Ra mắt tháng 10',
-    ctaSecondary: 'Đọc tài liệu',
-    note: 'Cần Claude Code gói trả phí và giấy phép AgentKit Engineer Kit.',
+    badge: 'Bản beta sắp ra mắt · Linux và Apple silicon',
+    title: ['Điều hành một ', 'đội AI', ' làm ứng dụng cho bạn'],
+    lead: 'VividKit Builder là app máy tính để một người điều hành đội đồng đội AI. Bạn nói điều mình muốn; đội làm trên bản sao riêng, VividKit thu bằng chứng, và việc chỉ xong khi bạn chấp nhận.',
+    start: 'Bắt đầu',
+    soon: 'Sắp ra mắt',
+    soonWhen: 'tháng 10',
+    runsOn: 'Chạy ngay trên máy bạn với Claude Code, AgentKit, git và Cloudflare Pages.',
   },
-  mock: {
-    inbox: 'Hộp thư',
-    projects: 'Dự án',
-    team: 'Đội',
-    project: 'Kettle & Crumb',
-    issueId: 'KC-14',
-    issueTitle: 'Nút Liên hệ bị lệch trên điện thoại',
-    state: 'Đang thực hiện',
-    stages: [
-      { name: 'Khoanh vùng', sub: 'Ben · xong', state: 'done' },
-      { name: 'Tìm nguyên nhân', sub: 'Bạn đã xác nhận', state: 'done' },
-      { name: 'Sửa', sub: 'Ben · Lập trình đang sửa', state: 'working' },
-      { name: 'Kiểm thử', sub: 'Tess · Kiểm thử', state: 'next' },
-      { name: 'Soát lại mã', sub: 'Ada · Kiến trúc sư', state: 'next' },
+  why: {
+    eyebrow: 'Vì sao có VividKit',
+    title: 'Agent lập trình rất mạnh. Điều hành chúng không nên cần terminal.',
+    lead: 'Những công cụ như Claude Code làm được phần mềm thật, nhưng đòi bạn gõ lệnh, đọc diff và tin vào một chữ "xong". VividKit dựng một bàn làm việc yên tĩnh quanh chúng, để bạn quản kết quả thay vì quản công cụ.',
+    beforeLabel: 'Khi chưa có VividKit',
+    items: [
+      {
+        icon: 'chat',
+        before: 'Prompt, cờ lệnh và phiên terminal',
+        title: 'Bạn nói, đội làm',
+        body: 'Mô tả thay đổi bằng lời thường. Cora chọn đúng quy trình, Ada hỏi điều còn chưa rõ, các đồng đội lần lượt làm tới khi có thứ để bạn duyệt.',
+      },
+      {
+        icon: 'evidence',
+        before: 'Một agent tự báo là xong',
+        title: 'Bằng chứng cho từng tiêu chí',
+        body: 'Mỗi Requirement có tiêu chí kiểm được. VividKit chụp trang ở cỡ điện thoại và máy tính, ghi lại kết quả kiểm, để bạn chấp nhận thứ mình nhìn thấy.',
+      },
+      {
+        icon: 'shield',
+        before: 'Một agent thả rông trong thư mục thật',
+        title: 'Dự án vẫn là của bạn',
+        body: 'Đội làm trên bản sao riêng, sau rào chắn của hệ điều hành. Trước mỗi lượt chạy có điểm khôi phục, và thay đổi thật đi qua cửa sổ tin cậy.',
+      },
     ],
-    gate: 'Bạn duyệt · Áp dụng · Xuất bản',
-    askLabel: 'Cần bạn trả lời',
-    askFrom: 'Ada · Kiến trúc sư',
-    askText: 'Trên điện thoại, nút nên rộng hết màn hình hay giữ kích thước như trên máy tính?',
-    options: ['Rộng hết màn hình', 'Giữ như máy tính'],
-    running: 'Đang chạy · 1',
-    runTitle: 'Ben · Sửa',
-    log: [
-      { time: '14:02', text: 'Đọc src/components/Contact.astro' },
-      { time: '14:03', text: 'Sửa kiểu cho màn hình nhỏ' },
-      { time: '14:04', text: 'Build site' },
-    ],
-    stop: 'Dừng Ben',
-    teamStatus: { cora: 'Rảnh', ada: 'Đang chờ', dee: 'Rảnh', ben: 'Đang làm', tess: 'Xếp hàng', ivy: 'Rảnh' },
   },
-  how: {
-    eyebrow: 'Một thay đổi đi thế nào',
-    title: 'Từ lời bạn nói tới site thật',
+  audience: {
+    eyebrow: 'Dành cho ai',
+    title: 'Cho người có ứng dụng cần làm, không phải có đội cần quản',
+    lead: 'Bạn không cần biết git hay viết code. Bạn cần một ý tưởng, hoặc một ứng dụng đang cần làm thêm.',
+    people: [
+      { icon: 'rocket', title: 'Người lập dự án', body: 'Biến ý tưởng thành bản đầu tiên chạy được, từng thay đổi một, có kiểm chứng.' },
+      { icon: 'store', title: 'Chủ tiệm', body: 'Giữ site luôn mới: sản phẩm, trang và chỗ sửa, không phải chờ lập trình viên.' },
+      { icon: 'briefcase', title: 'Freelancer', body: 'Giao việc lặp lại cho đội, dành thời gian cho phần khách hàng để ý.' },
+      { icon: 'users', title: 'Team nhỏ', body: 'Một đội AI dùng chung cho mọi dự án, ghi rõ cái gì đã đổi và vì sao.' },
+    ],
+    paths: [
+      { title: 'Nhận ứng dụng bạn đã có', body: 'Đội quét chỉ đọc, giải thích dự án chạy thế nào, rồi gợi ý việc nên làm tiếp.' },
+      { title: 'Bắt đầu từ ý tưởng', body: 'Ada giúp bạn định hình bản đầu tiên và hướng kỹ thuật trước khi bắt tay xây.' },
+    ],
+  },
+  flow: {
+    eyebrow: 'Cách làm',
+    title: 'Từ một câu nói tới thay đổi đã xuất bản',
     lead: 'Bạn quyết ở từng mốc. Phần việc ở giữa do đội làm, và bước nào cũng nhìn thấy được.',
     steps: [
-      { who: 'cora', title: 'Kể cho Cora', body: 'Mô tả bằng lời thường, ví dụ "nút Liên hệ trên điện thoại bị lệch". Cora phân loại, chọn quy trình và tạo issue trong Hộp thư.' },
-      { who: 'ada', title: 'Xác nhận Requirement', body: 'Ada hỏi điều còn chưa rõ và viết kết quả cần đạt kèm vài tiêu chí bạn tự kiểm được. Bạn xác nhận rồi bấm Bắt đầu.' },
-      { who: 'ben', title: 'Đội làm trên bản sao riêng', body: 'Các đồng đội lần lượt làm trong Relay, trên bản sao riêng của dự án. Bạn xem được, nhắn được, và bấm Dừng lúc nào cũng được.' },
-      { who: 'tess', title: 'Duyệt bằng chứng', body: 'Mỗi tiêu chí có bằng chứng: ảnh VividKit chụp, kết quả kiểm tra và ghi chú. Bạn Chấp nhận, hoặc Gửi lại kèm ghi chú.' },
-      { who: 'you', title: 'Áp dụng và xuất bản', body: 'Cửa sổ xác nhận tin cậy riêng hiện đúng những gì sẽ đổi trong dự án thật. Bạn xác nhận ở đó, và có thể Hoàn tác hay đổi về bản trước.' },
+      ['message', 'Kể cho Cora', 'Nói điều bạn muốn bằng lời thường. Cora phân loại và tạo issue trong Hộp thư.'],
+      ['file', 'Xác nhận Requirement', 'Ada hỏi điều chưa rõ và biến nó thành tiêu chí kiểm được.'],
+      ['branch', 'Đội bắt tay làm', 'Các đồng đội tiếp sức trên bản sao riêng. Xem hoặc Dừng lúc nào cũng được.'],
+      ['eye', 'Duyệt bằng chứng', 'Ảnh chụp và kết quả kiểm theo từng tiêu chí. Chấp nhận, hoặc gửi lại.'],
+      ['shield', 'Áp dụng và xuất bản', 'Xác nhận đúng từng tệp trong cửa sổ tin cậy. Vẫn hoàn tác và đổi về được.'],
     ],
   },
   team: {
     eyebrow: 'Đội',
-    title: 'Sáu đồng đội, một workspace',
-    lead: 'Một đội dùng chung cho mọi dự án. Mỗi đồng đội có vai trò cố định và làm một việc một lúc. Bạn đổi tên, ảnh, runtime hay quyền lúc nào cũng được.',
-    optionalTag: 'Tùy chọn',
-    members: [
-      { id: 'cora', name: 'Cora', role: 'Điều phối', does: 'Phân loại yêu cầu, chọn quy trình, tạo issue.' },
-      { id: 'ada', name: 'Ada', role: 'Kiến trúc sư', does: 'Hỏi cho rõ, viết Requirement và kế hoạch, soát lại mã.' },
-      { id: 'dee', name: 'Dee', role: 'Thiết kế', does: 'Bố cục và kiểu dáng khi thay đổi có màn mới.' },
-      { id: 'ben', name: 'Ben', role: 'Lập trình', does: 'Khởi tạo, xây dựng và sửa lỗi trong bản sao riêng.' },
-      { id: 'tess', name: 'Tess', role: 'Kiểm thử', does: 'Lấy bằng chứng cho từng tiêu chí, trước và sau.' },
-      { id: 'ivy', name: 'Ivy', role: 'Điều tra lỗi', does: 'Tìm nguyên nhân lỗi có bằng chứng. Chỉ đọc.', optional: true },
-    ],
+    title: 'Đội của bạn, dùng chung cho mọi dự án',
+    lead: 'Sáu đồng đội với vai trò cố định, mỗi người làm một việc một lúc. Đổi tên, đổi runtime, hoặc tuyển thêm.',
   },
   workflows: {
     eyebrow: 'Quy trình',
@@ -291,38 +295,31 @@ const vi: LandingContent = {
       { name: 'Sửa nhanh', when: 'Đổi trong một tệp. Lớn hơn dự kiến thì đội dừng và đề xuất quy trình khác.', inBeta: true },
       { name: 'Tính năng mới', when: 'Thêm hoặc đổi thứ người dùng nhìn thấy. Bạn có thể duyệt kế hoạch trước.', inBeta: true },
       { name: 'Dự án mới', when: 'Bắt đầu từ ý tưởng trong thư mục trống. Bạn xác nhận hướng kỹ thuật.', inBeta: true },
-      { name: 'Nhận dự án có sẵn', when: 'Đưa ứng dụng bạn đã có vào. Quét chỉ đọc, báo cáo, rồi gợi ý việc.', inBeta: true },
+      { name: 'Nhận dự án có sẵn', when: 'Đưa ứng dụng bạn đã có vào: quét chỉ đọc, báo cáo, rồi gợi ý việc.', inBeta: true },
       { name: 'Điều tra', when: 'Hiểu vấn đề trước khi quyết có sửa không. Kết thúc bằng báo cáo.', inBeta: false },
       { name: 'Cải thiện', when: 'Làm tốt hơn thứ đo được, có số đo trước và sau.', inBeta: false },
     ],
   },
   safety: {
     eyebrow: 'An toàn',
-    title: 'Bạn vẫn nắm dự án thật',
-    lead: 'Những điều này luôn đúng, kể cả khi bật chế độ tự động.',
-    items: [
-      { title: 'Mỗi issue một bản sao riêng', body: 'Đội bắt đầu trên bản sao của mình. Tệp bí mật như .env không có trong bản sao, và khoá hay token không bao giờ vào prompt, nhật ký hay bằng chứng.' },
-      { title: 'Hệ điều hành rào lại', body: 'Mỗi lượt chạy nằm trong sandbox: đội không ghi được ra ngoài bản sao, không đọc được thông tin đăng nhập của bạn. Máy không có rào chắn thì không Bắt đầu, trừ khi bạn tự bật Toàn quyền.' },
-      { title: 'Điểm khôi phục trước mỗi lượt chạy', body: 'VividKit ghi lại nhánh chính và bản đang chạy trên site trước, so lại sau, và cho Đổi về bản trước nếu có gì đã đổi.' },
-      { title: 'Hành động của bạn qua cửa sổ tin cậy', body: 'Áp dụng, Hoàn tác, Xuất bản, Đổi về bản trước và Tạo bản xem trước chỉ chạy sau khi bạn xác nhận trong cửa sổ riêng.' },
-      { title: 'Dừng là dừng', body: 'Lượt chạy nào cũng có nút Dừng và không bao giờ hỏi lại. Dừng tất cả chỉ cách một phím tắt.' },
-      { title: 'Không đoán số', body: 'Điều VividKit chưa biết hiện là Chưa rõ. Bằng chứng cũ được đánh Đã cũ và giữ lại, không xoá.' },
-    ],
+    title: 'Thiết kế để bạn luôn cầm lái',
+    lead: 'Agent làm rất nhanh. VividKit làm cho mỗi bước đều thấy được, quay lại được, và chỉ xong khi bạn chấp nhận.',
     autoTitle: 'Về chế độ tự động',
-    autoBody: 'Chế độ tự động mặc định bật để đội làm trọn việc: nếu công cụ trên máy cho phép, đồng đội được đẩy nhánh, mở PR, merge và xuất bản. Tắt đi thì đội chỉ đề xuất.',
+    autoBody: 'Chế độ tự động mặc định bật để đội làm trọn việc: nếu công cụ trên máy cho phép, đồng đội được đẩy nhánh, mở PR, merge và xuất bản. VividKit vẫn giữ điểm khôi phục và cho Đổi về bản trước. Tắt đi thì đội chỉ đề xuất.',
     more: 'Đọc hướng dẫn an toàn',
   },
   runtimes: {
     eyebrow: 'Runtime',
-    title: 'Chạy trên các công cụ lập trình AI bạn đang dùng',
-    lead: 'Mỗi đồng đội có thể dùng một runtime khác nhau. VividKit tìm các runtime đã cài trên máy và dùng chính tài khoản bạn đã đăng nhập.',
+    title: 'Dùng được với các agent lập trình bạn đang có',
+    lead: 'Mỗi đồng đội có thể chạy trên một runtime khác nhau. VividKit tìm các runtime đã cài trên máy và dùng chính tài khoản bạn đã đăng nhập.',
     verified: ['Claude Code', 'Codex', 'OpenCode', 'GitHub Copilot CLI', 'Cursor Agent', 'Grok', 'Oh My Pi'],
-    moreNote: 'Đã chạy thật trọn một issue. App còn liệt kê thêm runtime khác, ghi "Chưa kiểm thật".',
+    note: 'Mỗi runtime ở đây đã chạy thật trọn một issue. App còn liệt kê thêm runtime khác, ghi "Chưa kiểm thật".',
   },
   start: {
-    title: 'Bản beta ra mắt tháng 10',
-    lead: 'Dành cho người lập dự án, chủ tiệm, freelancer và team nhỏ. Nhận ứng dụng bạn đã có, hoặc bắt đầu từ ý tưởng. Ở bản beta, ứng dụng web chạy tốt nhất.',
-    needsTitle: 'Bạn cần',
+    eyebrow: 'Trước khi bắt đầu',
+    title: 'Bạn cần gì',
+    lead: 'VividKit tự kiểm những thứ này khi khởi động và cho bạn biết còn thiếu gì.',
+    needsTitle: 'Trên máy của bạn',
     needs: [
       'Claude Code, đăng nhập gói Pro hoặc Max',
       'AgentKit với giấy phép Engineer Kit',
@@ -331,12 +328,43 @@ const vi: LandingContent = {
     systemsTitle: 'Hệ điều hành',
     systems: [
       { name: 'Linux x86-64', status: 'Hỗ trợ (.deb, AppImage)', ok: true },
-      { name: 'macOS, Apple silicon', status: 'Hỗ trợ, bản chưa ký', ok: true },
-      { name: 'macOS, Intel', status: 'Chưa có bản cài', ok: false },
-      { name: 'Windows', status: 'Chưa hỗ trợ', ok: false },
+      { name: 'macOS, Apple silicon', status: 'Hỗ trợ', ok: true },
+      { name: 'macOS, Intel', status: 'Chưa có', ok: false },
+      { name: 'Windows', status: 'Chưa có', ok: false },
     ],
-    ctaPrimary: 'Ra mắt tháng 10',
-    ctaSecondary: 'Hướng dẫn cài',
+    install: 'Xem yêu cầu chi tiết',
+  },
+  faq: {
+    eyebrow: 'Câu hỏi',
+    title: 'Điều nên biết',
+    lead: '',
+    items: [
+      {
+        q: 'Tôi có cần biết lập trình không?',
+        a: 'Không. Bạn mô tả điều mình muốn, trả lời câu hỏi, đọc bằng chứng rồi bấm Chấp nhận, Áp dụng và Xuất bản. Chi tiết kỹ thuật vẫn ở đó khi bạn cần xem.',
+      },
+      {
+        q: 'Đội có làm hỏng dự án thật của tôi không?',
+        a: 'Đội bắt đầu trên bản sao riêng của dự án. VividKit ghi điểm khôi phục trước mỗi lượt chạy, báo nếu dự án thật hay site đã đổi, và cho Đổi về bản trước. Tắt chế độ tự động thì chỉ bạn mới áp dụng hay xuất bản được.',
+      },
+      {
+        q: 'VividKit dùng AI nào, và ai trả tiền?',
+        a: 'Của chính bạn. VividKit chạy các agent lập trình đã cài trên máy bằng tài khoản bạn đăng nhập, nên lượt chạy dùng gói bạn đang có. Bản beta cần Claude Code gói Pro hoặc Max.',
+      },
+      {
+        q: 'Chỉ dùng cho website thôi à?',
+        a: 'Không. VividKit phân biệt ứng dụng web với ứng dụng khác. Ứng dụng web được nhiều nhất: ảnh chụp trang làm bằng chứng và xuất bản lên Cloudflare Pages. Với ứng dụng khác, bằng chứng đến từ test, build và chạy thử, và chưa có xuất bản.',
+      },
+      {
+        q: 'Tệp và ghi chú của dự án nằm ở đâu?',
+        a: 'Trên máy của bạn. Requirement, kế hoạch, báo cáo và changelog được ghi vào thư mục dự án, đọc được cả khi không mở VividKit.',
+      },
+    ],
+  },
+  cta: {
+    title: 'Mang ứng dụng tới. Gặp đội của bạn.',
+    lead: 'Bản beta sắp ra mắt. Đọc tài liệu trước, rồi thêm một dự án và kể cho Cora việc nhỏ đầu tiên cần sửa.',
+    docs: 'Đọc tài liệu',
   },
   guides: {
     title: 'Đang học AgentKit hay ClaudeKit?',

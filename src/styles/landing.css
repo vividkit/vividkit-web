@@ -1,141 +1,482 @@
-/* Landing page for VividKit Builder. Visual language mirrors the app's
-   "Calm Tactile" tokens (vividkit-builder docs/spec/08-visual-m2.md):
-   no hard borders, 1px inner rings, thin shadows, colour carries meaning
-   (blue = working/selected, orange = needs you, green = done, red = stop). */
-@import '@fontsource/plus-jakarta-sans/vietnamese-400.css';
-@import '@fontsource/plus-jakarta-sans/vietnamese-500.css';
-@import '@fontsource/plus-jakarta-sans/vietnamese-600.css';
-@import '@fontsource/plus-jakarta-sans/vietnamese-700.css';
-@import '@fontsource/plus-jakarta-sans/latin-400.css';
-@import '@fontsource/plus-jakarta-sans/latin-500.css';
-@import '@fontsource/plus-jakarta-sans/latin-600.css';
-@import '@fontsource/plus-jakarta-sans/latin-700.css';
-@import '@fontsource/jetbrains-mono/latin-400.css';
-@import '@fontsource/jetbrains-mono/latin-500.css';
+/*
+ * Landing page for VividKit Builder: the app's tokens and fonts, then the home page styles
+ * shared with vividkit.app. Fonts are imported per weight (400.css…): each file declares every
+ * subset with its unicode-range, so Vietnamese letters come from the vietnamese subset. Per-subset
+ * files (latin-400.css) have no unicode-range and the last one declared would win for all text.
+ */
+@import '@fontsource/plus-jakarta-sans/400.css';
+@import '@fontsource/plus-jakarta-sans/500.css';
+@import '@fontsource/plus-jakarta-sans/600.css';
+@import '@fontsource/plus-jakarta-sans/700.css';
+@import '@fontsource/plus-jakarta-sans/800.css';
+@import '@fontsource/jetbrains-mono/400.css';
+@import '@fontsource/jetbrains-mono/500.css';
+@import './vk-tokens.css';
+@import './vk-home.css';
 
-.vkl {
-  --vk-font-sans: 'Plus Jakarta Sans', system-ui, sans-serif;
-  --vk-font-mono: 'JetBrains Mono', ui-monospace, monospace;
-  --vk-ease: cubic-bezier(0.22, 1, 0.36, 1);
-  --vk-person-1: #5a55c4;
-  --vk-person-2: #2b7466;
-  --vk-person-3: #a8406f;
-  --vk-person-4: #2d62a8;
-  --vk-person-5: #8e5418;
-  --vk-person-6: #5e6b2a;
-  --vk-chrome: #f3f3f3;
-  --vk-panel: #fdfdfd;
-  --vk-sunken: #f2f2f2;
-  --vk-inset: #f8f8f8;
-  --vk-ink: #0d0d0d;
-  --vk-ink2: #555555;
-  --vk-ink3: #6b6b6b;
-  --vk-line-strong: rgba(0, 0, 0, 0.12);
-  --vk-acc: #0067d1;
-  --vk-acc-fill: #0067d1;
-  --vk-acc-line: rgba(0, 103, 209, 0.35);
-  --vk-acc-soft: rgba(0, 103, 209, 0.12);
-  --vk-log-bg: #f6f6f7;
-  --vk-log-ink: #1f1f23;
-  --vk-log-dim: #66666f;
-  --vk-warn: #b4430c;
-  --vk-warn-soft: rgba(180, 67, 12, 0.1);
-  --vk-warn-line: rgba(180, 67, 12, 0.24);
-  --vk-ok: #167347;
-  --vk-ok-soft: rgba(22, 115, 71, 0.1);
-  --vk-danger: #b42318;
-  --vk-danger-soft: rgba(180, 35, 24, 0.08);
-  --vk-shadow-raise: 0 1px 2px rgba(0, 0, 0, 0.05), 0 0 0 1px rgba(0, 0, 0, 0.06);
-  --vk-shadow-float: 0 4px 42px rgba(0, 0, 0, 0.06), 0 2px 6px rgba(0, 0, 0, 0.05), 0 0 0 1px rgba(0, 0, 0, 0.06);
-  --vk-shadow-card: 0 0 0 1px rgba(0, 0, 0, 0.05), 0 2px 10px rgba(0, 0, 0, 0.04);
-  --vk-ring: inset 0 0 0 1px rgba(0, 0, 0, 0.07);
-  --vk-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.25);
-
+.vkh {
+  min-height: 100vh;
+  padding-top: 112px;
+  background:
+    radial-gradient(900px 520px at 50% -10%, color-mix(in srgb, var(--vk-brand-a) 10%, transparent), transparent 70%),
+    radial-gradient(700px 480px at 100% 55%, color-mix(in srgb, var(--vk-brand-b) 7%, transparent), transparent 70%),
+    radial-gradient(700px 480px at 0% 85%, color-mix(in srgb, var(--vk-brand-a) 7%, transparent), transparent 70%),
+    var(--vk-chrome);
+  color: var(--vk-ink);
   font-family: var(--vk-font-sans);
   word-spacing: 0.07em;
+}
+.vkh h1,
+.vkh h2,
+.vkh h3 {
+  font-family: var(--vk-font-sans);
+}
+.vkh code {
+  font-family: var(--vk-font-mono);
+  word-spacing: normal;
+}
+.vkh section[id] {
+  scroll-margin-top: 112px;
+}
+
+/* Not released yet: shaped like the primary action, but inert. */
+.vk-btn-soon {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 44px;
+  padding: 0 20px;
+  border-radius: var(--vk-radius-md);
+  background: rgba(255, 255, 255, 0.06);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--vk-brand-b) 45%, transparent);
   color: var(--vk-ink);
-  background: var(--vk-chrome);
+  font-size: 14.5px;
+  font-weight: 650;
+  cursor: default;
+}
+.vk-btn-soon small {
+  color: var(--vk-ink3);
+  font-size: 13px;
+  font-weight: 600;
 }
 
-.dark .vkl {
-  --vk-chrome: #0e0e0e;
-  --vk-panel: #141414;
-  --vk-sunken: #1d1d1d;
-  --vk-inset: #111111;
-  --vk-ink: #fbfbfb;
-  --vk-ink2: #cdcdcd;
-  --vk-ink3: #9a9a9a;
-  --vk-line-strong: rgba(255, 255, 255, 0.1);
-  --vk-acc: #7db4ff;
-  --vk-acc-fill: #0b6cd8;
-  --vk-acc-line: rgba(125, 180, 255, 0.38);
-  --vk-acc-soft: rgba(0, 113, 252, 0.2);
-  --vk-log-bg: #0c0c0d;
-  --vk-log-ink: #d9d9de;
-  --vk-log-dim: #7a7a85;
-  --vk-warn: #f59a5b;
-  --vk-warn-soft: rgba(245, 154, 91, 0.14);
-  --vk-warn-line: rgba(245, 154, 91, 0.3);
-  --vk-ok: #5ccb8f;
-  --vk-ok-soft: rgba(92, 203, 143, 0.14);
-  --vk-danger: #ff8a80;
-  --vk-danger-soft: rgba(255, 138, 128, 0.1);
-  --vk-shadow-raise: 0 1px 1px rgba(0, 0, 0, 0.24), inset 0 0 0 1px rgba(255, 255, 255, 0.04), inset 0 1px 0 rgba(255, 255, 255, 0.06);
-  --vk-shadow-float: 0 12px 40px rgba(0, 0, 0, 0.45), inset 0 0 0 1px rgba(255, 255, 255, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.07);
-  --vk-shadow-card: inset 0 0 0 1px rgba(255, 255, 255, 0.04), inset 0 1px 0 rgba(255, 255, 255, 0.05), 0 8px 30px rgba(0, 0, 0, 0.35);
-  --vk-ring: inset 0 0 0 1px rgba(255, 255, 255, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.04);
-  --vk-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.22);
+.vkh a:focus-visible {
+  outline: 2px solid var(--vk-acc);
+  outline-offset: 2px;
 }
 
-/* Layout */
-.vkl-wrap { max-width: 1160px; margin: 0 auto; padding: 0 16px; }
-@media (min-width: 768px) { .vkl-wrap { padding: 0 32px; } }
-.vkl-section { padding: 88px 0; scroll-margin-top: 72px; }
-@media (max-width: 767px) { .vkl-section { padding: 64px 0; } }
-
-.vkl-eyebrow { font-size: 13px; font-weight: 600; color: var(--vk-acc); margin-bottom: 10px; }
-.vkl-h2 { font-size: clamp(28px, 4vw, 40px); font-weight: 700; letter-spacing: -0.028em; line-height: 1.15; max-width: 22ch; text-wrap: balance; }
-.vkl-lead { margin-top: 14px; font-size: 16.5px; line-height: 1.6; color: var(--vk-ink2); max-width: 60ch; }
-
-.vkl-panel { background: var(--vk-panel); border-radius: 14px; box-shadow: var(--vk-shadow-card); }
-.vkl-mono { font-family: var(--vk-font-mono); word-spacing: 0; }
-
-/* Buttons: 10px radius, never pills */
-.vkl-btn {
-  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
-  height: 44px; padding: 0 18px; border-radius: 10px;
-  font-size: 15px; font-weight: 600; line-height: 1;
-  transition: transform 150ms var(--vk-ease), box-shadow 150ms var(--vk-ease), background 150ms var(--vk-ease);
+/* Bot avatars (from the vividkit.app global styles): a dot until the bot has its colour. */
+.vk-team-bot {
+  display: grid;
+  flex: none;
+  place-items: center;
 }
-.vkl-btn:active { transform: translateY(1px); }
-.vkl-btn-primary { background: var(--vk-acc-fill); color: #fff; box-shadow: var(--vk-highlight), 0 1px 2px rgba(0, 0, 0, 0.12); }
-.vkl-btn-primary:hover { background: color-mix(in srgb, var(--vk-acc-fill) 88%, #000); }
-.vkl-btn-quiet { background: var(--vk-panel); color: var(--vk-ink); box-shadow: var(--vk-shadow-raise); }
-.vkl-btn-quiet:hover { background: var(--vk-inset); }
-/* Not released yet: looks like the primary action but is not clickable */
-.vkl-btn-soon { background: var(--vk-acc-soft); color: var(--vk-acc); box-shadow: inset 0 0 0 1px var(--vk-acc-line); cursor: default; }
-.vkl-btn-soon:active { transform: none; }
-
-/* Status pill (allowed in M2 for status, not for actions) */
-.vkl-pill { display: inline-flex; align-items: center; gap: 6px; height: 22px; padding: 0 9px; border-radius: 999px; font-size: 12px; font-weight: 600; white-space: nowrap; }
-.vkl-pill-acc { background: var(--vk-acc-soft); color: var(--vk-acc); }
-.vkl-pill-warn { background: var(--vk-warn-soft); color: var(--vk-warn); box-shadow: inset 0 0 0 1px var(--vk-warn-line); }
-.vkl-pill-muted { background: var(--vk-sunken); color: var(--vk-ink3); }
-
-/* Live beam: only running things move */
-.vkl-live { position: relative; overflow: hidden; }
-.vkl-live::after {
-  content: ''; position: absolute; inset: auto 0 0 0; height: 2px;
-  background: linear-gradient(90deg, transparent, var(--vk-acc), transparent);
-  background-size: 50% 100%; background-repeat: no-repeat;
-  animation: vkl-beam 1.8s var(--vk-ease) infinite;
+.vk-team-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
 }
-@keyframes vkl-beam { from { background-position: -60% 0; } to { background-position: 160% 0; } }
-.vkl-dot-live { width: 7px; height: 7px; border-radius: 999px; background: var(--vk-acc); box-shadow: 0 0 0 3px var(--vk-acc-soft); animation: vkl-pulse 1.6s ease-in-out infinite; }
-@keyframes vkl-pulse { 50% { box-shadow: 0 0 0 6px transparent; } }
+
+/* ---------- Introduction sections (beyond the vividkit.app home) ---------- */
+
+.vk-eyebrow {
+  margin: 0 0 10px;
+  color: var(--vk-acc);
+  font-size: 13.5px;
+  font-weight: 650;
+  text-align: center;
+}
+.vk-eyebrow.vk-left {
+  text-align: left;
+}
+.vkh .vk-section-title {
+  max-width: 780px;
+  margin-inline: auto;
+  text-wrap: balance;
+}
+
+.vk-btn-quiet {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  gap: 8px;
+  height: 40px;
+  padding: 0 16px;
+  border-radius: var(--vk-radius-md);
+  background: var(--vk-inset);
+  box-shadow: var(--vk-shadow-raise);
+  color: var(--vk-ink);
+  font-size: 14px;
+  font-weight: 650;
+  transition: background var(--vk-dur-quick) var(--vk-ease);
+}
+.vk-btn-quiet:hover {
+  background: var(--vk-sunken);
+}
+
+/* Why: the old way, struck through, above what VividKit does instead */
+.vk-why {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  margin: 36px 0 0;
+  padding: 0;
+  list-style: none;
+}
+.vk-why li {
+  overflow: hidden;
+  border-radius: 20px;
+  background: var(--vk-panel);
+  box-shadow: var(--vk-shadow-card);
+}
+.vk-why-before {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 14px 20px;
+  background: var(--vk-inset);
+  border-bottom: 1px solid var(--vk-line);
+  color: var(--vk-ink3);
+  font-size: 13.5px;
+}
+.vk-why-before svg {
+  flex: none;
+  margin-top: 3px;
+  color: var(--vk-danger);
+}
+.vk-why-before span {
+  text-decoration: line-through;
+  text-decoration-color: color-mix(in srgb, var(--vk-danger) 45%, transparent);
+}
+.vk-why-before small {
+  display: block;
+  margin-bottom: 2px;
+  font-size: 11.5px;
+  font-weight: 600;
+}
+.vk-why-after {
+  padding: 20px 20px 24px;
+}
+.vk-why-after h3,
+.vk-people h3,
+.vk-path h3,
+.vk-workflows h3,
+.vk-note h3 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 650;
+  letter-spacing: -0.01em;
+}
+.vk-why-after h3 {
+  margin-top: 4px;
+}
+.vk-why-after p,
+.vk-people p,
+.vk-path p,
+.vk-workflows p,
+.vk-note p {
+  margin: 6px 0 0;
+  color: var(--vk-ink2);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+/* Audience */
+.vk-people {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+  margin: 36px 0 0;
+  padding: 0;
+  list-style: none;
+}
+.vk-people li {
+  padding: 22px 20px;
+  border-radius: 20px;
+  background: var(--vk-panel);
+  box-shadow: var(--vk-shadow-card);
+}
+.vk-people li > svg {
+  margin-bottom: 12px;
+  color: var(--vk-acc);
+}
+.vk-paths {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 16px;
+}
+.vk-path {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  padding: 22px 24px;
+  border-radius: 20px;
+  background:
+    radial-gradient(420px 160px at 0% 0%, color-mix(in srgb, var(--vk-brand-a) 13%, transparent), transparent),
+    var(--vk-panel);
+  box-shadow: var(--vk-shadow-card);
+}
+.vk-path-icon {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  background: var(--vk-brand);
+  color: #fff;
+  box-shadow: 0 10px 24px -10px rgba(37, 99, 235, 0.7);
+}
+
+/* Workflows */
+.vk-workflows {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 12px;
+  margin: 36px 0 0;
+  padding: 0;
+  list-style: none;
+}
+.vk-workflows li {
+  position: relative;
+  padding: 18px 20px 20px 22px;
+  border-radius: 16px;
+  background: var(--vk-panel);
+  box-shadow: var(--vk-shadow-card);
+}
+.vk-workflows li::before {
+  content: '';
+  position: absolute;
+  top: 18px;
+  bottom: 18px;
+  left: 0;
+  width: 3px;
+  border-radius: 0 3px 3px 0;
+  background: var(--vk-brand);
+}
+.vk-workflows li[data-later] {
+  background: transparent;
+  box-shadow: inset 0 0 0 1px var(--vk-line-strong);
+}
+.vk-workflows li[data-later]::before {
+  background: var(--vk-line-strong);
+}
+.vk-workflows h3 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.vk-tag {
+  padding: 1px 8px;
+  border-radius: var(--vk-radius-pill);
+  background: var(--vk-sunken);
+  color: var(--vk-ink3);
+  font-size: 11.5px;
+  font-weight: 600;
+}
+
+/* A wide row with text on the left and one action on the right */
+.vk-note {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px 24px;
+  margin-top: 16px;
+  padding: 22px 24px;
+  border-radius: 20px;
+  background: var(--vk-panel);
+  box-shadow: var(--vk-shadow-card);
+}
+.vk-note > div {
+  flex: 1 1 420px;
+}
+
+/* Runtimes and requirements */
+.vk-split {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+.vk-split-card {
+  padding: 32px;
+  border-radius: 24px;
+  background:
+    radial-gradient(520px 220px at 100% 0%, color-mix(in srgb, var(--vk-brand-b) 12%, transparent), transparent),
+    var(--vk-panel);
+  box-shadow: var(--vk-shadow-card);
+}
+.vk-card-title {
+  margin: 0;
+  font-size: clamp(22px, 2.4vw, 28px);
+  font-weight: 750;
+  letter-spacing: -0.03em;
+  line-height: 1.2;
+}
+.vk-card-lead {
+  margin: 10px 0 0;
+  color: var(--vk-ink2);
+  font-size: 15px;
+  line-height: 1.6;
+}
+.vk-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 22px 0 0;
+  padding: 0;
+  list-style: none;
+}
+.vk-chips li {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  height: 36px;
+  padding: 0 13px;
+  border-radius: var(--vk-radius-md);
+  background: var(--vk-inset);
+  box-shadow: var(--vk-shadow-raise);
+  font-size: 14px;
+  font-weight: 600;
+}
+.vk-chips svg,
+.vk-needs svg {
+  flex: none;
+  color: var(--vk-ok);
+}
+.vk-fine {
+  margin: 14px 0 0;
+  color: var(--vk-ink3);
+  font-size: 13px;
+  line-height: 1.55;
+}
+.vk-mini-label {
+  margin: 22px 0 8px;
+  color: var(--vk-ink3);
+  font-size: 12.5px;
+  font-weight: 600;
+}
+.vk-needs {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.vk-needs li {
+  display: flex;
+  gap: 10px;
+  font-size: 14.5px;
+  line-height: 1.5;
+}
+.vk-needs svg {
+  margin-top: 3px;
+}
+.vk-systems {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  border-radius: var(--vk-radius-md);
+  background: var(--vk-inset);
+  box-shadow: inset 0 0 0 1px var(--vk-line);
+  list-style: none;
+}
+.vk-systems li {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 9px 14px;
+  font-size: 14px;
+}
+.vk-systems li + li {
+  border-top: 1px solid var(--vk-line);
+}
+.vk-systems span {
+  font-weight: 600;
+}
+.vk-systems em {
+  color: var(--vk-ink3);
+  font-style: normal;
+}
+.vk-systems li[data-ok='true'] em {
+  color: var(--vk-ok);
+}
+.vk-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 18px;
+  color: var(--vk-acc);
+  font-size: 14px;
+  font-weight: 650;
+}
+.vk-link:hover {
+  text-decoration: underline;
+}
+
+/* FAQ */
+.vk-faq {
+  display: grid;
+  gap: 10px;
+  max-width: 820px;
+  margin: 32px auto 0;
+}
+.vk-faq details {
+  border-radius: 16px;
+  background: var(--vk-panel);
+  box-shadow: var(--vk-shadow-card);
+}
+.vk-faq summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 18px 22px;
+  cursor: pointer;
+  font-size: 15.5px;
+  font-weight: 650;
+  list-style: none;
+}
+.vk-faq summary::-webkit-details-marker {
+  display: none;
+}
+.vk-faq summary svg {
+  flex: none;
+  color: var(--vk-ink3);
+  transition: transform var(--vk-dur-fast) var(--vk-ease);
+}
+.vk-faq details[open] summary svg {
+  transform: rotate(180deg);
+}
+.vk-faq details p {
+  margin: 0;
+  padding: 0 22px 20px;
+  color: var(--vk-ink2);
+  font-size: 14.5px;
+  line-height: 1.65;
+}
+
+@media (max-width: 1024px) {
+  .vk-why,
+  .vk-split {
+    grid-template-columns: 1fr;
+  }
+  .vk-people {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 760px) {
+  .vk-people,
+  .vk-paths {
+    grid-template-columns: 1fr;
+  }
+  .vk-split-card {
+    padding: 24px 20px;
+  }
+}
 @media (prefers-reduced-motion: reduce) {
-  .vkl-live::after, .vkl-dot-live { animation: none; }
+  .vk-faq summary svg {
+    transition: none;
+  }
 }
-
-/* Focus */
-.vkl a:focus-visible, .vkl button:focus-visible { outline: 2px solid var(--vk-acc); outline-offset: 2px; }

@@ -73,8 +73,6 @@ export const common = {
   'footer.links.features': 'Tính Năng',
   'footer.links.how': 'Cách làm',
   'footer.links.docs': 'Tài liệu',
-  'footer.links.download': 'Tải bản beta',
-  'footer.links.feedback': 'Báo lỗi',
   'footer.links.pricing': 'Bảng Giá',
   'footer.links.commands': 'Lệnh',
   'footer.links.waitlist': 'Danh Sách Chờ',
