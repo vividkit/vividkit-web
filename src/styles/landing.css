@@ -480,3 +480,15 @@
     transition: none;
   }
 }
+
+/* Key phrase in a section title: the logo gradient, deep enough to read on light panels. */
+.vk-hl {
+  background: linear-gradient(100deg, #1d4ed8 10%, #0891b2 90%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.dark .vkh .vk-hl,
+.vkh [data-theme='dark'] .vk-hl {
+  background-image: var(--vk-brand-text);
+}

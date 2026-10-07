@@ -25,6 +25,7 @@ import {
   Users,
   X,
 } from 'lucide-astro';
+import Highlight from './Highlight.astro';
 import { AgentConsole } from './agent-console';
 import { HomeBento } from './home-bento';
 import { TeamShowcase } from './team-list';
@@ -83,7 +84,7 @@ const PATH_ICONS = [FolderGit2, Lightbulb];
       <!-- Why -->
       <section id="why" class="vk-section">
         <p class="vk-eyebrow">{c.why.eyebrow}</p>
-        <h2 class="vk-section-title">{c.why.title}</h2>
+        <h2 class="vk-section-title"><Highlight text={c.why.title} /></h2>
         <p class="vk-section-lead">{c.why.lead}</p>
         <ul class="vk-why">
           {c.why.items.map((w) => {
@@ -108,7 +109,7 @@ const PATH_ICONS = [FolderGit2, Lightbulb];
       <!-- Audience -->
       <section id="who" class="vk-section">
         <p class="vk-eyebrow">{c.audience.eyebrow}</p>
-        <h2 class="vk-section-title">{c.audience.title}</h2>
+        <h2 class="vk-section-title"><Highlight text={c.audience.title} /></h2>
         <p class="vk-section-lead">{c.audience.lead}</p>
         <ul class="vk-people">
           {c.audience.people.map((p) => {
@@ -141,7 +142,7 @@ const PATH_ICONS = [FolderGit2, Lightbulb];
       <!-- How it works -->
       <section id="how" class="vk-section">
         <p class="vk-eyebrow">{c.flow.eyebrow}</p>
-        <h2 class="vk-section-title">{c.flow.title}</h2>
+        <h2 class="vk-section-title"><Highlight text={c.flow.title} /></h2>
         <p class="vk-section-lead">{c.flow.lead}</p>
         <ol class="vk-flowline">
           {c.flow.steps.map(([icon, title, body]) => {
@@ -160,7 +161,7 @@ const PATH_ICONS = [FolderGit2, Lightbulb];
       <!-- Team -->
       <section id="team" class="vk-section">
         <p class="vk-eyebrow">{c.team.eyebrow}</p>
-        <h2 class="vk-section-title">{c.team.title}</h2>
+        <h2 class="vk-section-title"><Highlight text={c.team.title} /></h2>
         <p class="vk-section-lead">{c.team.lead}</p>
         <TeamShowcase client:visible lang={lang} />
       </section>
@@ -168,7 +169,7 @@ const PATH_ICONS = [FolderGit2, Lightbulb];
       <!-- Workflows -->
       <section id="workflows" class="vk-section">
         <p class="vk-eyebrow">{c.workflows.eyebrow}</p>
-        <h2 class="vk-section-title">{c.workflows.title}</h2>
+        <h2 class="vk-section-title"><Highlight text={c.workflows.title} /></h2>
         <p class="vk-section-lead">{c.workflows.lead}</p>
         <ul class="vk-workflows">
           {c.workflows.items.map((w) => (
@@ -186,7 +187,7 @@ const PATH_ICONS = [FolderGit2, Lightbulb];
       <!-- Safety -->
       <section id="safety" class="vk-section">
         <p class="vk-eyebrow">{c.safety.eyebrow}</p>
-        <h2 class="vk-section-title">{c.safety.title}</h2>
+        <h2 class="vk-section-title"><Highlight text={c.safety.title} /></h2>
         <p class="vk-section-lead">{c.safety.lead}</p>
         <HomeBento lang={lang} />
         <div class="vk-note">
@@ -202,7 +203,7 @@ const PATH_ICONS = [FolderGit2, Lightbulb];
         <div class="vk-split">
           <div class="vk-split-card">
             <p class="vk-eyebrow vk-left">{c.runtimes.eyebrow}</p>
-            <h2 class="vk-card-title">{c.runtimes.title}</h2>
+            <h2 class="vk-card-title"><Highlight text={c.runtimes.title} /></h2>
             <p class="vk-card-lead">{c.runtimes.lead}</p>
             <ul class="vk-chips">
               {c.runtimes.verified.map((r) => (
@@ -212,7 +213,7 @@ const PATH_ICONS = [FolderGit2, Lightbulb];
           </div>
           <div class="vk-split-card">
             <p class="vk-eyebrow vk-left">{c.start.eyebrow}</p>
-            <h2 class="vk-card-title">{c.start.title}</h2>
+            <h2 class="vk-card-title"><Highlight text={c.start.title} /></h2>
             <p class="vk-card-lead">{c.start.lead}</p>
             <h3 class="vk-mini-label">{c.start.needsTitle}</h3>
             <ul class="vk-needs">
@@ -236,7 +237,7 @@ const PATH_ICONS = [FolderGit2, Lightbulb];
       <!-- FAQ -->
       <section id="faq" class="vk-section">
         <p class="vk-eyebrow">{c.faq.eyebrow}</p>
-        <h2 class="vk-section-title">{c.faq.title}</h2>
+        <h2 class="vk-section-title"><Highlight text={c.faq.title} /></h2>
         <div class="vk-faq">
           {c.faq.items.map((f) => (
             <details>
@@ -253,7 +254,7 @@ const PATH_ICONS = [FolderGit2, Lightbulb];
       <!-- Closing band -->
       <section class="vk-stage vk-cta" data-theme="dark">
         <div class="vk-stage-glow" aria-hidden="true"></div>
-        <h2>{c.cta.title}</h2>
+        <h2><Highlight text={c.cta.title} /></h2>
         <p>{c.cta.lead}</p>
         <div class="vk-actions">
           <span class="vk-btn-soon">

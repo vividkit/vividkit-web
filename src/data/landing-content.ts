@@ -1,6 +1,7 @@
 // Landing page copy for VividKit Builder, EN + VI. The hero, flow, safety bento and team row
 // follow the vividkit.app home page (vividkit-builder apps/docs/app/[lang]/(home)/page.tsx);
 // the rest introduces the product in more depth. Product facts must match the Builder docs.
+// Section titles mark their key phrase with [brackets]; <Highlight> renders it in the accent gradient.
 // Downloads and links to the Builder docs stay off until the beta ships: the actions read "Coming soon".
 import type { Language } from '@/i18n';
 
@@ -63,7 +64,7 @@ const en: LandingContent = {
   },
   why: {
     eyebrow: 'Why VividKit',
-    title: 'Coding agents are powerful. Directing them should not need a terminal.',
+    title: 'Coding agents are powerful. Directing them should [not need a terminal].',
     lead: 'Tools like Claude Code can build real software, but they expect you to type commands, read diffs and trust a "done". VividKit puts a calm desk around them, so you manage outcomes instead of tools.',
     beforeLabel: 'Without VividKit',
     items: [
@@ -89,7 +90,7 @@ const en: LandingContent = {
   },
   audience: {
     eyebrow: 'Who it is for',
-    title: 'For people with an app to build, not a team to manage',
+    title: 'For people with [an app to build], not a team to manage',
     lead: 'You do not need to know git or write code. You need an idea, or an app that needs work.',
     people: [
       { icon: 'rocket', title: 'Founders', body: 'Turn an idea into a working first version, one checked change at a time.' },
@@ -104,7 +105,7 @@ const en: LandingContent = {
   },
   flow: {
     eyebrow: 'How it works',
-    title: 'From one sentence to a published change',
+    title: 'From [one sentence] to a published change',
     lead: 'You decide at each checkpoint. The team does the work in between, and every step is visible.',
     steps: [
       ['message', 'Tell Cora', 'Say what you want in plain words. Cora sorts it and opens an issue in your Inbox.'],
@@ -116,12 +117,12 @@ const en: LandingContent = {
   },
   team: {
     eyebrow: 'The team',
-    title: 'Your team, shared by every project',
+    title: 'Your [team], shared by every project',
     lead: 'Six teammates with fixed roles, each doing one thing at a time. Rename them, change their runtime, or add more.',
   },
   workflows: {
     eyebrow: 'Workflows',
-    title: 'A fixed path for every kind of work',
+    title: 'A [fixed path] for every kind of work',
     lead: 'Cora picks the workflow and you can change it before Start. Each one has checkpoints where nobody moves on without you.',
     laterTag: 'Later',
     items: [
@@ -136,20 +137,20 @@ const en: LandingContent = {
   },
   safety: {
     eyebrow: 'Safety',
-    title: 'Built so you stay in charge',
+    title: 'Built so [you stay in charge]',
     lead: 'Agents move fast. VividKit makes every step visible, reversible and yours to accept.',
     autoTitle: 'About auto mode',
     autoBody: 'Auto mode is on by default so the team can finish the job: if the tools on your machine allow it, teammates may push, open pull requests, merge and publish. VividKit still keeps a restore point and offers Roll back. Turn it off and they only propose.',
   },
   runtimes: {
     eyebrow: 'Runtimes',
-    title: 'Works with the coding agents you already use',
+    title: 'Works with the [coding agents] you already use',
     lead: 'Each teammate can run on a different runtime. VividKit finds the ones installed on your machine and uses your own sign-in.',
     verified: ['Claude Code', 'Codex', 'OpenCode', 'GitHub Copilot CLI', 'Cursor Agent', 'Grok', 'Oh My Pi'],
   },
   start: {
     eyebrow: 'Before you begin',
-    title: 'What you need',
+    title: 'What [you need]',
     lead: 'VividKit checks these for you when it starts, and tells you what is missing.',
     needsTitle: 'On your machine',
     needs: [
@@ -167,7 +168,7 @@ const en: LandingContent = {
   },
   faq: {
     eyebrow: 'Questions',
-    title: 'Good to know',
+    title: 'Good to [know]',
     lead: '',
     items: [
       {
@@ -193,7 +194,7 @@ const en: LandingContent = {
     ],
   },
   cta: {
-    title: 'Bring an app. Meet your team.',
+    title: 'Bring an app. [Meet your team.]',
     lead: 'The beta is coming soon. When it lands, add a project and tell Cora about the first small thing to fix.',
   },
   guides: {
@@ -220,7 +221,7 @@ const vi: LandingContent = {
   },
   why: {
     eyebrow: 'Vì sao có VividKit',
-    title: 'Agent lập trình rất mạnh. Điều hành chúng không nên cần terminal.',
+    title: 'Agent lập trình rất mạnh. Điều hành chúng [không nên cần terminal].',
     lead: 'Những công cụ như Claude Code làm được phần mềm thật, nhưng đòi bạn gõ lệnh, đọc diff và tin vào một chữ "xong". VividKit dựng một bàn làm việc yên tĩnh quanh chúng, để bạn quản kết quả thay vì quản công cụ.',
     beforeLabel: 'Khi chưa có VividKit',
     items: [
@@ -246,7 +247,7 @@ const vi: LandingContent = {
   },
   audience: {
     eyebrow: 'Dành cho ai',
-    title: 'Cho người có ứng dụng cần làm, không phải có đội cần quản',
+    title: 'Cho người có [ứng dụng cần làm], không phải có đội cần quản',
     lead: 'Bạn không cần biết git hay viết code. Bạn cần một ý tưởng, hoặc một ứng dụng đang cần làm thêm.',
     people: [
       { icon: 'rocket', title: 'Người lập dự án', body: 'Biến ý tưởng thành bản đầu tiên chạy được, từng thay đổi một, có kiểm chứng.' },
@@ -261,7 +262,7 @@ const vi: LandingContent = {
   },
   flow: {
     eyebrow: 'Cách làm',
-    title: 'Từ một câu nói tới thay đổi đã xuất bản',
+    title: 'Từ [một câu nói] tới thay đổi đã xuất bản',
     lead: 'Bạn quyết ở từng mốc. Phần việc ở giữa do đội làm, và bước nào cũng nhìn thấy được.',
     steps: [
       ['message', 'Kể cho Cora', 'Nói điều bạn muốn bằng lời thường. Cora phân loại và tạo issue trong Hộp thư.'],
@@ -273,12 +274,12 @@ const vi: LandingContent = {
   },
   team: {
     eyebrow: 'Đội',
-    title: 'Đội của bạn, dùng chung cho mọi dự án',
+    title: '[Đội của bạn], dùng chung cho mọi dự án',
     lead: 'Sáu đồng đội với vai trò cố định, mỗi người làm một việc một lúc. Đổi tên, đổi runtime, hoặc tuyển thêm.',
   },
   workflows: {
     eyebrow: 'Quy trình',
-    title: 'Mỗi loại việc một đường đi rõ ràng',
+    title: 'Mỗi loại việc một [đường đi rõ ràng]',
     lead: 'Cora chọn quy trình, bạn đổi được trước khi Bắt đầu. Quy trình nào cũng có mốc mà không ai đi tiếp khi chưa có bạn.',
     laterTag: 'Sau',
     items: [
@@ -293,20 +294,20 @@ const vi: LandingContent = {
   },
   safety: {
     eyebrow: 'An toàn',
-    title: 'Thiết kế để bạn luôn cầm lái',
+    title: 'Thiết kế để [bạn luôn cầm lái]',
     lead: 'Agent làm rất nhanh. VividKit làm cho mỗi bước đều thấy được, quay lại được, và chỉ xong khi bạn chấp nhận.',
     autoTitle: 'Về chế độ tự động',
     autoBody: 'Chế độ tự động mặc định bật để đội làm trọn việc: nếu công cụ trên máy cho phép, đồng đội được đẩy nhánh, mở PR, merge và xuất bản. VividKit vẫn giữ điểm khôi phục và cho Đổi về bản trước. Tắt đi thì đội chỉ đề xuất.',
   },
   runtimes: {
     eyebrow: 'Runtime',
-    title: 'Dùng được với các agent lập trình bạn đang có',
+    title: 'Dùng được với các [agent lập trình] bạn đang có',
     lead: 'Mỗi đồng đội có thể chạy trên một runtime khác nhau. VividKit tìm các runtime đã cài trên máy và dùng chính tài khoản bạn đã đăng nhập.',
     verified: ['Claude Code', 'Codex', 'OpenCode', 'GitHub Copilot CLI', 'Cursor Agent', 'Grok', 'Oh My Pi'],
   },
   start: {
     eyebrow: 'Trước khi bắt đầu',
-    title: 'Bạn cần gì',
+    title: 'Bạn [cần gì]',
     lead: 'VividKit tự kiểm những thứ này khi khởi động và cho bạn biết còn thiếu gì.',
     needsTitle: 'Trên máy của bạn',
     needs: [
@@ -324,7 +325,7 @@ const vi: LandingContent = {
   },
   faq: {
     eyebrow: 'Câu hỏi',
-    title: 'Điều nên biết',
+    title: 'Điều [nên biết]',
     lead: '',
     items: [
       {
@@ -350,7 +351,7 @@ const vi: LandingContent = {
     ],
   },
   cta: {
-    title: 'Mang ứng dụng tới. Gặp đội của bạn.',
+    title: 'Mang ứng dụng tới. [Gặp đội của bạn.]',
     lead: 'Bản beta sắp ra mắt. Khi có bản, hãy thêm một dự án và kể cho Cora việc nhỏ đầu tiên cần sửa.',
   },
   guides: {
