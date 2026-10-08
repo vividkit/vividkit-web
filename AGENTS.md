@@ -138,3 +138,19 @@ We keep all important docs in `./docs` folder and keep updating them, structure 
 ```
 
 **IMPORTANT:** *MUST READ* and *MUST COMPLY* all *INSTRUCTIONS* in project `./AGENTS.md`, especially *WORKFLOWS* section is *CRITICALLY IMPORTANT*, this rule is *MANDATORY. NON-NEGOTIABLE. NO EXCEPTIONS. MUST REMEMBER AT ALL TIMES!!!*
+
+## Cursor Cloud specific instructions
+
+This is an Astro 6 static site (SSG) using **npm** (`package-lock.json`). Node 22 is available; dependencies are refreshed automatically on startup via the update script (`npm ci`).
+
+Standard commands live in `package.json` and the README "Development Commands" table — use those rather than duplicating them here:
+
+- Dev server: `npm run dev` (Astro serves on port `4321`; use `npm run dev -- --host` to bind all interfaces).
+- Production build: `npm run build` (runs `astro build`, then the `postbuild` step `node scripts/generate-llms-full.mjs`, which reads the just-built `dist/` — build first, no network needed).
+- Preview built site: `npm run preview`.
+
+Non-obvious caveats:
+
+- **Type check is not a passing gate.** `npm run astro -- check` currently reports pre-existing TypeScript errors (hundreds) and there is no `lint`/`check` npm script. The real correctness gate is `npm run build`, which succeeds. Do not try to "fix" these pre-existing type errors as part of unrelated work.
+- `puppeteer` is a dependency but is not needed to run the dev server or build; `npm ci` does not require downloading Chromium for the site to work.
+- The `.agents/skills/` Python skills (`/vk:*` maintainer tooling) are separate from the web app and are not needed to build or run the site.
