@@ -10,18 +10,27 @@ import {
   BadgeCheck,
   Briefcase,
   Check,
+  CalendarClock,
   ChevronDown,
+  CircleCheck,
   Clock,
   Eye,
   FileCheck2,
   FolderGit2,
   GitBranch,
+  Github,
+  Hourglass,
+  Layers,
   Lightbulb,
+  Mail,
   MessageSquareText,
   MessagesSquare,
+  Monitor,
+  Puzzle,
   Rocket,
   ShieldCheck,
   Store,
+  Terminal,
   Users,
   X,
 } from 'lucide-astro';
@@ -30,9 +39,19 @@ import WaitlistForm from './WaitlistForm.astro';
 import { AgentConsole } from './agent-console';
 import { HomeBento } from './home-bento';
 import { TeamShowcase } from './team-list';
-import { landingContent, type AudienceIcon, type FlowIcon, type WhyIcon } from '@/data/landing-content';
+import { CONTACT, STACK_LOGOS, landingContent, type AudienceIcon, type FlowIcon, type StackIcon, type WhyIcon } from '@/data/landing-content';
 import { useTranslatedPath, type Language } from '@/i18n';
 import '@/styles/landing.css';
+// Runtime marks from @lobehub/icons-static-svg (MIT), the icon set the Builder app uses for its
+// runtime badges. Inlined so the one-colour marks follow the theme (currentColor).
+import claudeCodeLogo from '@/assets/runtimes/claude-code.svg?raw';
+import codexLogo from '@/assets/runtimes/codex.svg?raw';
+import opencodeLogo from '@/assets/runtimes/opencode.svg?raw';
+import githubCopilotLogo from '@/assets/runtimes/github-copilot.svg?raw';
+import cursorLogo from '@/assets/runtimes/cursor.svg?raw';
+import grokLogo from '@/assets/runtimes/grok.svg?raw';
+import piLogo from '@/assets/runtimes/pi.svg?raw';
+import antigravityLogo from '@/assets/runtimes/antigravity.svg?raw';
 
 interface Props { lang: Language }
 const { lang } = Astro.props;
@@ -49,6 +68,20 @@ const FLOW_ICONS: Record<FlowIcon, typeof Eye> = {
 const WHY_ICONS: Record<WhyIcon, typeof Eye> = { chat: MessagesSquare, evidence: BadgeCheck, shield: ShieldCheck };
 const AUDIENCE_ICONS: Record<AudienceIcon, typeof Eye> = { store: Store, rocket: Rocket, briefcase: Briefcase, users: Users };
 const PATH_ICONS = [FolderGit2, Lightbulb];
+const STACK_ICONS: Record<StackIcon, typeof Eye> = { claude: Terminal, kit: Puzzle, app: Monitor, more: Layers };
+const STATUS_ICONS = { now: CircleCheck, beta: CalendarClock, later: Hourglass } as const;
+// Keyed by the runtime names in landing-content; a runtime without a published mark (Oh My Pi)
+// gets the generic terminal icon.
+const RUNTIME_LOGOS: Record<string, string> = {
+  'Claude Code': claudeCodeLogo,
+  Codex: codexLogo,
+  OpenCode: opencodeLogo,
+  'GitHub Copilot CLI': githubCopilotLogo,
+  'Cursor Agent': cursorLogo,
+  Grok: grokLogo,
+  Pi: piLogo,
+  Antigravity: antigravityLogo,
+};
 ---
 
 <MainLayout title={c.meta.title} description={c.meta.description} canonical={lang === 'vi' ? '/vi/' : '/'} lang={lang}>
@@ -57,7 +90,7 @@ const PATH_ICONS = [FolderGit2, Lightbulb];
 
     <main class="vk-home">
       <!-- Hero -->
-      <section id="hero" class="vk-stage" data-theme="dark">
+      <section id="hero" class="vk-stage">
         <div class="vk-stage-glow" aria-hidden="true"></div>
         <div class="vk-hero">
           <div class="vk-hero-text">
@@ -80,9 +113,15 @@ const PATH_ICONS = [FolderGit2, Lightbulb];
                 <small>· {c.hero.soonWhen}</small>
               </span>
             </div>
+            <p class="vk-runs-on">{c.hero.noDownload}</p>
             <p class="vk-runs-on">{c.hero.runsOn}</p>
           </div>
-          <AgentConsole client:visible lang={lang} />
+          <figure class="vk-hero-figure">
+            <div data-theme="dark">
+              <AgentConsole client:visible lang={lang} />
+            </div>
+            <figcaption class="vk-figcaption">{c.hero.illustration}</figcaption>
+          </figure>
         </div>
       </section>
 
@@ -163,6 +202,51 @@ const PATH_ICONS = [FolderGit2, Lightbulb];
         </ol>
       </section>
 
+      <!-- Status: what exists today, what the beta should include, what comes after -->
+      <section id="status" class="vk-section">
+        <p class="vk-eyebrow">{c.status.eyebrow}</p>
+        <h2 class="vk-section-title"><Highlight text={c.status.title} /></h2>
+        <p class="vk-section-lead">{c.status.lead}</p>
+        <div class="vk-status">
+          {c.status.columns.map((col) => {
+            const Icon = STATUS_ICONS[col.tone];
+            return (
+              <div class="vk-status-col" data-tone={col.tone}>
+                <h3><Icon size={18} />{col.label}</h3>
+                <ul>
+                  {col.items.map((item) => <li>{item}</li>)}
+                </ul>
+              </div>
+            );
+          })}
+        </div>
+        <p class="vk-fine vk-center">{c.status.note}</p>
+      </section>
+
+      <!-- Built on: the real role of Claude Code, AgentKit and VividKit -->
+      <section id="stack" class="vk-section">
+        <p class="vk-eyebrow">{c.stack.eyebrow}</p>
+        <h2 class="vk-section-title"><Highlight text={c.stack.title} /></h2>
+        <p class="vk-section-lead">{c.stack.lead}</p>
+        <ul class="vk-people">
+          {c.stack.items.map((item) => {
+            const Icon = STACK_ICONS[item.icon];
+            const logo = STACK_LOGOS[item.icon];
+            return (
+              <li>
+                <span class="vk-stack-logo" data-generic={!logo || undefined}>
+                  {logo ? <img src={logo} alt="" width="28" height="28" loading="lazy" decoding="async" /> : <Icon size={22} />}
+                </span>
+                <h3>{item.name}</h3>
+                <p class="vk-role">{item.role}</p>
+                <p>{item.body}</p>
+              </li>
+            );
+          })}
+        </ul>
+        <p class="vk-fine vk-center">{c.stack.fine}</p>
+      </section>
+
       <!-- Team -->
       <section id="team" class="vk-section">
         <p class="vk-eyebrow">{c.team.eyebrow}</p>
@@ -195,6 +279,7 @@ const PATH_ICONS = [FolderGit2, Lightbulb];
         <h2 class="vk-section-title"><Highlight text={c.safety.title} /></h2>
         <p class="vk-section-lead">{c.safety.lead}</p>
         <HomeBento lang={lang} />
+        <p class="vk-fine vk-center">{c.safety.illustration}</p>
         <div class="vk-note">
           <div>
             <h3>{c.safety.autoTitle}</h3>
@@ -212,9 +297,17 @@ const PATH_ICONS = [FolderGit2, Lightbulb];
             <p class="vk-card-lead">{c.runtimes.lead}</p>
             <ul class="vk-chips">
               {c.runtimes.verified.map((r) => (
-                <li><Check size={14} />{r}</li>
+                <li>
+                  {RUNTIME_LOGOS[r] ? (
+                    <span class="vk-runtime-logo" aria-hidden="true" set:html={RUNTIME_LOGOS[r]} />
+                  ) : (
+                    <span class="vk-runtime-logo" aria-hidden="true"><Terminal size={16} /></span>
+                  )}
+                  {r}
+                </li>
               ))}
             </ul>
+            <p class="vk-fine">{c.runtimes.fine}</p>
           </div>
           <div class="vk-split-card">
             <p class="vk-eyebrow vk-left">{c.start.eyebrow}</p>
@@ -257,7 +350,7 @@ const PATH_ICONS = [FolderGit2, Lightbulb];
       </section>
 
       <!-- Closing band -->
-      <section id="waitlist" class="vk-stage vk-cta" data-theme="dark">
+      <section id="waitlist" class="vk-stage vk-cta">
         <div class="vk-stage-glow" aria-hidden="true"></div>
         <span class="vk-badge">
           <span class="vk-live-dot"></span>
@@ -268,15 +361,72 @@ const PATH_ICONS = [FolderGit2, Lightbulb];
         <WaitlistForm lang={lang} />
       </section>
 
-      <section class="vk-note">
-        <div>
-          <h3>{c.guides.title}</h3>
-          <p>{c.guides.body}</p>
+      <!-- About: founder and contact -->
+      <section id="about" class="vk-section">
+        <p class="vk-eyebrow">{c.about.eyebrow}</p>
+        <h2 class="vk-section-title"><Highlight text={c.about.title} /></h2>
+        <p class="vk-section-lead">{c.about.lead}</p>
+        <div class="vk-paths">
+          <div class="vk-path">
+            <img
+              class="vk-founder-photo"
+              src="/about/thieu-nguyen.webp"
+              alt={c.about.founder.photoAlt}
+              width="72"
+              height="72"
+              loading="lazy"
+              decoding="async"
+            />
+            <div>
+              <h3>{c.about.founder.name}</h3>
+              <p class="vk-role">{c.about.founder.role}</p>
+              <p>{c.about.founder.body}</p>
+              <a class="vk-link" href={CONTACT.founderGithub} target="_blank" rel="noopener noreferrer">
+                <Github size={16} />
+                {c.about.founder.github}
+                <span class="sr-only">: {c.about.founder.name}</span>
+              </a>
+            </div>
+          </div>
+          <div class="vk-path">
+            <span class="vk-path-icon"><Mail size={20} /></span>
+            <div>
+              <h3>{c.about.contact.title}</h3>
+              <p>{c.about.contact.body}</p>
+              <a class="vk-link" href={`mailto:${CONTACT.email}`}>
+                <Mail size={16} />
+                {CONTACT.email}
+              </a>
+              <br />
+              <a class="vk-link vk-link-tight" href={CONTACT.orgGithub} target="_blank" rel="noopener noreferrer">
+                <Github size={16} />
+                {c.about.contact.github}
+              </a>
+            </div>
+          </div>
         </div>
-        <a href={translatePath('/guides')} class="vk-btn-quiet">
-          {c.guides.cta}
-          <ArrowRight size={16} />
-        </a>
+        <p class="vk-fine vk-center">{c.about.independent}</p>
+      </section>
+
+      <!-- Resources: the guides stay a separate part of the site -->
+      <section id="guides" class="vk-section">
+        <div class="vk-note">
+          <div>
+            <p class="vk-eyebrow vk-left">{c.guides.eyebrow}</p>
+            <h2 class="vk-card-title"><Highlight text={c.guides.title} /></h2>
+            <p>{c.guides.lead}</p>
+            <ul class="vk-guide-links">
+              {c.guides.links.map((l) => (
+                <li><a href={translatePath(l.path)}>{l.label}</a></li>
+              ))}
+            </ul>
+            <p class="vk-fine">{c.guides.fine}</p>
+          </div>
+          <a href={translatePath('/guides')} class="vk-btn-quiet">
+            {c.guides.cta}
+            <ArrowRight size={16} />
+          </a>
+        </div>
       </section>
     </main>
   </div>

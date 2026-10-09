@@ -62,7 +62,9 @@ export const common = {
   // fix_logs — translations moved to inline in FixLogsGuide.astro
   // footer
   // Footer
-  'footer.tagline': 'App máy tính để điều hành đội AI làm ứng dụng cho bạn. Kèm hướng dẫn cho AgentKit và ClaudeKit.',
+  'footer.tagline': 'Ứng dụng desktop để builders điều hành agent lập trình AI. Đang phát triển, dự kiến beta tháng 10/2026. Trang này còn có các bài hướng dẫn riêng, đọc miễn phí, cho người dùng AgentKit và ClaudeKit.',
+  'footer.disclaimer': 'VividKit là dự án độc lập, không liên kết, không được Anthropic tài trợ hay xác nhận. Claude và Claude Code là thương hiệu của Anthropic.',
+  'footer.contact': 'Liên hệ',
   'footer.copyright': '© 2026 VividKit. All rights reserved.',
   'footer.sponsor': 'Ủng hộ trên GitHub',
   // Footer links
@@ -93,7 +95,7 @@ export const common = {
   'footer.claudekit_discord': 'ClaudeKit Discord',
   'footer.agentkit_discord': 'AgentKit Discord',
   'footer.get_started': 'Bắt Đầu',
-  'footer.claudekit_discount': 'AgentKit (Giảm 30%)',
+  'footer.claudekit_discount': 'AgentKit (link giới thiệu, giảm 30%)',
   'footer.required_for_vividkit': 'VividKit Builder cần giấy phép AgentKit Engineer Kit',
   // form
   // Waitlist form
@@ -298,6 +300,6 @@ export const common = {
   'section.waitlist': 'Tham Gia Waitlist',
   // site
   // Site metadata
-  'site.title': 'VividKit - Visual Interface cho ClaudeKit',
+  'site.title': 'Hướng dẫn VividKit',
   'site.description': 'Visual interface cho ClaudeKit commands và AI skills. Không cần nhớ. Không cần biết terminal. Chỉ cần click.',
 } as const;

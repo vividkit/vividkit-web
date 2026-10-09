@@ -609,3 +609,240 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* Hero: the status line and the runtime line sit together */
+.vk-runs-on + .vk-runs-on {
+  margin-top: 6px;
+}
+/* The console and bento are drawings made for this page; their captions say so. */
+.vk-hero-figure {
+  min-width: 0;
+  margin: 0;
+}
+.vk-figcaption {
+  margin-top: 10px;
+  color: var(--vk-ink3);
+  font-size: 12.5px;
+  text-align: center;
+}
+.vk-center {
+  max-width: 720px;
+  margin-right: auto;
+  margin-left: auto;
+  text-align: center;
+}
+
+/* Status: now / planned for the beta / after the beta */
+.vk-status {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 36px;
+}
+.vk-status-col {
+  padding: 22px 22px 24px;
+  border-radius: 20px;
+  background: var(--vk-panel);
+  box-shadow: var(--vk-shadow-card);
+}
+.vk-status-col[data-tone='later'] {
+  background: transparent;
+  box-shadow: inset 0 0 0 1px var(--vk-line-strong);
+}
+.vk-status-col h3 {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin: 0;
+  font-size: 15px;
+  font-weight: 650;
+}
+.vk-status-col h3 svg {
+  flex: none;
+  color: var(--vk-acc);
+}
+.vk-status-col[data-tone='now'] h3 svg {
+  color: var(--vk-ok);
+}
+.vk-status-col[data-tone='later'] h3 svg {
+  color: var(--vk-ink3);
+}
+.vk-status-col ul {
+  display: grid;
+  gap: 10px;
+  margin: 14px 0 0;
+  padding: 0 0 0 18px;
+  color: var(--vk-ink2);
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+/* Built on + About */
+.vk-people p.vk-role,
+.vk-path p.vk-role {
+  margin-top: 2px;
+  color: var(--vk-acc);
+  font-size: 12.5px;
+  font-weight: 600;
+}
+.vk-founder-photo {
+  flex: none;
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow:
+    0 0 0 3px var(--vk-panel),
+    0 0 0 4px var(--vk-line-strong),
+    0 10px 24px -12px rgba(20, 30, 55, 0.4);
+}
+.vk-link-tight {
+  margin-top: 8px;
+}
+
+/* Resources */
+.vk-guide-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 14px 0 0;
+  padding: 0;
+  list-style: none;
+}
+.vk-guide-links a {
+  display: inline-flex;
+  align-items: center;
+  height: 32px;
+  padding: 0 12px;
+  border-radius: var(--vk-radius-md);
+  background: var(--vk-inset);
+  box-shadow: inset 0 0 0 1px var(--vk-line);
+  color: var(--vk-ink);
+  font-size: 13.5px;
+  font-weight: 600;
+}
+.vk-guide-links a:hover {
+  color: var(--vk-acc);
+}
+
+@media (max-width: 900px) {
+  .vk-status {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/*
+ * Light theme. The hero and the closing band follow the page theme instead of staying black,
+ * so the light page has no hard black blocks; only the console stays a dark app window.
+ * Surfaces and ink are a little cooler and softer than the app tokens to cut the glare.
+ */
+html:not(.dark) .vkh {
+  --vk-chrome: #f1f3f7;
+  --vk-panel: #fafbfd;
+  --vk-sunken: #eceff4;
+  --vk-inset: #f5f7fa;
+  --vk-ink: #141a26;
+  --vk-ink2: #4a5263;
+  --vk-ink3: #626b7c;
+  --vk-line: rgba(20, 30, 55, 0.07);
+  --vk-line-strong: rgba(20, 30, 55, 0.12);
+  --vk-shadow-card: 0 0 0 1px rgba(20, 30, 55, 0.06), 0 6px 20px -12px rgba(20, 30, 55, 0.14);
+  --vk-shadow-raise: 0 1px 2px rgba(20, 30, 55, 0.05), 0 0 0 1px rgba(20, 30, 55, 0.07);
+}
+html:not(.dark) .vkh .vk-stage {
+  background: linear-gradient(165deg, #f8faff 0%, #edf2fa 100%);
+  box-shadow:
+    inset 0 0 0 1px rgba(37, 99, 235, 0.08),
+    0 24px 60px -36px rgba(30, 64, 175, 0.3);
+}
+html:not(.dark) .vkh .vk-stage-glow {
+  background:
+    radial-gradient(700px 380px at 12% -8%, rgba(37, 99, 235, 0.13), transparent 70%),
+    radial-gradient(560px 360px at 92% 18%, rgba(6, 182, 212, 0.1), transparent 70%),
+    linear-gradient(rgba(20, 30, 55, 0.035) 1px, transparent 1px) 0 0 / 44px 44px,
+    linear-gradient(90deg, rgba(20, 30, 55, 0.035) 1px, transparent 1px) 0 0 / 44px 44px;
+}
+html:not(.dark) .vkh .vk-badge,
+html:not(.dark) .vkh .vk-btn-soon {
+  background: rgba(255, 255, 255, 0.7);
+  box-shadow: inset 0 0 0 1px rgba(37, 99, 235, 0.16);
+}
+html:not(.dark) .vkh .vk-live-dot {
+  background: #0891b2;
+}
+html:not(.dark) .vkh .vk-gradient-text {
+  background-image: linear-gradient(100deg, #1d4ed8 10%, #0891b2 90%);
+}
+html:not(.dark) .vkh .vk-console {
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.08),
+    0 30px 70px -34px rgba(30, 64, 175, 0.45);
+}
+html:not(.dark) .vkh .vk-wl {
+  background: rgba(255, 255, 255, 0.75);
+  box-shadow:
+    inset 0 0 0 1px rgba(20, 30, 55, 0.07),
+    0 24px 60px -36px rgba(30, 64, 175, 0.3);
+}
+html:not(.dark) .vkh .vk-wl-field input,
+html:not(.dark) .vkh .vk-wl-field select,
+html:not(.dark) .vkh .vk-wl-field textarea {
+  background: #fff;
+}
+html:not(.dark) .vkh .vk-btn-primary {
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.28),
+    0 8px 22px -10px rgba(37, 99, 235, 0.5);
+}
+/* A dark island (the console) sets its own text colour instead of inheriting the light page's. */
+.vkh [data-theme='dark'] {
+  color: var(--vk-ink);
+}
+
+/* Built on: each product shows its mark on a small white tile; other runtimes get a generic icon. */
+.vk-stack-logo {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  margin-bottom: 14px;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow:
+    inset 0 0 0 1px rgba(20, 30, 55, 0.08),
+    0 6px 16px -10px rgba(20, 30, 55, 0.35);
+}
+.vk-stack-logo img {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+}
+.vk-stack-logo[data-generic] {
+  color: #3b4352;
+}
+.vk-people .vk-stack-logo svg {
+  margin: 0;
+  color: inherit;
+}
+/* The app icon has its own margin inside the artwork; show it a little larger to match. */
+.vk-stack-logo img[src$='vividkit.svg'] {
+  width: 36px;
+  height: 36px;
+}
+
+/* Runtime chips: each runtime's mark in place of the check. One-colour marks use currentColor. */
+.vk-runtime-logo {
+  display: inline-grid;
+  flex: none;
+  place-items: center;
+  width: 18px;
+  height: 18px;
+  color: var(--vk-ink);
+}
+.vk-runtime-logo svg {
+  width: 18px;
+  height: 18px;
+}
+.vk-chips .vk-runtime-logo svg {
+  color: var(--vk-ink);
+}

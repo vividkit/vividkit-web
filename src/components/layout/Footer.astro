@@ -3,7 +3,7 @@ import { Heart } from 'lucide-astro';
 import Logo from '@/components/ui/Logo.astro';
 import { useTranslations } from '@/i18n/utils';
 import { getLangFromUrl, useTranslatedPath, type Language } from '@/i18n';
-import { BUILDER_LINKS } from '@/data/landing-content';
+import { BUILDER_LINKS, CONTACT } from '@/data/landing-content';
 
 interface Props {
   class?: string;
@@ -41,17 +41,19 @@ const translatePath = useTranslatedPath(currentLang);
         <ul class="space-y-2 text-sm text-slate-600 dark:text-slate-400">
           <li><a href={translatePath('/guides')} class="hover:text-slate-900 dark:hover:text-slate-200 transition-colors cursor-pointer">{t('footer.links.guides')}</a></li>
           <li><a href={translatePath('/guides/promotions')} class="hover:text-slate-900 dark:hover:text-slate-200 transition-colors cursor-pointer">{t('footer.links.promotions')}</a></li>
-          <li><a href="https://agentkit.best/discord" target="_blank" class="hover:text-slate-900 dark:hover:text-slate-200 transition-colors cursor-pointer">{t('footer.agentkit_discord')}</a></li>
+          <li><a href={BUILDER_LINKS.agentkit} target="_blank" rel="noopener noreferrer sponsored" class="hover:text-slate-900 dark:hover:text-slate-200 transition-colors cursor-pointer">{t('footer.claudekit_discount')}</a></li>
+          <li><a href="https://agentkit.best/discord" target="_blank" rel="noopener noreferrer" class="hover:text-slate-900 dark:hover:text-slate-200 transition-colors cursor-pointer">{t('footer.agentkit_discord')}</a></li>
           <li><a href={translatePath('/guides/donate')} class="hover:text-slate-900 dark:hover:text-slate-200 transition-colors cursor-pointer">{t('footer.links.donate')}</a></li>
         </ul>
       </div>
 
       <div>
-        <h4 class="font-heading font-semibold mb-4">{t('footer.get_started')}</h4>
-        <a href={BUILDER_LINKS.agentkit} target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl cta-button font-medium text-sm text-white mb-3 cursor-pointer">
-          {t('footer.claudekit_discount')}
-        </a>
-        <p class="text-xs text-slate-500">{t('footer.required_for_vividkit')}</p>
+        <h4 class="font-heading font-semibold mb-4">{t('footer.contact')}</h4>
+        <ul class="space-y-2 text-sm text-slate-600 dark:text-slate-400">
+          <li><a href={`mailto:${CONTACT.email}`} class="hover:text-slate-900 dark:hover:text-slate-200 transition-colors cursor-pointer">{CONTACT.email}</a></li>
+          <li><a href={translatePath('/#about')} class="hover:text-slate-900 dark:hover:text-slate-200 transition-colors cursor-pointer">{t('footer.links.about')}</a></li>
+          <li><a href={CONTACT.orgGithub} target="_blank" rel="noopener noreferrer" class="hover:text-slate-900 dark:hover:text-slate-200 transition-colors cursor-pointer">GitHub</a></li>
+        </ul>
       </div>
     </div>
 
@@ -66,6 +68,7 @@ const translatePath = useTranslatedPath(currentLang);
         {t('footer.sponsor')}
       </a>
       <p>{t('footer.copyright')}</p>
+      <p class="max-w-2xl text-xs">{t('footer.disclaimer')}</p>
     </div>
   </div>
 </footer>
