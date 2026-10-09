@@ -62,7 +62,7 @@ export const common = {
   // fix_logs — translations moved to inline in FixLogsGuide.astro
   // footer
   // Footer
-  'footer.tagline': 'A desktop app for builders to direct AI coding agents. In development, beta planned for October 2026. Plus free guides for AgentKit and ClaudeKit.',
+  'footer.tagline': 'A desktop app for builders to direct AI coding agents. In development, beta planned for October 2026. The site also hosts separate, free-to-read guides for AgentKit and ClaudeKit users.',
   'footer.disclaimer': 'VividKit is an independent project, not affiliated with, sponsored or endorsed by Anthropic. Claude and Claude Code are trademarks of Anthropic.',
   'footer.contact': 'Contact',
   'footer.copyright': '© 2026 VividKit. All rights reserved.',

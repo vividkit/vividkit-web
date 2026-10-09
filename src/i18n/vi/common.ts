@@ -62,7 +62,7 @@ export const common = {
   // fix_logs — translations moved to inline in FixLogsGuide.astro
   // footer
   // Footer
-  'footer.tagline': 'Ứng dụng desktop để builders điều hành agent lập trình AI. Đang phát triển, dự kiến beta tháng 10/2026. Kèm hướng dẫn miễn phí cho AgentKit và ClaudeKit.',
+  'footer.tagline': 'Ứng dụng desktop để builders điều hành agent lập trình AI. Đang phát triển, dự kiến beta tháng 10/2026. Trang này còn có các bài hướng dẫn riêng, đọc miễn phí, cho người dùng AgentKit và ClaudeKit.',
   'footer.disclaimer': 'VividKit là dự án độc lập, không liên kết, không được Anthropic tài trợ hay xác nhận. Claude và Claude Code là thương hiệu của Anthropic.',
   'footer.contact': 'Liên hệ',
   'footer.copyright': '© 2026 VividKit. All rights reserved.',

@@ -818,9 +818,7 @@ html:not(.dark) .vkh .vk-btn-primary {
   object-fit: contain;
 }
 .vk-stack-logo[data-generic] {
-  background: var(--vk-inset);
-  box-shadow: inset 0 0 0 1px var(--vk-line-strong);
-  color: var(--vk-ink2);
+  color: #3b4352;
 }
 .vk-people .vk-stack-logo svg {
   margin: 0;
