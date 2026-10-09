@@ -3,7 +3,8 @@
 // the rest introduces the product in more depth. Product facts must match the Builder docs
 // (vividkit-builder apps/docs/content/docs/*, docs/PROGRESS.md): requirements, runtimes, safety, workflows.
 // Section titles mark their key phrase with [brackets]; <Highlight> renders it in the accent gradient.
-// The beta is planned, not released: no download buttons, no links to vividkit.app until it ships.
+// The beta is planned, not released: no download buttons, and no mention of where downloads will live
+// until the beta ships (the download host is not ready to be shown).
 // Founder facts confirmed by the owner (Oct 2026): Thieu Nguyen, Founder, github.com/thieung. No legal
 // entity or founding date is listed on purpose; do not add one without a document to back it.
 import type { Language } from '@/i18n';
@@ -175,7 +176,7 @@ const en: LandingContent = {
         label: 'Planned for the beta, October 2026',
         tone: 'beta',
         items: [
-          'A first public build, 0.1.0-beta.1, offered as a download on vividkit.app.',
+          'A first public build, 0.1.0-beta.1, offered as a download.',
           'Linux (.deb and AppImage), macOS on Apple silicon and Windows x64, as unsigned builds.',
           'An email to everyone on the waitlist when it is ready.',
         ],
@@ -190,7 +191,7 @@ const en: LandingContent = {
         ],
       },
     ],
-    note: 'Until the beta ships there is no download, and vividkit.app does not offer the app yet.',
+    note: 'Until the beta ships there is no public download.',
   },
   stack: {
     eyebrow: 'Built on',
@@ -285,7 +286,7 @@ const en: LandingContent = {
     items: [
       {
         q: 'Can I download VividKit now?',
-        a: 'Not yet. VividKit is in development and the beta is planned for October 2026. When it ships, the download will be on vividkit.app and everyone on the waitlist gets an email.',
+        a: 'Not yet. VividKit is in development and the beta is planned for October 2026. When it ships, everyone on the waitlist gets an email with the download link.',
       },
       {
         q: 'Do I need to know how to code?',
@@ -468,7 +469,7 @@ const vi: LandingContent = {
         label: 'Dự kiến cho bản beta, tháng 10/2026',
         tone: 'beta',
         items: [
-          'Bản công khai đầu tiên, 0.1.0-beta.1, cho tải tại vividkit.app.',
+          'Bản công khai đầu tiên, 0.1.0-beta.1, cho tải về.',
           'Linux (.deb và AppImage), macOS Apple silicon và Windows x64, dạng chưa ký số.',
           'Email báo cho mọi người trong danh sách chờ khi sẵn sàng.',
         ],
@@ -483,7 +484,7 @@ const vi: LandingContent = {
         ],
       },
     ],
-    note: 'Trước khi beta ra mắt chưa có bản tải nào, và vividkit.app chưa cung cấp app.',
+    note: 'Trước khi beta ra mắt chưa có bản tải công khai.',
   },
   stack: {
     eyebrow: 'Nền tảng',
@@ -578,7 +579,7 @@ const vi: LandingContent = {
     items: [
       {
         q: 'Tôi tải VividKit được chưa?',
-        a: 'Chưa. VividKit đang phát triển và bản beta dự kiến ra mắt tháng 10/2026. Khi ra mắt, bản tải sẽ có ở vividkit.app và mọi người trong danh sách chờ sẽ nhận email.',
+        a: 'Chưa. VividKit đang phát triển và bản beta dự kiến ra mắt tháng 10/2026. Khi ra mắt, mọi người trong danh sách chờ sẽ nhận email kèm link tải.',
       },
       {
         q: 'Tôi có cần biết lập trình không?',
