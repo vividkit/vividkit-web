@@ -1,92 +1,82 @@
-# VividKit - Giao diện Trực quan cho ClaudeKit
+# VividKit
 
-> 🚧 **VividKit Desktop App sắp ra mắt!** Tham gia [danh sách early access](https://vividkit.dev) để được thông báo khi launch.
+> **Trạng thái:** đang phát triển. Bản beta của ứng dụng desktop VividKit dự kiến ra mắt **tháng 10/2026**; hiện chưa phát hành và chưa có bản tải. [Đăng ký chờ](https://vividkit.dev/vi/#waitlist) để nhận email khi ra mắt.
 
 > 🇬🇧 English: see [README.md](./README.md)
 
-VividKit biến các lệnh AI coding thành GUI trực quan, giúp ClaudeKit dễ tiếp cận với dev ở mọi cấp độ. Trong khi Desktop App đang phát triển, bạn có thể khám phá bộ guides của tụi mình về cách dùng ClaudeKit hiệu quả với Claude Code CLI.
+Repo này là mã nguồn của **[vividkit.dev](https://vividkit.dev/vi/)**: landing page giới thiệu ứng dụng desktop VividKit, cùng bộ hướng dẫn riêng, đọc miễn phí, cho người dùng AgentKit và ClaudeKit.
 
-## 🖥️ VividKit Desktop App (Sắp ra mắt)
+## 🖥️ Ứng dụng desktop VividKit
 
-**Lớp Visual Intelligence cho ClaudeKit CLI**
+VividKit là ứng dụng desktop cho builders muốn làm ứng dụng bằng agent lập trình AI mà không phải sống trong terminal. Bạn nói điều mình muốn; một đội đồng đội AI làm việc trên bản sao riêng của dự án, VividKit thu bằng chứng cho từng tiêu chí, và việc chỉ xong khi bạn chấp nhận.
 
-VividKit Desktop nâng cấp trải nghiệm ClaudeKit CLI với dashboard trực quan persistent và tương tác qua GUI.
+**Một thay đổi đi qua những bước nào**
 
-### Tính năng chính (MVP)
+1. **Kể cho Cora** điều bạn muốn bằng lời thường. Cora phân loại và tạo issue.
+2. **Xác nhận Requirement.** Ada hỏi điều chưa rõ và biến nó thành tiêu chí kiểm được.
+3. **Đội bắt tay làm** theo kiểu tiếp sức, trên bản sao riêng của dự án. Xem hoặc Dừng lúc nào cũng được.
+4. **Duyệt bằng chứng:** ảnh chụp cỡ điện thoại và máy tính, kết quả kiểm theo từng tiêu chí. Chấp nhận hoặc gửi lại.
+5. **Áp dụng và xuất bản** qua một cửa sổ xác nhận riêng. Vẫn hoàn tác và đổi về bản trước được.
 
-#### 1. Catalog & Discovery trực quan
-- Browse mọi agents, skills, commands qua giao diện trực quan
-- Không phải đào sâu file markdown nữa
-- Capability explorer có search + filter
+**Tiến độ hiện tại**
 
-#### 2. Dashboard trực quan persistent
-- Live monitoring với graph và timeline
-- Trực quan hóa token usage qua các run
-- Metrics + xu hướng performance của agent
-- Progress tracking giữ nguyên kể cả khi đóng terminal
+| | |
+|---|---|
+| Đã chạy được trên bản dựng phát triển | Trọn vòng cho ứng dụng web, gồm Xuất bản qua Cloudflare Pages. Quy trình: Sửa lỗi, Sửa nhanh, Tính năng mới, Dự án mới, Nhận dự án có sẵn, Tái cấu trúc. Chín CLI agent lập trình đã chạy trên issue thật. Bản dựng thử chạy trên Linux, Mac Apple silicon và Windows 11. |
+| Dự kiến cho bản beta (tháng 10/2026) | Bản công khai đầu tiên `0.1.0-beta.1`: Linux (`.deb`, AppImage), macOS Apple silicon và Windows x64, chưa ký số. Email báo cho danh sách chờ khi sẵn sàng. |
+| Sau bản beta | Quy trình Điều tra và Cải thiện, thêm bộ kỹ năng khác (để không bắt buộc AgentKit), xuất bản ứng dụng không phải website. |
 
-#### 3. Run History & So sánh
-- Archive toàn bộ agent execution trong quá khứ
-- So sánh side-by-side giữa các run
-- Nhận diện pattern qua nhiều session
-- Trực quan hóa execution timeline
+Mốc thời gian là kế hoạch, không phải cam kết.
 
-#### 4. Tương tác không cần nhớ syntax
-- Khởi chạy agent qua GUI (không phải nhớ command)
-- Cấu hình tham số trực quan
-- Build workflow theo kiểu point-and-click
+**Nền tảng**
 
-#### 5. Dễ tiếp cận cho người không chuyên
-- Giao diện thân thiện cho PM/designer
-- View read-only cho thành viên team
-- Tóm tắt trực quan capability + kết quả của agent
+- **Claude Code** làm việc chính: mỗi đồng đội chạy như một phiên Claude Code trên máy bạn, đăng nhập bằng gói Pro hoặc Max của chính bạn. Bắt buộc cho bản beta.
+- **AgentKit** (giấy phép Engineer Kit) cung cấp bộ kỹ năng cho các giai đoạn như lập kế hoạch, kiểm thử và soát mã. AgentKit là sản phẩm riêng của một nhóm khác.
+- **Runtime khác** (Codex, OpenCode, GitHub Copilot CLI, Cursor Agent, Grok, Oh My Pi, Pi, Antigravity) có thể chạy từng đồng đội.
 
-#### 6. Tự động cập nhật ClaudeKit Project
-- Tự sync với update mới nhất từ ClaudeKit
-- Không cần chạy `update/init` hằng ngày
-- Background updates kèm changelog notification
+VividKit không tự gọi Claude API và không bán lại quyền dùng mô hình. VividKit là dự án độc lập, không liên kết, không được Anthropic, AgentKit hay ClaudeKit tài trợ hay xác nhận. Claude và Claude Code là thương hiệu của Anthropic.
 
-#### 7. Tích hợp CCS Delegation
-- Tích hợp [CCS (Claude Code Switcher)](https://github.com/kaitranntt/ccs) sẵn
-- Chuyển đổi giữa Claude, Gemini, Codex và profile AI tùy chỉnh tức thì
-- Quản lý nhiều account với visual profile selector
-- Delegate task chỉ với một click để tiết kiệm chi phí Claude API
+**Ai đang xây VividKit**
 
-*"Sức mạnh của ClaudeKit, giờ có cả mắt."*
-
-**[→ Tham gia Waiting List](https://vividkit.dev)**
+- **Thieu Nguyen**, Founder — [GitHub](https://github.com/thieung)
+- Liên hệ: [hello@vividkit.dev](mailto:hello@vividkit.dev) · [github.com/vividkit](https://github.com/vividkit)
 
 ---
 
-## 📚 ClaudeKit với Claude Code CLI
+## 📚 Hướng dẫn (tài nguyên riêng)
 
-Trong lúc chờ VividKit Desktop, bạn có thể master ClaudeKit qua bộ docs đầy đủ:
+Hướng dẫn và best practices đọc miễn phí cho người dùng AgentKit và cộng đồng vibe coding, bằng tiếng Việt và tiếng Anh. Các bài này không thuộc app, và đọc chúng không đồng nghĩa với được dùng app.
 
-| Guide | Mô tả |
+| Hướng dẫn | Mô tả |
 |-------|-------|
-| [CLI Guide](https://vividkit.dev/vi/guides) | Cài đặt và setup |
-| [Commands](https://vividkit.dev/vi/guides/commands) | Tham khảo 60+ commands |
+| [Trang hướng dẫn](https://vividkit.dev/vi/guides) | Tất cả hướng dẫn |
+| [AgentKit](https://vividkit.dev/vi/guides/agentkit) | Bắt đầu, khối xây dựng, cấu hình, chuyển từ ClaudeKit |
+| [Commands](https://vividkit.dev/vi/guides/commands) | Tham khảo lệnh và skill |
 | [Workflows](https://vividkit.dev/vi/guides/workflows) | Best practices và patterns |
 | [CCS](https://vividkit.dev/vi/guides/ccs) | Claude Code Switcher cho multi-model delegation |
 | [UI/UX](https://vividkit.dev/vi/guides/uiux) | Skills design và styling |
-| [Resume](https://vividkit.dev/vi/guides/resume) | Khôi phục và tiếp tục session |
+| [Session recovery](https://vividkit.dev/vi/guides/session-recovery) | Khôi phục và tiếp tục session |
 | [Permissions](https://vividkit.dev/vi/guides/permissions) | Permission modes (auto, bypass, granular rules) |
 | [Fix Logs](https://vividkit.dev/vi/guides/fix-logs) | Chiến lược debug |
+
+Một số hướng dẫn có link AgentKit kèm mã giới thiệu.
 
 ---
 
 ## 🛠️ Tech Stack (Website này)
 
-- **Framework**: Astro 5.x với Static Site Generation (SSG)
-- **Styling**: Tailwind CSS v4 + design system glassmorphism tự build
-- **Type Safety**: TypeScript strict mode + path aliasing đầy đủ
-- **Interactivity**: Alpine.js 3.15.2 cho client-side interaction nhẹ
-- **i18n**: Astro i18n built-in, hỗ trợ English (mặc định) + Vietnamese
+- **Framework**: Astro 6 với Static Site Generation (SSG)
+- **Styling**: Tailwind CSS v4; landing page dùng design token của app VividKit (`src/styles/vk-tokens.css`)
+- **Type Safety**: TypeScript strict mode + path aliasing
+- **Interactivity**: React island trên landing page (run console, bot của đội); Alpine.js cho các trang hướng dẫn
+- **i18n**: Astro i18n built-in, English (mặc định) + Vietnamese
+- **Waitlist**: Web3Forms (`PUBLIC_WEB3FORMS_KEY`)
 - **Deployment**: Vercel (kèm analytics)
 - **Performance**: Sharp cho image optimization, LightningCSS cho CSS minify
-- **Design System**: Glassmorphism UI + hệ thống typography 3 font
 
-## 🤖 VividKit Maintainer Skills (`/vk:*`)
+Nội dung landing page nằm ở `src/data/landing-content.ts` (EN + VI). Thông tin sản phẩm ở đó phải khớp tài liệu của app VividKit; không thêm tuyên bố khi chưa có bằng chứng.
+
+## 🤖 VividKit Maintainer Skills & Commands (`/vk:*`)
 
 Skills riêng cho repo này, dùng để giữ guides đồng bộ với upstream ClaudeKit. Gọi qua Claude Code bằng prefix `/vk:`.
 
@@ -96,6 +86,7 @@ Skills riêng cho repo này, dùng để giữ guides đồng bộ với upstrea
 | `/vk:audit-ck-cli` | So sánh `claudekit-cli` upstream với CLI/Migrate guide; đề xuất update theo command (`ck migrate`, `ck init`, …) | `/vk:audit-ck-cli` hoặc `/vk:audit-ck-cli page=guides/migrate command=migrate` |
 | `/vk:audit-skill` | Audit thay đổi skill upstream ClaudeKit (so với catalog skill đang render trên site) | `/vk:audit-skill <skill-name>` |
 | `/vk:add-scenario` | Thêm scenario mới cho một ClaudeKit command vào guides | `/vk:add-scenario` |
+| `/project:vk:update-how-ck-works` | Lệnh riêng của project: điều phối `/vk:audit-skill` + `/vk:add-scenario` để cập nhật các trang How-CK-Works (giải thích chi tiết, quick ref dạng hình, dữ liệu pipeline, ví dụ prompt); thêm `--include-local-missing` để phủ cả skill CK chưa có trên guide | `/project:vk:update-how-ck-works --include-local-missing --limit 3` |
 
 ### Cách dùng nhanh
 
@@ -132,10 +123,10 @@ Chi tiết từng skill xem `skills/vk-*/SKILL.md` (`vk-audit-ck-cli` và `vk-au
 
 | Lệnh | Tác dụng |
 |------|----------|
-| `npm install` | Cài đặt dependencies |
-| `npm run dev` | Chạy local dev server tại `localhost:4321` |
-| `npm run build` | Build production site sang `./dist/` |
-| `npm run preview` | Preview build local |
+| `pnpm install` | Cài đặt dependencies |
+| `pnpm run dev` | Chạy local dev server tại `localhost:4321` |
+| `pnpm run build` | Build production site sang `./dist/` |
+| `pnpm run preview` | Preview build local |
 
 ## 📁 Cấu trúc dự án
 
@@ -157,10 +148,8 @@ vividkit-web/
 
 ## 🔗 Liên kết
 
-- [Website VividKit](https://vividkit.dev) - Tham gia waiting list
-- [ClaudeKit CLI](https://github.com/mrgoonie/claudekit-cli) - Repo source
-- [Claude Code](https://claude.ai/code) - CLI chính thức của Anthropic
-
----
-
-*VividKit - AI coding rõ ràng như pha lê*
+- [vividkit.dev](https://vividkit.dev/vi/) - Landing page và danh sách chờ beta
+- [Hướng dẫn](https://vividkit.dev/vi/guides) - Hướng dẫn AgentKit và ClaudeKit
+- [Tài liệu AgentKit](https://docs.agentkit.best/en/stable) - Bộ kỹ năng app sử dụng
+- [Claude Code](https://claude.ai/code) - Agent lập trình của Anthropic, bắt buộc cho bản beta
+- Liên hệ: [hello@vividkit.dev](mailto:hello@vividkit.dev)
