@@ -24,6 +24,16 @@ export type WhyIcon = 'chat' | 'evidence' | 'shield';
 export type AudienceIcon = 'store' | 'rocket' | 'briefcase' | 'users';
 export type StackIcon = 'claude' | 'kit' | 'app' | 'more';
 
+// Product marks for the "Built on" cards; 'more' (other runtimes) keeps a generic icon.
+// claude-code.svg is the Claude Code mark from @lobehub/icons-static-svg (MIT), the same file the
+// Builder app uses for its runtime badge; vividkit.svg is the app icon (vividkit-builder
+// apps/desktop/resources/icons/icon.svg); agentkit.webp is the AgentKit logo supplied by the owner.
+export const STACK_LOGOS: Partial<Record<StackIcon, string>> = {
+  claude: '/landing/logos/claude-code.svg',
+  kit: '/landing/logos/agentkit.webp',
+  app: '/landing/logos/vividkit.svg',
+};
+
 interface Section { eyebrow: string; title: string; lead: string }
 
 export interface LandingContent {

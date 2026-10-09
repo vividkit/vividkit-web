@@ -39,7 +39,7 @@ import WaitlistForm from './WaitlistForm.astro';
 import { AgentConsole } from './agent-console';
 import { HomeBento } from './home-bento';
 import { TeamShowcase } from './team-list';
-import { CONTACT, landingContent, type AudienceIcon, type FlowIcon, type StackIcon, type WhyIcon } from '@/data/landing-content';
+import { CONTACT, STACK_LOGOS, landingContent, type AudienceIcon, type FlowIcon, type StackIcon, type WhyIcon } from '@/data/landing-content';
 import { useTranslatedPath, type Language } from '@/i18n';
 import '@/styles/landing.css';
 
@@ -209,9 +209,12 @@ const STATUS_ICONS = { now: CircleCheck, beta: CalendarClock, later: Hourglass }
         <ul class="vk-people">
           {c.stack.items.map((item) => {
             const Icon = STACK_ICONS[item.icon];
+            const logo = STACK_LOGOS[item.icon];
             return (
               <li>
-                <Icon size={20} />
+                <span class="vk-stack-logo" data-generic={!logo || undefined}>
+                  {logo ? <img src={logo} alt="" width="28" height="28" loading="lazy" decoding="async" /> : <Icon size={22} />}
+                </span>
                 <h3>{item.name}</h3>
                 <p class="vk-role">{item.role}</p>
                 <p>{item.body}</p>
