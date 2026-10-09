@@ -1,88 +1,80 @@
-# VividKit - Visual Interface for ClaudeKit
+# VividKit
 
-> 🚧 **VividKit Desktop App Coming Soon!** Join our [early access waiting list](https://vividkit.dev) to be notified when we launch.
+> **Status:** in development. The beta of the VividKit desktop app is planned for **October 2026**; it is not released yet and there is no download. [Join the waitlist](https://vividkit.dev/#waitlist) to get an email when it ships.
 
-VividKit transforms AI coding commands into an intuitive GUI, making ClaudeKit accessible to developers of all skill levels. While our Desktop App is in development, explore our comprehensive guides on using ClaudeKit effectively with Claude Code CLI.
+> 🇻🇳 Tiếng Việt: see [README.vi.md](./README.vi.md)
 
-## 🖥️ VividKit Desktop App (Coming Soon)
+This repository is the source of **[vividkit.dev](https://vividkit.dev)**: the landing page for the VividKit desktop app, plus a separate set of free-to-read guides for AgentKit and ClaudeKit users.
 
-**Visual Intelligence Layer for ClaudeKit CLI**
+## 🖥️ VividKit desktop app
 
-VividKit Desktop transforms the ClaudeKit CLI experience with persistent visual dashboards and GUI-driven interactions.
+VividKit is a desktop app for builders who want to ship apps with AI coding agents without living in a terminal. You say what you want; a team of AI teammates works in a private copy of your project, VividKit collects evidence for each criterion, and the work is done only when you accept it.
 
-### Key Features (MVP)
+**How a change travels**
 
-#### 1. Visual Catalog & Discovery
-- Browse all agents, skills, and commands in a visual interface
-- No more digging through markdown files
-- Searchable, filterable capability explorer
+1. **Tell Cora** what you want in plain words. Cora sorts it and opens an issue.
+2. **Confirm the Requirement.** Ada asks what is unclear and turns it into criteria you can check.
+3. **The team works** in a relay, in a private copy of the project. Watch or Stop at any time.
+4. **Review evidence:** screenshots at phone and desktop size and check results per criterion. Accept or send back.
+5. **Apply and publish** through a separate confirmation window. Undo and roll back stay possible.
 
-#### 2. Persistent Visual Dashboards
-- Live execution monitoring with graphs and timelines
-- Token usage visualization across runs
-- Agent performance metrics and trends
-- Progress tracking that persists after terminal closes
+**Where it is today**
 
-#### 3. Run History & Comparison
-- Archive of all past agent executions
-- Side-by-side run comparisons
-- Pattern recognition across multiple sessions
-- Execution timeline visualization
+| | |
+|---|---|
+| Works in development builds | The full loop for web apps, including Publish through Cloudflare Pages. Workflows: Bug fix, Quick fix, New feature, New project, Take over a project, Restructure. Nine coding-agent CLIs tested on real issues. Test builds run on Linux, an Apple silicon Mac and Windows 11. |
+| Planned for the beta (October 2026) | First public build `0.1.0-beta.1`: Linux (`.deb`, AppImage), macOS on Apple silicon and Windows x64, unsigned. Waitlist email when ready. |
+| After the beta | Investigation and Improvement workflows, more skill packs (so AgentKit is no longer required), publishing apps that are not websites. |
 
-#### 4. Syntax-Free Interaction
-- GUI-driven agent launching (no command memorization)
-- Visual parameter configuration
-- Point-and-click workflow building
+The date is a plan, not a promise.
 
-#### 5. Non-Technical Accessibility
-- Stakeholder-friendly interface for PMs/designers
-- Read-only views for team members
-- Visual summaries of agent capabilities and results
+**What it is built on**
 
-#### 6. Auto-Update ClaudeKit Projects
-- Automatic sync with latest ClaudeKit updates
-- No manual `update/init` commands required daily
-- Background updates with changelog notifications
+- **Claude Code** does the work: each teammate runs as a Claude Code session on your machine, signed in with your own Pro or Max plan. Required for the beta.
+- **AgentKit** (Engineer Kit license) provides the skill pack for stages such as planning, testing and code review. AgentKit is a separate product from another team.
+- **Other runtimes** (Codex, OpenCode, GitHub Copilot CLI, Cursor Agent, Grok, Oh My Pi, Pi, Antigravity) can run individual teammates.
 
-#### 7. Integrated CCS Delegation
-- Built-in [CCS (Claude Code Switcher)](https://github.com/kaitranntt/ccs) integration
-- Switch between Claude, Gemini, Codex & custom AI profiles instantly
-- Multi-account management with visual profile selector
-- One-click task delegation to save Claude API costs
+VividKit does not call the Claude API itself and does not resell model access. It is an independent project, not affiliated with, sponsored or endorsed by Anthropic, AgentKit or ClaudeKit. Claude and Claude Code are trademarks of Anthropic.
 
-*"ClaudeKit's power, now with eyes."*
+**Who builds it**
 
-**[→ Join the Waiting List](https://vividkit.dev)**
+- **Thieu Nguyen**, Founder — [GitHub](https://github.com/thieung)
+- Contact: [hello@vividkit.dev](mailto:hello@vividkit.dev) · [github.com/vividkit](https://github.com/vividkit)
 
 ---
 
-## 📚 ClaudeKit with Claude Code CLI
+## 📚 Guides (separate resource)
 
-While waiting for VividKit Desktop, master ClaudeKit through our comprehensive documentation:
+Free-to-read guides and best practices for AgentKit users and the vibe coding community, in English and Vietnamese. They are not part of the app, and reading them does not give access to it.
 
 | Guide | Description |
 |-------|-------------|
-| [CLI Guide](https://vividkit.dev/guides) | Installation and setup |
-| [Commands](https://vividkit.dev/guides/commands) | All 60+ commands reference |
+| [Guides home](https://vividkit.dev/guides) | All guides |
+| [AgentKit](https://vividkit.dev/guides/agentkit) | Getting started, building blocks, configuration, migrating from ClaudeKit |
+| [Commands](https://vividkit.dev/guides/commands) | Commands and skills reference |
 | [Workflows](https://vividkit.dev/guides/workflows) | Best practices and patterns |
 | [CCS](https://vividkit.dev/guides/ccs) | Claude Code Switcher for multi-model delegation |
 | [UI/UX](https://vividkit.dev/guides/uiux) | Design skills and styling |
-| [Resume](https://vividkit.dev/guides/resume) | Session recovery and continuation |
+| [Session recovery](https://vividkit.dev/guides/session-recovery) | Resuming and continuing sessions |
 | [Permissions](https://vividkit.dev/guides/permissions) | Permission modes (auto, bypass, granular rules) |
 | [Fix Logs](https://vividkit.dev/guides/fix-logs) | Debugging strategies |
+
+Some guides link to AgentKit with a referral code.
 
 ---
 
 ## 🛠️ Tech Stack (This Website)
 
-- **Framework**: Astro 5.x with Static Site Generation (SSG)
-- **Styling**: Tailwind CSS v4 with custom glassmorphism design system
-- **Type Safety**: TypeScript with strict mode and comprehensive path aliasing
-- **Interactivity**: Alpine.js 3.15.2 for lightweight client-side interactions
-- **i18n**: Built-in Astro i18n with English (default) and Vietnamese support
+- **Framework**: Astro 6 with Static Site Generation (SSG)
+- **Styling**: Tailwind CSS v4; the landing page uses the VividKit app's design tokens (`src/styles/vk-tokens.css`)
+- **Type Safety**: TypeScript with strict mode and path aliasing
+- **Interactivity**: React islands on the landing page (run console, team bots); Alpine.js on the guides
+- **i18n**: Built-in Astro i18n with English (default) and Vietnamese
+- **Waitlist**: Web3Forms (`PUBLIC_WEB3FORMS_KEY`)
 - **Deployment**: Vercel with integrated analytics
 - **Performance**: Sharp for image optimization, LightningCSS for CSS minification
-- **Design System**: Custom glassmorphism UI with three-font typography system
+
+Landing page copy lives in `src/data/landing-content.ts` (EN + VI). Product facts there must match the VividKit app docs; do not add claims without evidence.
 
 ## 🤖 VividKit Maintainer Skills & Commands (`/vk:*`)
 
@@ -158,10 +150,8 @@ vividkit-web/
 
 ## 🔗 Links
 
-- [VividKit Website](https://vividkit.dev) - Join the waiting list
-- [ClaudeKit CLI](https://github.com/mrgoonie/claudekit-cli) - Source repository
-- [Claude Code](https://claude.ai/code) - Anthropic's official CLI
-
----
-
-*VividKit - Making AI coding crystal clear*
+- [vividkit.dev](https://vividkit.dev) - Landing page and beta waitlist
+- [Guides](https://vividkit.dev/guides) - AgentKit and ClaudeKit guides
+- [AgentKit docs](https://docs.agentkit.best/en/stable) - Skill pack used by the app
+- [Claude Code](https://claude.ai/code) - Anthropic's coding agent, required for the beta
+- Contact: [hello@vividkit.dev](mailto:hello@vividkit.dev)
