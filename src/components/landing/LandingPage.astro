@@ -68,7 +68,7 @@ const STATUS_ICONS = { now: CircleCheck, beta: CalendarClock, later: Hourglass }
 
     <main class="vk-home">
       <!-- Hero -->
-      <section id="hero" class="vk-stage" data-theme="dark">
+      <section id="hero" class="vk-stage">
         <div class="vk-stage-glow" aria-hidden="true"></div>
         <div class="vk-hero">
           <div class="vk-hero-text">
@@ -95,7 +95,9 @@ const STATUS_ICONS = { now: CircleCheck, beta: CalendarClock, later: Hourglass }
             <p class="vk-runs-on">{c.hero.runsOn}</p>
           </div>
           <figure class="vk-hero-figure">
-            <AgentConsole client:visible lang={lang} />
+            <div data-theme="dark">
+              <AgentConsole client:visible lang={lang} />
+            </div>
             <figcaption class="vk-figcaption">{c.hero.illustration}</figcaption>
           </figure>
         </div>
@@ -316,7 +318,7 @@ const STATUS_ICONS = { now: CircleCheck, beta: CalendarClock, later: Hourglass }
       </section>
 
       <!-- Closing band -->
-      <section id="waitlist" class="vk-stage vk-cta" data-theme="dark">
+      <section id="waitlist" class="vk-stage vk-cta">
         <div class="vk-stage-glow" aria-hidden="true"></div>
         <span class="vk-badge">
           <span class="vk-live-dot"></span>

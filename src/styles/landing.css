@@ -724,3 +724,71 @@
     grid-template-columns: minmax(0, 1fr);
   }
 }
+
+/*
+ * Light theme. The hero and the closing band follow the page theme instead of staying black,
+ * so the light page has no hard black blocks; only the console stays a dark app window.
+ * Surfaces and ink are a little cooler and softer than the app tokens to cut the glare.
+ */
+html:not(.dark) .vkh {
+  --vk-chrome: #f1f3f7;
+  --vk-panel: #fafbfd;
+  --vk-sunken: #eceff4;
+  --vk-inset: #f5f7fa;
+  --vk-ink: #141a26;
+  --vk-ink2: #4a5263;
+  --vk-ink3: #626b7c;
+  --vk-line: rgba(20, 30, 55, 0.07);
+  --vk-line-strong: rgba(20, 30, 55, 0.12);
+  --vk-shadow-card: 0 0 0 1px rgba(20, 30, 55, 0.06), 0 6px 20px -12px rgba(20, 30, 55, 0.14);
+  --vk-shadow-raise: 0 1px 2px rgba(20, 30, 55, 0.05), 0 0 0 1px rgba(20, 30, 55, 0.07);
+}
+html:not(.dark) .vkh .vk-stage {
+  background: linear-gradient(165deg, #f8faff 0%, #edf2fa 100%);
+  box-shadow:
+    inset 0 0 0 1px rgba(37, 99, 235, 0.08),
+    0 24px 60px -36px rgba(30, 64, 175, 0.3);
+}
+html:not(.dark) .vkh .vk-stage-glow {
+  background:
+    radial-gradient(700px 380px at 12% -8%, rgba(37, 99, 235, 0.13), transparent 70%),
+    radial-gradient(560px 360px at 92% 18%, rgba(6, 182, 212, 0.1), transparent 70%),
+    linear-gradient(rgba(20, 30, 55, 0.035) 1px, transparent 1px) 0 0 / 44px 44px,
+    linear-gradient(90deg, rgba(20, 30, 55, 0.035) 1px, transparent 1px) 0 0 / 44px 44px;
+}
+html:not(.dark) .vkh .vk-badge,
+html:not(.dark) .vkh .vk-btn-soon {
+  background: rgba(255, 255, 255, 0.7);
+  box-shadow: inset 0 0 0 1px rgba(37, 99, 235, 0.16);
+}
+html:not(.dark) .vkh .vk-live-dot {
+  background: #0891b2;
+}
+html:not(.dark) .vkh .vk-gradient-text {
+  background-image: linear-gradient(100deg, #1d4ed8 10%, #0891b2 90%);
+}
+html:not(.dark) .vkh .vk-console {
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.08),
+    0 30px 70px -34px rgba(30, 64, 175, 0.45);
+}
+html:not(.dark) .vkh .vk-wl {
+  background: rgba(255, 255, 255, 0.75);
+  box-shadow:
+    inset 0 0 0 1px rgba(20, 30, 55, 0.07),
+    0 24px 60px -36px rgba(30, 64, 175, 0.3);
+}
+html:not(.dark) .vkh .vk-wl-field input,
+html:not(.dark) .vkh .vk-wl-field select,
+html:not(.dark) .vkh .vk-wl-field textarea {
+  background: #fff;
+}
+html:not(.dark) .vkh .vk-btn-primary {
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.28),
+    0 8px 22px -10px rgba(37, 99, 235, 0.5);
+}
+/* A dark island (the console) sets its own text colour instead of inheriting the light page's. */
+.vkh [data-theme='dark'] {
+  color: var(--vk-ink);
+}
