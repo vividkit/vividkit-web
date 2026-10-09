@@ -335,6 +335,61 @@
   }
 }
 
+/* Animated ambient background (aurora orbs + faint grid), light/dark aware */
+body::before,
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+}
+
+body::before {
+  background:
+    radial-gradient(40rem 32rem at 12% 8%, rgba(59, 130, 246, 0.16), transparent 60%),
+    radial-gradient(36rem 30rem at 88% 14%, rgba(168, 85, 247, 0.14), transparent 60%),
+    radial-gradient(34rem 28rem at 70% 90%, rgba(6, 182, 212, 0.13), transparent 60%),
+    radial-gradient(30rem 26rem at 8% 85%, rgba(249, 115, 22, 0.09), transparent 60%);
+  background-size: 140% 140%;
+  animation: aurora-drift 24s ease-in-out infinite alternate;
+  will-change: background-position;
+}
+
+body::after {
+  background-image:
+    linear-gradient(to right, rgba(100, 116, 139, 0.08) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(100, 116, 139, 0.08) 1px, transparent 1px);
+  background-size: 56px 56px;
+  -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 20%, transparent 75%);
+  mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 20%, transparent 75%);
+}
+
+.dark body::before {
+  background:
+    radial-gradient(40rem 32rem at 12% 8%, rgba(59, 130, 246, 0.28), transparent 60%),
+    radial-gradient(36rem 30rem at 88% 14%, rgba(168, 85, 247, 0.24), transparent 60%),
+    radial-gradient(34rem 28rem at 70% 90%, rgba(6, 182, 212, 0.20), transparent 60%),
+    radial-gradient(30rem 26rem at 8% 85%, rgba(249, 115, 22, 0.12), transparent 60%);
+  background-size: 140% 140%;
+}
+
+.dark body::after {
+  background-image:
+    linear-gradient(to right, rgba(148, 163, 184, 0.07) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(148, 163, 184, 0.07) 1px, transparent 1px);
+}
+
+@keyframes aurora-drift {
+  0%   { background-position: 0% 0%; transform: scale(1); }
+  50%  { background-position: 100% 40%; transform: scale(1.06); }
+  100% { background-position: 30% 100%; transform: scale(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body::before { animation: none; }
+}
+
 /* Keyframe animations */
 @keyframes gradient-flow {
   0%, 100% {
