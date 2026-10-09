@@ -609,3 +609,118 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* Hero: the status line and the runtime line sit together */
+.vk-runs-on + .vk-runs-on {
+  margin-top: 6px;
+}
+/* The console and bento are drawings made for this page; their captions say so. */
+.vk-hero-figure {
+  min-width: 0;
+  margin: 0;
+}
+.vk-figcaption {
+  margin-top: 10px;
+  color: var(--vk-ink3);
+  font-size: 12.5px;
+  text-align: center;
+}
+.vk-center {
+  max-width: 720px;
+  margin-right: auto;
+  margin-left: auto;
+  text-align: center;
+}
+
+/* Status: now / planned for the beta / after the beta */
+.vk-status {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 36px;
+}
+.vk-status-col {
+  padding: 22px 22px 24px;
+  border-radius: 20px;
+  background: var(--vk-panel);
+  box-shadow: var(--vk-shadow-card);
+}
+.vk-status-col[data-tone='later'] {
+  background: transparent;
+  box-shadow: inset 0 0 0 1px var(--vk-line-strong);
+}
+.vk-status-col h3 {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin: 0;
+  font-size: 15px;
+  font-weight: 650;
+}
+.vk-status-col h3 svg {
+  flex: none;
+  color: var(--vk-acc);
+}
+.vk-status-col[data-tone='now'] h3 svg {
+  color: var(--vk-ok);
+}
+.vk-status-col[data-tone='later'] h3 svg {
+  color: var(--vk-ink3);
+}
+.vk-status-col ul {
+  display: grid;
+  gap: 10px;
+  margin: 14px 0 0;
+  padding: 0 0 0 18px;
+  color: var(--vk-ink2);
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+/* Built on + About */
+.vk-people p.vk-role,
+.vk-path p.vk-role {
+  margin-top: 2px;
+  color: var(--vk-acc);
+  font-size: 12.5px;
+  font-weight: 600;
+}
+.vk-initials {
+  font-size: 15px;
+  font-weight: 750;
+  letter-spacing: 0.02em;
+}
+.vk-link-tight {
+  margin-top: 8px;
+}
+
+/* Resources */
+.vk-guide-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 14px 0 0;
+  padding: 0;
+  list-style: none;
+}
+.vk-guide-links a {
+  display: inline-flex;
+  align-items: center;
+  height: 32px;
+  padding: 0 12px;
+  border-radius: var(--vk-radius-md);
+  background: var(--vk-inset);
+  box-shadow: inset 0 0 0 1px var(--vk-line);
+  color: var(--vk-ink);
+  font-size: 13.5px;
+  font-weight: 600;
+}
+.vk-guide-links a:hover {
+  color: var(--vk-acc);
+}
+
+@media (max-width: 900px) {
+  .vk-status {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

@@ -62,7 +62,9 @@ export const common = {
   // fix_logs — translations moved to inline in FixLogsGuide.astro
   // footer
   // Footer
-  'footer.tagline': 'A desktop app to run an AI team that builds your app. Plus guides for AgentKit and ClaudeKit.',
+  'footer.tagline': 'A desktop app for builders to direct AI coding agents. In development, beta planned for October 2026. Plus free guides for AgentKit and ClaudeKit.',
+  'footer.disclaimer': 'VividKit is an independent project, not affiliated with, sponsored or endorsed by Anthropic. Claude and Claude Code are trademarks of Anthropic.',
+  'footer.contact': 'Contact',
   'footer.copyright': '© 2026 VividKit. All rights reserved.',
   'footer.sponsor': 'Sponsor on GitHub',
   // Footer links
@@ -93,7 +95,7 @@ export const common = {
   'footer.claudekit_discord': 'ClaudeKit Discord',
   'footer.agentkit_discord': 'AgentKit Discord',
   'footer.get_started': 'Get Started',
-  'footer.claudekit_discount': 'AgentKit (30% OFF)',
+  'footer.claudekit_discount': 'AgentKit (referral link, 30% off)',
   'footer.required_for_vividkit': 'VividKit Builder needs an AgentKit Engineer Kit license',
   // form
   // Waitlist form
@@ -298,6 +300,6 @@ export const common = {
   'section.waitlist': 'Join the Waitlist',
   // site
   // Site metadata
-  'site.title': 'VividKit - Visual Interface for ClaudeKit',
+  'site.title': 'VividKit Guides',
   'site.description': 'Visual interface for ClaudeKit\'s AI commands and skills. No memorization. No terminal expertise. Just browse and click.',
 } as const;

@@ -31,8 +31,9 @@ const nav = landingContent[currentLang].nav;
         <nav class="hidden lg:flex items-center justify-center flex-1">
           <ul class="flex items-center gap-3 xl:gap-5 px-3 xl:px-4 py-1.5 rounded-full bg-white/50 dark:bg-white/5 border border-white/20 dark:border-white/5 shadow-inner">
             <li><a href={translatePath('/#how')} class="nav-link text-[10px] xl:text-xs font-semibold uppercase tracking-wide px-1.5 xl:px-2 py-1 whitespace-nowrap">{nav.how}</a></li>
-            <li><a href={translatePath('/#team')} class="nav-link text-[10px] xl:text-xs font-semibold uppercase tracking-wide px-1.5 xl:px-2 py-1 whitespace-nowrap">{nav.team}</a></li>
+            <li><a href={translatePath('/#status')} class="nav-link text-[10px] xl:text-xs font-semibold uppercase tracking-wide px-1.5 xl:px-2 py-1 whitespace-nowrap">{nav.status}</a></li>
             <li><a href={translatePath('/#safety')} class="nav-link text-[10px] xl:text-xs font-semibold uppercase tracking-wide px-1.5 xl:px-2 py-1 whitespace-nowrap">{nav.safety}</a></li>
+            <li><a href={translatePath('/#about')} class="nav-link text-[10px] xl:text-xs font-semibold uppercase tracking-wide px-1.5 xl:px-2 py-1 whitespace-nowrap">{nav.about}</a></li>
             <li><a href={translatePath('/guides')} class="nav-link text-[10px] xl:text-xs font-semibold uppercase tracking-wide px-1.5 xl:px-2 py-1 whitespace-nowrap">{nav.guides}</a></li>
           </ul>
         </nav>
@@ -89,8 +90,9 @@ const nav = landingContent[currentLang].nav;
   <div id="mobile-menu" class="hidden lg:hidden absolute top-full left-4 right-4 mt-2 glass-card rounded-2xl p-4 shadow-xl">
     <nav class="flex flex-col gap-2">
       <a href={translatePath('/#how')} class="px-4 py-3 rounded-xl hover:bg-slate-100 dark:hover:bg-white/10 text-slate-600 dark:text-slate-300 font-medium transition-colors">{nav.how}</a>
-      <a href={translatePath('/#team')} class="px-4 py-3 rounded-xl hover:bg-slate-100 dark:hover:bg-white/10 text-slate-600 dark:text-slate-300 font-medium transition-colors">{nav.team}</a>
+      <a href={translatePath('/#status')} class="px-4 py-3 rounded-xl hover:bg-slate-100 dark:hover:bg-white/10 text-slate-600 dark:text-slate-300 font-medium transition-colors">{nav.status}</a>
       <a href={translatePath('/#safety')} class="px-4 py-3 rounded-xl hover:bg-slate-100 dark:hover:bg-white/10 text-slate-600 dark:text-slate-300 font-medium transition-colors">{nav.safety}</a>
+      <a href={translatePath('/#about')} class="px-4 py-3 rounded-xl hover:bg-slate-100 dark:hover:bg-white/10 text-slate-600 dark:text-slate-300 font-medium transition-colors">{nav.about}</a>
       <a href={translatePath('/guides')} class="px-4 py-3 rounded-xl hover:bg-slate-100 dark:hover:bg-white/10 text-slate-600 dark:text-slate-300 font-medium transition-colors">{nav.guides}</a>
       <div class="h-px bg-slate-200 dark:bg-slate-700 my-2"></div>
       <a

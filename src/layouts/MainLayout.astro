@@ -13,17 +13,17 @@ const {
   title,
   description,
   canonical,
-  ogImage = '/og-image.png',
+  ogImage = '/logo-1024.png',
   ogType = 'website',
   lang = 'en'
 } = Astro.props;
 
 const fullTitle = `${title} | VividKit`;
-const siteUrl = import.meta.env.PUBLIC_SITE_URL || 'https://vividkit.com';
+const siteUrl = import.meta.env.PUBLIC_SITE_URL || 'https://vividkit.dev';
 const fullCanonical = `${siteUrl}${canonical}`;
 const fullOgImage = `${siteUrl}${ogImage}`;
 
-// Structured data for SEO (JSON-LD)
+// Structured data for SEO (JSON-LD). The app is not released yet: no offers, price or download URL.
 const structuredData = {
   '@context': 'https://schema.org',
   '@type': 'SoftwareApplication',
@@ -31,17 +31,13 @@ const structuredData = {
   description: description,
   url: siteUrl,
   applicationCategory: 'DeveloperApplication',
-  operatingSystem: 'Linux, macOS',
-  offers: {
-    '@type': 'Offer',
-    price: '0',
-    priceCurrency: 'USD',
+  creator: {
+    '@type': 'Person',
+    name: 'Thieu Nguyen',
+    jobTitle: 'Founder',
+    url: 'https://github.com/thieung',
   },
-  author: {
-    '@type': 'Organization',
-    name: 'VividKit',
-    url: siteUrl,
-  },
+  sameAs: ['https://github.com/vividkit'],
 };
 ---
 

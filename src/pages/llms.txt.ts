@@ -40,7 +40,7 @@ export const GET: APIRoute = () => {
     '',
     '> Comprehensive documentation for ClaudeKit — an AI coding toolkit for the Claude Code CLI. Covers installation, 73+ slash commands and skills, workflow recipes, permissions, hooks, multi-provider setup (CCS, Codex), and troubleshooting.',
     '',
-    `Each guide has a Vietnamese mirror at the same path prefixed with \`/vi\` (e.g. ${siteUrl}/vi/guides/commands). VividKit is a visual interface for ClaudeKit; these guides teach ClaudeKit usage with the Claude Code CLI. A full-text version is available at ${siteUrl}/llms-full.txt.`,
+    `Each guide has a Vietnamese mirror at the same path prefixed with \`/vi\` (e.g. ${siteUrl}/vi/guides/commands). VividKit is a desktop app for builders to direct AI coding agents (in development, beta planned for October 2026); these guides are a separate free resource for AgentKit and ClaudeKit users of the Claude Code CLI. A full-text version is available at ${siteUrl}/llms-full.txt.`,
     '',
     (guideSections as GuideSection[]).map(renderSection).join('\n\n'),
     '',

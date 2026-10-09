@@ -5,9 +5,9 @@ const COPY = {
   en: {
     copy: ['Private copy per issue', 'The team clones your project and only ever writes there. Your folder changes when you Apply.'],
     evidence: ['Evidence, not promises', 'VividKit screenshots each page at phone and desktop size and checks every criterion.'],
-    trusted: ['A trusted window for real changes', 'Apply, Undo, Publish and Roll back run only after you confirm the exact files.'],
+    trusted: ['A separate window for real changes', 'Apply, Undo, Publish and Roll back run only after you confirm the exact files.'],
     stop: ['Stop means stop', 'One press ends the run within three seconds. Nothing already done is lost.'],
-    isolation: ['Isolated by the system', 'Every shell command runs behind bubblewrap or Seatbelt. Secrets stay out of reach.'],
+    isolation: ['Isolation when Full access is off', 'Claude Code and Codex then run every shell command behind bubblewrap or Seatbelt, away from secrets. Full access is on by default in the beta.'],
     versions: ['Requirements have versions', 'Change your mind mid-way: v2 shows what changed, and v1 evidence turns Stale.'],
     main: 'main',
     issue: 'vk/KC-12',
@@ -24,9 +24,9 @@ const COPY = {
   vi: {
     copy: ['Mỗi issue một bản sao riêng', 'Đội clone dự án và chỉ ghi ở đó. Thư mục của bạn chỉ đổi khi bạn Áp dụng.'],
     evidence: ['Bằng chứng, không phải lời hứa', 'VividKit chụp từng trang ở cỡ điện thoại và máy tính, kiểm từng tiêu chí.'],
-    trusted: ['Cửa sổ tin cậy cho thay đổi thật', 'Áp dụng, Hoàn tác, Xuất bản, Đổi về bản trước chỉ chạy khi bạn xác nhận đúng từng tệp.'],
+    trusted: ['Cửa sổ riêng cho thay đổi thật', 'Áp dụng, Hoàn tác, Xuất bản, Đổi về bản trước chỉ chạy khi bạn xác nhận đúng từng tệp.'],
     stop: ['Dừng là dừng', 'Một lần bấm, lượt chạy kết thúc trong ba giây. Không mất gì đã làm.'],
-    isolation: ['Rào chắn của hệ điều hành', 'Mọi lệnh shell chạy sau bubblewrap hoặc Seatbelt. Bí mật nằm ngoài tầm với.'],
+    isolation: ['Rào chắn khi tắt Toàn quyền', 'Khi đó Claude Code và Codex chạy mọi lệnh shell sau bubblewrap hoặc Seatbelt, xa các bí mật. Bản beta mặc định bật Toàn quyền.'],
     versions: ['Requirement có phiên bản', 'Đổi ý giữa chừng: v2 cho thấy điều gì đổi, bằng chứng v1 thành Đã cũ.'],
     main: 'main',
     issue: 'vk/KC-12',
