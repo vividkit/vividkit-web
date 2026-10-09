@@ -42,6 +42,16 @@ import { TeamShowcase } from './team-list';
 import { CONTACT, STACK_LOGOS, landingContent, type AudienceIcon, type FlowIcon, type StackIcon, type WhyIcon } from '@/data/landing-content';
 import { useTranslatedPath, type Language } from '@/i18n';
 import '@/styles/landing.css';
+// Runtime marks from @lobehub/icons-static-svg (MIT), the icon set the Builder app uses for its
+// runtime badges. Inlined so the one-colour marks follow the theme (currentColor).
+import claudeCodeLogo from '@/assets/runtimes/claude-code.svg?raw';
+import codexLogo from '@/assets/runtimes/codex.svg?raw';
+import opencodeLogo from '@/assets/runtimes/opencode.svg?raw';
+import githubCopilotLogo from '@/assets/runtimes/github-copilot.svg?raw';
+import cursorLogo from '@/assets/runtimes/cursor.svg?raw';
+import grokLogo from '@/assets/runtimes/grok.svg?raw';
+import piLogo from '@/assets/runtimes/pi.svg?raw';
+import antigravityLogo from '@/assets/runtimes/antigravity.svg?raw';
 
 interface Props { lang: Language }
 const { lang } = Astro.props;
@@ -60,6 +70,18 @@ const AUDIENCE_ICONS: Record<AudienceIcon, typeof Eye> = { store: Store, rocket:
 const PATH_ICONS = [FolderGit2, Lightbulb];
 const STACK_ICONS: Record<StackIcon, typeof Eye> = { claude: Terminal, kit: Puzzle, app: Monitor, more: Layers };
 const STATUS_ICONS = { now: CircleCheck, beta: CalendarClock, later: Hourglass } as const;
+// Keyed by the runtime names in landing-content; a runtime without a published mark (Oh My Pi)
+// gets the generic terminal icon.
+const RUNTIME_LOGOS: Record<string, string> = {
+  'Claude Code': claudeCodeLogo,
+  Codex: codexLogo,
+  OpenCode: opencodeLogo,
+  'GitHub Copilot CLI': githubCopilotLogo,
+  'Cursor Agent': cursorLogo,
+  Grok: grokLogo,
+  Pi: piLogo,
+  Antigravity: antigravityLogo,
+};
 ---
 
 <MainLayout title={c.meta.title} description={c.meta.description} canonical={lang === 'vi' ? '/vi/' : '/'} lang={lang}>
@@ -275,7 +297,14 @@ const STATUS_ICONS = { now: CircleCheck, beta: CalendarClock, later: Hourglass }
             <p class="vk-card-lead">{c.runtimes.lead}</p>
             <ul class="vk-chips">
               {c.runtimes.verified.map((r) => (
-                <li><Check size={14} />{r}</li>
+                <li>
+                  {RUNTIME_LOGOS[r] ? (
+                    <span class="vk-runtime-logo" aria-hidden="true" set:html={RUNTIME_LOGOS[r]} />
+                  ) : (
+                    <span class="vk-runtime-logo" aria-hidden="true"><Terminal size={16} /></span>
+                  )}
+                  {r}
+                </li>
               ))}
             </ul>
             <p class="vk-fine">{c.runtimes.fine}</p>

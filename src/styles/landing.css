@@ -829,3 +829,20 @@ html:not(.dark) .vkh .vk-btn-primary {
   width: 36px;
   height: 36px;
 }
+
+/* Runtime chips: each runtime's mark in place of the check. One-colour marks use currentColor. */
+.vk-runtime-logo {
+  display: inline-grid;
+  flex: none;
+  place-items: center;
+  width: 18px;
+  height: 18px;
+  color: var(--vk-ink);
+}
+.vk-runtime-logo svg {
+  width: 18px;
+  height: 18px;
+}
+.vk-chips .vk-runtime-logo svg {
+  color: var(--vk-ink);
+}
