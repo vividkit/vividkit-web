@@ -79,7 +79,7 @@ export interface LandingContent {
     errors: { name: string; email: string; role: string; message: string };
   };
   about: Section & {
-    founder: { name: string; role: string; body: string; github: string };
+    founder: { name: string; role: string; body: string; github: string; photoAlt: string };
     contact: { title: string; body: string; github: string };
     independent: string;
   };
@@ -355,6 +355,7 @@ const en: LandingContent = {
       role: 'Founder',
       body: 'Designs and builds the VividKit desktop app, and writes the guides on this site.',
       github: 'GitHub',
+      photoAlt: 'Portrait of Thieu Nguyen, founder of VividKit',
     },
     contact: {
       title: 'Contact',
@@ -647,6 +648,7 @@ const vi: LandingContent = {
       role: 'Founder',
       body: 'Thiết kế và xây ứng dụng desktop VividKit, đồng thời viết các hướng dẫn trên trang này.',
       github: 'GitHub',
+      photoAlt: 'Ảnh chân dung Thieu Nguyen, founder của VividKit',
     },
     contact: {
       title: 'Liên hệ',

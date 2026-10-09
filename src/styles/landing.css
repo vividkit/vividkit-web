@@ -685,10 +685,16 @@
   font-size: 12.5px;
   font-weight: 600;
 }
-.vk-initials {
-  font-size: 15px;
-  font-weight: 750;
-  letter-spacing: 0.02em;
+.vk-founder-photo {
+  flex: none;
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow:
+    0 0 0 3px var(--vk-panel),
+    0 0 0 4px var(--vk-line-strong),
+    0 10px 24px -12px rgba(20, 30, 55, 0.4);
 }
 .vk-link-tight {
   margin-top: 8px;

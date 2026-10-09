@@ -336,7 +336,15 @@ const STATUS_ICONS = { now: CircleCheck, beta: CalendarClock, later: Hourglass }
         <p class="vk-section-lead">{c.about.lead}</p>
         <div class="vk-paths">
           <div class="vk-path">
-            <span class="vk-path-icon vk-initials" aria-hidden="true">TN</span>
+            <img
+              class="vk-founder-photo"
+              src="/about/thieu-nguyen.webp"
+              alt={c.about.founder.photoAlt}
+              width="72"
+              height="72"
+              loading="lazy"
+              decoding="async"
+            />
             <div>
               <h3>{c.about.founder.name}</h3>
               <p class="vk-role">{c.about.founder.role}</p>
