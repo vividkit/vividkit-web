@@ -1,0 +1,14 @@
+{
+  "slug": "databases",
+  "hash": "7d8b3f72874e25b57b36c367beb878551dfb49c8174cd91204d0fa55f0af0878",
+  "source": "kit",
+  "path": "ak-cli@origin/main:kits/engineer/skills/ak-databases/SKILL.md",
+  "pinnedAt": "2026-10-02T21:25:37.467Z",
+  "snapshot": {
+    "name": "ak:databases",
+    "description": "Design schemas, write queries for MongoDB and PostgreSQL. Use for database design, SQL/NoSQL queries, aggregation pipelines, indexes, migrations, replication, performance optimization, psql CLI.",
+    "when_to_use": "Invoke when schema, query, migration, or index work is central.",
+    "argument_hint": "[query or schema task]",
+    "version": null
+  }
+}

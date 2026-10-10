@@ -11,7 +11,7 @@ Locks for **kit inventory + skill fingerprints** vs the cheatsheet, and for
 
 Guide prose: `src/data/guides/agentkit-skill-details/`.
 Cheatsheet: `src/data/guides/agentkit-skills-cheatsheet.ts`.
-Invoked check: `skills/vk-audit-ak-skill-details/scripts/run.mjs` (inventory is step 1).
+Invoked check: `skills/vk-audit-ak-skills/scripts/run.mjs` (inventory is step 1).
 
 ak-docs `pages[]` is docs nav, not kit inventory.
 
@@ -47,7 +47,7 @@ AK_CLI="$AK_CLI" pnpm run audit:ak-kit-inventory
 node scripts/check-ak-kit-skill-inventory.mjs --kit-root "$AK_CLI"
 
 # Full gate this repo actually invokes (inventory first, then detail pages)
-node skills/vk-audit-ak-skill-details/scripts/run.mjs check --kit-root "$AK_CLI"
+node skills/vk-audit-ak-skills/scripts/run.mjs check --kit-root "$AK_CLI"
 ```
 
 `--kit-root` must be an ak-cli **git** checkout that has `origin/main` and
@@ -64,8 +64,8 @@ Runtimes discover project skills from `.claude/skills/` (Claude) and
 This machine already has relative links; after a fresh clone:
 
 ```bash
-ln -sfn ../../skills/vk-audit-ak-skill-details .claude/skills/vk-audit-ak-skill-details
-ln -sfn ../../skills/vk-audit-ak-skill-details .agents/skills/vk-audit-ak-skill-details
+ln -sfn ../../skills/vk-audit-ak-skills .claude/skills/vk-audit-ak-skills
+ln -sfn ../../skills/vk-audit-ak-skills .agents/skills/vk-audit-ak-skills
 ```
 
 Restart Claude Code / Codex after linking. Then invoke:

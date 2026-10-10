@@ -1,0 +1,14 @@
+{
+  "slug": "payment-integration",
+  "hash": "43bef8d2728cc14c1a3baac55a53efc89622e156ff036304ff58e02fc59394dd",
+  "source": "kit",
+  "path": "ak-cli@origin/main:kits/engineer/skills/ak-payment-integration/SKILL.md",
+  "pinnedAt": "2026-10-02T21:25:37.469Z",
+  "snapshot": {
+    "name": "ak:payment-integration",
+    "description": "Integrate payments with SePay and PayFS (Vietnamese bank transfers, VietQR), Polar, Stripe, Creem, Dodo Payments, Lemon Squeezy, Paddle, and PayPal. Checkout, webhooks, subscriptions, usage billing, license keys, QR codes, and multi-provider orders.",
+    "when_to_use": "Invoke for checkout, subscriptions, webhooks, or QR payments.",
+    "argument_hint": "[provider] [task]",
+    "version": null
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "slug": "predict",
+  "hash": "af1b861c7ea1e35669161881556890d3923fc1ee9b506206b2beafa016445788",
+  "source": "kit",
+  "path": "ak-cli@origin/main:kits/engineer/skills/ak-predict/SKILL.md",
+  "pinnedAt": "2026-10-02T21:25:37.469Z",
+  "snapshot": {
+    "name": "ak:predict",
+    "description": "5 expert personas debate proposed changes before implementation. Catches architectural, security, performance, and UX issues early. Use before major features or risky changes.",
+    "when_to_use": "Invoke before high-risk changes that need persona debate.",
+    "argument_hint": "<feature description or change proposal> [--files <glob>] [--chain reason|probe]",
+    "version": null
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "slug": "tech-graph",
+  "hash": "f75c65b6221a32bd2ec64836fdc66444d8d3d9959d1c533260d7bd4c72e6deed",
+  "source": "kit",
+  "path": "ak-cli@origin/main:kits/core/skills/ak-tech-graph/SKILL.md",
+  "pinnedAt": "2026-10-02T21:25:37.472Z",
+  "snapshot": {
+    "name": "ak:tech-graph",
+    "description": ">-",
+    "when_to_use": "Invoke for publish-grade architecture or flow diagrams.",
+    "argument_hint": "[diagram-type or system description]",
+    "version": null
+  }
+}

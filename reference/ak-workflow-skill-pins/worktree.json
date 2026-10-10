@@ -1,0 +1,14 @@
+{
+  "slug": "worktree",
+  "hash": "715addf550fa28943238f72394ee4c15bed2e72dabce49527a301574ce0c2970",
+  "source": "kit",
+  "path": "ak-cli@origin/main:kits/core/skills/ak-worktree/SKILL.md",
+  "pinnedAt": "2026-10-02T21:25:37.473Z",
+  "snapshot": {
+    "name": "ak:worktree",
+    "description": "Create, inspect, and clean isolated git worktrees. Use for feature isolation, worktree health audits, stale cleanup, and monorepo or submodule workflows.",
+    "when_to_use": "Invoke for isolated worktrees, stale cleanup, or worktree audits.",
+    "argument_hint": "[feature-description] OR [project] [feature]",
+    "version": null
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "slug": "git",
+  "hash": "bb2c38bd609701aa817d0dda156cd46f6ff7c79d1d62f5d03f28fdce031bbc59",
+  "source": "kit",
+  "path": "ak-cli@origin/main:kits/core/skills/ak-git/SKILL.md",
+  "pinnedAt": "2026-10-02T21:25:37.468Z",
+  "snapshot": {
+    "name": "ak:git",
+    "description": "Git operations with conventional commits. Use for staging, committing, pushing, PRs, merges, stacked PRs. Auto-splits commits by type/scope. Security scans for secrets.",
+    "when_to_use": "Invoke for commits, PRs, stacked PRs, branch hygiene, or release git steps.",
+    "argument_hint": "cm|cp|pr|merge|merge-pr|stack [args]",
+    "version": null
+  }
+}

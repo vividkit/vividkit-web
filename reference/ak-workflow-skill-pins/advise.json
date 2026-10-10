@@ -1,0 +1,14 @@
+{
+  "slug": "advise",
+  "hash": "0a6c535d38ee262e4187a09e2bf7e375ec298d57b122943c41a1a01768c53181",
+  "source": "kit",
+  "path": "ak-cli@origin/main:kits/engineer/skills/ak-advise/SKILL.md",
+  "pinnedAt": "2026-10-02T21:25:37.466Z",
+  "snapshot": {
+    "name": "ak:advise",
+    "description": "Interview until user and agent share the same picture of the outcome, preview it visually, then deliver evidence-backed technical advice. Use for advisory interviews and second opinions; implementation belongs to a delivery workflow.",
+    "when_to_use": "Invoke when the user wants honest advice, a second opinion, requirement reframing, or an interview that pressure-tests an existing plan, design, or proposal — before planning or implementation.",
+    "argument_hint": "[prompt-or-url] [--html] [--md] [--wiki] [--github] [--agent] [--ultra] [--yagni] [--no-antv|--no-diagram-design|--no-editorial-visuals]",
+    "version": null
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "slug": "team",
+  "hash": "e330e0f762af168d1aea0238126532b97e4632b3774ddd0a751530a991bb14fb",
+  "source": "kit",
+  "path": "ak-cli@origin/main:kits/engineer/skills/ak-team/SKILL.md",
+  "pinnedAt": "2026-10-02T21:25:37.472Z",
+  "snapshot": {
+    "name": "ak:team",
+    "description": "Orchestrate Agent Teams for parallel multi-session collaboration. Use for research, implementation, review, and debug workflows requiring independent teammates.",
+    "when_to_use": "Invoke for coordinated multi-session agent teamwork.",
+    "argument_hint": "<template> <context> [--devs|--researchers|--reviewers N] [--delegate]",
+    "version": null
+  }
+}

@@ -87,7 +87,7 @@ function runInventory(repo, kitRoot) {
 }
 
 function runSkillDetails(repo, kitRoot, akDocs) {
-  const script = join(repo, 'skills/vk-audit-ak-skill-details/scripts/run.mjs');
+  const script = join(repo, 'skills/vk-audit-ak-skills/scripts/run.mjs');
   if (!existsSync(script)) return { code: 2, stdout: '', stderr: 'missing vk:audit-ak-skills runner' };
   const args = [script, 'check', '--repo', repo, '--kit-root', kitRoot, '--kit', 'all', '--skip-inventory'];
   if (akDocs) args.push('--ak-docs', akDocs);

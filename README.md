@@ -76,48 +76,30 @@ Some guides link to AgentKit with a referral code.
 
 Landing page copy lives in `src/data/landing-content.ts` (EN + VI). Product facts there must match the VividKit app docs; do not add claims without evidence.
 
-## 🤖 VividKit Maintainer Skills & Commands (`/vk:*`)
+## 🤖 VividKit Maintainer Skills (`/vk:*`)
 
-Repo-specific skills that keep VividKit guides in sync with upstream ClaudeKit. Invoke via Claude Code using the `/vk:` prefix.
+Repo-specific skills that check VividKit guides against their upstream sources. Invoke them in Claude Code with the `/vk:` prefix (Codex: `$vk:`).
 
 > 🇻🇳 Tiếng Việt: see [README.vi.md](./README.vi.md)
 
 | Skill | When to use | Example |
 |-------|-------------|---------|
-| `/vk:changelog-sync` | Detect new ClaudeKit changelog entries and sync Commands/Hooks/Workflows guides + i18n strings | `/vk:changelog-sync` |
-| `/vk:audit-ck-cli` | Compare upstream `claudekit-cli` against the CLI/Migrate guides; propose updates per command (`ck migrate`, `ck init`, …) | `/vk:audit-ck-cli` or `/vk:audit-ck-cli page=guides/migrate command=migrate` |
-| `/vk:audit-skill` | Audit upstream ClaudeKit skill changes against the skill catalog rendered on the site | `/vk:audit-skill <skill-name>` |
-| `/vk:add-scenario` | Add a new scenario entry for a ClaudeKit command into the guides | `/vk:add-scenario` |
-| `/project:vk:update-how-ck-works` | Project custom command: orchestrates `/vk:audit-skill` + `/vk:add-scenario` to update How-CK-Works pages with detailed explanation, graphic quick refs, pipeline data, and prompt examples; use `--include-local-missing` to cover CK skills not yet on the guide | `/project:vk:update-how-ck-works --include-local-missing --limit 3` |
+| `/vk:audit-ak-guides` | Audit every `/guides/agentkit` page (EN + VI) against ak-cli and ak-docs after an AgentKit update. Fails while any page has no owner or an owner check is red | `/vk:audit-ak-guides --check` |
+| `/vk:audit-ak-skills` | Report or fix drift in the AgentKit skills cheatsheet and skill-detail pages | `/vk:audit-ak-skills --report --kit all` |
+| `/vk:audit-ak-workflows` | Check the AgentKit skills used in workflow cards against reviewed pins | `/vk:audit-ak-workflows --report` |
+| `vk:audit-ak-pages` | Internal module: every other AgentKit page, plus the CLI cheatsheet against the ak cobra command tree | run through `/vk:audit-ak-guides` |
+| `/vk:audit-ccs` | Compare upstream `kaitranntt/ccs` against the CCS guide | `/vk:audit-ccs --check` |
 
-### Quick usage
-
-1. **Quick check** — no fetch, just compare current marker:
-   ```
-   /vk:audit-ck-cli
-   ```
-2. **Detailed report** — categorized diff + impact map + update proposals:
-   ```
-   /vk:audit-ck-cli report
-   ```
-3. **Full sync** — fetch latest, generate report, update marker:
-   ```
-   /vk:audit-ck-cli sync
-   ```
-4. **Target a specific page/command** — pass args as `page=<guide-slug> command=<ck-command>`:
-   ```
-   /vk:audit-ck-cli page=guides/migrate command=migrate
-   ```
+ClaudeKit guides are frozen: they stay on the site but are no longer synced with upstream, and the ClaudeKit sync skills were removed.
 
 ### Conventions
 
-- **Tracked skills** live in `skills/` (and `commands/vk/`); runtimes read them through symlinks. After a fresh clone, link each one once, e.g. `ln -sfn ../../skills/vk-changelog-sync .claude/skills/vk-changelog-sync` and `ln -sfn ../../../commands/vk/update-how-ck-works.md .claude/commands/vk/update-how-ck-works.md`.
-- **Reference repos** are cloned under `reference/` (claudekit, claudekit-cli) — not committed; treated as source of truth during audits.
-- **Marker files** (`reference/.last-sync*`) store the commit SHA of the last successful sync.
-- **Reports** are written to `reference/changelog-reports/` (skill-generated).
-- Skills only **propose** changes — always review before applying them to `src/components/guides/*` or `src/data/guides/*`.
+- **Tracked skills** live in `skills/`; runtimes read them through symlinks. After a fresh clone, link each one once (see each skill's `README.md`), e.g. `ln -sfn ../../skills/vk-audit-ak-guides .claude/skills/vk-audit-ak-guides`.
+- **Upstream sources**: AgentKit audits read local ak-cli / ak-docs git checkouts (`--kit-root`, `--ak-docs`; `git fetch` them first). The CCS audit clones into `reference/ccs/` (not committed).
+- **Reviewed state** that must survive a fresh clone is committed under `reference/ak-docs-skills-meta/` and `reference/ak-workflow-skill-*`. Sync markers and reports under `reference/` stay local.
+- Skills only **propose** changes or write locks after review — always review before applying them to `src/components/guides/*` or `src/data/guides/*`.
 
-See `skills/vk-*/SKILL.md` for per-skill details (`vk-audit-ck-cli` and `vk-audit-ck-hooks` still live in `.claude/skills/`).
+See `skills/vk-*/SKILL.md` for per-skill details.
 
 ---
 

@@ -1,0 +1,14 @@
+{
+  "slug": "llms",
+  "hash": "b2c6611f9485d8040e112fd469549e2c11a6bff63c8646dfee4758e7794e9697",
+  "source": "kit",
+  "path": "ak-cli@origin/main:kits/engineer/skills/ak-llms/SKILL.md",
+  "pinnedAt": "2026-10-02T21:25:37.468Z",
+  "snapshot": {
+    "name": "ak:llms",
+    "description": "Generate llms.txt, llms-full.txt, and per-page .md variants from docs or codebase scanning, following the llmstxt.org spec. Use for LLM-friendly site indexes, Markdown page mirrors, documentation summaries, AI context optimization.",
+    "when_to_use": "Invoke to produce llms.txt, llms-full.txt, or .md page variants for AI readers.",
+    "argument_hint": "[path|url] [--full] [--md-links] [--output path]",
+    "version": null
+  }
+}

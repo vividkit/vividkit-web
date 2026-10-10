@@ -1,0 +1,14 @@
+{
+  "slug": "preview",
+  "hash": "e0174870862bcc9f7c70d3fc2544c39bf5b9d1e5ca74b2ea5720a25a3a4bd619",
+  "source": "kit",
+  "path": "ak-cli@origin/main:kits/core/skills/ak-preview/SKILL.md",
+  "pinnedAt": "2026-10-02T21:25:37.469Z",
+  "snapshot": {
+    "name": "ak:preview",
+    "description": "View files or generate visual explanations, slides, and diagrams. Use for code walkthroughs, architecture visualization, HTML/Markdown presentations.",
+    "when_to_use": "Invoke for visual explanations, file previews, or diagrams.",
+    "argument_hint": "[path] OR [--html] --explain|--slides|--diagram|--ascii [topic] OR --html --diff|--plan-review|--recap [--no-antv|--no-diagram-design|--no-editorial-visuals]",
+    "version": null
+  }
+}

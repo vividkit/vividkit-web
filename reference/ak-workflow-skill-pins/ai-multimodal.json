@@ -1,0 +1,14 @@
+{
+  "slug": "ai-multimodal",
+  "hash": "d36d1f111a0f6656cc6af02ac5e18259bc520fc3063bd26dc5a08e6dfff53f18",
+  "source": "kit",
+  "path": "ak-cli@origin/main:kits/core/skills/ak-ai-multimodal/SKILL.md",
+  "pinnedAt": "2026-10-02T21:25:37.467Z",
+  "snapshot": {
+    "name": "ak:ai-multimodal",
+    "description": "Analyze and generate image, audio, video, and document content. Prefers the active model's native vision for image/document understanding; falls back to the npm-latest Multix CLI and live provider catalogs only when native vision is ineligible or a generation/audio/video task needs a configured provider.",
+    "when_to_use": "Invoke for media generation, transcription, or vision/OCR tasks the active model's native vision cannot handle.",
+    "argument_hint": "[file-path] [prompt]",
+    "version": null
+  }
+}

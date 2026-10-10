@@ -1,7 +1,9 @@
 ---
 name: vk:audit-ccs
 description: Deeply audit upstream CCS (kaitranntt/ccs) — CLI command surface, subsystem architecture, per-provider capabilities, config schemas, and provider profiles — vs the VividKit CCS Guide. Inventories current guide coverage, fetches latest from main, compares against last-sync commit, categorizes diff, and proposes concrete updates. Use when checking if CCS Guide is stale, after a new ccs release, or before publishing CCS doc updates.
-version: 2.0.0
+when_to_use: "Use when the CCS Guide may be stale versus upstream kaitranntt/ccs, after a ccs release, or before publishing CCS guide edits."
+user-invocable: true
+version: 2.0.1
 argument-hint: "[--inventory | --check | --report | --sync | --validate | --commands | --architecture | --capabilities | --schemas] [--no-fetch]"
 ---
 
@@ -165,24 +167,26 @@ skills/vk-audit-ccs/
 
 ## Artifacts
 
-| File | Committed? | Purpose |
-|---|---|---|
-| `reference/.last-sync-ccs` | ✅ | Last audited commit SHA |
-| `reference/ccs/` | ❌ gitignored | Upstream mirror clone |
-| `reference/ccs-provider-snapshots.json` | ❌ gitignored | Auto-built provider matrix (regenerate with `--sync`) |
-| `reference/ccs-provider-editorial.json` | ✅ | User-curated `setupCommands` + `caveats` overlay |
-| `reference/changelog-reports/{date}-ccs-changelog.md` | ✅ | Diff report |
-| `reference/changelog-reports/{date}-ccs-inventory.md` | ✅ | Profile coverage matrix |
-| `reference/changelog-reports/{date}-ccs-commands.md` | ✅ | CLI surface coverage |
-| `reference/changelog-reports/{date}-ccs-architecture.md` | ✅ | Subsystem coverage |
-| `reference/changelog-reports/{date}-ccs-capabilities.md` | ✅ | Per-provider capability matrix |
-| `reference/changelog-reports/{date}-ccs-schemas.md` | ✅ | Config schema coverage |
+All artifacts are machine-local: `.gitignore` ignores `reference/**/*` except a short whitelist that does not include them. A fresh clone starts without a sync marker or editorial overlay.
+
+| File | Purpose |
+|---|---|
+| `reference/.last-sync-ccs` | Last audited commit SHA |
+| `reference/ccs/` | Upstream mirror clone |
+| `reference/ccs-provider-snapshots.json` | Auto-built provider matrix (regenerate with `--sync`) |
+| `reference/ccs-provider-editorial.json` | User-curated `setupCommands` + `caveats` overlay |
+| `reference/changelog-reports/{date}-ccs-changelog.md` | Diff report |
+| `reference/changelog-reports/{date}-ccs-inventory.md` | Profile coverage matrix |
+| `reference/changelog-reports/{date}-ccs-commands.md` | CLI surface coverage |
+| `reference/changelog-reports/{date}-ccs-architecture.md` | Subsystem coverage |
+| `reference/changelog-reports/{date}-ccs-capabilities.md` | Per-provider capability matrix |
+| `reference/changelog-reports/{date}-ccs-schemas.md` | Config schema coverage |
 
 ## Impact Mapping
 
 | ccs Path | VividKit Guide Files |
 |---|---|
-| `src/commands/command-catalog.ts`, `src/commands/help-command.ts` | `ccs-installation-and-quickstart-section.astro`, `ccs-features-and-integration-section.astro`, `src/i18n/{en,vi}/ccs.ts` |
+| `src/commands/command-catalog.ts`, `src/commands/help-command.ts` | `ccs-cheatsheet-section.astro` + `src/data/guides/ccs-cheatsheet-data.ts`, `ccs-features-and-integration-section.astro`, `src/i18n/{en,vi}/ccs.ts` |
 | `src/cliproxy/provider-capabilities.ts` | `ccs-provider-configuration-section.astro`, `ccs-features-and-integration-section.astro` |
 | `src/cliproxy/ai-providers/managed-model-prefixes.ts` | `ccs-provider-configuration-section.astro` (model→provider routing) |
 | `src/config/schemas/**` | `ccs-features-and-integration-section.astro`, `ccs-provider-configuration-section.astro`, i18n |
@@ -198,8 +202,8 @@ skills/vk-audit-ccs/
 | `src/web-server/**`, `ui/**` | `ccs-dashboard-and-resources-section.astro` |
 | `src/management/**` | `ccs-features-and-integration-section.astro` (doctor / repair) |
 | `src/channels/**` | `ccs-features-and-integration-section.astro` (channels / websearch / thinking) |
-| `bin/**`, `scripts/**`, `docker/**` | `ccs-installation-and-quickstart-section.astro` |
-| `package.json` (version) | `ccs-installation-and-quickstart-section.astro`, i18n install snippets |
+| `bin/**`, `scripts/**`, `docker/**` | `ccs-overview-section.astro` (install commands) |
+| `package.json` (version) | `ccs-overview-section.astro`, `ccs-cheatsheet-section.astro`, i18n install snippets |
 | `CHANGELOG.md` | `ccs-overview-section.astro`, `ccs-features-and-integration-section.astro` |
 | `README.md`, `docs/**` | `ccs-overview-section.astro`, i18n |
 
