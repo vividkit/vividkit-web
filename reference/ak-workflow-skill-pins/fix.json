@@ -1,0 +1,14 @@
+{
+  "slug": "fix",
+  "hash": "64ab4721fb39fea79c38defdff9ca161bf5c311a84de1fe9272c77e0250dd5df",
+  "source": "kit",
+  "path": "ak-cli@origin/main:kits/core/skills/ak-fix/SKILL.md",
+  "pinnedAt": "2026-10-02T21:25:37.468Z",
+  "snapshot": {
+    "name": "ak:fix",
+    "description": "Fix bugs, errors, test failures, and CI/CD issues with intelligent routing. Use for type errors, lint issues, log errors, UI bugs, code problems.",
+    "when_to_use": "Invoke when there is a concrete bug, error, or CI failure.",
+    "argument_hint": "[issue] --auto|--review|--quick|--parallel [--ultra] [--advice] [--skip-journal]",
+    "version": null
+  }
+}

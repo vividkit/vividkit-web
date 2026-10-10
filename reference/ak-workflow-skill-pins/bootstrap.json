@@ -1,0 +1,14 @@
+{
+  "slug": "bootstrap",
+  "hash": "afe597b9a61b968b0bd1134d62934cab84a60f26dda2eb33eb483cb4e555de00",
+  "source": "kit",
+  "path": "ak-cli@origin/main:kits/engineer/skills/ak-bootstrap/SKILL.md",
+  "pinnedAt": "2026-10-02T21:25:37.467Z",
+  "snapshot": {
+    "name": "ak:bootstrap",
+    "description": "Bootstrap new projects (web, mobile, CLI, API, MCP, WebMCP, libraries) from a locked scope straight to implementation via ak:cook, then ak:code-review, ak:enhance-ux-ax --auto for web surfaces, and optional release with live verification; no separate planning phase. Modes: auto (default, agent decides), full (interactive thorough), fast (skip research), parallel (multi-agent); --ask interviews the user via ak:advise until scope is locked.",
+    "when_to_use": "Invoke to start a new project or full-stack setup from scratch.",
+    "argument_hint": "[requirements] [--auto|--full|--fast|--parallel] [--ask] [--ultra] [--yagni] [--skip-journal]",
+    "version": null
+  }
+}

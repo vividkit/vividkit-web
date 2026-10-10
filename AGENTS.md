@@ -84,43 +84,13 @@ When editing AgentKit guides under `src/components/guides/agentkit/` (and relate
 - Prefer: hero short subtitle → scannable cards (do / don’t / path A vs B) → detailed phases with code.
 - Dense technical detail (manifest ownership, residual checks) can stay, but lead with plain “what you do / what you see / what not to do”.
 
-## VividKit Guides - Changelog Sync
+## Guide Maintenance Skills
 
-When running `/vk:changelog-sync`, update these locations:
-
-### CommandsGuide (`src/components/guides/commands/`)
-1. **Version badges**: `commands-categories-grid.astro` - EK/MK version labels
-2. **Beta Preview section**: `commands-categories-grid.astro` lines ~99-122 - NEW/ENHANCED/DEPRECATED skills
-3. **Commands data**: `src/data/guides/commands-engineer-kit.ts`, `commands-marketing-kit.ts`
-4. **i18n strings**: `src/i18n/en/commands.ts`, `src/i18n/vi/commands.ts`
-
-### Other Guides
-- **Flowchart versions**: `flowchart-marketing-v12-data.ts`, `flowchart-marketing-summary-section.astro`
-- **Hooks data**: `src/data/guides/custom-hooks/custom-hooks-data.ts`
-- **Workflows data**: `src/data/guides/workflows-data/workflows-stable.ts`, `workflows-beta-additions.ts`
-
-### Workflows - Bilingual Files
-When adding new workflow cards, update BOTH:
-- **EN**: `src/data/guides/workflows-data/workflows-*.ts`
-- **VI**: `src/data/vi/guides/workflows-data/workflows-*.ts`
-
-**VI translation convention for workflow entries:**
-- **Translate to Vietnamese:** `title`, `bestFor`, `description` (in steps), `tip`, `features`, `typeLabel`, time unit in `duration` (e.g. `phút` instead of `min`)
-- **Keep in English (verbatim):** `category`, `level` — these are matched against English-keyed lookup tables (`categoryOrder`, `categoryMeta` in `workflows-engineer-section.astro`). Translating them causes the workflow to silently disappear from the rendered page.
-- All other technical fields (`command`, `color`, `icon`, `gradientHeader`, etc.) stay verbatim.
-
-**IMPORTANT:** Beta Preview section is separate from main commands grid - don't forget to update both!
-
-### Beta-Only Skills - Dual Listing Convention
-When a skill is **beta-exclusive** (exists in beta branch only, not yet in stable), list it in BOTH places:
-1. **Beta Preview section** (`commands-categories-grid.astro` beta array) — surfaces the forward-looking signal
-2. **Stable category group** (`commands-engineer-kit.ts`) with `isBeta: true` flag — renders a purple BETA badge inline next to the command name, keeping it discoverable in its natural category
-
-When the skill graduates to stable: remove `isBeta: true` flag AND remove the Beta Preview entry. See `.Codex/skills/vk-changelog-sync/SKILL.md` → "Universal Beta-Badge Rule" for the full decision matrix.
-
-### HTML in Detail Fields
-- **Stable commands** (`commands-engineer-kit.ts`): Uses `{cmd.detail}` → **NO HTML rendering** → don't use `<br/>`
-- **Beta Preview** (`commands-categories-grid.astro`): Uses `set:html` → **renders HTML** → can use `<br/>`
+- **AgentKit guides** (`/guides/agentkit/*`): run `/vk:audit-ak-guides --check` after an ak-cli / ak-docs update. Its modules are `/vk:audit-ak-skills` (skills cheatsheet + skill-detail pages), `/vk:audit-ak-workflows` (workflow cards), and `vk:audit-ak-pages` (every other AgentKit page). Skill sources and helper-flag rules: `skills/vk-audit-ak-skills/references/authority.md`.
+- **CCS guide**: `/vk:audit-ccs`.
+- **ClaudeKit guides are frozen** (commands, how-ck-works, workflows, hooks, cli, cli-commands, migrate, flowchart). There is no upstream sync and the CK sync skills were removed; edit them only to fix bugs. When you do:
+  - VI workflow entries in `src/data/vi/guides/workflows-data/` keep `category` and `level` in English. They are lookup keys, and translating them silently hides the card.
+  - Stable `detail` in `commands-engineer-kit.ts` renders as plain text (`{cmd.detail}`), so no HTML. The Beta Preview block in `commands-categories-grid.astro` uses `set:html`.
 
 ## Documentation Management
 

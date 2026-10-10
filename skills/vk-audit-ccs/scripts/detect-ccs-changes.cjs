@@ -75,7 +75,6 @@ const GUIDE_FILES = [
   "src/components/guides/FlowchartInteractiveCCS.astro",
   "src/components/guides/ccs/ccs-overview-section.astro",
   "src/components/guides/ccs/ccs-key-features-section.astro",
-  "src/components/guides/ccs/ccs-installation-and-quickstart-section.astro",
   "src/components/guides/ccs/ccs-configure-providers-section.astro",
   "src/components/guides/ccs/ccs-provider-configuration-section.astro",
   "src/components/guides/ccs/ccs-decision-tree-section.astro",
@@ -118,7 +117,8 @@ const IMPACT_MAP = [
       "src/components/guides/CCSGuide.astro",
       "src/components/guides/ccs/ccs-decision-tree-section.astro",
       "src/components/guides/ccs/ccs-features-and-integration-section.astro",
-      "src/components/guides/ccs/ccs-installation-and-quickstart-section.astro",
+      "src/components/guides/ccs/ccs-cheatsheet-section.astro",
+      "src/data/guides/ccs-cheatsheet-data.ts",
       "src/data/guides/ccs-decision-tree-data.ts",
       "src/i18n/en/ccs.ts",
       "src/i18n/vi/ccs.ts",
@@ -247,14 +247,15 @@ const IMPACT_MAP = [
   {
     match: /^bin\/|^scripts\/|^docker\//,
     category: "install-bin",
-    files: ["src/components/guides/ccs/ccs-installation-and-quickstart-section.astro"],
+    files: ["src/components/guides/ccs/ccs-overview-section.astro"],
   },
   // Package metadata
   {
     match: /^package\.json$/,
     category: "package",
     files: [
-      "src/components/guides/ccs/ccs-installation-and-quickstart-section.astro",
+      "src/components/guides/ccs/ccs-overview-section.astro",
+      "src/components/guides/ccs/ccs-cheatsheet-section.astro",
       "src/i18n/en/ccs.ts",
       "src/i18n/vi/ccs.ts",
     ],
@@ -572,7 +573,7 @@ function buildProposals({ fromSha, toSha, changes, buckets, inventory }) {
   const newVer = readVersion(toSha);
   if (oldVer && newVer && oldVer !== newVer) {
     proposals.push(
-      `**Version bump** \`${oldVer}\` → \`${newVer}\`: refresh version badge in \`ccs-installation-and-quickstart-section.astro\` + i18n install snippets.`
+      `**Version bump** \`${oldVer}\` → \`${newVer}\`: refresh version badge in \`ccs-overview-section.astro\` + i18n install snippets.`
     );
   }
   const added = listProfileFileChanges(changes, "A");
@@ -599,7 +600,7 @@ function buildProposals({ fromSha, toSha, changes, buckets, inventory }) {
   }
   if (buckets["install-bin"]) {
     proposals.push(
-      `**Installer / docker / scripts changes** — re-verify install commands in \`ccs-installation-and-quickstart-section.astro\`.`
+      `**Installer / docker / scripts changes** — re-verify install commands in \`ccs-overview-section.astro\` and \`ccs-cheatsheet-section.astro\`.`
     );
   }
   if (buckets.changelog) {
@@ -900,7 +901,9 @@ function validateAgainstVKSources(snapshot) {
 
   // 1. Package name drift: every "npm install -g <pkg>/ccs" must match upstream.
   const pkgScanFiles = [
-    "src/components/guides/ccs/ccs-installation-and-quickstart-section.astro",
+    "src/components/guides/ccs/ccs-overview-section.astro",
+    "src/components/guides/ccs/ccs-cheatsheet-section.astro",
+    "src/data/guides/ccs-cheatsheet-data.ts",
     "src/components/guides/ccs/ccs-provider-configuration-section.astro",
     "src/data/guides/ccs-decision-tree-data.ts",
     "src/i18n/en/ccs.ts",

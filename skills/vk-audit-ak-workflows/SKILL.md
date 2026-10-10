@@ -36,8 +36,8 @@ Codex: `$vk:audit-ak-workflows --check`
 ```text
 /vk:audit-ak-workflows --check
 
---repo /Users/thieunv/projects/personal/vividkit-web
---kit-root /Users/thieunv/projects/contribution/agentkit/ak-cli
+--repo <vividkit-web root>
+--kit-root $AK_CLI
 
 git fetch ak-cli first if fingerprinting kit SKILL.md.
 Do not --sync until the report is reviewed. Never edit src/.

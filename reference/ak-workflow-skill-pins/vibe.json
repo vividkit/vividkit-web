@@ -1,0 +1,14 @@
+{
+  "slug": "vibe",
+  "hash": "6b9157c1e761e75bb278e1e2618a2de15f81c18ce1b63b3b43033def18ce4f5a",
+  "source": "kit",
+  "path": "ak-cli@origin/main:kits/engineer/skills/ak-vibe/SKILL.md",
+  "pinnedAt": "2026-10-02T21:25:37.473Z",
+  "snapshot": {
+    "name": "ak:vibe",
+    "description": "Run the full vibe pipeline from request intake to PR readiness, with optional merge and post-merge CI convergence. Orchestrates worktree, plan, cook/fix, code-review, ship, and review-pr, integrating debug, research, test, and docs. Supports dual-stage beta-then-stable ships via --both, ultra verifier mode via --ultra, and kongming advisory supervision via --advice.",
+    "when_to_use": "Invoke when a user wants one command to take a GitHub issue or feature request from planning through implementation, PR review, shipping, and optional merge.",
+    "argument_hint": "[--ship] [--beta] [--both] [--advice] [--ultra] <github-issue-url | feature request>",
+    "version": null
+  }
+}

@@ -221,9 +221,9 @@ Package: `claudekit-cli` | Source: `reference/claudekit-cli/src/cli/command-regi
 
 | Skill | Purpose |
 |-------|---------|
-| `vk:cli-commands-tracker` | Consolidated command enumeration + change detection |
 | `vk:audit-ccs` | Deep CCS audit (capabilities, schemas, architecture) |
-| `vk:audit-ck-cli` | ClaudeKit CLI-specific audit (init, hooks, config) |
+
+ClaudeKit CLI sections are frozen: no skill tracks `claudekit-cli` any more.
 
 ---
 

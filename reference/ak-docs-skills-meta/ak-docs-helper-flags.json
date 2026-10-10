@@ -1,0 +1,142 @@
+{
+  "_comment": "Reviewed ak-docs table flags that are helper-CLI, script, or in-run operation flags (authority.md rules 3-4). check-ak-skill-detail-ak-docs.mjs keeps them off skill invocation instead of reporting missed. A flag listed in the kit SKILL.md argument-hint is still reported even if listed here. Review against ak-docs origin/main and ak-cli origin/main on 2026-10-06.",
+  "pages": {
+    "engineer/ak-ai-artist": [
+      "--aspect-ratio",
+      "--dry-run",
+      "--model",
+      "--size"
+    ],
+    "engineer/ak-cti-expert": [
+      "--sequential"
+    ],
+    "engineer/ak-databases": [
+      "--database",
+      "--db",
+      "--dry-run",
+      "--no-compress",
+      "--no-verify",
+      "--output",
+      "--retention-days",
+      "--uri"
+    ],
+    "engineer/ak-devops": [
+      "--dry-run",
+      "--env",
+      "--json",
+      "--project",
+      "--verbose"
+    ],
+    "engineer/ak-diagram": [
+      "--type"
+    ],
+    "engineer/ak-journal": [
+      "--date",
+      "--project",
+      "--stdin",
+      "--summary"
+    ],
+    "engineer/ak-markdown-novel-viewer": [
+      "--background",
+      "--dir",
+      "--file",
+      "--foreground",
+      "--host",
+      "--no-open",
+      "--open",
+      "--port",
+      "--stop"
+    ],
+    "engineer/ak-repomix": [
+      "--copy",
+      "--include",
+      "--init",
+      "--no-security-check",
+      "--remote",
+      "--remove-comments"
+    ],
+    "engineer/ak-ship": [
+      "--fix",
+      "--reply"
+    ],
+    "engineer/ak-threejs": [
+      "--category",
+      "--complexity",
+      "--domain",
+      "--json",
+      "--use-case"
+    ],
+    "engineer/ak-ui-ux-pro-max": [
+      "--design-system",
+      "--domain",
+      "--json",
+      "--output-dir",
+      "--page",
+      "--persist",
+      "--stack"
+    ],
+    "engineer/ak-watzup": [
+      "--all",
+      "--fetch",
+      "--json",
+      "--max-branches",
+      "--max-plan-refs",
+      "--plan-limit",
+      "--prune",
+      "--redact-paths",
+      "--since"
+    ],
+    "engineer/ak-web-frameworks": [
+      "--directory",
+      "--dry-run",
+      "--import-alias",
+      "--no-eslint",
+      "--no-typescript",
+      "--package-manager",
+      "--pages-router",
+      "--path",
+      "--src-dir",
+      "--tailwind"
+    ],
+    "marketing/ak-creativity": [
+      "--campaign-name",
+      "--creative-brief",
+      "--domain",
+      "--format",
+      "--json",
+      "--max-results"
+    ],
+    "marketing/ak-elevenlabs": [
+      "--description",
+      "--duration",
+      "--file",
+      "--influence",
+      "--labels",
+      "--loop",
+      "--model",
+      "--output",
+      "--similarity",
+      "--speed",
+      "--stability",
+      "--stream",
+      "--voice"
+    ]
+  },
+  "notes": {
+    "engineer/ak-ai-artist": "Image script flags (scripts/generate.py), not /ak:ai-artist tokens",
+    "engineer/ak-cti-expert": "In-run /case operation flag, not a skill invocation token",
+    "engineer/ak-databases": "db_migrate.py / db_backup.py helper flags",
+    "engineer/ak-devops": "Cloudflare deploy and Dockerfile analyzer helper flags",
+    "engineer/ak-diagram": "Legacy editorial template script flag",
+    "engineer/ak-journal": "ak journal create CLI flags",
+    "engineer/ak-markdown-novel-viewer": "scripts/server.cjs flags",
+    "engineer/ak-repomix": "Repomix CLI flags; page defers to live CLI help",
+    "engineer/ak-ship": "Flags passed to ak:review-pr, not ak:ship",
+    "engineer/ak-threejs": "scripts/search.py flags",
+    "engineer/ak-ui-ux-pro-max": "scripts/search.py flags",
+    "engineer/ak-watzup": "scripts/watzup-scan.cjs flags",
+    "engineer/ak-web-frameworks": "create-next-app and turborepo_migrate.py flags",
+    "marketing/ak-creativity": "scripts/search.py and brief generator flags",
+    "marketing/ak-elevenlabs": "ElevenLabs helper CLI flags"
+  }
+}

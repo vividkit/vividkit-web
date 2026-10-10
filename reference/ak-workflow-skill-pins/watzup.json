@@ -1,0 +1,14 @@
+{
+  "slug": "watzup",
+  "hash": "428d83feb96545ae3cc7c5f3afbb7105a48c5c0a36001a8e7833f6ff207558ed",
+  "source": "kit",
+  "path": "ak-cli@origin/main:kits/core/skills/ak-watzup/SKILL.md",
+  "pinnedAt": "2026-10-02T21:25:37.473Z",
+  "snapshot": {
+    "name": "ak:watzup",
+    "description": "Generate short handoff reports from Git branches, remote refs, worktrees, unfinished plans, and roadmap docs. Surfaces priority-ranked next steps with checkbox progress and rationale. Use when the user asks what's in flight, wants progress/next steps, is in a fresh worktree or detached checkout, or needs end-of-session status.",
+    "when_to_use": "Invoke for end-of-session handoffs, progress summaries, cross-branch worktree status, unfinished plan discovery, and next-step recommendations.",
+    "argument_hint": "[branch|worktree|status]",
+    "version": null
+  }
+}

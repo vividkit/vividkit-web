@@ -1,0 +1,14 @@
+{
+  "slug": "orchestrate",
+  "hash": "6ca13bfd65d932d17d364300ce27a871578dedb3985af24766b0d5fdb80254f0",
+  "source": "kit",
+  "path": "ak-cli@origin/main:kits/engineer/skills/ak-orchestrate/SKILL.md",
+  "pinnedAt": "2026-10-02T21:25:37.468Z",
+  "snapshot": {
+    "name": "ak:orchestrate",
+    "description": "Coordinate staged or parallel jobs across live-verified coding-agent runtimes, Pi coding-agent sessions, and in-session subagents, using capability- and risk-based routing, worktree-isolated writes, resumable state, capture, safety gates, and independent arbiter review. Onboards a missing Pi runtime (install, profile, authentication, AgentKit projection) as a visible setup step when a job or the user asks for Pi.",
+    "when_to_use": "Invoke when work should be split across multiple headless runtimes, Pi sessions, or in-session subagents, routed by task capability and risk, isolated where needed, and reviewed before handoff; also when Pi must be installed and set up before it can take orchestrated jobs.",
+    "argument_hint": "<job-spec.yaml | task description | --resume <run-dir>> [--yes] [--internal]",
+    "version": null
+  }
+}

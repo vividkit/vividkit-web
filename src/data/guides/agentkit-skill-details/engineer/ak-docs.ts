@@ -78,12 +78,16 @@ const data: SkillInfographic = {
     subcommands: [
       {
         name: "init",
-        syntax: "/ak:docs init [request] [--advice]",
+        syntax: "/ak:docs init [request] [--preset classic] [--advice]",
         titleEn: "Initialize docs",
         titleVi: "Khởi tạo docs",
         descEn: "Establish the smallest project-specific documentation route. It does not impose a fixed template tree.",
         descVi: "Thiết lập tuyến tài liệu nhỏ nhất dành riêng cho project. Không áp đặt cây template cố định.",
         arguments: [{ token: "[request]", titleEn: "Initial docs need", titleVi: "Nhu cầu docs ban đầu", descEn: "Audience, outcome, evidence, navigation, or acceptance criteria for the new route.", descVi: "Audience, kết quả, bằng chứng, điều hướng hoặc tiêu chí chấp nhận cho tuyến mới." }],
+        options: [
+          { token: "--preset classic", titleEn: "Fixed classic layout", titleVi: "Layout classic cố định", descEn: "Opt-in for init only. Creates the seven fixed files under docs/ (project-overview-pdr, code-standards, codebase-summary, design-guidelines, deployment-guide, system-architecture, project-roadmap). It picks filenames only: files with no real information are skipped, not filled with placeholders.", descVi: "Chỉ dùng với init, phải bật rõ. Tạo bảy file cố định trong docs/ (project-overview-pdr, code-standards, codebase-summary, design-guidelines, deployment-guide, system-architecture, project-roadmap). Preset chỉ chọn tên file: file nào chưa có thông tin thật thì bỏ qua, không viết placeholder.", exampleCommand: "/ak:docs init --preset classic",
+          exampleCommandVi: '/ak:docs init --preset classic' },
+        ],
         outcomeEn: "Creates, retains, replaces, or removes only the authority surfaces needed for working navigation and verified claims.",
         outcomeVi: "Chỉ tạo, giữ, thay thế hoặc xóa các bề mặt thẩm quyền cần cho navigation hoạt động và claim đã xác minh.",
         exampleCommand: "/ak:docs init",

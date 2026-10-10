@@ -6,6 +6,9 @@
  * 3) CLI cheatsheet `ak <cmd>` names must be cobra commands registered under ak.
  *    A multi-word name walks that parent/child chain. Each entry's subcommands
  *    must be direct children of the named command. Does not fetch.
+ * 4) Advisory (never changes the exit code): cobra commands that beta (--beta-ref,
+ *    default origin/dev) adds or removes versus stable, for cheatsheet roots and
+ *    the cheatsheet commands' children, with whether the entry carries a betaNote.
  *    Does not claim migrate/safety copy.
  */
 import { existsSync, readdirSync, readFileSync, statSync } from 'node:fs';
@@ -127,11 +130,12 @@ const REGISTRY = [
 ];
 
 function parseArgs(argv) {
-  const out = { kitRoot: process.env.AK_CLI || '', stableRef: 'origin/main', repo: ROOT };
+  const out = { kitRoot: process.env.AK_CLI || '', stableRef: 'origin/main', betaRef: 'origin/dev', repo: ROOT };
   for (let i = 0; i < argv.length; i++) {
     const a = argv[i];
     if (a === '--kit-root') out.kitRoot = argv[++i] || '';
     else if (a === '--stable-ref') out.stableRef = argv[++i] || out.stableRef;
+    else if (a === '--beta-ref') out.betaRef = argv[++i] || out.betaRef;
     else if (a === '--repo') out.repo = argv[++i] || out.repo;
   }
   return out;
@@ -528,8 +532,33 @@ function cheatsheetEntries(repo) {
   return blocks.map((m) => {
     const sub = m[2].match(/subcommands:\s*\[([^\]]*)\]/);
     const subs = sub ? [...sub[1].matchAll(/"([^"]+)"/g)].map((x) => x[1].trim()) : [];
-    return { name: m[1].trim(), subs };
+    return { name: m[1].trim(), subs, betaNote: /\n\s*betaNote:/.test(m[2]) };
   });
+}
+
+/** Commands beta adds/removes vs stable under ak and under each cheatsheet command. */
+function betaCliDelta(stable, beta, entries) {
+  const lines = [];
+  const diff = (a, b) => [...b].filter((x) => !a.has(x)).sort();
+  const addedRoots = diff(stable.roots, beta.roots);
+  const removedRoots = diff(beta.roots, stable.roots);
+  if (addedRoots.length) lines.push(`beta adds ak ${addedRoots.join(', ')}`);
+  if (removedRoots.length) lines.push(`beta removes ak ${removedRoots.join(', ')}`);
+  for (const entry of entries) {
+    const cmd = entry.name.split(/\s+/).map((p) => p.split(/[<\[]/)[0]).filter(Boolean).pop();
+    if (!cmd) continue;
+    const s = stable.children.get(cmd) || new Set();
+    const b = beta.children.get(cmd) || new Set();
+    const added = diff(s, b);
+    const removed = diff(b, s);
+    if (!added.length && !removed.length) continue;
+    const note = entry.betaNote ? 'betaNote present' : 'no betaNote';
+    const parts = [];
+    if (added.length) parts.push(`+${added.join(' +')}`);
+    if (removed.length) parts.push(`-${removed.join(' -')}`);
+    lines.push(`ak ${entry.name}: ${parts.join(' ')} (${note})`);
+  }
+  return lines;
 }
 
 function main(argv) {
@@ -612,6 +641,11 @@ function main(argv) {
     `ak-guide-pages identities=${registered.length} walked=${walked.length} ` +
       `cobraRoots=${tree.roots.size} cobraEdges=${edgeCount} ${opts.stableRef}\n`,
   );
+  if (resolveRef(kitRoot, opts.betaRef) && tree.roots.size) {
+    const delta = betaCliDelta(tree, buildCobraTree(kitRoot, opts.betaRef), cheatsheetEntries(repo));
+    process.stdout.write(`beta-cli-delta ${delta.length} (advisory, not gated) ${opts.betaRef}\n`);
+    for (const line of delta) process.stdout.write(`  ${line}\n`);
+  }
   if (problems.length) {
     process.stderr.write(`Drift (${problems.length})\n`);
     for (const p of problems) process.stderr.write(`  ${p}\n`);

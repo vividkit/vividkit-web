@@ -5,7 +5,7 @@
   "stableRef": "origin/main",
   "betaRef": "origin/dev",
   "stableCommit": "1f79164e6dd197c957d2155a850cce0ca03a0adb",
-  "betaCommit": "89119dcee265d75f8b9112a2b65e0590607604a1",
+  "betaCommit": "9e322f928b10c83eaa9a1bf2084e7de49c614d1e",
   "stableVersion": "0.0.0",
   "betaVersion": "0.0.0",
   "kits": {
@@ -771,7 +771,7 @@
         "skillMd": "c4350cf30ae72d6f0c369a6f4bdaab3de1c06d1a"
       },
       "beta": {
-        "tree": "f193313d4f30d01ab374360070a46c3c7af67e52",
+        "tree": "908e80db6462773df5e8e9e767710e3a1bd4a66f",
         "skillMd": "c4350cf30ae72d6f0c369a6f4bdaab3de1c06d1a"
       }
     },
@@ -823,8 +823,8 @@
         "skillMd": "33c03017a9e9e9d2770741c2a29a9e274b2803d9"
       },
       "beta": {
-        "tree": "ec4cf52d99215c48f6779d5582cf94cc38118fa2",
-        "skillMd": "33c03017a9e9e9d2770741c2a29a9e274b2803d9"
+        "tree": "e032b978dec6e22921c7ecc44bf1e97b3dd8155b",
+        "skillMd": "9d28be050b76c7690566c1dbcb2674ad3e966263"
       }
     },
     "core/ak-ask": {
@@ -1997,7 +1997,7 @@
         "skillMd": "e99376015c53524c8282c33dc6a2aa13138994c3"
       },
       "beta": {
-        "tree": "9adad20aa434bb632cb9e4ea2e1bd526bc505a40",
+        "tree": "c50b2fe40167b24d215a2d8c39130485f998c5d7",
         "skillMd": "e99376015c53524c8282c33dc6a2aa13138994c3"
       }
     },
@@ -4013,8 +4013,8 @@
         "skillMd": "01c7a9c70df558fc241a32ffd573bb19b13cf1cf"
       },
       "beta": {
-        "tree": "dfdb00c54fe9699de89787f1bd49280431e05371",
-        "skillMd": "01c7a9c70df558fc241a32ffd573bb19b13cf1cf"
+        "tree": "a06a9e7ffe06d41ae19e1f81f2383bdeed16f9b6",
+        "skillMd": "e9aa01a96264e41900b5f76800887467e7d9b7d6"
       }
     },
     "marketing/ak-paid-ads": {
@@ -4061,7 +4061,7 @@
         "skillMd": "8fa6a8d5a338de6375fa22feb40528826142b7f4"
       },
       "beta": {
-        "tree": "61a291707a8b39813d9bf83c2310b9b9039371b9",
+        "tree": "95c6a573f620d45ae2216ba6b2c7c1ed3d5a42ac",
         "skillMd": "8fa6a8d5a338de6375fa22feb40528826142b7f4"
       }
     },

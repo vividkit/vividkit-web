@@ -1,0 +1,14 @@
+{
+  "slug": "agentize",
+  "hash": "2a284a408147abd832dd8dff751be9496efcbc836e80acaafe91ffc45ee3ddec",
+  "source": "kit",
+  "path": "ak-cli@origin/main:kits/engineer/skills/ak-agentize/SKILL.md",
+  "pinnedAt": "2026-10-02T21:25:37.466Z",
+  "snapshot": {
+    "name": "ak:agentize",
+    "description": "Expose existing code or APIs through an agent-friendly CLI, MCP server, or both. Choose the surface and deployment scope from the user’s task and existing project.",
+    "when_to_use": "Invoke to expose existing code as a reusable CLI or MCP tool across Claude, ChatGPT, Cursor, and skills.sh.",
+    "argument_hint": "[feature-or-module] [--both|--mcp|--cli] [--auto|--ask] [--ultra] [--advice] [--yagni]",
+    "version": null
+  }
+}

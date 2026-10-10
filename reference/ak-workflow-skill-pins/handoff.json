@@ -1,0 +1,14 @@
+{
+  "slug": "handoff",
+  "hash": "11e3037771bd2a09c4146cdfcab4740406e6d2feb9eeb01ed40ab5436c9cf630",
+  "source": "kit",
+  "path": "ak-cli@origin/main:kits/core/skills/ak-handoff/SKILL.md",
+  "pinnedAt": "2026-10-02T21:25:37.468Z",
+  "snapshot": {
+    "name": "ak:handoff",
+    "description": "Create a portable, redacted Markdown continuation contract that a fresh coding agent can consume to resume in-progress work safely, and optionally dispatch it to a selected coding runtime with --dispatch. Use when switching sessions, models, or runtimes, or when preserving decisions, verification state, and blockers.",
+    "when_to_use": "Invoke to capture a session's continuation contract for a successor agent, or with --dispatch --agent <id> to capture it and hand the work to a selected coding runtime through orchestrate. For a human-facing status report derived from branches, worktrees, plans, and repository history, use ak-watzup instead.",
+    "argument_hint": "[task focus] [--output PATH] [--include-diff] [--include-status] [--force] [--dispatch --agent <id> [--handoff PATH] [--cwd PATH] [--model NAME] [--yes]]",
+    "version": null
+  }
+}

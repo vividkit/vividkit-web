@@ -1,0 +1,14 @@
+{
+  "slug": "frontend-design",
+  "hash": "1eeb3b18b77f43fe8d01bff2d72c3a7adf347c2fbe9869509432baabae290f0a",
+  "source": "kit",
+  "path": "ak-cli@origin/main:kits/core/skills/ak-frontend-design/SKILL.md",
+  "pinnedAt": "2026-10-02T21:25:37.468Z",
+  "snapshot": {
+    "name": "ak:frontend-design",
+    "description": "Create polished frontend interfaces with deliberate art direction, from a brief, design, screenshot or video, and audit live products for UI/UX polish. Use for landing pages, product/dashboard UI, web components, 3D experiences, replicating UI designs, quick prototypes, immersive interfaces, avoiding AI slop, and hands-on UX audits of dev/staging/production apps across desktop, tablet and mobile.",
+    "when_to_use": "Invoke when visual fidelity, taste and polished UI are primary, or to audit and improve the UX of a running product.",
+    "argument_hint": "[prompt|image-path|component|url]",
+    "version": null
+  }
+}
