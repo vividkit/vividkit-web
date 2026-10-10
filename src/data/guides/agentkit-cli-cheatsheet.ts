@@ -9,6 +9,9 @@ export interface AkCliCommand {
   keyFlags?: string[];
   subcommands?: string[];
   example?: string;
+  /** Reader-facing note for behavior that differs on the beta CLI only. Backticks render as inline code. */
+  betaNote?: string;
+  betaNoteVi?: string;
 }
 
 export const akCliCommandsCheatsheet: AkCliCommand[] = [
@@ -49,6 +52,8 @@ export const akCliCommandsCheatsheet: AkCliCommand[] = [
     category: "setup",
     keyFlags: ["--check", "--channel", "--beta", "--dry-run", "--include-desktop", "--changelog", "--enable-auto-update", "--disable-auto-update"],
     example: "ak self-update --check",
+    betaNote: "On beta, `--beta` / `--channel` apply to this run only and do not change `updates.channel` in config. Set that key if you want beta CLI updates by default.",
+    betaNoteVi: "Trên beta, `--beta` / `--channel` chỉ áp dụng cho lần chạy này, không đổi `updates.channel` trong config. Muốn mặc định nhận bản CLI beta thì đặt key đó.",
   },
   {
     name: "ak update",
@@ -57,6 +62,8 @@ export const akCliCommandsCheatsheet: AkCliCommand[] = [
     category: "setup",
     keyFlags: ["--dry-run", "--yes", "--force", "--global", "--channel", "--beta", "--kits", "--local", "--remote", "--target", "--show-diff"],
     example: "ak update --dry-run",
+    betaNote: "On beta, `--beta` / `--channel` apply to this run only. Without a flag, each installed kit follows the channel it was installed from.",
+    betaNoteVi: "Trên beta, `--beta` / `--channel` chỉ áp dụng cho lần chạy này. Không gắn cờ thì mỗi kit đã cài đi theo kênh lúc nó được cài.",
   },
   {
     name: "ak uninstall",
@@ -79,6 +86,8 @@ export const akCliCommandsCheatsheet: AkCliCommand[] = [
     category: "kits",
     subcommands: ["init", "install", "install-path", "list-kits", "refresh", "repair-install-mode", "uninstall", "validate"],
     example: "ak kit list-kits",
+    betaNote: "On beta, `ak kit list-kits` reads the remote kit list by default and no longer falls back to a local `./kits` folder. For a local source, pass `--kits-dir` or set `AGENTKIT_KITS_DIR`.",
+    betaNoteVi: "Trên beta, `ak kit list-kits` mặc định đọc danh sách kit từ remote và không còn tự lấy thư mục `./kits` local. Muốn xem nguồn local thì truyền `--kits-dir` hoặc đặt `AGENTKIT_KITS_DIR`.",
   },
   {
     name: "ak kit init",
@@ -87,6 +96,8 @@ export const akCliCommandsCheatsheet: AkCliCommand[] = [
     category: "kits",
     keyFlags: ["--yes", "--beta", "--channel"],
     example: "ak kit init engineer --yes",
+    betaNote: "On beta, `--beta` / `--channel` apply to this run only and do not change the default channel in config. Set `kit.channel` in config if you want beta as the default.",
+    betaNoteVi: "Trên beta, `--beta` / `--channel` chỉ áp dụng cho lần chạy này, không đổi kênh mặc định trong config. Muốn beta là mặc định thì đặt `kit.channel` trong config.",
   },
   {
     name: "ak kit refresh",
@@ -235,6 +246,8 @@ export const akCliCommandsCheatsheet: AkCliCommand[] = [
     category: "inspect",
     subcommands: ["skills", "agents", "consent", "collect", "compare"],
     example: "ak insights skills",
+    betaNote: "Beta adds `ak insights work` (list, create, defer, dismiss, awaiting-verification, verify) to track improvement work from evidence-backed suggestions. `verify` only compares recorded evidence; it does not run a model or edit files.",
+    betaNoteVi: "Beta thêm `ak insights work` (list, create, defer, dismiss, awaiting-verification, verify) để theo dõi việc cải thiện từ các gợi ý có bằng chứng. `verify` chỉ so sánh số liệu đã ghi, không chạy model hay sửa file.",
   },
   {
     name: "ak eval",
@@ -288,6 +301,8 @@ export const akCliCommandsCheatsheet: AkCliCommand[] = [
     descriptionVi: "Liệt kê phiên bản local của ak, kit và skill",
     category: "inspect",
     example: "ak versions",
+    betaNote: "On beta, `ak versions` shows one row per install destination (runtime, scope, delivery mode), and the `--json` data uses schema version 2. Add `--local-only` to skip network lookups.",
+    betaNoteVi: "Trên beta, `ak versions` hiện một dòng cho mỗi nơi đã cài (runtime, scope, cách cài), và dữ liệu `--json` dùng schema version 2. Thêm `--local-only` để không tra mạng.",
   },
   {
     name: "ak changelog",

@@ -475,6 +475,11 @@ ak kit init engineer --beta --yes`}
           ? 'ak kit init --beta và ak kit install --beta đưa preflight CLI và resolve kit sang kênh beta, rồi ghi updates.channel cạnh kit.channel để lần update sau không gắn cờ vẫn đi đúng kênh đó.'
           : 'ak kit init --beta and ak kit install --beta send the CLI preflight and kit resolve to the beta channel, then record updates.channel next to kit.channel so a later update without the flag stays on that channel.'}
       </p>
+      <AkCallout variant="warn" title={isVi ? 'Kênh beta — cờ kênh chỉ áp dụng cho lần chạy đó' : 'Beta channel — channel flags apply to that run only'}>
+        {isVi
+          ? 'Trên CLI ak bản beta mới, --beta / --channel chỉ chọn kênh cho đúng lệnh đang chạy, không còn ghi kit.channel hay updates.channel trong ~/.agentkit/config.yaml. Kit vừa cài vẫn nhớ kênh của chính nó, nên ak update cho kit đó vẫn đi đúng kênh. Nhưng ak self-update và các lần cài kit mới không gắn cờ sẽ theo config (rỗng = stable). Muốn beta là mặc định thì đặt riêng updates.channel (CLI) và kit.channel (kit) trong config. Stable hiện tại vẫn giữ hành vi ở đoạn trên.'
+          : 'On the newest beta ak CLI, --beta / --channel pick the channel for that one command only and no longer write kit.channel or updates.channel in ~/.agentkit/config.yaml. An installed kit still remembers its own channel, so ak update for that kit stays on it. But ak self-update and new kit installs without the flag follow config (empty = stable). To make beta the default, set updates.channel (CLI) and kit.channel (kits) separately in config. Current stable keeps the behavior described above.'}
+      </AkCallout>
     </div>
   </AkSection>
 
