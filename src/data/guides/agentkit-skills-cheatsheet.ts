@@ -1477,6 +1477,18 @@ export const akMarketingSkills: AkSkillEntry[] = [
     args: ["[args]"],
   },
   {
+    id: "ak-filmmaking",
+    command: "/ak:filmmaking",
+    commandCodex: "$ak:filmmaking",
+    description: "Plan and produce long-form AI films (roughly 5-30 minutes) as a production graph with consistent characters, scene/shot continuity, storyboards, animatics, audio-first dialogue and lipsync, separate sound stems, cost-aware model routing, shot-level regeneration and final assembly. Not for marketing or social videos, motion graphics, or a single generated clip.",
+    descriptionVi: "Lên kế hoạch và sản xuất phim AI dài (khoảng 5-30 phút) dưới dạng một production graph: nhân vật nhất quán, liền mạch giữa cảnh và shot, storyboard, animatic, thoại làm audio trước rồi mới lipsync, các stem âm thanh tách riêng, chọn model theo chi phí, tạo lại từng shot và dựng bản cuối. Không dùng cho video marketing hay mạng xã hội, motion graphic, hoặc một clip đơn lẻ.",
+    category: "videoMedia",
+    isBeta: true,
+    argumentHint: "[create|script|breakdown|bible|storyboard|animatic|render|audio|qc|assemble] [brief-or-project]",
+    subcommands: ["create", "script", "breakdown", "bible", "storyboard", "animatic", "render", "audio", "qc", "assemble"],
+    args: ["[brief-or-project]"],
+  },
+  {
     id: "ak-fix",
     command: "/ak:fix",
     commandCodex: "$ak:fix",
@@ -2082,7 +2094,7 @@ export interface AkBetaPreviewItem {
 
 /**
  * Engineer Beta Preview: beta-only skills (origin/dev minus origin/main) plus core skills with
- * notable beta-only changes (v2.20.0-beta.1, v3.0.0-beta.1). Drop "enhanced" entries once the change reaches stable.
+ * notable beta-only changes (v2.20.0-beta.1 through v3.0.0-beta.16). Drop "enhanced" entries once the change reaches stable.
  */
 export const akEngineerBetaPreview: AkBetaPreviewItem[] = [
   {
@@ -2106,26 +2118,90 @@ export const akEngineerBetaPreview: AkBetaPreviewItem[] = [
     id: "ak-skill-creator",
     command: "/ak:skill-creator",
     commandCodex: "$ak:skill-creator",
-    description: "Leaner skill guidance: first checks whether a new skill is really needed or an existing skill, reference or script is enough; keeps SKILL.md focused on outcome, limits and known failure modes; moves catalogs and examples into references.",
-    descriptionVi: "Hướng dẫn viết skill gọn hơn: trước tiên kiểm tra có thật cần skill mới không, hay mở rộng skill, tài liệu tham khảo hoặc script sẵn có là đủ; giữ SKILL.md tập trung vào kết quả, giới hạn và lỗi hay gặp; chuyển danh mục và ví dụ sang references.",
+    description: "Leaner skill guidance: first checks whether a new skill is really needed or an existing skill, reference or script is enough; keeps SKILL.md focused on outcome, limits and known failure modes; moves catalogs and examples into references. One production standard is now the authoring contract, and a report script summarizes standard warnings across many skills at once.",
+    descriptionVi: "Hướng dẫn viết skill gọn hơn: trước tiên kiểm tra có thật cần skill mới không, hay mở rộng skill, tài liệu tham khảo hoặc script sẵn có là đủ; giữ SKILL.md tập trung vào kết quả, giới hạn và lỗi hay gặp; chuyển danh mục và ví dụ sang references. Giờ có một production standard chung làm chuẩn viết skill, và một script báo cáo tóm tắt các cảnh báo theo chuẩn đó cho nhiều skill cùng lúc.",
     badge: "enhanced",
   },
   {
     id: "ak-ak",
     command: "/ak:ak",
     commandCodex: "$ak:ak",
-    description: "Knows the newer beta CLI: the ak insights work commands for tracking improvement work (verify only compares recorded evidence; finishing a plan is not proof of improvement), safer login (no piping an email code into a headless login; use the API-key route instead), and setup that keeps your saved telemetry choice instead of asking again.",
-    descriptionVi: "Nắm thêm CLI ak bản beta mới: nhóm lệnh ak insights work để theo dõi việc cải thiện (verify chỉ so sánh số liệu đã ghi; xong plan chưa phải là bằng chứng đã cải thiện), đăng nhập an toàn hơn (không pipe mã email vào login headless, dùng API key thay thế), và setup giữ nguyên lựa chọn telemetry đã lưu thay vì hỏi lại.",
+    description: "Knows the newer beta CLI: the ak insights work commands for tracking improvement work (verify only compares recorded evidence; finishing a plan is not proof of improvement), safer login (no piping an email code into a headless login; use the API-key route instead), and setup that keeps your saved telemetry choice instead of asking again. It reads ak describe <command> --json for a command's flags, exit codes and risk before scripting it, and when a fresh install plan stops on risks it shows you each risk and reruns with --accept-risks only after you accept that exact list.",
+    descriptionVi: "Nắm thêm CLI ak bản beta mới: nhóm lệnh ak insights work để theo dõi việc cải thiện (verify chỉ so sánh số liệu đã ghi; xong plan chưa phải là bằng chứng đã cải thiện), đăng nhập an toàn hơn (không pipe mã email vào login headless, dùng API key thay thế), và setup giữ nguyên lựa chọn telemetry đã lưu thay vì hỏi lại. Đọc ak describe <command> --json để biết flag, mã thoát và mức rủi ro của lệnh trước khi viết script, và khi plan cài mới dừng vì có rủi ro thì cho bạn xem từng rủi ro, chỉ chạy lại với --accept-risks sau khi bạn đồng ý đúng danh sách đó.",
+    badge: "enhanced",
+  },
+  {
+    id: "ak-brainstorm",
+    command: "/ak:brainstorm",
+    commandCodex: "$ak:brainstorm",
+    description: "New opt-in --ak-render: builds the HTML brief with the AK Render compiler instead of hand-writing it. It implies --html, and a project .ak-render/ folder turns it on too.",
+    descriptionVi: "Thêm tùy chọn --ak-render: dựng bản brief HTML bằng compiler AK Render thay vì viết tay. Flag này kéo theo --html, và project có thư mục .ak-render/ cũng tự bật nó.",
+    badge: "enhanced",
+    flags: ["--ak-render"],
+  },
+  {
+    id: "ak-explain",
+    command: "/ak:explain",
+    commandCodex: "$ak:explain",
+    description: "New opt-in --ak-render: builds the visual explanation page from a page spec with the pinned AK Render CLI. It implies --html, and a project .ak-render/ folder turns it on too.",
+    descriptionVi: "Thêm tùy chọn --ak-render: dựng trang giải thích trực quan từ một page spec bằng CLI AK Render đã ghim phiên bản. Flag này kéo theo --html, và project có thư mục .ak-render/ cũng tự bật nó.",
+    badge: "enhanced",
+    flags: ["--ak-render"],
+  },
+  {
+    id: "ak-plan",
+    command: "/ak:plan",
+    commandCodex: "$ak:plan",
+    description: "New opt-in --ak-render: compiles plan.html from plan.page.yaml with the pinned AK Render CLI instead of hand-writing it. It implies --html, and a project .ak-render/ folder turns it on too.",
+    descriptionVi: "Thêm tùy chọn --ak-render: dựng plan.html từ plan.page.yaml bằng CLI AK Render đã ghim phiên bản thay vì viết tay. Flag này kéo theo --html, và project có thư mục .ak-render/ cũng tự bật nó.",
+    badge: "enhanced",
+    flags: ["--ak-render"],
+  },
+  {
+    id: "ak-preview",
+    command: "/ak:preview",
+    commandCodex: "$ak:preview",
+    description: "New opt-in --ak-render: compiles --explain, --diff, --plan-review or --recap HTML from a page spec with AK Render. It implies --html, and a project .ak-render/ folder turns it on too.",
+    descriptionVi: "Thêm tùy chọn --ak-render: dựng HTML cho --explain, --diff, --plan-review hoặc --recap từ một page spec bằng AK Render. Flag này kéo theo --html, và project có thư mục .ak-render/ cũng tự bật nó.",
+    badge: "enhanced",
+    flags: ["--ak-render"],
+  },
+  {
+    id: "ak-diagram",
+    command: "/ak:diagram",
+    commandCodex: "$ak:diagram",
+    description: "Diagrams can now be embedded in pages that other skills build with AK Render: a wrapper script compiles the whole page with the diagram inside. The diagram compiler itself stays offline; only the first run downloads the pinned AK Render package from npm.",
+    descriptionVi: "Sơ đồ giờ có thể nhúng vào các trang mà skill khác dựng bằng AK Render: một script wrapper dựng cả trang kèm sơ đồ bên trong. Bản thân compiler sơ đồ vẫn chạy offline; chỉ lần chạy đầu tải gói AK Render đã ghim phiên bản từ npm.",
     badge: "enhanced",
   },
 ];
 
 /**
  * Marketing Beta Preview. Marketing inherits core, so it reuses the engineer "enhanced" entries
- * (all core skills today). Add marketing-only beta skills and upgrades here explicitly.
+ * for skills the marketing kit also ships. Add marketing-only beta skills and upgrades here explicitly.
  */
 export const akMarketingBetaPreview: AkBetaPreviewItem[] = [
-  ...akEngineerBetaPreview.filter((item) => item.badge === "enhanced"),
+  ...akEngineerBetaPreview.filter(
+    (item) => item.badge === "enhanced" && akMarketingSkills.some((skill) => skill.id === item.id),
+  ),
+  {
+    id: "ak-filmmaking",
+    command: "/ak:filmmaking",
+    commandCodex: "$ak:filmmaking",
+    description: "Long-form AI films (about 5-30 minutes) run as a production graph: character bibles, shot continuity, storyboard and animatic gates, audio-first dialogue, separate sound stems, and fixing one failed shot without re-rendering the film.",
+    descriptionVi: "Phim AI dài (khoảng 5-30 phút) chạy theo một production graph: hồ sơ nhân vật, liền mạch giữa các shot, cổng duyệt storyboard và animatic, thoại làm audio trước, stem âm thanh tách riêng, và sửa một shot hỏng mà không phải render lại cả phim.",
+    badge: "new",
+    args: ["create", "script", "breakdown", "bible", "storyboard", "animatic", "render", "audio", "qc", "assemble"],
+  },
+  {
+    id: "ak-elevenlabs",
+    command: "/ak:elevenlabs",
+    commandCodex: "$ak:elevenlabs",
+    description: "Now writes and directs the voice script, not just the audio: new script, enhance and dialogue actions turn an idea into a performance-ready script, add delivery tags to final copy without changing its words, or direct a multi-speaker dialogue, then speak, clone and sfx generate the audio as before.",
+    descriptionVi: "Giờ viết và chỉ đạo cả kịch bản giọng đọc, không chỉ tạo audio: các action mới script, enhance và dialogue biến ý tưởng thành kịch bản sẵn sàng thu, thêm tag diễn đạt vào bản chốt mà không đổi chữ, hoặc chỉ đạo đoạn thoại nhiều người, rồi speak, clone và sfx tạo audio như trước.",
+    badge: "enhanced",
+    args: ["script", "enhance", "dialogue"],
+  },
   {
     id: "ak-onboarding-cro",
     command: "/ak:onboarding-cro",
