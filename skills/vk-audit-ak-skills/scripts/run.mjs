@@ -108,7 +108,7 @@ function main(argv) {
     ['scripts/check-ak-skill-detail-claims.mjs', '--self-test'],
     claims,
   );
-  if (args.akDocs && args.cmd !== 'check') {
+  if (args.akDocs) {
     steps.push(['scripts/check-ak-skill-detail-ak-docs.mjs', '--self-test']);
     steps.push([
       'scripts/check-ak-skill-detail-ak-docs.mjs',

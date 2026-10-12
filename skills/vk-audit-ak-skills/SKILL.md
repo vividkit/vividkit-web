@@ -102,7 +102,7 @@ Do not write the lock.
 | Flag | Meaning |
 | --- | --- |
 | `--kit-root` | **Required.** ak-cli **git** checkout with `origin/main` (stable) and `origin/dev` (beta) |
-| `--ak-docs` | Optional. Without it, `--report`/`--update` skip `check-ak-skill-detail-ak-docs.mjs`; claims skip docs Option/Mode tables |
+| `--ak-docs` | Optional. Without it, every mode skips `check-ak-skill-detail-ak-docs.mjs`; claims skip docs Option/Mode tables |
 | `--kit` | `engineer` \| `marketing` \| `all` (default `all`) |
 | `--repo` | VividKit root (default: walk up from this skill's directory) |
 
@@ -124,6 +124,7 @@ Runs every step below (each checker's `--self-test` first) without stopping on f
 2. `scripts/check-ak-skill-detail-principles.mjs`
 3. `scripts/check-ak-skill-details.mjs --kit-root <ak-cli>`
 4. `scripts/check-ak-skill-detail-claims.mjs --kit-root <ak-cli> [--ak-docs] --kit <kit>`
+5. With `--ak-docs`: `scripts/check-ak-skill-detail-ak-docs.mjs --ak-docs <ak-docs> --kit <kit> --kit-root <ak-cli>` (missing documented options fail; `en/vi drift` lines are advisory)
 
 `--skip-inventory` skips step 1. The umbrella `/vk:audit-ak-guides` passes it because it runs inventory itself.
 
@@ -131,7 +132,7 @@ A red claims checker is a real finding unless the latest `reference/changelog-re
 
 ### `--report`
 
-Runs `--check` checkers plus `scripts/check-ak-skill-detail-ak-docs.mjs`, continues after failures, writes
+Runs the `--check` checkers, continues after failures, writes
 `reference/changelog-reports/{YYYY-MM-DD}-ak-skill-details-audit.md`.
 Do not author every review candidate wholesale.
 
