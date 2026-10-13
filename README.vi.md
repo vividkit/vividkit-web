@@ -76,46 +76,28 @@ Một số hướng dẫn có link AgentKit kèm mã giới thiệu.
 
 Nội dung landing page nằm ở `src/data/landing-content.ts` (EN + VI). Thông tin sản phẩm ở đó phải khớp tài liệu của app VividKit; không thêm tuyên bố khi chưa có bằng chứng.
 
-## 🤖 VividKit Maintainer Skills & Commands (`/vk:*`)
+## 🤖 Skill bảo trì VividKit (`/vk:*`)
 
-Skills riêng cho repo này, dùng để giữ guides đồng bộ với upstream ClaudeKit. Gọi qua Claude Code bằng prefix `/vk:`.
+Các skill riêng của repo, dùng để đối chiếu guide VividKit với nguồn upstream. Gọi trong Claude Code bằng tiền tố `/vk:` (Codex: `$vk:`).
 
-| Skill | Khi dùng | Lệnh ví dụ |
-|-------|----------|-----------|
-| `/vk:changelog-sync` | Phát hiện ClaudeKit changelog mới và đồng bộ Commands/Hooks/Workflows guides + i18n | `/vk:changelog-sync` |
-| `/vk:audit-ck-cli` | So sánh `claudekit-cli` upstream với CLI/Migrate guide; đề xuất update theo command (`ck migrate`, `ck init`, …) | `/vk:audit-ck-cli` hoặc `/vk:audit-ck-cli page=guides/migrate command=migrate` |
-| `/vk:audit-skill` | Audit thay đổi skill upstream ClaudeKit (so với catalog skill đang render trên site) | `/vk:audit-skill <skill-name>` |
-| `/vk:add-scenario` | Thêm scenario mới cho một ClaudeKit command vào guides | `/vk:add-scenario` |
-| `/project:vk:update-how-ck-works` | Lệnh riêng của project: điều phối `/vk:audit-skill` + `/vk:add-scenario` để cập nhật các trang How-CK-Works (giải thích chi tiết, quick ref dạng hình, dữ liệu pipeline, ví dụ prompt); thêm `--include-local-missing` để phủ cả skill CK chưa có trên guide | `/project:vk:update-how-ck-works --include-local-missing --limit 3` |
+| Skill | Khi nào dùng | Ví dụ |
+|-------|--------------|-------|
+| `/vk:audit-ak-guides` | Audit mọi trang `/guides/agentkit` (EN + VI) so với ak-cli và ak-docs sau khi AgentKit cập nhật. Báo lỗi khi còn trang chưa có owner hoặc check của owner đang đỏ | `/vk:audit-ak-guides --check` |
+| `/vk:audit-ak-skills` | Báo cáo hoặc sửa lệch giữa cheatsheet skill AgentKit và các trang chi tiết skill | `/vk:audit-ak-skills --report --kit all` |
+| `/vk:audit-ak-workflows` | Kiểm tra các skill AgentKit dùng trong thẻ workflow so với pin đã duyệt | `/vk:audit-ak-workflows --report` |
+| `vk:audit-ak-pages` | Module nội bộ: các trang AgentKit còn lại, và CLI cheatsheet so với cây lệnh cobra của ak | chạy qua `/vk:audit-ak-guides` |
+| `/vk:audit-ccs` | So sánh upstream `kaitranntt/ccs` với CCS guide | `/vk:audit-ccs --check` |
 
-### Cách dùng nhanh
-
-1. **Quick check** — không fetch, chỉ so sánh marker hiện tại:
-   ```
-   /vk:audit-ck-cli
-   ```
-2. **Detailed report** — diff phân loại + impact map + đề xuất update:
-   ```
-   /vk:audit-ck-cli report
-   ```
-3. **Full sync** — fetch mới nhất, sinh report, update marker:
-   ```
-   /vk:audit-ck-cli sync
-   ```
-4. **Target page/command cụ thể** — truyền args dạng `page=<guide-slug> command=<ck-command>`:
-   ```
-   /vk:audit-ck-cli page=guides/migrate command=migrate
-   ```
+Guide ClaudeKit đã đóng băng: vẫn hiển thị trên site nhưng không còn đồng bộ với upstream, và các skill đồng bộ ClaudeKit đã bị gỡ.
 
 ### Quy ước
 
-- **Reference repos** clone tại `reference/` (claudekit, claudekit-cli) — không commit; là source of truth khi audit.
-- **Marker files** (`reference/.last-sync*`) ghi commit SHA của lần sync gần nhất.
-- **Reports** xuất ra `reference/changelog-reports/` (skill tự tạo).
-- **Skill được track** nằm ở `skills/` (và `commands/vk/`); runtime đọc chúng qua symlink. Sau khi clone mới, tạo link một lần cho mỗi skill, ví dụ `ln -sfn ../../skills/vk-changelog-sync .claude/skills/vk-changelog-sync` và `ln -sfn ../../../commands/vk/update-how-ck-works.md .claude/commands/vk/update-how-ck-works.md`.
-- Skill chỉ **đề xuất** thay đổi — luôn review trước khi apply vào `src/components/guides/*` hoặc `src/data/guides/*`.
+- **Skill được track** nằm ở `skills/`; runtime đọc qua symlink. Sau khi clone mới, tạo link một lần cho mỗi skill (xem `README.md` trong từng skill), ví dụ `ln -sfn ../../skills/vk-audit-ak-guides .claude/skills/vk-audit-ak-guides`.
+- **Nguồn upstream**: audit AgentKit đọc các git checkout ak-cli / ak-docs trên máy (`--kit-root`, `--ak-docs`; nhớ `git fetch` trước). Audit CCS clone vào `reference/ccs/` (không commit).
+- **Trạng thái đã duyệt** cần giữ khi clone mới được commit trong `reference/ak-docs-skills-meta/` và `reference/ak-workflow-skill-*`. Marker đồng bộ và report trong `reference/` chỉ nằm trên máy.
+- Skill chỉ **đề xuất** thay đổi, hoặc ghi lock sau khi đã duyệt — luôn review trước khi áp vào `src/components/guides/*` hay `src/data/guides/*`.
 
-Chi tiết từng skill xem `skills/vk-*/SKILL.md` (`vk-audit-ck-cli` và `vk-audit-ck-hooks` vẫn nằm ở `.claude/skills/`).
+Chi tiết từng skill xem `skills/vk-*/SKILL.md`.
 
 ---
 

@@ -431,16 +431,15 @@ function readAkCliSkillMd(akCli, slug) {
 
 function kitFingerprint(md, sourcePath) {
   const fm = parseFrontmatter(md);
-  const payload = {
-    source: "kit",
-    path: sourcePath,
+  // Hash content only: the same SKILL.md read from ak-cli refs or a local install must match.
+  const content = {
     name: fm.name || null,
     description: fm.description || null,
     when_to_use: fm.when_to_use || fm["when-to-use"] || null,
     argument_hint: fm["argument-hint"] || fm.argumentHint || null,
     version: (fm.metadata && fm.metadata.version) || fm.version || null,
   };
-  return { ...payload, hash: sha256(JSON.stringify(payload)) };
+  return { source: "kit", path: sourcePath, ...content, hash: sha256(JSON.stringify(content)) };
 }
 
 function fingerprintSkill(slug, repoRoot, kitRoot, cheatsheet, akCli) {
@@ -542,6 +541,14 @@ function loadOrBuildIndex(repoRoot, rebuild) {
 
 function writeIndex(repoRoot, index) {
   const indexPath = path.join(repoRoot, INDEX_REL);
+  // Skip the write when only generatedAt would change, so the tracked index stays stable.
+  const { generatedAt: _next, ...nextBody } = index;
+  try {
+    const { generatedAt: _prev, ...prevBody } = JSON.parse(fs.readFileSync(indexPath, "utf8"));
+    if (JSON.stringify(prevBody) === JSON.stringify(nextBody)) return indexPath;
+  } catch {
+    /* missing or unreadable: write it */
+  }
   ensureDir(path.dirname(indexPath));
   fs.writeFileSync(indexPath, JSON.stringify(index, null, 2) + "\n", "utf8");
   return indexPath;
@@ -604,8 +611,7 @@ function modeRebuildIndex(repoRoot) {
 }
 
 function modeCheck(repoRoot, kitRoot, akCli) {
-  const index = loadOrBuildIndex(repoRoot, true);
-  writeIndex(repoRoot, index); // keep index fresh for check
+  const index = loadOrBuildIndex(repoRoot, true); // fresh in memory; check never writes
   const a = analyze(repoRoot, kitRoot, index, akCli);
 
   let failed = false;

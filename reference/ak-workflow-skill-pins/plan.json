@@ -1,0 +1,14 @@
+{
+  "slug": "plan",
+  "hash": "77bfe737f96d63bbbc19dc378293bc42567404fa4fd4f0aed6d33f98a2221f6f",
+  "source": "kit",
+  "path": "ak-cli@origin/main:kits/core/skills/ak-plan/SKILL.md",
+  "pinnedAt": "2026-10-02T21:25:37.469Z",
+  "snapshot": {
+    "name": "ak:plan",
+    "description": "Create, validate or review implementation plans with acceptance criteria and executable phases. Use for planning and roadmaps; implementation belongs to cook.",
+    "when_to_use": "Invoke when work needs phases, architecture, or a roadmap.",
+    "argument_hint": "[task] [--fast|--hard|--deep|--parallel|--two|--debate|--ultra] [--tdd|--no-tasks] [--html] [--github] [--wiki] [--advice] [--yagni] [--skip-journal] [--no-antv|--no-diagram-design|--no-editorial-visuals] OR [archive|red-team|validate]",
+    "version": null
+  }
+}

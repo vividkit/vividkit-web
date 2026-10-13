@@ -1,0 +1,14 @@
+{
+  "slug": "code-review",
+  "hash": "2c170b76d2092f2ed4f1cccc4618e8c3237274a3e9bc43e8ee36d2f17601da96",
+  "source": "kit",
+  "path": "ak-cli@origin/main:kits/engineer/skills/ak-code-review/SKILL.md",
+  "pinnedAt": "2026-10-02T21:25:37.467Z",
+  "snapshot": {
+    "name": "ak:code-review",
+    "description": "Review code quality with evidence-based rigor. Supports input modes: pending changes, PR number, commit hash, and codebase scan. Focuses on bugs, regressions, maintainability, reliability, and verification gaps.",
+    "when_to_use": "Invoke to review diffs, PRs, commits, or full codebases.",
+    "argument_hint": "[#PR | COMMIT | --pending | codebase [parallel]] [--ultra] [--advice] [--yagni]",
+    "version": null
+  }
+}

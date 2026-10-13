@@ -1,9 +1,12 @@
 import type { SkillInfographic } from '@/data/guides/how-ck-works';
+import engineer from '../engineer/ak-fix';
 
 const data: SkillInfographic = {
   id: 'ak-fix',
   command: '/ak:fix',
   kit: 'marketer',
+  // Same core SKILL.md as the engineer kit, so the invocation reference is shared.
+  invocation: engineer.invocation,
   header: {
     titleEn: '/ak:fix — Evidence-first bug fixing',
     titleVi: '/ak:fix — Sửa lỗi theo nguyên nhân gốc',

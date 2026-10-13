@@ -35,12 +35,14 @@ Pages checker does **not** certify migrate/cutover safety copy or Desktop/Helper
 
 Setup after a fresh clone (symlinks into `.claude/skills/` / `.agents/skills/`): see `README.md` in this directory.
 
+`$AK_CLI` / `$AK_DOCS` below mean your local ak-cli and ak-docs git checkouts (with `origin/main` and `origin/dev` refs).
+
 ```text
 /vk:audit-ak-guides --check
 
 git fetch ak-cli first (does not fetch).
---kit-root /Users/thieunv/projects/contribution/agentkit/ak-cli
---ak-docs /Users/thieunv/projects/contribution/agentkit/ak-docs
+--kit-root $AK_CLI
+--ak-docs $AK_DOCS
 
 Expect exit 1 while any owned checker is red.
 Do not --write-lock. Do not claim the AgentKit guides audit is complete.
@@ -57,7 +59,7 @@ AK_CLI="$AK_CLI" pnpm run audit:ak-guides
 
 1. Walk `src/pages/guides/agentkit` and `src/pages/vi/guides/agentkit`. Fail on EN↔VI identity mismatch.
 2. `scripts/check-ak-kit-skill-inventory.mjs --kit-root` (cheatsheet vs kit.yaml + fingerprints).
-3. `skills/vk-audit-ak-skill-details/scripts/run.mjs check` (principles, SKILL.md lock, claims). Not inventory alone.
+3. `skills/vk-audit-ak-skills/scripts/run.mjs check` (principles, SKILL.md lock, claims). Not inventory alone.
 4. `vk:audit-ak-workflows --check --repo --kit-root`.
 5. Remaining identities: `scripts/check-ak-guide-pages.mjs` (`vk:audit-ak-pages`).
 6. Exit 1 if uncovered or owned-fail.

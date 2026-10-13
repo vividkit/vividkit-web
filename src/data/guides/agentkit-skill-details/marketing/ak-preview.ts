@@ -1,9 +1,12 @@
 import type { SkillInfographic } from '@/data/guides/how-ck-works';
+import engineer from '../engineer/ak-preview';
 
 const data: SkillInfographic = {
   id: 'ak-preview',
   command: '/ak:preview',
   kit: 'marketer',
+  // Same core SKILL.md as the engineer kit, so the invocation reference is shared.
+  invocation: engineer.invocation,
   header: {
     titleEn: '/ak:preview — Universal visual viewer',
     titleVi: '/ak:preview — Trình xem visual đa năng',

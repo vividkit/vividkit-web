@@ -1,0 +1,14 @@
+{
+  "slug": "goal-warmup",
+  "hash": "5c063704d77e87933f024340b5c059ed55334943b0c1d483aafc43fd345733a3",
+  "source": "kit",
+  "path": "ak-cli@origin/main:kits/engineer/skills/ak-goal-warmup/SKILL.md",
+  "pinnedAt": "2026-10-02T21:25:37.468Z",
+  "snapshot": {
+    "name": "ak:goal-warmup",
+    "description": "Outcome-locked preflight before long-running /goal or autonomous runs. Interview to a user-approved Outcome Contract, plan without silent scope drift, contract-preserving review, whole-plan preflight matrix, then Ready/Blocked/Decision handoff. Never auto-starts /goal. Use for goal warmup, goal prepare, long-running goal prep, outcome lock, execution readiness.",
+    "when_to_use": "Invoke before expensive multi-phase /goal or long-run work when outcome must stay locked and blockers must surface first.",
+    "argument_hint": "\"<goal>\" [--fast]",
+    "version": null
+  }
+}

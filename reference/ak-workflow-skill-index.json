@@ -1,0 +1,2327 @@
+{
+  "generatedAt": "2026-10-10T20:11:30.528Z",
+  "sourceFiles": [
+    "src/data/guides/agentkit-workflows/engineer.ts",
+    "src/data/guides/agentkit-workflows/marketing.ts"
+  ],
+  "skillCount": 44,
+  "workflowCount": 36,
+  "skills": {
+    "advise": {
+      "workflows": [
+        {
+          "id": "B3",
+          "title": "Advise then plan",
+          "featured": false,
+          "category": "Plan & Research",
+          "stepNumbers": [
+            1
+          ],
+          "commands": [
+            "/ak:advise"
+          ],
+          "sources": [
+            "step.command"
+          ]
+        },
+        {
+          "id": "L1",
+          "title": "Advised feature chain",
+          "featured": true,
+          "category": "Plan & Research",
+          "stepNumbers": [
+            1
+          ],
+          "commands": [
+            "/ak:advise \"problem\"",
+            "/ak:advise \"problem\" --agent"
+          ],
+          "sources": [
+            "adviceVariant",
+            "step.command"
+          ]
+        }
+      ],
+      "commands": [
+        "/ak:advise",
+        "/ak:advise \"problem\"",
+        "/ak:advise \"problem\" --agent"
+      ]
+    },
+    "agentize": {
+      "workflows": [
+        {
+          "id": "J1",
+          "title": "Expose feature as MCP/CLI",
+          "featured": false,
+          "category": "AI / MCP",
+          "stepNumbers": [
+            2
+          ],
+          "commands": [
+            "/ak:agentize"
+          ],
+          "sources": [
+            "step.command"
+          ]
+        }
+      ],
+      "commands": [
+        "/ak:agentize"
+      ]
+    },
+    "agentkit": {
+      "workflows": [
+        {
+          "id": "A6",
+          "title": "Task router",
+          "featured": true,
+          "category": "Getting Started",
+          "stepNumbers": [
+            1
+          ],
+          "commands": [
+            "/ak:agentkit \"task\""
+          ],
+          "sources": [
+            "step.command"
+          ]
+        }
+      ],
+      "commands": [
+        "/ak:agentkit \"task\""
+      ]
+    },
+    "ai-multimodal": {
+      "workflows": [
+        {
+          "id": "J2",
+          "title": "Multimodal asset pipeline",
+          "featured": false,
+          "category": "AI / MCP",
+          "stepNumbers": [
+            1
+          ],
+          "commands": [
+            "/ak:ai-multimodal"
+          ],
+          "sources": [
+            "step.command"
+          ]
+        }
+      ],
+      "commands": [
+        "/ak:ai-multimodal"
+      ]
+    },
+    "backend-development": {
+      "workflows": [
+        {
+          "id": "G1",
+          "title": "API + schema feature",
+          "featured": false,
+          "category": "Backend & Data",
+          "stepNumbers": [
+            3
+          ],
+          "commands": [
+            "/ak:backend-development"
+          ],
+          "sources": [
+            "step.command"
+          ]
+        }
+      ],
+      "commands": [
+        "/ak:backend-development"
+      ]
+    },
+    "better-auth": {
+      "workflows": [
+        {
+          "id": "G2",
+          "title": "Auth feature",
+          "featured": true,
+          "category": "Backend & Data",
+          "stepNumbers": [
+            1
+          ],
+          "commands": [
+            "/ak:better-auth"
+          ],
+          "sources": [
+            "step.command"
+          ]
+        }
+      ],
+      "commands": [
+        "/ak:better-auth"
+      ]
+    },
+    "bootstrap": {
+      "workflows": [
+        {
+          "id": "A3",
+          "title": "Start new project",
+          "featured": true,
+          "category": "Getting Started",
+          "stepNumbers": [
+            1
+          ],
+          "commands": [
+            "/ak:bootstrap \"app description\""
+          ],
+          "sources": [
+            "step.command"
+          ]
+        }
+      ],
+      "commands": [
+        "/ak:bootstrap \"app description\""
+      ]
+    },
+    "brainstorm": {
+      "workflows": [
+        {
+          "id": "A1",
+          "title": "Build a new feature",
+          "featured": true,
+          "category": "Getting Started",
+          "stepNumbers": [
+            1
+          ],
+          "commands": [
+            "/ak:brainstorm"
+          ],
+          "sources": [
+            "step.command"
+          ]
+        },
+        {
+          "id": "A3",
+          "title": "Start new project",
+          "featured": true,
+          "category": "Getting Started",
+          "stepNumbers": [
+            3
+          ],
+          "commands": [
+            "/ak:brainstorm"
+          ],
+          "sources": [
+            "step.command"
+          ]
+        },
+        {
+          "id": "B1",
+          "title": "Investigate before deciding",
+          "featured": false,
+          "category": "Plan & Research",
+          "stepNumbers": [
+            3
+          ],
+          "commands": [
+            "/ak:brainstorm"
+          ],
+          "sources": [
+            "step.command"
+          ]
+        },
+        {
+          "id": "I2",
+          "title": "Isolated feature worktree",
+          "featured": false,
+          "category": "Parallel",
+          "stepNumbers": [
+            2
+          ],
+          "commands": [
+            "/ak:brainstorm"
+          ],
+          "sources": [
+            "step.command"
+          ]
+        },
+        {
+          "id": "L5",
+          "title": "Brainstorm with advice, then plan",
+          "featured": false,
+          "category": "Plan & Research",
+          "stepNumbers": [
+            1
+          ],
+          "commands": [
+            "/ak:brainstorm \"options\" --advice"
+          ],
+          "sources": [
+            "step.command"
+          ]
+        }
+      ],
+      "commands": [
+        "/ak:brainstorm",
+        "/ak:brainstorm \"options\" --advice"
+      ]
+    },
+    "code-review": {
+      "workflows": [
+        {
+          "id": "A1",
+          "title": "Build a new feature",
+          "featured": true,
+          "category": "Getting Started",
+          "stepNumbers": [
+            6
+          ],
+          "commands": [
+            "/ak:code-review"
+          ],
+          "sources": [
+            "step.command"
+          ]
+        },
+        {
+          "id": "A2",
+          "title": "Quick implement",
+          "featured": true,
+          "category": "Getting Started",
+          "stepNumbers": [
+            3
+          ],
+          "commands": [
+            "/ak:code-review"
+          ],
+          "sources": [
+            "step.command"
+          ]
+        },
+        {
+          "id": "D2",
+          "title": "Local review before PR",
+          "featured": false,
+          "category": "Review & Ship",
+          "stepNumbers": [
+            1
+          ],
+          "commands": [
+            "/ak:code-review --pending"
+          ],
+          "sources": [
+            "step.command"
+          ]
+        },
+        {
+          "id": "E1",
+          "title": "Security audit",
+          "featured": true,
+          "category": "Security",
+          "stepNumbers": [
+            4
+          ],
+          "commands": [
+            "/ak:code-review"
+          ],
+          "sources": [
+            "step.command"
+          ]
+        },
+        {
+          "id": "G1",
+          "title": "API + schema feature",
+          "featured": false,
+          "category": "Backend & Data",
+          "stepNumbers": [
+            6
+          ],
+          "commands": [
+            "/ak:code-review"
+          ],
+          "sources": [
+            "step.command"
+          ]
+        },
+        {
+          "id": "I1",
+          "title": "Parallel cook",
+          "featured": true,
+          "category": "Parallel",
+          "stepNumbers": [
+            4
+          ],
+          "commands": [
+            "/ak:code-review"
+          ],
+          "sources": [
+            "step.command"
+          ]
+        },
+        {
+          "id": "L1",
+          "title": "Advised feature chain",
+          "featured": true,
+          "category": "Plan & Research",
+          "stepNumbers": [
+            6
+          ],
+          "commands": [
+            "/ak:code-review --pending"
+          ],
+          "sources": [
+            "step.command"
+          ]
+        }
+      ],
+      "commands": [
+        "/ak:code-review",
+        "/ak:code-review --pending"
+      ]
+    },
+    "cook": {
+      "workflows": [
+        {
+          "id": "A1",
+          "title": "Build a new feature",
+          "featured": true,
+          "category": "Getting Started",
+          "stepNumbers": [
+            4
+          ],
+          "commands": [
+            "/ak:cook /path/to/plan.md",
+            "/ak:cook /path/to/plan.md --advice"
+          ],
+          "sources": [
+            "adviceVariant",
+            "step.command"
+          ]
+        },
+        {
+          "id": "A2",
+          "title": "Quick implement",
+          "featured": true,
+          "category": "Getting Started",
+          "stepNumbers": [
+            1
+          ],
+          "commands": [
+            "/ak:cook \"small task\" --advice",
+            "/ak:cook \"task\""
+          ],
+          "sources": [
+            "adviceVariant",
+            "step.command"
+          ]
+        },
+        {
+          "id": "A3",
+          "title": "Start new project",
+          "featured": true,
+          "category": "Getting Started",
+          "stepNumbers": [
+            5
+          ],
+          "commands": [
+            "/ak:cook"
+          ],
+          "sources": [
+            "step.command"
+          ]
+        },
+        {
+          "id": "A4",
+          "title": "Issue to plan",
+          "featured": true,
+          "category": "Plan & Research",
+          "stepNumbers": [
+            3
+          ],
+          "commands": [
+            "/ak:cook <plan>"
+          ],
+          "sources": [
+            "step.command",
+            "tip"
+          ]
+        },
+        {
+          "id": "B2",
+          "title": "Plan with gates",
+          "featured": true,
+          "category": "Plan & Research",
+          "stepNumbers": [
+            6
+          ],
+          "commands": [
+            "/ak:cook /path/to/plan.md"
+          ],
+          "sources": [
+            "step.command"
+          ]
+        },
+        {
+          "id": "B3",
+          "title": "Advise then plan",
+          "featured": false,
+          "category": "Plan & Research",
+          "stepNumbers": [
+            3
+          ],
+          "commands": [
+            "/ak:cook"
+          ],
+          "sources": [
+            "step.command"
+          ]
+        },
+        {
+          "id": "B4",
+          "title": "Scenario / edge-case design",
+          "featured": false,
+          "category": "Plan & Research",
+          "stepNumbers": [
+            3
+          ],
+          "commands": [
+            "/ak:cook"
+          ],
+          "sources": [
+            "step.command"
+          ]
+        },
+        {
+          "id": "G2",
+          "title": "Auth feature",
+          "featured": true,
+          "category": "Backend & Data",
+          "stepNumbers": [
+            3
+          ],
+          "commands": [
+            "/ak:cook"
+          ],
+          "sources": [
+            "step.command"
+          ]
+        },
+        {
+          "id": "G3",
+          "title": "Payments",
+          "featured": false,
+          "category": "Backend & Data",
+          "stepNumbers": [
+            3
+          ],
+          "commands": [
+            "/ak:cook"
+          ],
+          "sources": [
+            "step.command"
+          ]
+        },
+        {
+          "id": "I1",
+          "title": "Parallel cook",
+          "featured": true,
+          "category": "Parallel",
+          "stepNumbers": [
+            2
+          ],
+          "commands": [
+            "/ak:cook --parallel"
+          ],
+          "sources": [
+            "step.command"
+          ]
+        },
+        {
+          "id": "I2",
+          "title": "Isolated feature worktree",
+          "featured": false,
+          "category": "Parallel",
+          "stepNumbers": [
+            4
+          ],
+          "commands": [
+            "/ak:cook /path/to/plan.md"
+          ],
+          "sources": [
+            "step.command"
+          ]
+        },
+        {
+          "id": "L1",
+          "title": "Advised feature chain",
+          "featured": true,
+          "category": "Plan & Research",
+          "stepNumbers": [
+            4
+          ],
+          "commands": [
+            "/ak:cook /path/to/plan.md --advice"
+          ],
+          "sources": [
+            "adviceVariant",
+            "step.command"
+          ]
+        },
+        {
+          "id": "L2",
+          "title": "Advised quick cook",
+          "featured": false,
+          "category": "Getting Started",
+          "stepNumbers": [
+            1
+          ],
+          "commands": [
+            "/ak:cook \"small task\" --advice"
+          ],
+          "sources": [
+            "step.command"
+          ]
+        },
+        {
+          "id": "L5",
+          "title": "Brainstorm with advice, then plan",
+          "featured": false,
+          "category": "Plan & Research",
+          "stepNumbers": [
+            3
+          ],
+          "commands": [
+            "/ak:cook /path/to/plan.md"
+          ],
+          "sources": [
+            "step.command"
+          ]
+        }
+      ],
+      "commands": [
+        "/ak:cook",
+        "/ak:cook \"small task\" --advice",
+        "/ak:cook \"task\"",
+        "/ak:cook --parallel",
+        "/ak:cook /path/to/plan.md",
+        "/ak:cook /path/to/plan.md --advice",
+        "/ak:cook <plan>"
+      ]
+    },
+    "databases": {
+      "workflows": [
+        {
+          "id": "G1",
+          "title": "API + schema feature",
+          "featured": false,
+          "category": "Backend & Data",
+          "stepNumbers": [
+            4
+          ],
+          "commands": [
+            "/ak:databases"
+          ],
+          "sources": [
+            "step.command"
+          ]
+        }
+      ],
+      "commands": [
+        "/ak:databases"
+      ]
+    },
+    "debug": {
+      "workflows": [
+        {
+          "id": "B1",
+          "title": "Investigate before deciding",
+          "featured": false,
+          "category": "Plan & Research",
+          "stepNumbers": [
+            2
+          ],
+          "commands": [
+            "/ak:debug"
+          ],
+          "sources": [
+            "step.command"
+          ]
+        },
+        {
+          "id": "C1",
+          "title": "Fix a bug",
+          "featured": true,
+          "category": "Debug & Fix",
+          "stepNumbers": [
+            4
+          ],
+          "commands": [
+            "/ak:debug"
+          ],
+          "sources": [
+            "step.command"
+          ]
+        },
+        {
+          "id": "C2",
+          "title": "Stuck twice → escalate",
+          "featured": false,
+          "category": "Debug & Fix",
+          "stepNumbers": [
+            1
+          ],
+          "commands": [
+            "/ak:debug"
+          ],
+          "sources": [
+            "step.command"
+          ]
+        },
+        {
+          "id": "C3",
+          "title": "Production log / flaky",
+          "featured": false,
+          "category": "Debug & Fix",
+          "stepNumbers": [
+            2
+          ],
+          "commands": [
+            "/ak:debug"
+          ],
+          "sources": [
+            "step.command"
+          ]
+        }
+      ],
+      "commands": [
+        "/ak:debug"
+      ]
+    },
+    "docs": {
+      "workflows": [
+        {
+          "id": "A3",
+          "title": "Start new project",
+          "featured": true,
+          "category": "Getting Started",
+          "stepNumbers": [
+            6
+          ],
+          "commands": [
+            "/ak:docs"
+          ],
+          "sources": [
+            "step.command"
+          ]
+        },
+        {
+          "id": "H1",
+          "title": "Update docs",
+          "featured": true,
+          "category": "Docs & Explain",
+          "stepNumbers": [
+            1
+          ],
+          "commands": [
+            "/ak:docs update"
+          ],
+          "sources": [
+            "step.command"
+          ]
+        },
+        {
+          "id": "J1",
+          "title": "Expose feature as MCP/CLI",
+          "featured": false,
+          "category": "AI / MCP",
+          "stepNumbers": [
+            5
+          ],
+          "commands": [
+            "/ak:docs"
+          ],
+          "sources": [
+            "step.command"
+          ]
+        }
+      ],
+      "commands": [
+        "/ak:docs",
+        "/ak:docs update"
+      ]
+    },
+    "fix": {
+      "workflows": [
+        {
+          "id": "C1",
+          "title": "Fix a bug",
+          "featured": true,
+          "category": "Debug & Fix",
+          "stepNumbers": [
+            1
+          ],
+          "commands": [
+            "/ak:fix",
+            "/ak:fix --review \"…\" --advice"
+          ],
+          "sources": [
+            "adviceVariant",
+            "step.command",
+            "tip"
+          ]
+        },
+        {
+          "id": "C2",
+          "title": "Stuck twice → escalate",
+          "featured": false,
+          "category": "Debug & Fix",
+          "stepNumbers": [
+            2
+          ],
+          "commands": [
+            "/ak:fix"
+          ],
+          "sources": [
+            "step.command"
+          ]
+        },
+        {
+          "id": "C3",
+          "title": "Production log / flaky",
+          "featured": false,
+          "category": "Debug & Fix",
+          "stepNumbers": [
+            4
+          ],
+          "commands": [
+            "/ak:fix"
+          ],
+          "sources": [
+            "step.command"
+          ]
+        },
+        {
+          "id": "E1",
+          "title": "Security audit",
+          "featured": true,
+          "category": "Security",
+          "stepNumbers": [
+            2
+          ],
+          "commands": [
+            "/ak:fix"
+          ],
+          "sources": [
+            "step.command"
+          ]
+        },
+        {
+          "id": "E2",
+          "title": "Quick secrets/deps sweep",
+          "featured": false,
+          "category": "Security",
+          "stepNumbers": [
+            2
+          ],
+          "commands": [
+            "/ak:fix"
+          ],
+          "sources": [
+            "step.command"
+          ]
+        },
+        {
+          "id": "L3",
+          "title": "Advised bug fix",
+          "featured": false,
+          "category": "Debug & Fix",
+          "stepNumbers": [
+            1
+          ],
+          "commands": [
+            "/ak:fix --review \"failing test / error\" --advice"
+          ],
+          "sources": [
+            "step.command"
+          ]
+        }
+      ],
+      "commands": [
+        "/ak:fix",
+        "/ak:fix --review \"failing test / error\" --advice",
+        "/ak:fix --review \"…\" --advice"
+      ]
+    },
+    "frontend-design": {
+      "workflows": [
+        {
+          "id": "F1",
+          "title": "Design to UI",
+          "featured": true,
+          "category": "Design & Frontend",
+          "stepNumbers": [
+            2
+          ],
+          "commands": [
+            "/ak:frontend-design"
+          ],
+          "sources": [
+            "step.command"
+          ]
+        },
+        {
+          "id": "F2",
+          "title": "Pixel-faithful from mockup",
+          "featured": false,
+          "category": "Design & Frontend",
+          "stepNumbers": [
+            1
+          ],
+          "commands": [
+            "/ak:frontend-design"
+          ],
+          "sources": [
+            "step.command"
+          ]
+        }
+      ],
+      "commands": [
+        "/ak:frontend-design"
+      ]
+    },
+    "frontend-development": {
+      "workflows": [
+        {
+          "id": "F1",
+          "title": "Design to UI",
+          "featured": true,
+          "category": "Design & Frontend",
+          "stepNumbers": [
+            3
+          ],
+          "commands": [
+            "/ak:frontend-development"
+          ],
+          "sources": [
+            "step.command"
+          ]
+        },
+        {
+          "id": "F3",
+          "title": "React performance pass",
+          "featured": false,
+          "category": "Design & Frontend",
+          "stepNumbers": [
+            2
+          ],
+          "commands": [
+            "/ak:frontend-development"
+          ],
+          "sources": [
+            "step.command"
+          ]
+        }
+      ],
+      "commands": [
+        "/ak:frontend-development"
+      ]
+    },
+    "git": {
+      "workflows": [
+        {
+          "id": "D2",
+          "title": "Local review before PR",
+          "featured": false,
+          "category": "Review & Ship",
+          "stepNumbers": [
+            3
+          ],
+          "commands": [
+            "/ak:git"
+          ],
+          "sources": [
+            "step.command"
+          ]
+        }
+      ],
+      "commands": [
+        "/ak:git"
+      ]
+    },
+    "goal-warmup": {
+      "workflows": [
+        {
+          "id": "B3",
+          "title": "Advise then plan",
+          "featured": false,
+          "category": "Plan & Research",
+          "stepNumbers": [
+            4
+          ],
+          "commands": [
+            "/ak:goal-warmup"
+          ],
+          "sources": [
+            "step.command",
+            "tip"
+          ]
+        }
+      ],
+      "commands": [
+        "/ak:goal-warmup"
+      ]
+    },
+    "handoff": {
+      "workflows": [
+        {
+          "id": "H3",
+          "title": "Session handoff",
+          "featured": false,
+          "category": "Docs & Explain",
+          "stepNumbers": [
+            2
+          ],
+          "commands": [
+            "/ak:handoff"
+          ],
+          "sources": [
+            "step.command"
+          ]
+        }
+      ],
+      "commands": [
+        "/ak:handoff"
+      ]
+    },
+    "issue-to-plan": {
+      "workflows": [
+        {
+          "id": "A4",
+          "title": "Issue to plan",
+          "featured": true,
+          "category": "Plan & Research",
+          "stepNumbers": [
+            1
+          ],
+          "commands": [
+            "/ak:issue-to-plan <issue>"
+          ],
+          "sources": [
+            "step.command"
+          ]
+        }
+      ],
+      "commands": [
+        "/ak:issue-to-plan <issue>"
+      ]
+    },
+    "journal": {
+      "workflows": [
+        {
+          "id": "C2",
+          "title": "Stuck twice → escalate",
+          "featured": false,
+          "category": "Debug & Fix",
+          "stepNumbers": [
+            4
+          ],
+          "commands": [
+            "/ak:journal"
+          ],
+          "sources": [
+            "step.command"
+          ]
+        }
+      ],
+      "commands": [
+        "/ak:journal"
+      ]
+    },
+    "llms": {
+      "workflows": [
+        {
+          "id": "H1",
+          "title": "Update docs",
+          "featured": true,
+          "category": "Docs & Explain",
+          "stepNumbers": [
+            3
+          ],
+          "commands": [
+            "/ak:llms"
+          ],
+          "sources": [
+            "step.command"
+          ]
+        }
+      ],
+      "commands": [
+        "/ak:llms"
+      ]
+    },
+    "mcp-builder": {
+      "workflows": [
+        {
+          "id": "J1",
+          "title": "Expose feature as MCP/CLI",
+          "featured": false,
+          "category": "AI / MCP",
+          "stepNumbers": [
+            3
+          ],
+          "commands": [
+            "/ak:mcp-builder"
+          ],
+          "sources": [
+            "step.command"
+          ]
+        }
+      ],
+      "commands": [
+        "/ak:mcp-builder"
+      ]
+    },
+    "orchestrate": {
+      "workflows": [
+        {
+          "id": "I1",
+          "title": "Parallel cook",
+          "featured": true,
+          "category": "Parallel",
+          "stepNumbers": [
+            5
+          ],
+          "commands": [
+            "/ak:orchestrate"
+          ],
+          "sources": [
+            "step.command",
+            "tip"
+          ]
+        }
+      ],
+      "commands": [
+        "/ak:orchestrate"
+      ]
+    },
+    "payment-integration": {
+      "workflows": [
+        {
+          "id": "G3",
+          "title": "Payments",
+          "featured": false,
+          "category": "Backend & Data",
+          "stepNumbers": [
+            1
+          ],
+          "commands": [
+            "/ak:payment-integration"
+          ],
+          "sources": [
+            "step.command"
+          ]
+        }
+      ],
+      "commands": [
+        "/ak:payment-integration"
+      ]
+    },
+    "plan": {
+      "workflows": [
+        {
+          "id": "A1",
+          "title": "Build a new feature",
+          "featured": true,
+          "category": "Getting Started",
+          "stepNumbers": [
+            2
+          ],
+          "commands": [
+            "/ak:plan",
+            "/ak:plan --advice \"…\""
+          ],
+          "sources": [
+            "adviceVariant",
+            "step.command"
+          ]
+        },
+        {
+          "id": "A3",
+          "title": "Start new project",
+          "featured": true,
+          "category": "Getting Started",
+          "stepNumbers": [
+            4
+          ],
+          "commands": [
+            "/ak:plan"
+          ],
+          "sources": [
+            "step.command"
+          ]
+        },
+        {
+          "id": "B1",
+          "title": "Investigate before deciding",
+          "featured": false,
+          "category": "Plan & Research",
+          "stepNumbers": [
+            4
+          ],
+          "commands": [
+            "/ak:plan"
+          ],
+          "sources": [
+            "step.command"
+          ]
+        },
+        {
+          "id": "B2",
+          "title": "Plan with gates",
+          "featured": true,
+          "category": "Plan & Research",
+          "stepNumbers": [
+            2,
+            3,
+            4
+          ],
+          "commands": [
+            "/ak:plan",
+            "/ak:plan red-team",
+            "/ak:plan validate"
+          ],
+          "sources": [
+            "step.command"
+          ]
+        },
+        {
+          "id": "B3",
+          "title": "Advise then plan",
+          "featured": false,
+          "category": "Plan & Research",
+          "stepNumbers": [
+            2
+          ],
+          "commands": [
+            "/ak:plan"
+          ],
+          "sources": [
+            "step.command"
+          ]
+        },
+        {
+          "id": "B4",
+          "title": "Scenario / edge-case design",
+          "featured": false,
+          "category": "Plan & Research",
+          "stepNumbers": [
+            2
+          ],
+          "commands": [
+            "/ak:plan --tdd"
+          ],
+          "sources": [
+            "step.command"
+          ]
+        },
+        {
+          "id": "G1",
+          "title": "API + schema feature",
+          "featured": false,
+          "category": "Backend & Data",
+          "stepNumbers": [
+            2
+          ],
+          "commands": [
+            "/ak:plan"
+          ],
+          "sources": [
+            "step.command"
+          ]
+        },
+        {
+          "id": "G2",
+          "title": "Auth feature",
+          "featured": true,
+          "category": "Backend & Data",
+          "stepNumbers": [
+            2
+          ],
+          "commands": [
+            "/ak:plan"
+          ],
+          "sources": [
+            "step.command"
+          ]
+        },
+        {
+          "id": "G3",
+          "title": "Payments",
+          "featured": false,
+          "category": "Backend & Data",
+          "stepNumbers": [
+            2
+          ],
+          "commands": [
+            "/ak:plan"
+          ],
+          "sources": [
+            "step.command"
+          ]
+        },
+        {
+          "id": "I1",
+          "title": "Parallel cook",
+          "featured": true,
+          "category": "Parallel",
+          "stepNumbers": [
+            1
+          ],
+          "commands": [
+            "/ak:plan --parallel"
+          ],
+          "sources": [
+            "step.command"
+          ]
+        },
+        {
+          "id": "I2",
+          "title": "Isolated feature worktree",
+          "featured": false,
+          "category": "Parallel",
+          "stepNumbers": [
+            3
+          ],
+          "commands": [
+            "/ak:plan"
+          ],
+          "sources": [
+            "step.command"
+          ]
+        },
+        {
+          "id": "L1",
+          "title": "Advised feature chain",
+          "featured": true,
+          "category": "Plan & Research",
+          "stepNumbers": [
+            2
+          ],
+          "commands": [
+            "/ak:plan --advice \"…\""
+          ],
+          "sources": [
+            "adviceVariant",
+            "step.command"
+          ]
+        },
+        {
+          "id": "L5",
+          "title": "Brainstorm with advice, then plan",
+          "featured": false,
+          "category": "Plan & Research",
+          "stepNumbers": [
+            2
+          ],
+          "commands": [
+            "/ak:plan --advice"
+          ],
+          "sources": [
+            "step.command"
+          ]
+        }
+      ],
+      "commands": [
+        "/ak:plan",
+        "/ak:plan --advice",
+        "/ak:plan --advice \"…\"",
+        "/ak:plan --parallel",
+        "/ak:plan --tdd",
+        "/ak:plan red-team",
+        "/ak:plan validate"
+      ]
+    },
+    "predict": {
+      "workflows": [
+        {
+          "id": "B2",
+          "title": "Plan with gates",
+          "featured": true,
+          "category": "Plan & Research",
+          "stepNumbers": [
+            1
+          ],
+          "commands": [
+            "/ak:predict"
+          ],
+          "sources": [
+            "step.command"
+          ]
+        }
+      ],
+      "commands": [
+        "/ak:predict"
+      ]
+    },
+    "preview": {
+      "workflows": [
+        {
+          "id": "H1",
+          "title": "Update docs",
+          "featured": true,
+          "category": "Docs & Explain",
+          "stepNumbers": [
+            2
+          ],
+          "commands": [
+            "/ak:preview --explain"
+          ],
+          "sources": [
+            "step.command"
+          ]
+        },
+        {
+          "id": "H2",
+          "title": "Visual architecture explainer",
+          "featured": false,
+          "category": "Docs & Explain",
+          "stepNumbers": [
+            3
+          ],
+          "commands": [
+            "/ak:preview --html --explain"
+          ],
+          "sources": [
+            "step.command"
+          ]
+        },
+        {
+          "id": "J2",
+          "title": "Multimodal asset pipeline",
+          "featured": false,
+          "category": "AI / MCP",
+          "stepNumbers": [
+            3
+          ],
+          "commands": [
+            "/ak:preview"
+          ],
+          "sources": [
+            "step.command"
+          ]
+        }
+      ],
+      "commands": [
+        "/ak:preview",
+        "/ak:preview --explain",
+        "/ak:preview --html --explain"
+      ]
+    },
+    "react-best-practices": {
+      "workflows": [
+        {
+          "id": "F3",
+          "title": "React performance pass",
+          "featured": false,
+          "category": "Design & Frontend",
+          "stepNumbers": [
+            1
+          ],
+          "commands": [
+            "/ak:react-best-practices"
+          ],
+          "sources": [
+            "step.command"
+          ]
+        }
+      ],
+      "commands": [
+        "/ak:react-best-practices"
+      ]
+    },
+    "research": {
+      "workflows": [
+        {
+          "id": "A3",
+          "title": "Start new project",
+          "featured": true,
+          "category": "Getting Started",
+          "stepNumbers": [
+            2
+          ],
+          "commands": [
+            "/ak:research"
+          ],
+          "sources": [
+            "step.command"
+          ]
+        }
+      ],
+      "commands": [
+        "/ak:research"
+      ]
+    },
+    "review-pr": {
+      "workflows": [
+        {
+          "id": "D1",
+          "title": "Review a PR",
+          "featured": true,
+          "category": "Review & Ship",
+          "stepNumbers": [
+            1,
+            2,
+            4
+          ],
+          "commands": [
+            "/ak:review-pr <PR>",
+            "/ak:review-pr <PR> --fix"
+          ],
+          "sources": [
+            "step.command"
+          ]
+        }
+      ],
+      "commands": [
+        "/ak:review-pr <PR>",
+        "/ak:review-pr <PR> --fix"
+      ]
+    },
+    "scenario": {
+      "workflows": [
+        {
+          "id": "B4",
+          "title": "Scenario / edge-case design",
+          "featured": false,
+          "category": "Plan & Research",
+          "stepNumbers": [
+            1
+          ],
+          "commands": [
+            "/ak:scenario"
+          ],
+          "sources": [
+            "step.command"
+          ]
+        }
+      ],
+      "commands": [
+        "/ak:scenario"
+      ]
+    },
+    "scout": {
+      "workflows": [
+        {
+          "id": "B1",
+          "title": "Investigate before deciding",
+          "featured": false,
+          "category": "Plan & Research",
+          "stepNumbers": [
+            1
+          ],
+          "commands": [
+            "/ak:scout"
+          ],
+          "sources": [
+            "step.command"
+          ]
+        },
+        {
+          "id": "C1",
+          "title": "Fix a bug",
+          "featured": true,
+          "category": "Debug & Fix",
+          "stepNumbers": [
+            3
+          ],
+          "commands": [
+            "/ak:scout"
+          ],
+          "sources": [
+            "step.command"
+          ]
+        },
+        {
+          "id": "C3",
+          "title": "Production log / flaky",
+          "featured": false,
+          "category": "Debug & Fix",
+          "stepNumbers": [
+            1
+          ],
+          "commands": [
+            "/ak:scout"
+          ],
+          "sources": [
+            "step.command"
+          ]
+        },
+        {
+          "id": "G1",
+          "title": "API + schema feature",
+          "featured": false,
+          "category": "Backend & Data",
+          "stepNumbers": [
+            1
+          ],
+          "commands": [
+            "/ak:scout"
+          ],
+          "sources": [
+            "step.command"
+          ]
+        },
+        {
+          "id": "H2",
+          "title": "Visual architecture explainer",
+          "featured": false,
+          "category": "Docs & Explain",
+          "stepNumbers": [
+            1
+          ],
+          "commands": [
+            "/ak:scout"
+          ],
+          "sources": [
+            "step.command"
+          ]
+        },
+        {
+          "id": "J1",
+          "title": "Expose feature as MCP/CLI",
+          "featured": false,
+          "category": "AI / MCP",
+          "stepNumbers": [
+            1
+          ],
+          "commands": [
+            "/ak:scout"
+          ],
+          "sources": [
+            "step.command"
+          ]
+        }
+      ],
+      "commands": [
+        "/ak:scout"
+      ]
+    },
+    "security": {
+      "workflows": [
+        {
+          "id": "E1",
+          "title": "Security audit",
+          "featured": true,
+          "category": "Security",
+          "stepNumbers": [
+            1,
+            3
+          ],
+          "commands": [
+            "/ak:security",
+            "/ak:security --secrets-only --deps-only"
+          ],
+          "sources": [
+            "step.command"
+          ]
+        },
+        {
+          "id": "E2",
+          "title": "Quick secrets/deps sweep",
+          "featured": false,
+          "category": "Security",
+          "stepNumbers": [
+            1
+          ],
+          "commands": [
+            "/ak:security --secrets-only --deps-only"
+          ],
+          "sources": [
+            "step.command"
+          ]
+        },
+        {
+          "id": "G2",
+          "title": "Auth feature",
+          "featured": true,
+          "category": "Backend & Data",
+          "stepNumbers": [
+            4
+          ],
+          "commands": [
+            "/ak:security"
+          ],
+          "sources": [
+            "step.command"
+          ]
+        },
+        {
+          "id": "G3",
+          "title": "Payments",
+          "featured": false,
+          "category": "Backend & Data",
+          "stepNumbers": [
+            4
+          ],
+          "commands": [
+            "/ak:security"
+          ],
+          "sources": [
+            "step.command"
+          ]
+        }
+      ],
+      "commands": [
+        "/ak:security",
+        "/ak:security --secrets-only --deps-only"
+      ]
+    },
+    "ship": {
+      "workflows": [
+        {
+          "id": "A1",
+          "title": "Build a new feature",
+          "featured": true,
+          "category": "Getting Started",
+          "stepNumbers": [
+            7
+          ],
+          "commands": [
+            "/ak:ship"
+          ],
+          "sources": [
+            "step.command"
+          ]
+        },
+        {
+          "id": "D2",
+          "title": "Local review before PR",
+          "featured": false,
+          "category": "Review & Ship",
+          "stepNumbers": [
+            4
+          ],
+          "commands": [
+            "/ak:ship"
+          ],
+          "sources": [
+            "step.command",
+            "tip"
+          ]
+        },
+        {
+          "id": "D3",
+          "title": "Ship a branch",
+          "featured": true,
+          "category": "Review & Ship",
+          "stepNumbers": [
+            2
+          ],
+          "commands": [
+            "/ak:ship"
+          ],
+          "sources": [
+            "step.command"
+          ]
+        },
+        {
+          "id": "E2",
+          "title": "Quick secrets/deps sweep",
+          "featured": false,
+          "category": "Security",
+          "stepNumbers": [
+            3
+          ],
+          "commands": [
+            "/ak:ship"
+          ],
+          "sources": [
+            "step.command"
+          ]
+        },
+        {
+          "id": "G2",
+          "title": "Auth feature",
+          "featured": true,
+          "category": "Backend & Data",
+          "stepNumbers": [
+            6
+          ],
+          "commands": [
+            "/ak:ship"
+          ],
+          "sources": [
+            "step.command"
+          ]
+        },
+        {
+          "id": "G3",
+          "title": "Payments",
+          "featured": false,
+          "category": "Backend & Data",
+          "stepNumbers": [
+            6
+          ],
+          "commands": [
+            "/ak:ship"
+          ],
+          "sources": [
+            "step.command"
+          ]
+        },
+        {
+          "id": "I2",
+          "title": "Isolated feature worktree",
+          "featured": false,
+          "category": "Parallel",
+          "stepNumbers": [
+            6
+          ],
+          "commands": [
+            "/ak:ship"
+          ],
+          "sources": [
+            "step.command"
+          ]
+        },
+        {
+          "id": "L1",
+          "title": "Advised feature chain",
+          "featured": true,
+          "category": "Plan & Research",
+          "stepNumbers": [
+            7
+          ],
+          "commands": [
+            "/ak:ship"
+          ],
+          "sources": [
+            "step.command"
+          ]
+        }
+      ],
+      "commands": [
+        "/ak:ship"
+      ]
+    },
+    "team": {
+      "workflows": [
+        {
+          "id": "I1",
+          "title": "Parallel cook",
+          "featured": true,
+          "category": "Parallel",
+          "stepNumbers": [
+            6
+          ],
+          "commands": [
+            "/ak:team"
+          ],
+          "sources": [
+            "step.command",
+            "tip"
+          ]
+        }
+      ],
+      "commands": [
+        "/ak:team"
+      ]
+    },
+    "tech-graph": {
+      "workflows": [
+        {
+          "id": "H2",
+          "title": "Visual architecture explainer",
+          "featured": false,
+          "category": "Docs & Explain",
+          "stepNumbers": [
+            2
+          ],
+          "commands": [
+            "/ak:tech-graph"
+          ],
+          "sources": [
+            "step.command"
+          ]
+        }
+      ],
+      "commands": [
+        "/ak:tech-graph"
+      ]
+    },
+    "test": {
+      "workflows": [
+        {
+          "id": "A1",
+          "title": "Build a new feature",
+          "featured": true,
+          "category": "Getting Started",
+          "stepNumbers": [
+            5
+          ],
+          "commands": [
+            "/ak:test"
+          ],
+          "sources": [
+            "step.command"
+          ]
+        },
+        {
+          "id": "A2",
+          "title": "Quick implement",
+          "featured": true,
+          "category": "Getting Started",
+          "stepNumbers": [
+            2
+          ],
+          "commands": [
+            "/ak:test"
+          ],
+          "sources": [
+            "step.command"
+          ]
+        },
+        {
+          "id": "B4",
+          "title": "Scenario / edge-case design",
+          "featured": false,
+          "category": "Plan & Research",
+          "stepNumbers": [
+            4
+          ],
+          "commands": [
+            "/ak:test"
+          ],
+          "sources": [
+            "step.command"
+          ]
+        },
+        {
+          "id": "C1",
+          "title": "Fix a bug",
+          "featured": true,
+          "category": "Debug & Fix",
+          "stepNumbers": [
+            2
+          ],
+          "commands": [
+            "/ak:test"
+          ],
+          "sources": [
+            "adviceVariant",
+            "step.command"
+          ]
+        },
+        {
+          "id": "C2",
+          "title": "Stuck twice → escalate",
+          "featured": false,
+          "category": "Debug & Fix",
+          "stepNumbers": [
+            3
+          ],
+          "commands": [
+            "/ak:test"
+          ],
+          "sources": [
+            "step.command"
+          ]
+        },
+        {
+          "id": "C3",
+          "title": "Production log / flaky",
+          "featured": false,
+          "category": "Debug & Fix",
+          "stepNumbers": [
+            5
+          ],
+          "commands": [
+            "/ak:test"
+          ],
+          "sources": [
+            "step.command"
+          ]
+        },
+        {
+          "id": "D1",
+          "title": "Review a PR",
+          "featured": true,
+          "category": "Review & Ship",
+          "stepNumbers": [
+            3
+          ],
+          "commands": [
+            "/ak:test"
+          ],
+          "sources": [
+            "step.command"
+          ]
+        },
+        {
+          "id": "D2",
+          "title": "Local review before PR",
+          "featured": false,
+          "category": "Review & Ship",
+          "stepNumbers": [
+            2
+          ],
+          "commands": [
+            "/ak:test"
+          ],
+          "sources": [
+            "step.command"
+          ]
+        },
+        {
+          "id": "E1",
+          "title": "Security audit",
+          "featured": true,
+          "category": "Security",
+          "stepNumbers": [
+            5
+          ],
+          "commands": [
+            "/ak:test"
+          ],
+          "sources": [
+            "step.command"
+          ]
+        },
+        {
+          "id": "G1",
+          "title": "API + schema feature",
+          "featured": false,
+          "category": "Backend & Data",
+          "stepNumbers": [
+            5
+          ],
+          "commands": [
+            "/ak:test"
+          ],
+          "sources": [
+            "step.command"
+          ]
+        },
+        {
+          "id": "G2",
+          "title": "Auth feature",
+          "featured": true,
+          "category": "Backend & Data",
+          "stepNumbers": [
+            5
+          ],
+          "commands": [
+            "/ak:test"
+          ],
+          "sources": [
+            "step.command"
+          ]
+        },
+        {
+          "id": "G3",
+          "title": "Payments",
+          "featured": false,
+          "category": "Backend & Data",
+          "stepNumbers": [
+            5
+          ],
+          "commands": [
+            "/ak:test"
+          ],
+          "sources": [
+            "step.command"
+          ]
+        },
+        {
+          "id": "I1",
+          "title": "Parallel cook",
+          "featured": true,
+          "category": "Parallel",
+          "stepNumbers": [
+            3
+          ],
+          "commands": [
+            "/ak:test"
+          ],
+          "sources": [
+            "step.command"
+          ]
+        },
+        {
+          "id": "I2",
+          "title": "Isolated feature worktree",
+          "featured": false,
+          "category": "Parallel",
+          "stepNumbers": [
+            5
+          ],
+          "commands": [
+            "/ak:test"
+          ],
+          "sources": [
+            "step.command"
+          ]
+        },
+        {
+          "id": "J1",
+          "title": "Expose feature as MCP/CLI",
+          "featured": false,
+          "category": "AI / MCP",
+          "stepNumbers": [
+            4
+          ],
+          "commands": [
+            "/ak:test"
+          ],
+          "sources": [
+            "step.command"
+          ]
+        },
+        {
+          "id": "L1",
+          "title": "Advised feature chain",
+          "featured": true,
+          "category": "Plan & Research",
+          "stepNumbers": [
+            5
+          ],
+          "commands": [
+            "/ak:test \"scope\""
+          ],
+          "sources": [
+            "step.command"
+          ]
+        },
+        {
+          "id": "L3",
+          "title": "Advised bug fix",
+          "featured": false,
+          "category": "Debug & Fix",
+          "stepNumbers": [
+            2
+          ],
+          "commands": [
+            "/ak:test"
+          ],
+          "sources": [
+            "step.command"
+          ]
+        }
+      ],
+      "commands": [
+        "/ak:test",
+        "/ak:test \"scope\""
+      ]
+    },
+    "ui-styling": {
+      "workflows": [
+        {
+          "id": "F1",
+          "title": "Design to UI",
+          "featured": true,
+          "category": "Design & Frontend",
+          "stepNumbers": [
+            4
+          ],
+          "commands": [
+            "/ak:ui-styling"
+          ],
+          "sources": [
+            "step.command"
+          ]
+        },
+        {
+          "id": "F2",
+          "title": "Pixel-faithful from mockup",
+          "featured": false,
+          "category": "Design & Frontend",
+          "stepNumbers": [
+            2
+          ],
+          "commands": [
+            "/ak:ui-styling"
+          ],
+          "sources": [
+            "step.command"
+          ]
+        }
+      ],
+      "commands": [
+        "/ak:ui-styling"
+      ]
+    },
+    "ui-ux-pro-max": {
+      "workflows": [
+        {
+          "id": "F1",
+          "title": "Design to UI",
+          "featured": true,
+          "category": "Design & Frontend",
+          "stepNumbers": [
+            1,
+            5
+          ],
+          "commands": [
+            "/ak:ui-ux-pro-max"
+          ],
+          "sources": [
+            "step.command"
+          ]
+        },
+        {
+          "id": "F2",
+          "title": "Pixel-faithful from mockup",
+          "featured": false,
+          "category": "Design & Frontend",
+          "stepNumbers": [
+            3
+          ],
+          "commands": [
+            "/ak:ui-ux-pro-max"
+          ],
+          "sources": [
+            "step.command"
+          ]
+        }
+      ],
+      "commands": [
+        "/ak:ui-ux-pro-max"
+      ]
+    },
+    "vibe": {
+      "workflows": [
+        {
+          "id": "A5",
+          "title": "Full vibe pipeline",
+          "featured": true,
+          "category": "Getting Started",
+          "stepNumbers": [
+            1,
+            2
+          ],
+          "commands": [
+            "/ak:vibe --advice <issue-url>",
+            "/ak:vibe <issue-or-request>"
+          ],
+          "sources": [
+            "step.command",
+            "tip"
+          ]
+        },
+        {
+          "id": "L4",
+          "title": "Advised vibe",
+          "featured": false,
+          "category": "Getting Started",
+          "stepNumbers": [
+            1
+          ],
+          "commands": [
+            "/ak:vibe --advice [--ship] <issue-url>"
+          ],
+          "sources": [
+            "step.command"
+          ]
+        }
+      ],
+      "commands": [
+        "/ak:vibe --advice <issue-url>",
+        "/ak:vibe --advice [--ship] <issue-url>",
+        "/ak:vibe <issue-or-request>"
+      ]
+    },
+    "watzup": {
+      "workflows": [
+        {
+          "id": "H3",
+          "title": "Session handoff",
+          "featured": false,
+          "category": "Docs & Explain",
+          "stepNumbers": [
+            1
+          ],
+          "commands": [
+            "/ak:watzup"
+          ],
+          "sources": [
+            "step.command"
+          ]
+        }
+      ],
+      "commands": [
+        "/ak:watzup"
+      ]
+    },
+    "web-testing": {
+      "workflows": [
+        {
+          "id": "C3",
+          "title": "Production log / flaky",
+          "featured": false,
+          "category": "Debug & Fix",
+          "stepNumbers": [
+            3
+          ],
+          "commands": [
+            "/ak:web-testing"
+          ],
+          "sources": [
+            "step.command"
+          ]
+        },
+        {
+          "id": "F1",
+          "title": "Design to UI",
+          "featured": true,
+          "category": "Design & Frontend",
+          "stepNumbers": [
+            6
+          ],
+          "commands": [
+            "/ak:web-testing"
+          ],
+          "sources": [
+            "step.command"
+          ]
+        },
+        {
+          "id": "F3",
+          "title": "React performance pass",
+          "featured": false,
+          "category": "Design & Frontend",
+          "stepNumbers": [
+            3
+          ],
+          "commands": [
+            "/ak:web-testing"
+          ],
+          "sources": [
+            "step.command"
+          ]
+        }
+      ],
+      "commands": [
+        "/ak:web-testing"
+      ]
+    },
+    "worktree": {
+      "workflows": [
+        {
+          "id": "I2",
+          "title": "Isolated feature worktree",
+          "featured": false,
+          "category": "Parallel",
+          "stepNumbers": [
+            1
+          ],
+          "commands": [
+            "/ak:worktree"
+          ],
+          "sources": [
+            "step.command"
+          ]
+        }
+      ],
+      "commands": [
+        "/ak:worktree"
+      ]
+    }
+  }
+}

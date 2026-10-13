@@ -36,8 +36,8 @@ Codex: `$vk:audit-ak-workflows --check`
 ```text
 /vk:audit-ak-workflows --check
 
---repo /Users/thieunv/projects/personal/vividkit-web
---kit-root /Users/thieunv/projects/contribution/agentkit/ak-cli
+--repo <vividkit-web root>
+--kit-root $AK_CLI
 
 git fetch ak-cli first if fingerprinting kit SKILL.md.
 Do not --sync until the report is reviewed. Never edit src/.
@@ -67,7 +67,7 @@ node skills/vk-audit-ak-workflows/scripts/detect-workflow-skill-drift.cjs --chec
 | Flag | Meaning | Exit |
 | --- | --- | --- |
 | `--rebuild-index` | Parse workflow data → `reference/ak-workflow-skill-index.json` | |
-| `--check` | Fail on drift / unknown refs (no `src/` writes) | 0 ok, 1 drift/broken refs, 2 usage |
+| `--check` | Fail on drift / unknown refs. Rebuilds the index in memory; writes nothing | 0 ok, 1 drift/broken refs, 2 usage |
 | `--report` | Write `reference/changelog-reports/{YYYY-MM-DD}-ak-workflows-audit.md` | |
 | `--sync` | Refresh `reference/ak-workflow-skill-pins/{slug}.json` after review. Never `src/` | |
 | `--kit-root <path>` | Extra root for kit `SKILL.md` trees | |
@@ -82,7 +82,7 @@ First hit wins:
 3. Repo-installed kit (`.agents/skills/ak-{slug}/`, `.claude/skills/ak-{slug}/`) when no ak-cli root is given. This measures the local install, not ak-cli.
 4. Cheatsheet fallback: `src/data/guides/agentkit-skills-cheatsheet.ts`
 
-Fields: `name`, `description`, `when_to_use`, `argument-hint`, `version` (kit) **or** `description` + `argumentHint` + `flags` + `subcommands` (cheatsheet).
+Hashed fields: `name`, `description`, `when_to_use`, `argument-hint`, `version` (kit; source path is recorded but not hashed) **or** `description` + `argumentHint` + `flags` + `subcommands` (cheatsheet).
 
 ## Artifacts
 

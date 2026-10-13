@@ -1,0 +1,14 @@
+{
+  "slug": "security",
+  "hash": "66f86a81b30aafdd67e6dd6380a90da29f007e3c09919425cbca2f0ec3554ff7",
+  "source": "kit",
+  "path": "ak-cli@origin/main:kits/engineer/skills/ak-security/SKILL.md",
+  "pinnedAt": "2026-10-02T21:25:37.472Z",
+  "snapshot": {
+    "name": "ak:security",
+    "description": "Scan codebase for security vulnerabilities, hardcoded secrets, dependency issues, and OWASP patterns, with optional STRIDE threat modeling, red-team persona discovery, and auto-fix. Use when asked to 'security scan', 'check for secrets', 'audit security', or before major releases.",
+    "when_to_use": "Invoke for security scan, secret detection, dependency audit, STRIDE/OWASP threat audit, or auto-fix loops.",
+    "argument_hint": "[scope] [--secrets-only] [--deps-only] [--fix] [--red-team] [--iterations N]",
+    "version": null
+  }
+}

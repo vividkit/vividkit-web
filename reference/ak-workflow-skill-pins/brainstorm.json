@@ -1,0 +1,14 @@
+{
+  "slug": "brainstorm",
+  "hash": "cf5db4c2c3a119c24cbe5f10df4a8bb85085f90579f09d1a8fd4f93877036705",
+  "source": "kit",
+  "path": "ak-cli@origin/main:kits/core/skills/ak-brainstorm/SKILL.md",
+  "pinnedAt": "2026-10-02T21:25:37.467Z",
+  "snapshot": {
+    "name": "ak:brainstorm",
+    "description": "Turn unclear intent into an accepted outcome and compare viable approaches before delivery.",
+    "when_to_use": "Use at the opening of multi-step delivery or when a diagnosed problem has meaningful solution choices.",
+    "argument_hint": "[topic or problem] [--ask] [--advice] [--html] [--report] [--ultra] [--yagni] [--no-antv|--no-diagram-design|--no-editorial-visuals]",
+    "version": null
+  }
+}

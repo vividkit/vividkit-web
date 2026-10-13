@@ -1,0 +1,14 @@
+{
+  "slug": "docs",
+  "hash": "3f09c1caaa273b39c5c195f0fac1df818b5ee5f45a26d576aa85ad024336a2c0",
+  "source": "kit",
+  "path": "ak-cli@origin/main:kits/core/skills/ak-docs/SKILL.md",
+  "pinnedAt": "2026-10-02T21:25:37.468Z",
+  "snapshot": {
+    "name": "ak:docs",
+    "description": "Analyze a codebase and create, refresh, summarize, or audit project documentation without imposing a fixed docs layout, with an opt-in classic layout via --preset classic, including authoring and optimizing the root CLAUDE.md/AGENTS.md agent context file, or distilling DO/DON'T rules for that file from git history, CI runs, and (with --source) current source-tree markers.",
+    "when_to_use": "Invoke to create, refresh, summarize, or audit project documentation; to author or optimize the root CLAUDE.md/AGENTS.md agent context file; or to distill DO/DON'T rules for that file from git history, CI runs, and optionally source-tree markers via --source.",
+    "argument_hint": "init|update|summarize|agent-context|agents|llms",
+    "version": null
+  }
+}

@@ -42,6 +42,18 @@ not fetch. Does not write `src/`.
 
 Exit 0 clean, 1 drift, 2 usage.
 
+Also prints `beta-cli-delta` (advisory, never gates): commands that `--beta-ref`
+(default `origin/dev`) adds or removes vs stable, per cheatsheet command, with
+`betaNote present|no betaNote`. Act on `no betaNote` by adding a `betaNote` /
+`betaNoteVi` to that cheatsheet entry (behavior changes such as flag semantics are
+not detected; read the beta changelog for those).
+
+A new root command that exists only on beta goes in
+`src/data/guides/agentkit-cli-beta-commands.ts` (rendered as the page's Beta-only
+commands section). The checker fails if a listed command is missing from
+`--beta-ref` or already registered on stable; on promotion, move the entry to the
+main cheatsheet.
+
 ## Stop
 
 Never claim the umbrella audit is complete solely because this checker is

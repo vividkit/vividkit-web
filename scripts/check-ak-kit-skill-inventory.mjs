@@ -25,6 +25,8 @@ import {
   ROOT,
   SURFACES,
   buildSnapshot,
+  resolvePageSkill,
+  showFileRaw,
   uniqueSorted,
 } from './lib/ak-kit-sources.mjs';
 
@@ -88,6 +90,54 @@ function previewIdsByBadge(text) {
   while ((m = re.exec(text))) {
     const badge = /\n\s*badge:\s*"enhanced"/.test(m[2]) ? 'enhanced' : 'new';
     out[badge].push(m[1]);
+  }
+  return out;
+}
+
+/**
+ * Frontmatter `description` from SKILL.md, whitespace-collapsed. Handles double-quoted,
+ * single-quoted, plain, and folded/literal block scalars, which is all kit SKILL.md uses.
+ */
+export function skillDescription(md) {
+  const fm = String(md || '').match(/^---\n([\s\S]*?)\n---/);
+  if (!fm) return '';
+  const lines = fm[1].split('\n');
+  const i = lines.findIndex((l) => /^description:/.test(l));
+  if (i < 0) return '';
+  const head = lines[i].replace(/^description:\s*/, '');
+  let value;
+  if (/^[>|][-+]?\s*$/.test(head)) {
+    const body = [];
+    for (let j = i + 1; j < lines.length && (/^\s/.test(lines[j]) || lines[j] === ''); j++) body.push(lines[j].trim());
+    value = body.join(' ');
+  } else if (head.startsWith('"')) {
+    value = JSON.parse(head);
+  } else if (head.startsWith("'")) {
+    value = head.slice(1, -1).replace(/''/g, "'");
+  } else {
+    value = head;
+  }
+  return value.replace(/\s+/g, ' ').trim();
+}
+
+/** Cheatsheet EN description must equal the kit SKILL.md description at the entry's channel. */
+function descriptionDrift(snapshot, kitRoot, surface, text) {
+  const out = [];
+  const re = /\n  \{\n    id: "(ak-[^"]+)"([\s\S]*?)\n  \},/g;
+  let m;
+  while ((m = re.exec(text))) {
+    const [, id, body] = m;
+    const d = body.match(/\n\s*description:\s*("(?:[^"\\]|\\.)*")/);
+    if (!d) continue;
+    const page = JSON.parse(d[1]).replace(/\s+/g, ' ').trim();
+    const channel = /\n\s*isBeta:\s*true/.test(body) ? 'beta' : 'stable';
+    const rec = resolvePageSkill(snapshot, surface, id);
+    const gitPath = rec.rec?.gitPath?.[channel];
+    if (!gitPath) continue;
+    const ref = channel === 'beta' ? snapshot.betaRef : snapshot.stableRef;
+    const raw = showFileRaw(kitRoot, ref, `${gitPath}/SKILL.md`);
+    const kit = skillDescription(raw ? raw.toString('utf8') : '');
+    if (kit && kit !== page) out.push(`${id}(${channel})`);
   }
   return out;
 }
@@ -179,7 +229,7 @@ function lockDrift(prev, next) {
   return lines;
 }
 
-function cheatsheetDrift(snapshot) {
+function cheatsheetDrift(snapshot, kitRoot) {
   const src = readFileSync(CHEATSHEET, 'utf8');
   const slices = sliceCheatsheet(src);
   const lines = [];
@@ -209,6 +259,10 @@ function cheatsheetDrift(snapshot) {
     const enhancedMissing = previewByBadge.enhanced.filter((id) => !catalogSet.has(id));
     if (enhancedMissing.length) {
       lines.push(`${surface} Beta Preview enhanced (not in cheatsheet catalog): ${enhancedMissing.join(', ')}`);
+    }
+    const staleDesc = descriptionDrift(snapshot, kitRoot, surface, slices[surface]);
+    if (staleDesc.length) {
+      lines.push(`${surface} description != kit SKILL.md: ${staleDesc.join(', ')}`);
     }
     if (!sameSet(flagged, wantBeta)) {
       lines.push(
@@ -270,7 +324,7 @@ function main() {
     process.stdout.write(`wrote ${LOCK_PATH}\n`);
   }
 
-  const sheet = cheatsheetDrift(snapshot);
+  const sheet = cheatsheetDrift(snapshot, kitRoot);
   const lock = opts.writeLock ? [] : lockDrift(loadLock(), snapshot);
   const problems = [...lock, ...sheet];
   if (problems.length) {
@@ -284,4 +338,4 @@ function main() {
   process.stdout.write('clean\n');
 }
 
-main();
+if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) main();

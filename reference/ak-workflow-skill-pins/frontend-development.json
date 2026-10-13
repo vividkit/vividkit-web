@@ -1,0 +1,14 @@
+{
+  "slug": "frontend-development",
+  "hash": "0d3cdc70e3c672b5857f65b10bc6006fd0a8cffdb5bd5a52b61e03fe2f482247",
+  "source": "kit",
+  "path": "ak-cli@origin/main:kits/engineer/skills/ak-frontend-development/SKILL.md",
+  "pinnedAt": "2026-10-02T21:25:37.468Z",
+  "snapshot": {
+    "name": "ak:frontend-development",
+    "description": "Build React/TypeScript frontends with modern patterns. Use for components, Suspense, lazy loading, useSuspenseQuery, MUI v7 styling, TanStack Router, performance optimization.",
+    "when_to_use": "Invoke for React/TypeScript frontend implementation.",
+    "argument_hint": "[component or feature]",
+    "version": null
+  }
+}

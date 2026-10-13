@@ -1,0 +1,14 @@
+{
+  "slug": "mcp-builder",
+  "hash": "bdd2ec704d25200c3f74c3a97d985d36782074aaf56fb8142e5ccc9effbaff4e",
+  "source": "kit",
+  "path": "ak-cli@origin/main:kits/engineer/skills/ak-mcp-builder/SKILL.md",
+  "pinnedAt": "2026-10-02T21:25:37.468Z",
+  "snapshot": {
+    "name": "ak:mcp-builder",
+    "description": "Build, upgrade, test and publish MCP servers that expose external services as tools. Covers MCP spec 2026-07-28, TypeScript SDK v2 and Python mcp v2 (MCPServer), tool design, OAuth, evaluations and the MCP Registry.",
+    "when_to_use": "Invoke when building, migrating or reviewing an MCP server or its tool surface; not for configuring MCP clients or calling existing servers.",
+    "argument_hint": "[service or API to integrate]",
+    "version": null
+  }
+}

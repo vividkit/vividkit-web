@@ -291,6 +291,22 @@ ak config prefs set agent_models.cursor.sonnet claude-sonnet-4-6`}
         ? 'Ngoài bảng trên, schema còn một số key không liệt kê hết ở đây — ví dụ content.* (daemon nội dung đa kênh), assertions, skills.<id>, simplify.gate, workflow_artifact_gate, extensions (lối thoát không validate). Muốn chỉnh những mục đó thì mở schema đầy đủ.'
         : 'Beyond the table above, the schema has more keys not listed here — for example content.* (multi-channel content daemon), assertions, skills.<id>, simplify.gate, workflow_artifact_gate, and extensions (unvalidated escape hatch). Open the full schema if you need those.'}
     </AkCallout>
+    <AkCallout variant="warn" title={isVi ? 'Chỉ kênh beta — file .akignore cho privacy hook' : 'Beta channel only — .akignore for the privacy hook'}>
+      <p set:html={isVi
+        ? `Trên beta, file ${akCode('.akignore')} liệt kê các path (cú pháp giống ${akCode('.gitignore')}) mà privacy hook không coi là nhạy cảm nữa. Dòng bắt đầu bằng ${akCode('!')} bảo vệ lại path đó. Stable hiện tại chưa có file này.`
+        : `On beta, a ${akCode('.akignore')} file lists paths (in ${akCode('.gitignore')} syntax) that the privacy hook stops treating as sensitive. A line starting with ${akCode('!')} protects that path again. Current stable does not have this file.`} />
+      <ul class="mt-2 list-disc space-y-1 pl-5">
+        <li set:html={isVi
+          ? `Vị trí: ${akCode('~/.agentkit/.akignore')} cho cả máy, ${akCode('.akignore')} hoặc ${akCode('.agentkit/.akignore')} trong repo cho từng project. File đọc sau thắng: máy trước, rồi tới project.`
+          : `Where: ${akCode('~/.agentkit/.akignore')} for your machine, ${akCode('.akignore')} or ${akCode('.agentkit/.akignore')} in the repo for one project. Later files win: machine first, then project.`} />
+        <li set:html={isVi
+          ? 'File của project đến cùng repo khi clone, nên chỉ có hiệu lực sau khi bạn xác nhận tin đúng nội dung đó một lần. Sửa file thì phải xác nhận lại. File ở máy không cần xác nhận.'
+          : 'A project file arrives with a clone, so it takes effect only after you confirm you trust that exact content once. Any edit needs a new confirmation. Your machine file needs none.'} />
+        <li set:html={isVi
+          ? `Chỉ áp dụng bên trong một git repo và cho path nằm trong project. File này không tắt hook; muốn tắt hẳn thì dùng ${akCode('privacy_block: false')}.`
+          : `It applies only inside a git repository, to paths within the project. It does not turn the hook off; to turn it off entirely, use ${akCode('privacy_block: false')}.`} />
+      </ul>
+    </AkCallout>
   </AkSection>
 
   <AkSection eyebrow={isVi ? 'Ví dụ' : 'Examples'} title={isVi ? 'Mẫu tối thiểu' : 'Minimal samples'}>

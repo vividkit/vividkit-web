@@ -5,10 +5,10 @@
   "stableRef": "origin/main",
   "betaRef": "origin/dev",
   "stableCommit": "1f79164e6dd197c957d2155a850cce0ca03a0adb",
-  "betaCommit": "b3951ed093b9a433b03fe29f9c514ca4d27f9ae3",
-  "generatedAt": "2026-10-02T19:51:57.323Z",
+  "betaCommit": "ddd1b947da4b8c8a4c2f0ad59997f69b5e26e52f",
+  "generatedAt": "2026-10-13T09:48:17.250Z",
   "kitRootHint": "../../contribution/agentkit/ak-cli",
-  "pageCount": 185,
+  "pageCount": 186,
   "entries": [
     {
       "kit": "engineer",
@@ -2033,6 +2033,21 @@
       "sourceSha256": "b49969825589a6d1ee030fffce1431a365aaae9d837bf0a9b8e7f9e78093af96",
       "argumentHint": "[subject|path|URL] [--html] [--eli5]",
       "descriptionSha256": "3518012052dd6902d3d3a472fecec49ff800b9df50bda148340886bca4b3766c",
+      "missingSource": false
+    },
+    {
+      "kit": "marketing",
+      "id": "ak-filmmaking",
+      "route": "/guides/agentkit/skills/marketing/ak-filmmaking",
+      "detailFile": "src/data/guides/agentkit-skill-details/marketing/ak-filmmaking.ts",
+      "sourceChannel": "beta",
+      "sourceRef": "origin/dev",
+      "sourceCommit": "ddd1b947da4b8c8a4c2f0ad59997f69b5e26e52f",
+      "source": "kits/marketing/skills/ak-filmmaking/SKILL.md",
+      "sourceBlob": "307778be982899fa246c4b64a020a62ec27e5c84",
+      "sourceSha256": "794b165cbc7eb26495259ab938c4a23b58401ad5825c3af824fa6bf9d1145ded",
+      "argumentHint": "[create|script|breakdown|bible|storyboard|animatic|render|audio|qc|assemble] [brief-or-project]",
+      "descriptionSha256": "9b494d2ed77cad5e1801612d0ba11e90fc81fc1148633eac2cd3e6ccd58b5a49",
       "missingSource": false
     },
     {

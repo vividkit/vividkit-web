@@ -1,0 +1,14 @@
+{
+  "slug": "web-testing",
+  "hash": "e6602e642f1b47e5adbe7b39f0f2f5bcedab84b930d44dddbbdac00383119a37",
+  "source": "kit",
+  "path": "ak-cli@origin/main:kits/engineer/skills/ak-web-testing/SKILL.md",
+  "pinnedAt": "2026-10-02T21:25:37.473Z",
+  "snapshot": {
+    "name": "ak:web-testing",
+    "description": "Web testing with Playwright, Vitest, k6. E2E/unit/integration/load/security/visual/a11y testing. Use for test automation, flakiness, Core Web Vitals, mobile gestures, cross-browser.",
+    "when_to_use": "Invoke for browser, visual, load, or accessibility tests.",
+    "argument_hint": "[test-type] [target]",
+    "version": null
+  }
+}

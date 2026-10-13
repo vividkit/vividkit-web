@@ -1,0 +1,14 @@
+{
+  "slug": "cook",
+  "hash": "7503c84e52f110ad8b65fd2d621c46522b0ee4bd5167e3e3a848c55d84ea5410",
+  "source": "kit",
+  "path": "ak-cli@origin/main:kits/core/skills/ak-cook/SKILL.md",
+  "pinnedAt": "2026-10-02T21:25:37.467Z",
+  "snapshot": {
+    "name": "ak:cook",
+    "description": "Implement features, plans, and fixes with structured workflow. Use for feature development, plan execution, code implementation pipelines.",
+    "when_to_use": "Invoke to implement known scope after requirements are clear.",
+    "argument_hint": "[task|plan-path] [--interactive|--fast|--parallel|--auto|--no-test] [--tdd] [--advice] [--yagni] [--skip-journal]",
+    "version": null
+  }
+}

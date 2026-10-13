@@ -1,0 +1,14 @@
+{
+  "slug": "scenario",
+  "hash": "55b8c86bf14ac7feef78a5edf2f3bc97cb139512a4a1d397333bc93e5292b767",
+  "source": "kit",
+  "path": "ak-cli@origin/main:kits/engineer/skills/ak-scenario/SKILL.md",
+  "pinnedAt": "2026-10-02T21:25:37.469Z",
+  "snapshot": {
+    "name": "ak:scenario",
+    "description": "Generate comprehensive edge cases and test scenarios by decomposing features across 12 dimensions. Use for pre-implementation risk discovery, QA planning, regression design, and bounded iterative exploration of coverage gaps.",
+    "when_to_use": "Invoke to expand requirements into edge cases and QA scenarios.",
+    "argument_hint": "<file path or feature description> [--iterations N] [--saturation]",
+    "version": null
+  }
+}
