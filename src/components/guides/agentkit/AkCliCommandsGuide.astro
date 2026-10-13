@@ -2,6 +2,7 @@
 import { getLangFromUrl, type Language } from '@/i18n';
 import AkCliCommandsHero from './ak-cli-commands/ak-cli-commands-hero.astro';
 import AkCliCommandsCheatsheet from './ak-cli-commands/ak-cli-commands-cheatsheet.astro';
+import AkCliCommandsBetaSection from './ak-cli-commands/ak-cli-commands-beta-section.astro';
 
 interface Props {
   lang?: Language;
@@ -14,6 +15,7 @@ const currentLang = lang || getLangFromUrl(Astro.url);
 <div class="space-y-8 mt-6">
   <AkCliCommandsHero lang={currentLang} />
   <AkCliCommandsCheatsheet lang={currentLang} />
+  <AkCliCommandsBetaSection lang={currentLang} />
 </div>
 
 <script>

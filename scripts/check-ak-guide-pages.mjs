@@ -9,6 +9,9 @@
  * 4) Advisory (never changes the exit code): cobra commands that beta (--beta-ref,
  *    default origin/dev) adds or removes versus stable, for cheatsheet roots and
  *    the cheatsheet commands' children, with whether the entry carries a betaNote.
+ *    Roots listed in agentkit-cli-beta-commands.ts are not reported.
+ * 5) Beta-only command list (agentkit-cli-beta-commands.ts) must resolve on the beta
+ *    tree and must not exist on stable yet (promoted commands move to the cheatsheet).
  *    Does not claim migrate/safety copy.
  */
 import { existsSync, readdirSync, readFileSync, statSync } from 'node:fs';
@@ -61,6 +64,8 @@ const REGISTRY = [
       'src/pages/guides/agentkit/cli-commands.astro',
       'src/components/guides/agentkit/AkCliCommandsGuide.astro',
       'src/data/guides/agentkit-cli-cheatsheet.ts',
+      'src/data/guides/agentkit-cli-beta-commands.ts',
+      'src/components/guides/agentkit/ak-cli-commands/ak-cli-commands-beta-section.astro',
     ],
     cliCheatsheet: true,
   },
@@ -526,8 +531,12 @@ function cartesian(lists) {
   return acc;
 }
 
-function cheatsheetEntries(repo) {
-  const src = readFileSync(join(repo, 'src/data/guides/agentkit-cli-cheatsheet.ts'), 'utf8');
+const BETA_CLI_REL = 'src/data/guides/agentkit-cli-beta-commands.ts';
+
+function cheatsheetEntries(repo, rel = 'src/data/guides/agentkit-cli-cheatsheet.ts') {
+  const path = join(repo, rel);
+  if (!existsSync(path)) return [];
+  const src = readFileSync(path, 'utf8');
   const blocks = [...src.matchAll(/name:\s*"ak ([^"]+)"([\s\S]*?)(?=\n  \{\n    name:|\n\];)/g)];
   return blocks.map((m) => {
     const sub = m[2].match(/subcommands:\s*\[([^\]]*)\]/);
@@ -537,10 +546,10 @@ function cheatsheetEntries(repo) {
 }
 
 /** Commands beta adds/removes vs stable under ak and under each cheatsheet command. */
-function betaCliDelta(stable, beta, entries) {
+function betaCliDelta(stable, beta, entries, listedBetaRoots = new Set()) {
   const lines = [];
   const diff = (a, b) => [...b].filter((x) => !a.has(x)).sort();
-  const addedRoots = diff(stable.roots, beta.roots);
+  const addedRoots = diff(stable.roots, beta.roots).filter((r) => !listedBetaRoots.has(r));
   const removedRoots = diff(beta.roots, stable.roots);
   if (addedRoots.length) lines.push(`beta adds ak ${addedRoots.join(', ')}`);
   if (removedRoots.length) lines.push(`beta removes ak ${removedRoots.join(', ')}`);
@@ -641,8 +650,21 @@ function main(argv) {
     `ak-guide-pages identities=${registered.length} walked=${walked.length} ` +
       `cobraRoots=${tree.roots.size} cobraEdges=${edgeCount} ${opts.stableRef}\n`,
   );
-  if (resolveRef(kitRoot, opts.betaRef) && tree.roots.size) {
-    const delta = betaCliDelta(tree, buildCobraTree(kitRoot, opts.betaRef), cheatsheetEntries(repo));
+  const betaEntries = cheatsheetEntries(repo, BETA_CLI_REL);
+  const betaTree = resolveRef(kitRoot, opts.betaRef) ? buildCobraTree(kitRoot, opts.betaRef) : null;
+  for (const entry of betaEntries) {
+    const parts = entry.name.split(/\s+/).map((part) => part.split(/[<\[]/)[0]).filter(Boolean);
+    const known = (t) => {
+      if (!t || !parts.length || !t.roots.has(parts[0])) return false;
+      for (let i = 1; i < parts.length; i++) if (!(t.children.get(parts[i - 1]) || new Set()).has(parts[i])) return false;
+      return true;
+    };
+    if (known(tree)) problems.push(`beta-cli promoted ak ${entry.name} (now on ${opts.stableRef}; move it to the main cheatsheet)`);
+    else if (betaTree && !known(betaTree)) problems.push(`beta-cli unknown ak ${entry.name} (not registered at ${opts.betaRef})`);
+  }
+  if (betaTree && tree.roots.size) {
+    const listed = new Set(betaEntries.map((e) => e.name.split(/\s+/)[0]));
+    const delta = betaCliDelta(tree, betaTree, cheatsheetEntries(repo), listed);
     process.stdout.write(`beta-cli-delta ${delta.length} (advisory, not gated) ${opts.betaRef}\n`);
     for (const line of delta) process.stdout.write(`  ${line}\n`);
   }
