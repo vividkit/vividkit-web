@@ -5,7 +5,7 @@
   "stableRef": "origin/main",
   "betaRef": "origin/dev",
   "stableCommit": "1f79164e6dd197c957d2155a850cce0ca03a0adb",
-  "betaCommit": "fd7d938711655bb8a8ca00cfa31e28da80abc991",
+  "betaCommit": "ddd1b947da4b8c8a4c2f0ad59997f69b5e26e52f",
   "stableVersion": "0.0.0",
   "betaVersion": "0.0.0",
   "kits": {
@@ -1555,7 +1555,7 @@
         "skillMd": "4e9a19f124152ad3ab974d022990d7c15029e885"
       },
       "beta": {
-        "tree": "477d597987f0f78b91eed0bf179200efbbd27875",
+        "tree": "088f5a5202d55d5f9de21e1ca3248b8137d1f80d",
         "skillMd": "dd14c211bd179afea5f5330693d0b80facc12fb2"
       }
     },
@@ -2601,8 +2601,8 @@
         "skillMd": "47ae4d8c0173e94da562c2cbc9a0369b990b208a"
       },
       "beta": {
-        "tree": "12ce21e47e90e8795cabf437efdc685fb8de12a7",
-        "skillMd": "47ae4d8c0173e94da562c2cbc9a0369b990b208a"
+        "tree": "329cf47b3b947d3ada92ddba5177780de6ffdf3a",
+        "skillMd": "8c00cb8d3fa30642fa1e7dcafaad8c05ef995088"
       }
     },
     "engineer/ak-page-builder": {
@@ -4015,8 +4015,8 @@
         "skillMd": "3d0513a2c34b60a13a8ff6a44b3a3a9cfa747666"
       },
       "beta": {
-        "tree": "74b68e360f23c57f81e0aae99db4848f02228f3b",
-        "skillMd": "3d0513a2c34b60a13a8ff6a44b3a3a9cfa747666"
+        "tree": "ff60c1184c9a0753a7d27a1b64f7921026e65d5a",
+        "skillMd": "bd31cb73ddc41ec3a1cb5fc7dacaf155c8c7b473"
       }
     },
     "marketing/ak-onboarding-cro": {

@@ -2094,7 +2094,7 @@ export interface AkBetaPreviewItem {
 
 /**
  * Engineer Beta Preview: beta-only skills (origin/dev minus origin/main) plus core skills with
- * notable beta-only changes (v2.20.0-beta.1 through v3.0.0-beta.16). Drop "enhanced" entries once the change reaches stable.
+ * notable beta-only changes (v2.20.0-beta.1 through the current v3.0.0 beta). Drop "enhanced" entries once the change reaches stable.
  */
 export const akEngineerBetaPreview: AkBetaPreviewItem[] = [
   {
@@ -2174,6 +2174,14 @@ export const akEngineerBetaPreview: AkBetaPreviewItem[] = [
     descriptionVi: "Sơ đồ giờ có thể nhúng vào các trang mà skill khác dựng bằng AK Render: một script wrapper dựng cả trang kèm sơ đồ bên trong. Bản thân compiler sơ đồ vẫn chạy offline; chỉ lần chạy đầu tải gói AK Render đã ghim phiên bản từ npm.",
     badge: "enhanced",
   },
+  {
+    id: "ak-orchestrate",
+    command: "/ak:orchestrate",
+    commandCodex: "$ak:orchestrate",
+    description: "States which parts work off macOS: planning, probing and in-session subagent jobs run on Linux and Windows too, while jobs that need a supervised CLI or Pi process are reported blocked with the platform reason instead of being refused outright or run unsupervised.",
+    descriptionVi: "Nói rõ phần nào chạy được ngoài macOS: lên kế hoạch, kiểm tra runtime và job dùng subagent trong session vẫn chạy trên Linux và Windows, còn job cần tiến trình CLI hoặc Pi được giám sát thì báo blocked kèm lý do nền tảng, thay vì từ chối cả yêu cầu hay chạy mà không giám sát.",
+    badge: "enhanced",
+  },
 ];
 
 /**
@@ -2201,6 +2209,14 @@ export const akMarketingBetaPreview: AkBetaPreviewItem[] = [
     descriptionVi: "Giờ viết và chỉ đạo cả kịch bản giọng đọc, không chỉ tạo audio: các action mới script, enhance và dialogue biến ý tưởng thành kịch bản sẵn sàng thu, thêm tag diễn đạt vào bản chốt mà không đổi chữ, hoặc chỉ đạo đoạn thoại nhiều người, rồi speak, clone và sfx tạo audio như trước.",
     badge: "enhanced",
     args: ["script", "enhance", "dialogue"],
+  },
+  {
+    id: "ak-motion-video",
+    command: "/ak:motion-video",
+    commandCodex: "$ak:motion-video",
+    description: "About 70 style profiles now, including a Vox-like collage explainer. Before any paid audio it shows a beat map (story arc, hook, one line per scene) and plans a shot and camera move per scene; printed or collage looks and supplied photos are generated as image layers through multix and animated in GSAP.",
+    descriptionVi: "Giờ có khoảng 70 style profile, thêm kiểu explainer collage giống Vox. Trước khi tạo audio tốn phí sẽ cho xem beat map (mạch câu chuyện, hook, mỗi cảnh một dòng) và lên shot cùng chuyển động camera cho từng cảnh; các kiểu in ấn, collage hay ảnh bạn đưa vào được tạo thành lớp ảnh qua multix rồi animate bằng GSAP.",
+    badge: "enhanced",
   },
   {
     id: "ak-onboarding-cro",
