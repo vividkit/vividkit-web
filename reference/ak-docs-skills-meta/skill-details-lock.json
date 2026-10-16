@@ -5,10 +5,10 @@
   "stableRef": "origin/main",
   "betaRef": "origin/dev",
   "stableCommit": "1f79164e6dd197c957d2155a850cce0ca03a0adb",
-  "betaCommit": "ddd1b947da4b8c8a4c2f0ad59997f69b5e26e52f",
-  "generatedAt": "2026-10-13T09:48:17.250Z",
+  "betaCommit": "7d7f6b9659741aa54601c07ec34424f88d9a4e69",
+  "generatedAt": "2026-10-16T21:18:19.609Z",
   "kitRootHint": "../../contribution/agentkit/ak-cli",
-  "pageCount": 186,
+  "pageCount": 187,
   "entries": [
     {
       "kit": "engineer",
@@ -128,6 +128,21 @@
       "sourceSha256": "5e228b1e6891bcfba3f7a3b4a1a8c28080cdc0a2d17ce64911b922c63536af5b",
       "argumentHint": "[technical-question] [--yagni]",
       "descriptionSha256": "31fcf702d279a06d844234798f4164ebeb99cc354456e60b2fb8512a04ae9215",
+      "missingSource": false
+    },
+    {
+      "kit": "engineer",
+      "id": "ak-atoz",
+      "route": "/guides/agentkit/skills/engineer/ak-atoz",
+      "detailFile": "src/data/guides/agentkit-skill-details/engineer/ak-atoz.ts",
+      "sourceChannel": "beta",
+      "sourceRef": "origin/dev",
+      "sourceCommit": "7d7f6b9659741aa54601c07ec34424f88d9a4e69",
+      "source": "kits/engineer/skills/ak-atoz/SKILL.md",
+      "sourceBlob": "fbb8168ec5dfb41fca32164d1923de77cf898f70",
+      "sourceSha256": "b5c6739fd0d8705ce4a1cb411186cc67820cf182f3f533d6169ec0f8cf0f3fc5",
+      "argumentHint": "\\\"<request or URL>\\\" [--yagni]",
+      "descriptionSha256": "03f2aa51ff7dc58df712aef3bcee933b79f70e7ee038e68372fa3c428e3c6525",
       "missingSource": false
     },
     {
@@ -2042,7 +2057,7 @@
       "detailFile": "src/data/guides/agentkit-skill-details/marketing/ak-filmmaking.ts",
       "sourceChannel": "beta",
       "sourceRef": "origin/dev",
-      "sourceCommit": "ddd1b947da4b8c8a4c2f0ad59997f69b5e26e52f",
+      "sourceCommit": "7d7f6b9659741aa54601c07ec34424f88d9a4e69",
       "source": "kits/marketing/skills/ak-filmmaking/SKILL.md",
       "sourceBlob": "307778be982899fa246c4b64a020a62ec27e5c84",
       "sourceSha256": "794b165cbc7eb26495259ab938c4a23b58401ad5825c3af824fa6bf9d1145ded",

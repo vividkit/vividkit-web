@@ -120,6 +120,8 @@ export const akCliCommandsCheatsheet: AkCliCommand[] = [
     category: "kits",
     subcommands: ["graph", "install", "list", "remove", "search", "show"],
     example: "ak skills list",
+    betaNote: "Beta adds `ak skills route \"<intent>\"`, which picks the installed skill that fits an intent or answers `NONE` (read-only, offline). Beta also adds commands for SkillX skill releases (`resolve`, `inspect`, `read`, `sync`) and for running granted skill scripts in a sandbox (`exec`, `grants`, `mcp serve`); these need opt-in environment flags such as `AGENTKIT_SKILLX=1`, so check `ak skills --help` first.",
+    betaNoteVi: "Beta thêm `ak skills route \"<intent>\"` để chọn skill đã cài phù hợp với ý định, hoặc trả về `NONE` (chỉ đọc, chạy offline). Beta cũng thêm các lệnh cho bản phát hành skill SkillX (`resolve`, `inspect`, `read`, `sync`) và để chạy script skill đã được cấp quyền trong sandbox (`exec`, `grants`, `mcp serve`); nhóm này cần bật biến môi trường như `AGENTKIT_SKILLX=1`, nên xem `ak skills --help` trước.",
   },
   {
     name: "ak skill",
@@ -134,6 +136,8 @@ export const akCliCommandsCheatsheet: AkCliCommand[] = [
     descriptionVi: "Quản lý agent đã cài",
     category: "kits",
     example: "ak agents",
+    betaNote: "Beta adds `ak agents model` (list, get, explain, set, inherit, reset, adopt, apply) to see and change the model each installed agent runs on. `list`, `get` and `explain` are read-only; if you changed a model inside the runtime, `adopt` records it in config, while `apply` overwrites it only with `--yes`.",
+    betaNoteVi: "Beta thêm `ak agents model` (list, get, explain, set, inherit, reset, adopt, apply) để xem và đổi model mà từng agent đã cài đang chạy. `list`, `get` và `explain` chỉ đọc; nếu bạn đã đổi model ngay trong runtime thì `adopt` ghi lựa chọn đó vào config, còn `apply` chỉ ghi đè khi có `--yes`.",
   },
   {
     name: "ak run",
@@ -326,6 +330,8 @@ export const akCliCommandsCheatsheet: AkCliCommand[] = [
     category: "config",
     subcommands: ["set", "get", "list", "delete", "rotate", "import-env"],
     example: "ak secrets list",
+    betaNote: "Beta adds `ak secrets annotate <ref>` to describe a stored secret (project, environment, provider, account, tags) without changing its value, and `ak secrets search` to find secrets by that metadata, never by value.",
+    betaNoteVi: "Beta thêm `ak secrets annotate <ref>` để mô tả một secret đã lưu (project, môi trường, provider, tài khoản, tag) mà không đổi giá trị của nó, và `ak secrets search` để tìm secret theo các thông tin đó, không bao giờ tìm theo giá trị.",
   },
   {
     name: "ak config",

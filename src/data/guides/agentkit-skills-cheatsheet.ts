@@ -124,6 +124,18 @@ export const akEngineerSkills: AkSkillEntry[] = [
     flags: ["--yagni"],
   },
   {
+    id: "ak-atoz",
+    command: "/ak:atoz",
+    commandCodex: "$ak:atoz",
+    description: "Take a request from A to Z: lock scope with an ak:advise interview and explicit user confirmation, list everything the user must hand over up front, then run fully autonomous as an orchestrator of parallel sub-sessions, tracking the GitHub issue, until every confirmed Done-means item is verified. Use when the user wants one upfront conversation and no babysitting afterwards; advice-only or preflight-only requests belong to ak:advise or ak:goal-warmup.",
+    descriptionVi: "Nhận một yêu cầu và làm từ A đến Z: chốt phạm vi qua buổi phỏng vấn ak:advise kèm xác nhận rõ ràng của người dùng, liệt kê ngay từ đầu mọi thứ người dùng cần giao, rồi chạy hoàn toàn tự động như bộ điều phối các sub-session song song, cập nhật GitHub issue, cho tới khi mọi mục Done means đã chốt đều được kiểm chứng. Dùng khi bạn muốn trao đổi một lần ở đầu và không phải trông chừng về sau; nếu chỉ cần lời khuyên hay chỉ cần kiểm tra trước khi chạy thì dùng ak:advise hoặc ak:goal-warmup.",
+    category: "buildShip",
+    isBeta: true,
+    argumentHint: "\"<request or URL>\" [--yagni]",
+    args: ["\"<request or URL>\""],
+    flags: ["--yagni"],
+  },
+  {
     id: "ak-autoresearch",
     command: "/ak:autoresearch",
     commandCodex: "$ak:autoresearch",
@@ -2098,6 +2110,31 @@ export interface AkBetaPreviewItem {
  */
 export const akEngineerBetaPreview: AkBetaPreviewItem[] = [
   {
+    id: "ak-atoz",
+    command: "/ak:atoz",
+    commandCodex: "$ak:atoz",
+    description: "One conversation up front, then no babysitting: an ak:advise interview locks scope and Done means behind an explicit Confirm, you hand over every prerequisite in one batch, then the agent orchestrates parallel sub-sessions, tracks the GitHub issue label and reviews the result in an isolated session until every Done-means item is verified.",
+    descriptionVi: "Trao đổi một lần ở đầu, sau đó không cần trông chừng: buổi phỏng vấn ak:advise chốt phạm vi và Done means sau một lần Confirm rõ ràng, bạn giao đủ mọi đầu vào trong một lượt, rồi agent điều phối các sub-session song song, cập nhật nhãn GitHub issue và review kết quả trong một session tách biệt cho tới khi mọi mục Done means được kiểm chứng.",
+    badge: "new",
+    flags: ["--yagni"],
+  },
+  {
+    id: "ak-ship",
+    command: "/ak:ship",
+    commandCodex: "$ak:ship",
+    description: "Supports batch-landing repositories: when the repo's own CLAUDE.md, AGENTS.md or contributing docs name a merge train, landing bot or scheduled routine, it runs the local verification those docs require, opens the PR ready for review with that evidence, and stops there even with --merge, reporting the merge as delegated to the landing owner.",
+    descriptionVi: "Hỗ trợ repo merge theo lô: khi CLAUDE.md, AGENTS.md hay tài liệu đóng góp của chính repo chỉ định merge train, bot hoặc lịch merge định kỳ, skill chạy bước kiểm tra local mà tài liệu đó yêu cầu, mở PR sẵn sàng review kèm bằng chứng đó, rồi dừng ở đó kể cả khi có --merge, báo việc merge đã giao cho bên phụ trách merge.",
+    badge: "enhanced",
+  },
+  {
+    id: "ak-vibe",
+    command: "/ak:vibe",
+    commandCodex: "$ak:vibe",
+    description: "Follows the same batch-landing boundary as /ak:ship: in a repo whose own docs name a landing owner, it still reviews, fixes and labels the PR, uses local verification evidence instead of waiting for PR checks, and skips the merge step even with --ship or --both.",
+    descriptionVi: "Theo cùng ranh giới merge theo lô như /ak:ship: trong repo mà tài liệu của chính nó chỉ định bên phụ trách merge, skill vẫn review, sửa và gắn nhãn PR, dùng bằng chứng kiểm tra local thay vì chờ PR check, và bỏ bước merge kể cả khi có --ship hoặc --both.",
+    badge: "enhanced",
+  },
+  {
     id: "ak-docs",
     command: "/ak:docs",
     commandCodex: "$ak:docs",
@@ -2126,8 +2163,8 @@ export const akEngineerBetaPreview: AkBetaPreviewItem[] = [
     id: "ak-ak",
     command: "/ak:ak",
     commandCodex: "$ak:ak",
-    description: "Knows the newer beta CLI: the ak insights work commands for tracking improvement work (verify only compares recorded evidence; finishing a plan is not proof of improvement), safer login (no piping an email code into a headless login; use the API-key route instead), and setup that keeps your saved telemetry choice instead of asking again. It reads ak describe <command> --json for a command's flags, exit codes and risk before scripting it, and when a fresh install plan stops on risks it shows you each risk and reruns with --accept-risks only after you accept that exact list.",
-    descriptionVi: "Nắm thêm CLI ak bản beta mới: nhóm lệnh ak insights work để theo dõi việc cải thiện (verify chỉ so sánh số liệu đã ghi; xong plan chưa phải là bằng chứng đã cải thiện), đăng nhập an toàn hơn (không pipe mã email vào login headless, dùng API key thay thế), và setup giữ nguyên lựa chọn telemetry đã lưu thay vì hỏi lại. Đọc ak describe <command> --json để biết flag, mã thoát và mức rủi ro của lệnh trước khi viết script, và khi plan cài mới dừng vì có rủi ro thì cho bạn xem từng rủi ro, chỉ chạy lại với --accept-risks sau khi bạn đồng ý đúng danh sách đó.",
+    description: "Knows the newer beta CLI. It routes before loading a skill: ak skills route \"<intent>\" --json answers NONE, one local skill, or a short list to clarify, and a high score is never consent to install. It covers ak agents model for reading or pinning the model each installed agent runs on (adopt a model you edited in the runtime instead of overwriting it), the ak insights work commands (verify only compares recorded evidence), safer headless login through an API key, and ak describe <command> --json for a command's flags, exit codes and risk. When a fresh install plan stops on risks it shows you each one and reruns with --accept-risks only after you accept that exact list.",
+    descriptionVi: "Nắm thêm CLI ak bản beta mới. Trước khi nạp skill sẽ định tuyến: ak skills route \"<intent>\" --json trả về NONE, một skill local, hoặc một danh sách ngắn cần làm rõ, và điểm cao không đồng nghĩa được phép cài. Biết dùng ak agents model để xem hoặc ghim model cho từng agent đã cài (nếu bạn đã sửa model trong runtime thì adopt thay vì ghi đè), nhóm lệnh ak insights work (verify chỉ so sánh số liệu đã ghi), đăng nhập headless an toàn hơn bằng API key, và ak describe <command> --json để biết flag, mã thoát và mức rủi ro của lệnh. Khi plan cài mới dừng vì có rủi ro thì cho bạn xem từng rủi ro, chỉ chạy lại với --accept-risks sau khi bạn đồng ý đúng danh sách đó.",
     badge: "enhanced",
   },
   {
@@ -2178,8 +2215,8 @@ export const akEngineerBetaPreview: AkBetaPreviewItem[] = [
     id: "ak-orchestrate",
     command: "/ak:orchestrate",
     commandCodex: "$ak:orchestrate",
-    description: "States which parts work off macOS: planning, probing and in-session subagent jobs run on Linux and Windows too, while jobs that need a supervised CLI or Pi process are reported blocked with the platform reason instead of being refused outright or run unsupervised.",
-    descriptionVi: "Nói rõ phần nào chạy được ngoài macOS: lên kế hoạch, kiểm tra runtime và job dùng subagent trong session vẫn chạy trên Linux và Windows, còn job cần tiến trình CLI hoặc Pi được giám sát thì báo blocked kèm lý do nền tảng, thay vì từ chối cả yêu cầu hay chạy mà không giám sát.",
+    description: "States which parts work off macOS: planning, probing and in-session subagent jobs run on Linux and Windows too, while a job that needs a supervised CLI or Pi process settles as blocked with an unsupported-platform reason instead of being run unsupervised. A blocked job is not repaired in place; it is re-prepared in a new run that routes it in-session, or prepared on a Mac.",
+    descriptionVi: "Nói rõ phần nào chạy được ngoài macOS: lên kế hoạch, kiểm tra runtime và job dùng subagent trong session vẫn chạy trên Linux và Windows, còn job cần tiến trình CLI hoặc Pi được giám sát thì chốt trạng thái blocked kèm lý do nền tảng không hỗ trợ, thay vì chạy mà không giám sát. Job đã blocked không sửa tại chỗ được; cần chuẩn bị lại trong một run mới để chạy trong session, hoặc chuẩn bị trên máy Mac.",
     badge: "enhanced",
   },
 ];
