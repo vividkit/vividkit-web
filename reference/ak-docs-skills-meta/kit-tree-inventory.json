@@ -5,7 +5,7 @@
   "stableRef": "origin/main",
   "betaRef": "origin/dev",
   "stableCommit": "1f79164e6dd197c957d2155a850cce0ca03a0adb",
-  "betaCommit": "ddd1b947da4b8c8a4c2f0ad59997f69b5e26e52f",
+  "betaCommit": "7d7f6b9659741aa54601c07ec34424f88d9a4e69",
   "stableVersion": "0.0.0",
   "betaVersion": "0.0.0",
   "kits": {
@@ -171,6 +171,7 @@
         "ak-advise",
         "ak-agentize",
         "ak-ai-artist",
+        "ak-atoz",
         "ak-autoresearch",
         "ak-backend-development",
         "ak-better-auth",
@@ -450,6 +451,7 @@
         "ak-ai-multimodal",
         "ak-ak",
         "ak-ask",
+        "ak-atoz",
         "ak-autoresearch",
         "ak-backend-development",
         "ak-better-auth",
@@ -546,7 +548,9 @@
         "ak-worktree",
         "ak-xia"
       ],
-      "betaOnly": [],
+      "betaOnly": [
+        "ak-atoz"
+      ],
       "stableOnly": []
     },
     "marketing": {
@@ -827,8 +831,8 @@
         "skillMd": "33c03017a9e9e9d2770741c2a29a9e274b2803d9"
       },
       "beta": {
-        "tree": "64269ccfddb483a9d120a553384841aec44b42e9",
-        "skillMd": "be445321cc4ca86498c3af74affce9dcb0ed0ae3"
+        "tree": "218bae50c0b803aef6a5dcab2b37269e918d1f9a",
+        "skillMd": "7b62687d62a86d80d5ac090f20cb914820366dfc"
       }
     },
     "core/ak-ask": {
@@ -1813,6 +1817,28 @@
         "skillMd": "d59932d7672743c4ea65e74326fce7ef1abe7779"
       }
     },
+    "engineer/ak-atoz": {
+      "id": "ak-atoz",
+      "sourceKit": "engineer",
+      "gitPath": {
+        "stable": null,
+        "beta": "kits/engineer/skills/ak-atoz"
+      },
+      "surfaces": {
+        "stable": [],
+        "beta": [
+          "engineer"
+        ]
+      },
+      "stable": {
+        "tree": null,
+        "skillMd": null
+      },
+      "beta": {
+        "tree": "38171c048ff6ca7599ec6a24259b6bbcc9a3204e",
+        "skillMd": "fbb8168ec5dfb41fca32164d1923de77cf898f70"
+      }
+    },
     "engineer/ak-autoresearch": {
       "id": "ak-autoresearch",
       "sourceKit": "engineer",
@@ -2601,8 +2627,8 @@
         "skillMd": "47ae4d8c0173e94da562c2cbc9a0369b990b208a"
       },
       "beta": {
-        "tree": "329cf47b3b947d3ada92ddba5177780de6ffdf3a",
-        "skillMd": "8c00cb8d3fa30642fa1e7dcafaad8c05ef995088"
+        "tree": "a3c2cb91243a34aaf92687773f6425f44f25eec5",
+        "skillMd": "b685ddd1c064e31f25c7581440b377c1460303f8"
       }
     },
     "engineer/ak-page-builder": {
@@ -2985,8 +3011,8 @@
         "skillMd": "36b43cef1475d0731fea595843928dfe0de17599"
       },
       "beta": {
-        "tree": "dd46a1ef936ef8a5638db0204a5c8e92cdb1d3f6",
-        "skillMd": "36b43cef1475d0731fea595843928dfe0de17599"
+        "tree": "fa51908bf130da1df554be57308e72e988c0fbd9",
+        "skillMd": "09f6a81507fd9a45a146777e7246dcd2377cd384"
       }
     },
     "engineer/ak-shopify": {
@@ -3177,8 +3203,8 @@
         "skillMd": "28f5197abec9cd692c5ff630629415684b0ddb84"
       },
       "beta": {
-        "tree": "0b5b11a2299db3bc3be05488006fc22e475912a8",
-        "skillMd": "28f5197abec9cd692c5ff630629415684b0ddb84"
+        "tree": "7bc773e64804856be0fd7d66913b95eaf9a68c20",
+        "skillMd": "233f54935748709d8a1cd2c6b32ed5b55937df68"
       }
     },
     "engineer/ak-web-frameworks": {

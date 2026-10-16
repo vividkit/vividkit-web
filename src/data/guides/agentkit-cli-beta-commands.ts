@@ -11,4 +11,12 @@ export const akCliBetaCommands: AkCliCommand[] = [
     keyFlags: ["--json"],
     example: "ak describe kit install --json",
   },
+  {
+    name: "ak license",
+    description: "See and manage the devices activated on your AgentKit App license key. Needs a session from ak login --license-key; an API-key or email login does not work here. To check which kits you can install, use ak licenses.",
+    descriptionVi: "Xem và quản lý các thiết bị đã kích hoạt bằng license key AgentKit App. Cần phiên đăng nhập từ ak login --license-key; đăng nhập bằng API key hay email không dùng được ở đây. Muốn xem bạn được cài kit nào thì dùng ak licenses.",
+    category: 'account',
+    subcommands: ["devices"],
+    example: "ak license devices",
+  },
 ];

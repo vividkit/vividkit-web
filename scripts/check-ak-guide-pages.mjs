@@ -443,7 +443,7 @@ function buildCobraTree(kitRoot, ref) {
     }
     return hits.length === 1 ? hits[0] : null;
   }
-  function exprUses(expr, caller, lits, locals) {
+  function exprUses(expr, caller, lits, locals, stack = new Set()) {
     const text = String(expr || '').trim();
     if (!text) return [];
     if (locals && locals.has(text)) return locals.get(text);
@@ -469,13 +469,13 @@ function buildCobraTree(kitRoot, ref) {
     }
     const call = parseCall(text, 0);
     if (!call) return [];
-    return callUses(call, caller, lits, locals, new Set());
+    return callUses(call, caller, lits, locals, stack);
   }
   function callUses(call, caller, lits, locals, stack) {
     const target = lookup(call.pkgAlias, call.funcName, caller && caller.pkg);
     if (!target) return [];
     const lists = target.paramNames.map((_, idx) => {
-      const vals = call.args[idx] == null ? [] : exprUses(call.args[idx], caller, lits, locals);
+      const vals = call.args[idx] == null ? [] : exprUses(call.args[idx], caller, lits, locals, stack);
       return vals.length ? vals : [''];
     });
     const combos = lists.length ? cartesian(lists) : [[]];
@@ -495,24 +495,24 @@ function buildCobraTree(kitRoot, ref) {
     for (const ev of scanDepth0(fn.body)) {
       if (ev.kind === 'assign') {
         const rhs = fn.body.slice(ev.rhsAt).trimStart();
-        locals.set(ev.name, rhs.startsWith('func') ? [] : exprUses(rhs, fn, lits, locals));
+        locals.set(ev.name, rhs.startsWith('func') ? [] : exprUses(rhs, fn, lits, locals, stack));
       } else if (ev.kind === 'useset') {
         locals.set(ev.name, [ev.use]);
       } else if (ev.kind === 'add') {
         for (const parent of locals.get(ev.recv) || []) {
           for (const arg of ev.args) {
-            for (const child of exprUses(arg, fn, lits, locals)) addEdge(parent, child);
+            for (const child of exprUses(arg, fn, lits, locals, stack)) addEdge(parent, child);
           }
         }
       } else if (ev.kind === 'grouped') {
         for (const parent of locals.get('root') || []) {
           for (const arg of ev.args.slice(1)) {
-            for (const child of exprUses(arg, fn, lits, locals)) addEdge(parent, child);
+            for (const child of exprUses(arg, fn, lits, locals, stack)) addEdge(parent, child);
           }
         }
       } else if (ev.kind === 'return') {
         const line = fn.body.slice(ev.at).trim().split('\n')[0];
-        returned = exprUses(line, fn, lits, locals);
+        returned = exprUses(line, fn, lits, locals, stack);
       }
     }
     return returned.map(asCmd).filter(Boolean);
