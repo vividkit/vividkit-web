@@ -120,8 +120,8 @@ export const akCliCommandsCheatsheet: AkCliCommand[] = [
     category: "kits",
     subcommands: ["graph", "install", "list", "remove", "search", "show"],
     example: "ak skills list",
-    betaNote: "Beta adds `ak skills route \"<intent>\"`, which picks the installed skill that fits an intent or answers `NONE` (read-only, offline). Beta also adds commands for SkillX skill releases (`resolve`, `inspect`, `read`, `sync`) and for running granted skill scripts in a sandbox (`exec`, `grants`, `mcp serve`); these need opt-in environment flags such as `AGENTKIT_SKILLX=1`, so check `ak skills --help` first.",
-    betaNoteVi: "Beta thêm `ak skills route \"<intent>\"` để chọn skill đã cài phù hợp với ý định, hoặc trả về `NONE` (chỉ đọc, chạy offline). Beta cũng thêm các lệnh cho bản phát hành skill SkillX (`resolve`, `inspect`, `read`, `sync`) và để chạy script skill đã được cấp quyền trong sandbox (`exec`, `grants`, `mcp serve`); nhóm này cần bật biến môi trường như `AGENTKIT_SKILLX=1`, nên xem `ak skills --help` trước.",
+    betaNote: "Beta adds `ak skills route \"<intent>\"`, which picks the installed skill that fits an intent or answers `NONE` (read-only, offline). Beta also adds commands for SkillX skill releases (`resolve`, `inspect`, `read`, `sync`) and for running granted skill scripts in a sandbox (`exec`, `grants`, `mcp serve`); these need opt-in environment flags such as `AGENTKIT_SKILLX=1`, so check `ak skills --help` first. With `AGENTKIT_SKILL_STORE=1`, `ak skills migrate` adopts kit skills an older install wrote into the skill store without writing, moving or removing any skill file; it applies without asking, so run it with `--dry-run --json` first.",
+    betaNoteVi: "Beta thêm `ak skills route \"<intent>\"` để chọn skill đã cài phù hợp với ý định, hoặc trả về `NONE` (chỉ đọc, chạy offline). Beta cũng thêm các lệnh cho bản phát hành skill SkillX (`resolve`, `inspect`, `read`, `sync`) và để chạy script skill đã được cấp quyền trong sandbox (`exec`, `grants`, `mcp serve`); nhóm này cần bật biến môi trường như `AGENTKIT_SKILLX=1`, nên xem `ak skills --help` trước. Khi bật `AGENTKIT_SKILL_STORE=1`, `ak skills migrate` đưa các skill của kit do bản cài cũ ghi ra vào skill store mà không ghi, di chuyển hay xóa file skill nào; lệnh chạy luôn không hỏi lại, nên chạy thử với `--dry-run --json` trước.",
   },
   {
     name: "ak skill",
@@ -196,6 +196,8 @@ export const akCliCommandsCheatsheet: AkCliCommand[] = [
     category: "inspect",
     keyFlags: ["--json", "--adapter", "--check", "--fix", "--list", "--offline", "--exit-on-fail"],
     example: "ak doctor --json",
+    betaNote: "Beta adds the read-only check `ak doctor --check skill_roots_shared`, which warns when two runtimes reach the same skills folder through a symlink or junction. The warning never changes the exit code; give each runtime its own skills folder.",
+    betaNoteVi: "Beta thêm bước kiểm tra chỉ đọc `ak doctor --check skill_roots_shared`, cảnh báo khi hai runtime dùng chung một thư mục skill qua symlink hoặc junction. Cảnh báo này không đổi mã thoát; hãy cho mỗi runtime một thư mục skill riêng.",
   },
   {
     name: "ak audit",
@@ -330,8 +332,8 @@ export const akCliCommandsCheatsheet: AkCliCommand[] = [
     category: "config",
     subcommands: ["set", "get", "list", "delete", "rotate", "import-env"],
     example: "ak secrets list",
-    betaNote: "Beta adds `ak secrets annotate <ref>` to describe a stored secret (project, environment, provider, account, tags) without changing its value, and `ak secrets search` to find secrets by that metadata, never by value.",
-    betaNoteVi: "Beta thêm `ak secrets annotate <ref>` để mô tả một secret đã lưu (project, môi trường, provider, tài khoản, tag) mà không đổi giá trị của nó, và `ak secrets search` để tìm secret theo các thông tin đó, không bao giờ tìm theo giá trị.",
+    betaNote: "Beta adds `ak secrets annotate <ref>` to describe a stored secret (project, environment, provider, account, tags) without changing its value, and `ak secrets search` to find secrets by that metadata, never by value. `annotate` runs only at the terminal; the Desktop app's Secrets page shows the result and searches the same way. `ak secrets import-env <dir>` imports every dotenv file in a project folder as one plan (skipping example, template and backup files); add `--dry-run` to see the plan without storing anything. A key set in more than one file is skipped and each place is listed.",
+    betaNoteVi: "Beta thêm `ak secrets annotate <ref>` để mô tả một secret đã lưu (project, môi trường, provider, tài khoản, tag) mà không đổi giá trị của nó, và `ak secrets search` để tìm secret theo các thông tin đó, không bao giờ tìm theo giá trị. `annotate` chỉ chạy ở terminal; trang Secrets của app Desktop hiển thị kết quả và tìm kiếm theo cùng cách. `ak secrets import-env <dir>` nhập mọi file dotenv trong thư mục project thành một plan (bỏ qua file example, template và backup); thêm `--dry-run` để xem plan mà không lưu gì. Key xuất hiện ở nhiều file sẽ bị bỏ qua và liệt kê từng chỗ.",
   },
   {
     name: "ak config",

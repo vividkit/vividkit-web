@@ -5,7 +5,7 @@
   "stableRef": "origin/main",
   "betaRef": "origin/dev",
   "stableCommit": "1f79164e6dd197c957d2155a850cce0ca03a0adb",
-  "betaCommit": "7d7f6b9659741aa54601c07ec34424f88d9a4e69",
+  "betaCommit": "5a7578bad0136fa12b598175319bd749e3727a87",
   "stableVersion": "0.0.0",
   "betaVersion": "0.0.0",
   "kits": {
@@ -831,8 +831,8 @@
         "skillMd": "33c03017a9e9e9d2770741c2a29a9e274b2803d9"
       },
       "beta": {
-        "tree": "218bae50c0b803aef6a5dcab2b37269e918d1f9a",
-        "skillMd": "7b62687d62a86d80d5ac090f20cb914820366dfc"
+        "tree": "a61862ee334b5a0bd272fd78a56fadf7510497a2",
+        "skillMd": "7d4629f0461ad064b9886902a25afa91380181a4"
       }
     },
     "core/ak-ask": {
