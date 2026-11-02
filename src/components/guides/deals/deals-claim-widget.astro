@@ -984,7 +984,8 @@ const couponEndsAt = import.meta.env.PUBLIC_CLAUDEKIT_COUPON_END_AT || '2026-05-
           el.style.opacity = '0';
           document.body.appendChild(el);
           el.select();
-          document.execCommand('copy');
+          // Legacy copy path; the standard typing marks execCommand deprecated.
+          (document as { execCommand(command: string): boolean }).execCommand('copy');
           document.body.removeChild(el);
         }
 

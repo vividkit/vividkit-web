@@ -6,7 +6,10 @@
 // Flags/argument-hint/descriptions: kit SKILL.md. Not CLI version. Not ak-docs pages[].
 // Nested docx/pdf/pptx/xlsx under document-skills are not separate top-level pages.
 // UI groups: Engineer = workflow (CK-like); Marketing = GTM lifecycle.
-// Invoke: Claude Code/Cursor /ak:<skill>, Codex $ak:<skill>.
+// Invoke: mostly authored in the v2 colon form (/ak:<skill>, $ak:<skill>); rendered through withAkInvocation
+//   as the v3 dash form /ak-<skill>, see agentkit-invocation.ts. Entries added since v3 use the dash form directly.
+
+import { withAkInvocation } from "./agentkit-invocation";
 
 export interface AkSkillEntry {
   id: string;
@@ -36,7 +39,7 @@ export interface AkSkillEntry {
   order?: number;
 }
 
-export const akEngineerSkills: AkSkillEntry[] = [
+export const akEngineerSkills: AkSkillEntry[] = withAkInvocation([
   {
     id: "ak-advise",
     command: "/ak:advise",
@@ -102,16 +105,6 @@ export const akEngineerSkills: AkSkillEntry[] = [
     args: ["[file-path]", "[prompt]"],
   },
   {
-    id: "ak-ak",
-    command: "/ak:ak",
-    commandCodex: "$ak:ak",
-    description: "Operate the ak control-plane CLI itself — the AgentKit binary that installs, inspects, updates, recovers, and removes kits and their skills. Use when the next action is invoking an ak subcommand (init, kit, skills, plan, journal, doctor, recover, self-update, login), deciding between read-only inspection and lifecycle mutation, disambiguating project vs global scope, or interpreting ak --json output. Not for authoring skills (use ak:skill-creator) or routing generic work (use ak:agentkit).",
-    descriptionVi: "Vận hành CLI ak (binary AgentKit): cài, xem, cập nhật, phục hồi và gỡ kit cùng skill. Dùng khi bước tiếp theo là chạy lệnh ak (init, kit, skills, plan, journal, doctor, recover, self-update, login), chọn xem trước hay sửa vòng đời, phân biệt project với global, hoặc đọc output --json. Không dùng để viết skill (dùng ak:skill-creator) hay chia việc chung (dùng ak:agentkit).",
-    category: "utilities",
-    argumentHint: "[goal or subcommand]",
-    args: ["[goal or subcommand]"],
-  },
-  {
     id: "ak-ask",
     command: "/ak:ask",
     commandCodex: "$ak:ask",
@@ -125,14 +118,14 @@ export const akEngineerSkills: AkSkillEntry[] = [
   },
   {
     id: "ak-atoz",
-    command: "/ak:atoz",
-    commandCodex: "$ak:atoz",
-    description: "Take a request from A to Z: lock scope with an ak:advise interview and explicit user confirmation, list everything the user must hand over up front, then run fully autonomous as an orchestrator of parallel sub-sessions, tracking the GitHub issue, until every confirmed Done-means item is verified. Use when the user wants one upfront conversation and no babysitting afterwards; advice-only or preflight-only requests belong to ak:advise or ak:goal-warmup.",
-    descriptionVi: "Nhận một yêu cầu và làm từ A đến Z: chốt phạm vi qua buổi phỏng vấn ak:advise kèm xác nhận rõ ràng của người dùng, liệt kê ngay từ đầu mọi thứ người dùng cần giao, rồi chạy hoàn toàn tự động như bộ điều phối các sub-session song song, cập nhật GitHub issue, cho tới khi mọi mục Done means đã chốt đều được kiểm chứng. Dùng khi bạn muốn trao đổi một lần ở đầu và không phải trông chừng về sau; nếu chỉ cần lời khuyên hay chỉ cần kiểm tra trước khi chạy thì dùng ak:advise hoặc ak:goal-warmup.",
+    command: "/ak-atoz",
+    commandCodex: "$ak-atoz",
+    description: "Take a request A to Z: lock scope via ak-advise, collect all prerequisites first, then run parallel sub-sessions on a GitHub issue until each Done-means item is verified.",
+    descriptionVi: "Đưa một yêu cầu đi từ A tới Z: khóa phạm vi qua ak-advise, gom đủ mọi thứ cần chuẩn bị ngay từ đầu, rồi chạy song song nhiều sub-session trên một GitHub issue cho tới khi từng mục Done means được kiểm chứng.",
     category: "buildShip",
-    isBeta: true,
-    argumentHint: "\"<request or URL>\" [--yagni]",
-    args: ["\"<request or URL>\""],
+    isNew: true,
+    argumentHint: '"<request or URL>" [--yagni]',
+    args: ["<request or URL>"],
     flags: ["--yagni"],
   },
   {
@@ -392,6 +385,18 @@ export const akEngineerSkills: AkSkillEntry[] = [
     category: "docsContent",
     argumentHint: "<docx|pdf|pptx|xlsx> [path] [action]",
     args: ["<docx|pdf|pptx|xlsx>", "[path]", "[action]"],
+  },
+  {
+    id: "ak-dogfood",
+    command: "/ak-dogfood",
+    commandCodex: "$ak-dogfood",
+    description: "Review this session for the skills it used, learn from its mistakes and slow paths, and improve those skills with concrete proposals; dry-run by default, --apply applies, --ask decides each proposal with the user. One skill's usage history is ak-skill-creator's; a git-history review is ak-retro's.",
+    descriptionVi: "Rà soát session này để tìm các skill đã dùng, học từ lỗi và chỗ chậm của nó, rồi cải thiện chính các skill đó bằng đề xuất cụ thể; mặc định chỉ chạy thử, --apply để áp dụng, --ask để bạn quyết từng đề xuất. Lịch sử dùng của một skill là việc của ak-skill-creator; rà soát theo git history là việc của ak-retro.",
+    category: "utilities",
+    isNew: true,
+    argumentHint: "[focus] [--all [--since YYYY-MM-DD]] [--apply|--ask] [--skill <name>]",
+    args: ["[focus]"],
+    flags: ["--all", "--apply", "--ask", "--since", "--skill"],
   },
   {
     id: "ak-enhance-ux-ax",
@@ -1077,6 +1082,18 @@ export const akEngineerSkills: AkSkillEntry[] = [
     flags: ["--framework", "--style"],
   },
   {
+    id: "ak-vault",
+    command: "/ak-vault",
+    commandCodex: "$ak-vault",
+    description: "Store, find, sync, rotate, and use secrets (API keys, tokens, .env values) through AgentKit's `ak secrets` vault without ever printing a value, while honoring a user's recorded choice of .env files or another secret manager. Use when a task touches a credential, a .env.* file, or a deploy or API call that needs a key.",
+    descriptionVi: "Lưu, tìm, đồng bộ, xoay vòng và dùng secret (API key, token, giá trị .env) qua vault `ak secrets` của AgentKit mà không bao giờ in giá trị ra, đồng thời làm theo lựa chọn bạn đã ghi: giữ file .env hay dùng trình quản lý secret khác. Dùng khi task đụng tới credential, file .env.*, hoặc lệnh deploy hay gọi API cần key.",
+    category: "securityIntel",
+    isNew: true,
+    argumentHint: "[store|find|sync|use|rotate|import] [ref or .env path]",
+    subcommands: ["store", "find", "sync", "use", "rotate", "import"],
+    args: ["[ref or .env path]"],
+  },
+  {
     id: "ak-vibe",
     command: "/ak:vibe",
     commandCodex: "$ak:vibe",
@@ -1152,9 +1169,9 @@ export const akEngineerSkills: AkSkillEntry[] = [
     args: ["[feature]"],
     flags: ["--auto", "--compare", "--copy", "--fast", "--improve", "--port"],
   },
-];
+]);
 
-export const akMarketingSkills: AkSkillEntry[] = [
+export const akMarketingSkills: AkSkillEntry[] = withAkInvocation([
   {
     id: "ak-ab-test-setup",
     command: "/ak:ab-test-setup",
@@ -1214,16 +1231,6 @@ export const akMarketingSkills: AkSkillEntry[] = [
     category: "videoMedia",
     argumentHint: "[file-path] [prompt]",
     args: ["[file-path]", "[prompt]"],
-  },
-  {
-    id: "ak-ak",
-    command: "/ak:ak",
-    commandCodex: "$ak:ak",
-    description: "Operate the ak control-plane CLI itself — the AgentKit binary that installs, inspects, updates, recovers, and removes kits and their skills. Use when the next action is invoking an ak subcommand (init, kit, skills, plan, journal, doctor, recover, self-update, login), deciding between read-only inspection and lifecycle mutation, disambiguating project vs global scope, or interpreting ak --json output. Not for authoring skills (use ak:skill-creator) or routing generic work (use ak:agentkit).",
-    descriptionVi: "Vận hành CLI ak (binary AgentKit): cài, xem, cập nhật, phục hồi và gỡ kit cùng skill. Dùng khi bước tiếp theo là chạy lệnh ak (init, kit, skills, plan, journal, doctor, recover, self-update, login), chọn xem trước hay sửa vòng đời, phân biệt project với global, hoặc đọc output --json. Không dùng để viết skill (dùng ak:skill-creator) hay chia việc chung (dùng ak:agentkit).",
-    category: "utilities",
-    argumentHint: "[goal or subcommand]",
-    args: ["[goal or subcommand]"],
   },
   {
     id: "ak-analytics",
@@ -1456,6 +1463,18 @@ export const akMarketingSkills: AkSkillEntry[] = [
     args: ["[text-or-file]"],
   },
   {
+    id: "ak-dogfood",
+    command: "/ak-dogfood",
+    commandCodex: "$ak-dogfood",
+    description: "Review this session for the skills it used, learn from its mistakes and slow paths, and improve those skills with concrete proposals; dry-run by default, --apply applies, --ask decides each proposal with the user. One skill's usage history is ak-skill-creator's; a git-history review is ak-retro's.",
+    descriptionVi: "Rà soát session này để tìm các skill đã dùng, học từ lỗi và chỗ chậm của nó, rồi cải thiện chính các skill đó bằng đề xuất cụ thể; mặc định chỉ chạy thử, --apply để áp dụng, --ask để bạn quyết từng đề xuất. Lịch sử dùng của một skill là việc của ak-skill-creator; rà soát theo git history là việc của ak-retro.",
+    category: "utilities",
+    isNew: true,
+    argumentHint: "[focus] [--all [--since YYYY-MM-DD]] [--apply|--ask] [--skill <name>]",
+    args: ["[focus]"],
+    flags: ["--all", "--apply", "--ask", "--since", "--skill"],
+  },
+  {
     id: "ak-enhance-ux-ax",
     command: "/ak:enhance-ux-ax",
     commandCodex: "$ak:enhance-ux-ax",
@@ -1490,12 +1509,12 @@ export const akMarketingSkills: AkSkillEntry[] = [
   },
   {
     id: "ak-filmmaking",
-    command: "/ak:filmmaking",
-    commandCodex: "$ak:filmmaking",
-    description: "Plan and produce long-form AI films (roughly 5-30 minutes) as a production graph with consistent characters, scene/shot continuity, storyboards, animatics, audio-first dialogue and lipsync, separate sound stems, cost-aware model routing, shot-level regeneration and final assembly. Not for marketing or social videos, motion graphics, or a single generated clip.",
-    descriptionVi: "Lên kế hoạch và sản xuất phim AI dài (khoảng 5-30 phút) dưới dạng một production graph: nhân vật nhất quán, liền mạch giữa cảnh và shot, storyboard, animatic, thoại làm audio trước rồi mới lipsync, các stem âm thanh tách riêng, chọn model theo chi phí, tạo lại từng shot và dựng bản cuối. Không dùng cho video marketing hay mạng xã hội, motion graphic, hoặc một clip đơn lẻ.",
+    command: "/ak-filmmaking",
+    commandCodex: "$ak-filmmaking",
+    description: "Produce long-form AI films (roughly 5-30 minutes) as a production graph: consistent characters, shot continuity, storyboards, animatics, audio-first lipsync dialogue, sound stems and cost-aware model routing.",
+    descriptionVi: "Sản xuất phim AI dài (khoảng 5-30 phút) dưới dạng một production graph: nhân vật nhất quán, liền mạch giữa các shot, storyboard, animatic, thoại làm audio trước rồi mới lipsync, stem âm thanh tách riêng và chọn model theo chi phí.",
     category: "videoMedia",
-    isBeta: true,
+    isNew: true,
     argumentHint: "[create|script|breakdown|bible|storyboard|animatic|render|audio|qc|assemble] [brief-or-project]",
     subcommands: ["create", "script", "breakdown", "bible", "storyboard", "animatic", "render", "audio", "qc", "assemble"],
     args: ["[brief-or-project]"],
@@ -1961,6 +1980,18 @@ export const akMarketingSkills: AkSkillEntry[] = [
     flags: ["--framework", "--style"],
   },
   {
+    id: "ak-vault",
+    command: "/ak-vault",
+    commandCodex: "$ak-vault",
+    description: "Store, find, sync, rotate, and use secrets (API keys, tokens, .env values) through AgentKit's `ak secrets` vault without ever printing a value, while honoring a user's recorded choice of .env files or another secret manager. Use when a task touches a credential, a .env.* file, or a deploy or API call that needs a key.",
+    descriptionVi: "Lưu, tìm, đồng bộ, xoay vòng và dùng secret (API key, token, giá trị .env) qua vault `ak secrets` của AgentKit mà không bao giờ in giá trị ra, đồng thời làm theo lựa chọn bạn đã ghi: giữ file .env hay dùng trình quản lý secret khác. Dùng khi task đụng tới credential, file .env.*, hoặc lệnh deploy hay gọi API cần key.",
+    category: "utilities",
+    isNew: true,
+    argumentHint: "[store|find|sync|use|rotate|import] [ref or .env path]",
+    subcommands: ["store", "find", "sync", "use", "rotate", "import"],
+    args: ["[ref or .env path]"],
+  },
+  {
     id: "ak-video",
     command: "/ak:video",
     commandCodex: "$ak:video",
@@ -2025,7 +2056,7 @@ export const akMarketingSkills: AkSkillEntry[] = [
     argumentHint: "[niche] [style]",
     args: ["[niche]", "[style]"],
   },
-];
+]);
 
 
 // --- UI grouping (workflow/SDLC for Engineer; GTM for Marketing) — not SKILL.md metadata ---
@@ -2106,164 +2137,16 @@ export interface AkBetaPreviewItem {
 
 /**
  * Engineer Beta Preview: beta-only skills (origin/dev minus origin/main) plus core skills with
- * notable beta-only changes (v2.20.0-beta.1 through the current v3.0.0 beta). Drop "enhanced" entries once the change reaches stable.
+ * notable beta-only changes. Drop entries once the change reaches stable. Empty while stable and beta
+ * ship the same skills (v3.0.0). Commands use the runtime name ak-<slug>.
  */
-export const akEngineerBetaPreview: AkBetaPreviewItem[] = [
-  {
-    id: "ak-atoz",
-    command: "/ak:atoz",
-    commandCodex: "$ak:atoz",
-    description: "One conversation up front, then no babysitting: an ak:advise interview locks scope and Done means behind an explicit Confirm, you hand over every prerequisite in one batch, then the agent orchestrates parallel sub-sessions, tracks the GitHub issue label and reviews the result in an isolated session until every Done-means item is verified.",
-    descriptionVi: "Trao đổi một lần ở đầu, sau đó không cần trông chừng: buổi phỏng vấn ak:advise chốt phạm vi và Done means sau một lần Confirm rõ ràng, bạn giao đủ mọi đầu vào trong một lượt, rồi agent điều phối các sub-session song song, cập nhật nhãn GitHub issue và review kết quả trong một session tách biệt cho tới khi mọi mục Done means được kiểm chứng.",
-    badge: "new",
-    flags: ["--yagni"],
-  },
-  {
-    id: "ak-ship",
-    command: "/ak:ship",
-    commandCodex: "$ak:ship",
-    description: "Supports batch-landing repositories: when the repo's own CLAUDE.md, AGENTS.md or contributing docs name a merge train, landing bot or scheduled routine, it runs the local verification those docs require, opens the PR ready for review with that evidence, and stops there even with --merge, reporting the merge as delegated to the landing owner.",
-    descriptionVi: "Hỗ trợ repo merge theo lô: khi CLAUDE.md, AGENTS.md hay tài liệu đóng góp của chính repo chỉ định merge train, bot hoặc lịch merge định kỳ, skill chạy bước kiểm tra local mà tài liệu đó yêu cầu, mở PR sẵn sàng review kèm bằng chứng đó, rồi dừng ở đó kể cả khi có --merge, báo việc merge đã giao cho bên phụ trách merge.",
-    badge: "enhanced",
-  },
-  {
-    id: "ak-vibe",
-    command: "/ak:vibe",
-    commandCodex: "$ak:vibe",
-    description: "Follows the same batch-landing boundary as /ak:ship: in a repo whose own docs name a landing owner, it still reviews, fixes and labels the PR, uses local verification evidence instead of waiting for PR checks, and skips the merge step even with --ship or --both.",
-    descriptionVi: "Theo cùng ranh giới merge theo lô như /ak:ship: trong repo mà tài liệu của chính nó chỉ định bên phụ trách merge, skill vẫn review, sửa và gắn nhãn PR, dùng bằng chứng kiểm tra local thay vì chờ PR check, và bỏ bước merge kể cả khi có --ship hoặc --both.",
-    badge: "enhanced",
-  },
-  {
-    id: "ak-docs",
-    command: "/ak:docs",
-    commandCodex: "$ak:docs",
-    description: "New philosophy mode (runs only when you ask for it): reads the repo and this project's past sessions, interviews you about product principles, then writes only the exact change you approve. Ordinary docs runs never read session history.",
-    descriptionVi: "Thêm chế độ philosophy (chỉ chạy khi bạn gọi rõ): đọc repo và các session cũ của chính project này, phỏng vấn bạn về nguyên tắc sản phẩm, rồi chỉ ghi đúng phần thay đổi bạn đã duyệt. Các lệnh docs thông thường không đọc lịch sử session.",
-    badge: "enhanced",
-    args: ["philosophy"],
-  },
-  {
-    id: "ak-test",
-    command: "/ak:test",
-    commandCodex: "$ak:test",
-    description: "Verification-first rework: before adding tests it states what must hold, the risk, and which existing check already covers it; reuses earlier results only when code, config and environment still match; decides when to add, merge or retire tests; never weakens tests or gates to get a green run. optimize and audit no longer fan out parallel scouts by default.",
-    descriptionVi: "Làm lại theo hướng kiểm chứng trước: trước khi thêm test sẽ nêu rõ điều cần đúng, rủi ro và check nào đã có sẵn; chỉ dùng lại kết quả cũ khi code, cấu hình và môi trường không đổi; quyết định khi nào thêm, gộp hay bỏ test; không nới lỏng test hay gate để có kết quả xanh. optimize và audit không còn mặc định chạy nhiều scout song song.",
-    badge: "enhanced",
-  },
-  {
-    id: "ak-skill-creator",
-    command: "/ak:skill-creator",
-    commandCodex: "$ak:skill-creator",
-    description: "Leaner skill guidance: first checks whether a new skill is really needed or an existing skill, reference or script is enough; keeps SKILL.md focused on outcome, limits and known failure modes; moves catalogs and examples into references. One production standard is now the authoring contract, and a report script summarizes standard warnings across many skills at once.",
-    descriptionVi: "Hướng dẫn viết skill gọn hơn: trước tiên kiểm tra có thật cần skill mới không, hay mở rộng skill, tài liệu tham khảo hoặc script sẵn có là đủ; giữ SKILL.md tập trung vào kết quả, giới hạn và lỗi hay gặp; chuyển danh mục và ví dụ sang references. Giờ có một production standard chung làm chuẩn viết skill, và một script báo cáo tóm tắt các cảnh báo theo chuẩn đó cho nhiều skill cùng lúc.",
-    badge: "enhanced",
-  },
-  {
-    id: "ak-ak",
-    command: "/ak:ak",
-    commandCodex: "$ak:ak",
-    description: "Knows the newer beta CLI. It routes before loading a skill: ak skills route \"<intent>\" --json answers NONE, one local skill, or a short list to clarify, and a high score is never consent to install. It covers ak agents model for reading or pinning the model each installed agent runs on (adopt a model you edited in the runtime instead of overwriting it), the ak insights work commands (verify only compares recorded evidence), safer headless login through an API key, and ak describe <command> --json for a command's flags, exit codes and risk. When a fresh install plan stops on risks it shows you each one and reruns with --accept-risks only after you accept that exact list. With the opt-in skill store (AGENTKIT_SKILL_STORE=1) it can run ak skills migrate to adopt skills an older install wrote, without touching any skill file (preview with --dry-run --json first), and it knows ak doctor now warns when two runtimes share one skills folder through a link.",
-    descriptionVi: "Nắm thêm CLI ak bản beta mới. Trước khi nạp skill sẽ định tuyến: ak skills route \"<intent>\" --json trả về NONE, một skill local, hoặc một danh sách ngắn cần làm rõ, và điểm cao không đồng nghĩa được phép cài. Biết dùng ak agents model để xem hoặc ghim model cho từng agent đã cài (nếu bạn đã sửa model trong runtime thì adopt thay vì ghi đè), nhóm lệnh ak insights work (verify chỉ so sánh số liệu đã ghi), đăng nhập headless an toàn hơn bằng API key, và ak describe <command> --json để biết flag, mã thoát và mức rủi ro của lệnh. Khi plan cài mới dừng vì có rủi ro thì cho bạn xem từng rủi ro, chỉ chạy lại với --accept-risks sau khi bạn đồng ý đúng danh sách đó. Khi bật skill store (AGENTKIT_SKILL_STORE=1), có thể chạy ak skills migrate để nhận quản lý các skill do bản cài cũ ghi ra mà không đụng vào file skill nào (xem trước bằng --dry-run --json), và biết ak doctor giờ cảnh báo khi hai runtime dùng chung một thư mục skill qua symlink.",
-    badge: "enhanced",
-  },
-  {
-    id: "ak-brainstorm",
-    command: "/ak:brainstorm",
-    commandCodex: "$ak:brainstorm",
-    description: "New opt-in --ak-render: builds the HTML brief with the AK Render compiler instead of hand-writing it. It implies --html, and a project .ak-render/ folder turns it on too.",
-    descriptionVi: "Thêm tùy chọn --ak-render: dựng bản brief HTML bằng compiler AK Render thay vì viết tay. Flag này kéo theo --html, và project có thư mục .ak-render/ cũng tự bật nó.",
-    badge: "enhanced",
-    flags: ["--ak-render"],
-  },
-  {
-    id: "ak-explain",
-    command: "/ak:explain",
-    commandCodex: "$ak:explain",
-    description: "New opt-in --ak-render: builds the visual explanation page from a page spec with the pinned AK Render CLI. It implies --html, and a project .ak-render/ folder turns it on too.",
-    descriptionVi: "Thêm tùy chọn --ak-render: dựng trang giải thích trực quan từ một page spec bằng CLI AK Render đã ghim phiên bản. Flag này kéo theo --html, và project có thư mục .ak-render/ cũng tự bật nó.",
-    badge: "enhanced",
-    flags: ["--ak-render"],
-  },
-  {
-    id: "ak-plan",
-    command: "/ak:plan",
-    commandCodex: "$ak:plan",
-    description: "New opt-in --ak-render: compiles plan.html from plan.page.yaml with the pinned AK Render CLI instead of hand-writing it. It implies --html, and a project .ak-render/ folder turns it on too.",
-    descriptionVi: "Thêm tùy chọn --ak-render: dựng plan.html từ plan.page.yaml bằng CLI AK Render đã ghim phiên bản thay vì viết tay. Flag này kéo theo --html, và project có thư mục .ak-render/ cũng tự bật nó.",
-    badge: "enhanced",
-    flags: ["--ak-render"],
-  },
-  {
-    id: "ak-preview",
-    command: "/ak:preview",
-    commandCodex: "$ak:preview",
-    description: "New opt-in --ak-render: compiles --explain, --diff, --plan-review or --recap HTML from a page spec with AK Render. It implies --html, and a project .ak-render/ folder turns it on too.",
-    descriptionVi: "Thêm tùy chọn --ak-render: dựng HTML cho --explain, --diff, --plan-review hoặc --recap từ một page spec bằng AK Render. Flag này kéo theo --html, và project có thư mục .ak-render/ cũng tự bật nó.",
-    badge: "enhanced",
-    flags: ["--ak-render"],
-  },
-  {
-    id: "ak-diagram",
-    command: "/ak:diagram",
-    commandCodex: "$ak:diagram",
-    description: "Diagrams can now be embedded in pages that other skills build with AK Render: a wrapper script compiles the whole page with the diagram inside. The diagram compiler itself stays offline; only the first run downloads the pinned AK Render package from npm.",
-    descriptionVi: "Sơ đồ giờ có thể nhúng vào các trang mà skill khác dựng bằng AK Render: một script wrapper dựng cả trang kèm sơ đồ bên trong. Bản thân compiler sơ đồ vẫn chạy offline; chỉ lần chạy đầu tải gói AK Render đã ghim phiên bản từ npm.",
-    badge: "enhanced",
-  },
-  {
-    id: "ak-orchestrate",
-    command: "/ak:orchestrate",
-    commandCodex: "$ak:orchestrate",
-    description: "States which parts work off macOS: planning, probing and in-session subagent jobs run on Linux and Windows too, while a job that needs a supervised CLI or Pi process settles as blocked with an unsupported-platform reason instead of being run unsupervised. A blocked job is not repaired in place; it is re-prepared in a new run that routes it in-session, or prepared on a Mac.",
-    descriptionVi: "Nói rõ phần nào chạy được ngoài macOS: lên kế hoạch, kiểm tra runtime và job dùng subagent trong session vẫn chạy trên Linux và Windows, còn job cần tiến trình CLI hoặc Pi được giám sát thì chốt trạng thái blocked kèm lý do nền tảng không hỗ trợ, thay vì chạy mà không giám sát. Job đã blocked không sửa tại chỗ được; cần chuẩn bị lại trong một run mới để chạy trong session, hoặc chuẩn bị trên máy Mac.",
-    badge: "enhanced",
-  },
-];
+export const akEngineerBetaPreview: AkBetaPreviewItem[] = [];
 
 /**
  * Marketing Beta Preview. Marketing inherits core, so it reuses the engineer "enhanced" entries
- * for skills the marketing kit also ships. Add marketing-only beta skills and upgrades here explicitly.
+ * for skills the marketing kit also ships. Add marketing-only beta skills, beta-only core skills and upgrades here explicitly.
  */
-export const akMarketingBetaPreview: AkBetaPreviewItem[] = [
-  ...akEngineerBetaPreview.filter(
-    (item) => item.badge === "enhanced" && akMarketingSkills.some((skill) => skill.id === item.id),
-  ),
-  {
-    id: "ak-filmmaking",
-    command: "/ak:filmmaking",
-    commandCodex: "$ak:filmmaking",
-    description: "Long-form AI films (about 5-30 minutes) run as a production graph: character bibles, shot continuity, storyboard and animatic gates, audio-first dialogue, separate sound stems, and fixing one failed shot without re-rendering the film.",
-    descriptionVi: "Phim AI dài (khoảng 5-30 phút) chạy theo một production graph: hồ sơ nhân vật, liền mạch giữa các shot, cổng duyệt storyboard và animatic, thoại làm audio trước, stem âm thanh tách riêng, và sửa một shot hỏng mà không phải render lại cả phim.",
-    badge: "new",
-    args: ["create", "script", "breakdown", "bible", "storyboard", "animatic", "render", "audio", "qc", "assemble"],
-  },
-  {
-    id: "ak-elevenlabs",
-    command: "/ak:elevenlabs",
-    commandCodex: "$ak:elevenlabs",
-    description: "Now writes and directs the voice script, not just the audio: new script, enhance and dialogue actions turn an idea into a performance-ready script, add delivery tags to final copy without changing its words, or direct a multi-speaker dialogue, then speak, clone and sfx generate the audio as before.",
-    descriptionVi: "Giờ viết và chỉ đạo cả kịch bản giọng đọc, không chỉ tạo audio: các action mới script, enhance và dialogue biến ý tưởng thành kịch bản sẵn sàng thu, thêm tag diễn đạt vào bản chốt mà không đổi chữ, hoặc chỉ đạo đoạn thoại nhiều người, rồi speak, clone và sfx tạo audio như trước.",
-    badge: "enhanced",
-    args: ["script", "enhance", "dialogue"],
-  },
-  {
-    id: "ak-motion-video",
-    command: "/ak:motion-video",
-    commandCodex: "$ak:motion-video",
-    description: "About 70 style profiles now, including a Vox-like collage explainer. Before any paid audio it shows a beat map (story arc, hook, one line per scene) and plans a shot and camera move per scene; printed or collage looks and supplied photos are generated as image layers through multix and animated in GSAP.",
-    descriptionVi: "Giờ có khoảng 70 style profile, thêm kiểu explainer collage giống Vox. Trước khi tạo audio tốn phí sẽ cho xem beat map (mạch câu chuyện, hook, mỗi cảnh một dòng) và lên shot cùng chuyển động camera cho từng cảnh; các kiểu in ấn, collage hay ảnh bạn đưa vào được tạo thành lớp ảnh qua multix rồi animate bằng GSAP.",
-    badge: "enhanced",
-  },
-  {
-    id: "ak-onboarding-cro",
-    command: "/ak:onboarding-cro",
-    commandCodex: "$ak:onboarding-cro",
-    description: "Rewritten as a lean core: activation must be one user action that predicts retention (or is labeled a hypothesis with the events to track); the plan fixes the biggest measured drop first, keeps required steps instead of deleting them, and ties every change to a success metric and a guardrail. No invented benchmarks, and it never sends messages itself.",
-    descriptionVi: "Viết lại gọn theo lõi mới: activation phải là một hành động của người dùng dự báo được việc quay lại (hoặc ghi rõ là giả thuyết kèm event cần đo); kế hoạch xử lý điểm rơi lớn nhất đã đo trước, giữ các bước bắt buộc thay vì xóa, và mỗi thay đổi gắn với một chỉ số thành công và một guardrail. Không bịa benchmark, và không tự gửi tin nhắn.",
-    badge: "enhanced",
-  },
-];
+export const akMarketingBetaPreview: AkBetaPreviewItem[] = [];
 
 export const akEngineerSkillCount = akEngineerSkills.length;
 export const akMarketingSkillCount = akMarketingSkills.length;

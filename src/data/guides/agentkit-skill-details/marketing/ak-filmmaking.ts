@@ -11,7 +11,7 @@ const stage = (
   outcomeVi: string,
 ): SkillSubcommand => ({
   name,
-  syntax: `/ak:filmmaking ${name} [brief-or-project]`,
+  syntax: `/ak-filmmaking ${name} [brief-or-project]`,
   titleEn,
   titleVi,
   descEn,
@@ -22,11 +22,11 @@ const stage = (
 
 const data: SkillInfographic = {
   id: 'ak-filmmaking',
-  command: '/ak:filmmaking',
+  command: '/ak-filmmaking',
   kit: 'marketer',
   header: {
-    titleEn: '/ak:filmmaking — Long-form AI films',
-    titleVi: '/ak:filmmaking — Phim AI dài',
+    titleEn: '/ak-filmmaking — Long-form AI films',
+    titleVi: '/ak-filmmaking — Phim AI dài',
     taglineEn:
       'Direct a 5–30 minute AI film as a production pipeline instead of one long generation: a films/<slug>/ production graph keeps characters, scenes, shots, dialogue timing, sound stems and cost in one place, so any single shot can be regenerated without touching the rest of the film.',
     taglineVi:
@@ -62,7 +62,7 @@ const data: SkillInfographic = {
     'Nếu phim không ổn ở dạng animatic thì sửa câu chuyện và nhịp; model video đắt hơn cũng không cứu được.',
   ],
   invocation: {
-    syntax: '/ak:filmmaking [create|script|breakdown|bible|storyboard|animatic|render|audio|qc|assemble] [brief-or-project]',
+    syntax: '/ak-filmmaking [create|script|breakdown|bible|storyboard|animatic|render|audio|qc|assemble] [brief-or-project]',
     arguments: [
       {
         token: '[brief-or-project]',
@@ -71,7 +71,7 @@ const data: SkillInfographic = {
         descEn: 'A film brief (story, length, budget mode, aspect, where to stop) for create, or an existing films/<slug>/ project for a single stage.',
         descVi: 'Brief phim (câu chuyện, thời lượng, mức budget, tỉ lệ khung, điểm dừng) cho create, hoặc một project films/<slug>/ có sẵn khi chạy một bước riêng.',
         required: false,
-        exampleCommand: '/ak:filmmaking create "A 12-minute drama about two sisters who reconnect in a rainy café. Balanced budget, 16:9, stop at each approval gate and before any paid generation"',
+        exampleCommand: '/ak-filmmaking create "A 12-minute drama about two sisters who reconnect in a rainy café. Balanced budget, 16:9, stop at each approval gate and before any paid generation"',
       },
     ],
     subcommands: [
@@ -91,8 +91,8 @@ const data: SkillInfographic = {
     {
       labelEn: 'Start a film with gates',
       labelVi: 'Bắt đầu phim có cổng duyệt',
-      command: '/ak:filmmaking create "A 12-minute drama about two sisters who reconnect in a rainy café. Balanced budget, 16:9, stop at each approval gate and before any paid generation"',
-      commandVi: '/ak:filmmaking create "Phim chính kịch 12 phút về hai chị em làm lành trong một quán cà phê ngày mưa. Budget balanced, 16:9, dừng ở mỗi cổng duyệt và trước mọi lần tạo tốn phí"',
+      command: '/ak-filmmaking create "A 12-minute drama about two sisters who reconnect in a rainy café. Balanced budget, 16:9, stop at each approval gate and before any paid generation"',
+      commandVi: '/ak-filmmaking create "Phim chính kịch 12 phút về hai chị em làm lành trong một quán cà phê ngày mưa. Budget balanced, 16:9, dừng ở mỗi cổng duyệt và trước mọi lần tạo tốn phí"',
       whenEn: 'Use for a new narrative film when you want to review every stage before money is spent.',
       whenVi: 'Dùng cho một phim kể chuyện mới khi bạn muốn duyệt từng bước trước khi tốn tiền.',
       expectedEn: 'Creates films/<slug>/, writes the screenplay and breakdown, and stops at the bible and storyboard gates with film.py validate results.',
@@ -102,8 +102,8 @@ const data: SkillInfographic = {
     {
       labelEn: 'Animatic before rendering',
       labelVi: 'Animatic trước khi render',
-      command: '/ak:filmmaking animatic films/rain-check',
-      commandVi: '/ak:filmmaking animatic films/rain-check',
+      command: '/ak-filmmaking animatic films/rain-check',
+      commandVi: '/ak-filmmaking animatic films/rain-check',
       whenEn: 'Use once the dialogue master exists, to check story and timing cheaply.',
       whenVi: 'Dùng khi đã có bản thoại master, để kiểm câu chuyện và nhịp với chi phí thấp.',
       expectedEn: 'Cuts a full-length animatic on the dialogue master and reports the timeline blockers to clear before rendering.',
@@ -112,8 +112,8 @@ const data: SkillInfographic = {
     {
       labelEn: 'Fix only the failed shots',
       labelVi: 'Chỉ sửa các shot hỏng',
-      command: '/ak:filmmaking qc films/rain-check',
-      commandVi: '/ak:filmmaking qc films/rain-check',
+      command: '/ak-filmmaking qc films/rain-check',
+      commandVi: '/ak-filmmaking qc films/rain-check',
       whenEn: 'Use after rendering, when some shots drift in identity, morph or lose lipsync.',
       whenVi: 'Dùng sau khi render, khi vài shot bị lệch nhận dạng nhân vật, biến dạng hoặc lệch khẩu hình.',
       expectedEn: 'Lists timestamped failures with the stage each returns to, so only those shots are redone, for example an identity drift back to the storyboard.',

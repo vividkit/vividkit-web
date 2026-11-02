@@ -46,6 +46,7 @@ export type GuideActiveTab =
   | 'agentkit-workflows'
   | 'agentkit-statusline'
   | 'agentkit-updating'
+  | 'agentkit-upgrading-v3'
   | 'agentkit-clean-reinstall'
   | 'agentkit-troubleshooting'
   | 'agentkit-clean-cutover-from-claudekit'

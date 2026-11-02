@@ -1,4 +1,5 @@
 ---
+import { akInvocationText } from '@/data/guides/agentkit-invocation';
 // AgentKit troubleshooting (quick checks). Clean reinstall lives on its own page.
 import { getLangFromUrl, useTranslatedPath, type Language } from '@/i18n';
 import AkPageHero from './AkPageHero.astro';
@@ -21,13 +22,13 @@ const skillMissing = isVi
   ? [
       'Xác nhận Kit đã cài đúng runtime và đúng scope (project vs global).',
       'Restart coding assistant hoặc mở session mới sau khi cài.',
-      'Dùng đúng cú pháp runtime (/ak:… vs $ak:…).',
+      akInvocationText('Dùng đúng cú pháp runtime (/ak:… vs $ak:…).'),
       'Đọc warning adapter: component có thể bị drop hoặc chỉ là supporting content.',
     ]
   : [
       'Confirm the Kit installed for the correct runtime and scope (project vs global).',
       'Restart the coding assistant or open a new session after install.',
-      'Use the correct runtime syntax (/ak:… vs $ak:…).',
+      akInvocationText('Use the correct runtime syntax (/ak:… vs $ak:…).'),
       'Read adapter warnings: a component may be dropped or kept as supporting content only.',
     ];
 

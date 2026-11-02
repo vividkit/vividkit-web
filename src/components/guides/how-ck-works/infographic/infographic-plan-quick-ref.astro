@@ -240,7 +240,7 @@ const outputFlags = (data.outputFlags || []).map(f => ({
   flag: f.flag,
   title: isVi ? f.titleVi : f.titleEn,
   desc: isVi ? f.descVi : f.descEn,
-  example: f.exampleCommand || '',
+  example: (isVi ? f.exampleCommandVi || f.exampleCommand : f.exampleCommand) || '',
   accent: outputFlagAccent[f.flag] || outputFlagAccent['--github'],
 }));
 const outputItems = (isVi ? data.reportOutput?.descVi : data.reportOutput?.descEn)

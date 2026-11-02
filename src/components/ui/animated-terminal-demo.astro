@@ -305,7 +305,7 @@ const t = useTranslations(currentLang);
     private staggeredItems: NodeListOf<HTMLElement>;
     private replayBtn: HTMLElement;
     private isAnimating = false;
-    private timeouts: number[] = [];
+    private timeouts: ReturnType<typeof setTimeout>[] = [];
     private hasPlayed = false;
     private typingCallbacks: Map<string, () => void> = new Map();
 

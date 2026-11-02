@@ -79,7 +79,7 @@ const structuredData = {
     <meta property="twitter:image" content={fullOgImage} />
 
     <!-- Structured Data (JSON-LD) -->
-    <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(structuredData)} />
 
     <!-- Google Analytics + Facebook Pixel -->
     <ThirdPartyAnalytics />

@@ -1,4 +1,4 @@
-// Auto-curated from AgentKit CLI help (stable origin/main). ak onboard is on the stable command tree.
+// Auto-curated from AgentKit CLI help (stable origin/main, v3). check-ak-guide-pages validates names against the cobra tree.
 export type AkCliCategory = 'setup' | 'kits' | 'account' | 'inspect' | 'config';
 
 export interface AkCliCommand {
@@ -9,7 +9,10 @@ export interface AkCliCommand {
   keyFlags?: string[];
   subcommands?: string[];
   example?: string;
-  /** Reader-facing note for behavior that differs on the beta CLI only. Backticks render as inline code. */
+  /** Reader-facing note on the stable CLI (extra subcommands, flag scope). Backticks render as inline code. */
+  note?: string;
+  noteVi?: string;
+  /** Reader-facing note for behavior that exists on the beta CLI only. Backticks render as inline code. */
   betaNote?: string;
   betaNoteVi?: string;
 }
@@ -52,8 +55,8 @@ export const akCliCommandsCheatsheet: AkCliCommand[] = [
     category: "setup",
     keyFlags: ["--check", "--channel", "--beta", "--dry-run", "--include-desktop", "--changelog", "--enable-auto-update", "--disable-auto-update"],
     example: "ak self-update --check",
-    betaNote: "On beta, `--beta` / `--channel` apply to this run only and do not change `updates.channel` in config. Set that key if you want beta CLI updates by default.",
-    betaNoteVi: "Trên beta, `--beta` / `--channel` chỉ áp dụng cho lần chạy này, không đổi `updates.channel` trong config. Muốn mặc định nhận bản CLI beta thì đặt key đó.",
+    note: "`--beta` / `--channel` apply to this run only and do not change `updates.channel` in config. Set that key if you want beta CLI updates by default.",
+    noteVi: "`--beta` / `--channel` chỉ áp dụng cho lần chạy này, không đổi `updates.channel` trong config. Muốn mặc định nhận bản CLI beta thì đặt key đó.",
   },
   {
     name: "ak update",
@@ -62,8 +65,16 @@ export const akCliCommandsCheatsheet: AkCliCommand[] = [
     category: "setup",
     keyFlags: ["--dry-run", "--yes", "--force", "--global", "--channel", "--beta", "--kits", "--local", "--remote", "--target", "--show-diff"],
     example: "ak update --dry-run",
-    betaNote: "On beta, `--beta` / `--channel` apply to this run only. Without a flag, each installed kit follows the channel it was installed from.",
-    betaNoteVi: "Trên beta, `--beta` / `--channel` chỉ áp dụng cho lần chạy này. Không gắn cờ thì mỗi kit đã cài đi theo kênh lúc nó được cài.",
+    note: "`--beta` / `--channel` apply to this run only. Without a flag, each installed kit follows the channel it was installed from. The opt-in `ak update --ssot` takes a checkpoint first, then moves the kit skills installed globally and in this project (all registered projects with `--all-projects`) into the AgentKit skill store and keeps that mode for later updates. It previews unless you pass `--yes`; undo it with `ak rollback --to v2`. Plain `ak update` never starts it.",
+    noteVi: "`--beta` / `--channel` chỉ áp dụng cho lần chạy này. Không gắn cờ thì mỗi kit đã cài đi theo kênh lúc nó được cài. Tùy chọn `ak update --ssot` chụp checkpoint trước, rồi chuyển các skill kit đã cài ở global và trong project này (mọi project đã đăng ký nếu thêm `--all-projects`) vào skill store của AgentKit, và giữ chế độ đó cho các lần update sau. Không có `--yes` thì chỉ xem trước; muốn quay lại thì chạy `ak rollback --to v2`. `ak update` thường không bao giờ tự bật chế độ này.",
+  },
+  {
+    name: "ak rollback",
+    description: "Return AgentKit to the v2 state captured before the v3 upgrade. It restores the newest pre-upgrade checkpoint step by step, keeps your sign-in, turns automatic updates off so nothing re-upgrades on its own, and resumes at the first unfinished step if it is interrupted. Only --to v2 is supported; preview with --dry-run.",
+    descriptionVi: "Đưa AgentKit về trạng thái v2 đã chụp lại trước khi nâng lên v3. Lệnh khôi phục checkpoint trước nâng cấp mới nhất theo từng bước, giữ phiên đăng nhập, tắt cập nhật tự động để không tự nâng lại, và nếu bị ngắt thì chạy lại sẽ tiếp tục từ bước chưa xong. Chỉ hỗ trợ --to v2; xem trước bằng --dry-run.",
+    category: 'setup',
+    keyFlags: ["--to", "--dry-run", "--checkpoint", "--install-v2", "--skip-secrets", "--yes"],
+    example: "ak rollback --to v2 --dry-run",
   },
   {
     name: "ak uninstall",
@@ -86,8 +97,8 @@ export const akCliCommandsCheatsheet: AkCliCommand[] = [
     category: "kits",
     subcommands: ["init", "install", "install-path", "list-kits", "refresh", "repair-install-mode", "uninstall", "validate"],
     example: "ak kit list-kits",
-    betaNote: "On beta, `ak kit list-kits` reads the remote kit list by default and no longer falls back to a local `./kits` folder. For a local source, pass `--kits-dir` or set `AGENTKIT_KITS_DIR`.",
-    betaNoteVi: "Trên beta, `ak kit list-kits` mặc định đọc danh sách kit từ remote và không còn tự lấy thư mục `./kits` local. Muốn xem nguồn local thì truyền `--kits-dir` hoặc đặt `AGENTKIT_KITS_DIR`.",
+    note: "`ak kit list-kits` reads the remote kit list by default and does not fall back to a local `./kits` folder. For a local source, pass `--kits-dir` or set `AGENTKIT_KITS_DIR`.",
+    noteVi: "`ak kit list-kits` mặc định đọc danh sách kit từ remote và không tự lấy thư mục `./kits` local. Muốn xem nguồn local thì truyền `--kits-dir` hoặc đặt `AGENTKIT_KITS_DIR`.",
   },
   {
     name: "ak kit init",
@@ -96,8 +107,8 @@ export const akCliCommandsCheatsheet: AkCliCommand[] = [
     category: "kits",
     keyFlags: ["--yes", "--beta", "--channel"],
     example: "ak kit init engineer --yes",
-    betaNote: "On beta, `--beta` / `--channel` apply to this run only and do not change the default channel in config. Set `kit.channel` in config if you want beta as the default.",
-    betaNoteVi: "Trên beta, `--beta` / `--channel` chỉ áp dụng cho lần chạy này, không đổi kênh mặc định trong config. Muốn beta là mặc định thì đặt `kit.channel` trong config.",
+    note: "`--beta` / `--channel` apply to this run only and do not change the default channel in config. Set `kit.channel` in config if you want beta as the default.",
+    noteVi: "`--beta` / `--channel` chỉ áp dụng cho lần chạy này, không đổi kênh mặc định trong config. Muốn beta là mặc định thì đặt `kit.channel` trong config.",
   },
   {
     name: "ak kit refresh",
@@ -120,8 +131,10 @@ export const akCliCommandsCheatsheet: AkCliCommand[] = [
     category: "kits",
     subcommands: ["graph", "install", "list", "remove", "search", "show"],
     example: "ak skills list",
-    betaNote: "Beta adds `ak skills route \"<intent>\"`, which picks the installed skill that fits an intent or answers `NONE` (read-only, offline). Beta also adds commands for SkillX skill releases (`resolve`, `inspect`, `read`, `sync`) and for running granted skill scripts in a sandbox (`exec`, `grants`, `mcp serve`); these need opt-in environment flags such as `AGENTKIT_SKILLX=1`, so check `ak skills --help` first. With `AGENTKIT_SKILL_STORE=1`, `ak skills migrate` adopts kit skills an older install wrote into the skill store without writing, moving or removing any skill file; it applies without asking, so run it with `--dry-run --json` first.",
-    betaNoteVi: "Beta thêm `ak skills route \"<intent>\"` để chọn skill đã cài phù hợp với ý định, hoặc trả về `NONE` (chỉ đọc, chạy offline). Beta cũng thêm các lệnh cho bản phát hành skill SkillX (`resolve`, `inspect`, `read`, `sync`) và để chạy script skill đã được cấp quyền trong sandbox (`exec`, `grants`, `mcp serve`); nhóm này cần bật biến môi trường như `AGENTKIT_SKILLX=1`, nên xem `ak skills --help` trước. Khi bật `AGENTKIT_SKILL_STORE=1`, `ak skills migrate` đưa các skill của kit do bản cài cũ ghi ra vào skill store mà không ghi, di chuyển hay xóa file skill nào; lệnh chạy luôn không hỏi lại, nên chạy thử với `--dry-run --json` trước.",
+    note: "Also: `ak skills route \"<intent>\"` (picks the installed skill that fits an intent or answers `NONE`; read-only, offline), `ak skills migrate` (adopts kit skills an older install wrote into the skill store without writing, moving or removing any skill file; it applies without asking, so run it with `--dry-run --json` first), `ak skills kit` (personal kits that extend a kit version), `ak skills resolve`, `inspect`, `read` and `sync` (SkillX releases), `ak skills grants` and `exec` (run a granted skill script in a sandbox), `ak skills improve` and `evolution`, and `ak skills mcp serve`. The SkillX, personal-kit and migrate commands need the opt-in skill store (`ak update --ssot`, or a flag such as `AGENTKIT_SKILLX=1`), so check `ak skills --help` first.",
+    noteVi: "Có thêm `ak skills route \"<intent>\"` (chọn skill đã cài phù hợp với ý định, hoặc trả về `NONE`; chỉ đọc, chạy offline), `ak skills migrate` (đưa các skill của kit do bản cài cũ ghi ra vào skill store mà không ghi, di chuyển hay xóa file skill nào; lệnh chạy luôn không hỏi lại, nên chạy thử với `--dry-run --json` trước), `ak skills kit` (personal kit mở rộng từ một phiên bản kit), `ak skills resolve`, `inspect`, `read` và `sync` (bản phát hành SkillX), `ak skills grants` và `exec` (chạy script skill đã cấp quyền trong sandbox), `ak skills improve` và `evolution`, cùng `ak skills mcp serve`. Các lệnh SkillX, personal kit và migrate cần bật skill store (`ak update --ssot`, hoặc biến như `AGENTKIT_SKILLX=1`), nên xem `ak skills --help` trước.",
+    betaNote: "Beta adds `ak skills link` and `unlink` to connect SkillX to your agentkit.best account, or remove that link.",
+    betaNoteVi: "Beta thêm `ak skills link` và `unlink` để nối SkillX với tài khoản agentkit.best của bạn, hoặc gỡ liên kết đó.",
   },
   {
     name: "ak skill",
@@ -136,8 +149,8 @@ export const akCliCommandsCheatsheet: AkCliCommand[] = [
     descriptionVi: "Quản lý agent đã cài",
     category: "kits",
     example: "ak agents",
-    betaNote: "Beta adds `ak agents model` (list, get, explain, set, inherit, reset, adopt, apply) to see and change the model each installed agent runs on. `list`, `get` and `explain` are read-only; if you changed a model inside the runtime, `adopt` records it in config, while `apply` overwrites it only with `--yes`.",
-    betaNoteVi: "Beta thêm `ak agents model` (list, get, explain, set, inherit, reset, adopt, apply) để xem và đổi model mà từng agent đã cài đang chạy. `list`, `get` và `explain` chỉ đọc; nếu bạn đã đổi model ngay trong runtime thì `adopt` ghi lựa chọn đó vào config, còn `apply` chỉ ghi đè khi có `--yes`.",
+    note: "Also: `ak agents model` (list, get, set, inherit, reset, apply, adopt, explain) to see which config layer sets each installed agent's model, pin a model or reasoning effort, or let an agent use the parent session's model. `list`, `get` and `explain` are read-only; if you changed a model inside the runtime, `adopt` records it in config, while `apply` overwrites it only with `--yes`.",
+    noteVi: "Có thêm `ak agents model` (list, get, set, inherit, reset, apply, adopt, explain) để xem lớp config nào quyết định model của từng agent đã cài, ghim model hoặc mức reasoning, hoặc cho agent dùng model của session cha. `list`, `get` và `explain` chỉ đọc; nếu bạn đã đổi model ngay trong runtime thì `adopt` ghi lựa chọn đó vào config, còn `apply` chỉ ghi đè khi có `--yes`.",
   },
   {
     name: "ak run",
@@ -190,14 +203,28 @@ export const akCliCommandsCheatsheet: AkCliCommand[] = [
     example: "ak licenses",
   },
   {
+    name: "ak license",
+    description: "Manage the devices bound to your AgentKit App license: list them, or deactivate one to free a seat.",
+    descriptionVi: "Quản lý các thiết bị đang gắn với license AgentKit App: xem danh sách, hoặc hủy kích hoạt một thiết bị để giải phóng chỗ.",
+    category: 'account',
+    subcommands: ["devices", "devices deactivate"],
+    example: "ak license devices",
+  },
+  {
     name: "ak doctor",
     description: "Run health checks on the AgentKit installation",
     descriptionVi: "Kiểm tra sức khỏe bản cài AgentKit",
     category: "inspect",
     keyFlags: ["--json", "--adapter", "--check", "--fix", "--list", "--offline", "--exit-on-fail"],
     example: "ak doctor --json",
-    betaNote: "Beta adds the read-only check `ak doctor --check skill_roots_shared`, which warns when two runtimes reach the same skills folder through a symlink or junction. The warning never changes the exit code; give each runtime its own skills folder.",
-    betaNoteVi: "Beta thêm bước kiểm tra chỉ đọc `ak doctor --check skill_roots_shared`, cảnh báo khi hai runtime dùng chung một thư mục skill qua symlink hoặc junction. Cảnh báo này không đổi mã thoát; hãy cho mỗi runtime một thư mục skill riêng.",
+  },
+  {
+    name: "ak describe",
+    description: "Print the contract of any ak command for agents and scripts: summary, examples, flags, subcommands, declared exit codes, and whether it changes files, needs the network or asks for confirmation. Read-only and offline; values a command has not declared read \"unspecified\".",
+    descriptionVi: "In ra contract của bất kỳ lệnh ak nào cho agent và script: tóm tắt, ví dụ, flag, lệnh con, mã thoát đã khai báo, và lệnh đó có sửa file, cần mạng hay hỏi xác nhận không. Chỉ đọc và chạy offline; giá trị nào lệnh chưa khai báo sẽ hiện \"unspecified\".",
+    category: 'inspect',
+    keyFlags: ["--json"],
+    example: "ak describe kit install --json",
   },
   {
     name: "ak audit",
@@ -212,6 +239,8 @@ export const akCliCommandsCheatsheet: AkCliCommand[] = [
     descriptionVi: "Quản lý snapshot để rollback",
     category: "inspect",
     example: "ak backups",
+    note: "Also: `ak backups checkpoint`, a compressed, verifiable checkpoint of AgentKit and runtime state. `ak update --ssot` takes one before it upgrades, `--pre-upgrade` takes one by hand, and `ak rollback --to v2` restores from it.",
+    noteVi: "Có thêm `ak backups checkpoint`: chụp checkpoint nén, kiểm tra được của trạng thái AgentKit và runtime. `ak update --ssot` tự chụp một cái trước khi nâng cấp, `--pre-upgrade` để chụp tay, và `ak rollback --to v2` khôi phục từ đó.",
   },
   {
     name: "ak recover",
@@ -252,8 +281,8 @@ export const akCliCommandsCheatsheet: AkCliCommand[] = [
     category: "inspect",
     subcommands: ["skills", "agents", "consent", "collect", "compare"],
     example: "ak insights skills",
-    betaNote: "Beta adds `ak insights work` (list, create, defer, dismiss, awaiting-verification, verify) to track improvement work from evidence-backed suggestions. `verify` only compares recorded evidence; it does not run a model or edit files.",
-    betaNoteVi: "Beta thêm `ak insights work` (list, create, defer, dismiss, awaiting-verification, verify) để theo dõi việc cải thiện từ các gợi ý có bằng chứng. `verify` chỉ so sánh số liệu đã ghi, không chạy model hay sửa file.",
+    note: "Also: `ak insights work` (list, create, defer, dismiss, awaiting-verification, verify) to track improvement work from evidence-backed suggestions. `verify` only compares recorded evidence; it does not run a model or edit files.",
+    noteVi: "Có thêm `ak insights work` (list, create, defer, dismiss, awaiting-verification, verify) để theo dõi việc cải thiện từ các gợi ý có bằng chứng. `verify` chỉ so sánh số liệu đã ghi, không chạy model hay sửa file.",
   },
   {
     name: "ak eval",
@@ -307,8 +336,8 @@ export const akCliCommandsCheatsheet: AkCliCommand[] = [
     descriptionVi: "Liệt kê phiên bản local của ak, kit và skill",
     category: "inspect",
     example: "ak versions",
-    betaNote: "On beta, `ak versions` shows one row per install destination (runtime, scope, delivery mode), and the `--json` data uses schema version 2. Add `--local-only` to skip network lookups.",
-    betaNoteVi: "Trên beta, `ak versions` hiện một dòng cho mỗi nơi đã cài (runtime, scope, cách cài), và dữ liệu `--json` dùng schema version 2. Thêm `--local-only` để không tra mạng.",
+    note: "`ak versions` shows one row per install destination (runtime, scope, delivery mode), and the `--json` data uses schema version 2. Add `--local-only` to skip network lookups.",
+    noteVi: "`ak versions` hiện một dòng cho mỗi nơi đã cài (runtime, scope, cách cài), và dữ liệu `--json` dùng schema version 2. Thêm `--local-only` để không tra mạng.",
   },
   {
     name: "ak changelog",
@@ -332,8 +361,8 @@ export const akCliCommandsCheatsheet: AkCliCommand[] = [
     category: "config",
     subcommands: ["set", "get", "list", "delete", "rotate", "import-env"],
     example: "ak secrets list",
-    betaNote: "Beta adds `ak secrets annotate <ref>` to describe a stored secret (project, environment, provider, account, tags) without changing its value, and `ak secrets search` to find secrets by that metadata, never by value. `annotate` runs only at the terminal; the Desktop app's Secrets page shows the result and searches the same way. `ak secrets import-env <dir>` imports every dotenv file in a project folder as one plan (skipping example, template and backup files); add `--dry-run` to see the plan without storing anything. A key set in more than one file is skipped and each place is listed.",
-    betaNoteVi: "Beta thêm `ak secrets annotate <ref>` để mô tả một secret đã lưu (project, môi trường, provider, tài khoản, tag) mà không đổi giá trị của nó, và `ak secrets search` để tìm secret theo các thông tin đó, không bao giờ tìm theo giá trị. `annotate` chỉ chạy ở terminal; trang Secrets của app Desktop hiển thị kết quả và tìm kiếm theo cùng cách. `ak secrets import-env <dir>` nhập mọi file dotenv trong thư mục project thành một plan (bỏ qua file example, template và backup); thêm `--dry-run` để xem plan mà không lưu gì. Key xuất hiện ở nhiều file sẽ bị bỏ qua và liệt kê từng chỗ.",
+    note: "Also: `ak secrets search` and `describe` (find a secret by its metadata, never by value), `annotate` (edit metadata only), `alias`, `compare` (answers match or differs and prints neither value), and `request` plus `run` (ask for access, then run one program with granted secrets in its environment). `ak secrets import-env <dir>` imports every dotenv file in a project folder as one plan (skipping example, template and backup files); add `--dry-run` to see the plan without storing anything. Values still never print.",
+    noteVi: "Có thêm `ak secrets search` và `describe` (tìm secret theo metadata, không bao giờ theo giá trị), `annotate` (chỉ sửa metadata), `alias`, `compare` (chỉ trả lời khớp hay khác, không in giá trị nào), cùng `request` và `run` (xin quyền truy cập, rồi chạy một chương trình với secret đã được cấp trong biến môi trường). `ak secrets import-env <dir>` nhập mọi file dotenv trong thư mục project thành một plan (bỏ qua file example, template và backup); thêm `--dry-run` để xem plan mà không lưu gì. Giá trị vẫn không bao giờ bị in ra.",
   },
   {
     name: "ak config",

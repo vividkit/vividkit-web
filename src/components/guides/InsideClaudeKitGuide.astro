@@ -1,4 +1,5 @@
 ---
+import type { TranslationKey } from '@/i18n/utils';
 /**
  * Inside ClaudeKit hub page — compact header + search + track filter + paginated article grid.
  * Scales from 3 to 100+ articles: search narrows, filter focuses, load-more paginates.
@@ -85,7 +86,7 @@ const tracks = [...new Set(insideClaudeKitTopics.map((topic) => topic.track))];
             role="tab"
             aria-selected="false"
           >
-            {t(meta.badgeKey)}
+            {t(meta.badgeKey as TranslationKey)}
           </button>
         );
       })}
@@ -126,7 +127,7 @@ const tracks = [...new Set(insideClaudeKitTopics.map((topic) => topic.track))];
   </section>
 </div>
 
-<script define:vars={{ PAGE_SIZE, showingLabel: t('guides.inside_claudekit.showing_count'), ofLabel: t('guides.inside_claudekit.of_count'), articlesLabel: t('guides.inside_claudekit.articles_count') }}>
+<script is:inline define:vars={{ PAGE_SIZE, showingLabel: t('guides.inside_claudekit.showing_count'), ofLabel: t('guides.inside_claudekit.of_count'), articlesLabel: t('guides.inside_claudekit.articles_count') }}>
   function initHub() {
     const bar = document.getElementById('ick-filter-bar');
     const grid = document.getElementById('ick-article-grid');

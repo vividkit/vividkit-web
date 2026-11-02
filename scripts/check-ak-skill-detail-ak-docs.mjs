@@ -305,7 +305,7 @@ function main(argv) {
       if (row.missing) process.stdout.write(`  - ${row.missing}\n`);
       for (const f of row.invented || []) process.stdout.write(`  - wrong ${f}\n`);
       for (const f of row.missed || []) process.stdout.write(`  - missed ${f}\n`);
-      for (const f of row.localeDrift || []) process.stdout.write(`  - en/vi drift ${f}\n`);
+      if (row.localeDrift?.length) process.stdout.write(`  - en/vi drift (${row.localeDrift.length}): ${row.localeDrift.join(' ')}\n`);
     }
   }
   process.stdout.write(
@@ -320,7 +320,7 @@ function main(argv) {
     process.stdout.write(`\n${row.kit}/${row.id} channel=${row.channel}\n`);
     for (const f of row.invented) process.stdout.write(`  - wrong ${f}\n`);
     for (const f of row.missed) process.stdout.write(`  - missed ${f}\n`);
-    for (const f of row.localeDrift) process.stdout.write(`  - en/vi drift ${f}\n`);
+    if (row.localeDrift.length) process.stdout.write(`  - en/vi drift (${row.localeDrift.length}): ${row.localeDrift.join(' ')}\n`);
   }
   process.exit(rows.some((r) => r.invented.length || r.missed.length) ? 1 : 0);
 

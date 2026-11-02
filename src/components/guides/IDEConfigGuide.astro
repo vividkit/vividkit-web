@@ -137,8 +137,8 @@ const fullExample = `"claudeCode.environmentVariables": [
   document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('[data-guide-tabs]').forEach(group => {
       const buttons = Array.from(group.querySelectorAll('[data-tab-button]'));
-      const panels = Array.from(group.querySelectorAll('[data-tab-panel]'));
-      const activate = (tab) => {
+      const panels = Array.from(group.querySelectorAll<HTMLElement>('[data-tab-panel]'));
+      const activate = (tab?: string | null) => {
         buttons.forEach(button => {
           const active = button.getAttribute('data-tab-button') === tab;
           button.setAttribute('aria-selected', String(active));

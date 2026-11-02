@@ -1,4 +1,5 @@
 ---
+import type { TranslationKey } from '@/i18n/utils';
 // Section 5: Common Confusions - FAQ accordion
 import { useTranslations } from "@/i18n/utils";
 import { type Language } from "@/i18n";
@@ -41,7 +42,7 @@ const faqs = [
             Q
           </span>
           <span class="flex-1 font-medium text-slate-900 dark:text-white">
-            {t(`guides.claude_mechanics.faq.${faq.q}`)}
+            {t(`guides.claude_mechanics.faq.${faq.q}` as TranslationKey)}
           </span>
           <svg
             class="w-5 h-5 text-slate-400 shrink-0 transition-transform duration-200 group-open:rotate-180"
@@ -56,7 +57,7 @@ const faqs = [
         <div class="px-4 pb-4">
           <div class="pl-9 pt-2 border-t border-slate-200 dark:border-slate-700">
             <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">
-              {t(`guides.claude_mechanics.faq.${faq.a}`)}
+              {t(`guides.claude_mechanics.faq.${faq.a}` as TranslationKey)}
             </p>
           </div>
         </div>

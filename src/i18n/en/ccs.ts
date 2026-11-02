@@ -170,6 +170,8 @@ export const ccs = {
   'ccs.guide.dashboard_launch_default': 'Open dashboard (auto-opens browser)',
   'ccs.guide.dashboard_launch_custom': 'Specify custom port',
   'ccs.guide.dashboard_access_note': 'The dashboard will automatically open in your browser. If not, access it manually at http://localhost:PORT',
+  'ccs.guide.dashboard_manage_title': 'Account Management',
+  'ccs.guide.dashboard_manage_desc': 'Accounts are stored locally and can be managed via the web dashboard. Add, edit, or remove profiles directly from the UI.',
   'ccs.guide.dashboard_setup_title': 'Beginner setup path',
   'ccs.guide.dashboard_step1_title': 'Open the local app',
   'ccs.guide.dashboard_step1_desc': 'Start with the dashboard instead of editing YAML by hand.',

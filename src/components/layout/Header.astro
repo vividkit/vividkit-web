@@ -1,6 +1,6 @@
 ---
 import Logo from '@/components/ui/Logo.astro';
-import { getLangFromUrl, languages, useTranslatedPath, type Language } from '@/i18n';
+import { getLangFromUrl, useTranslatedPath, type Language } from '@/i18n';
 import { useTranslations } from '@/i18n/utils';
 import { landingContent } from '@/data/landing-content';
 
@@ -8,8 +8,6 @@ interface Props {
   class?: string;
   lang?: Language;
 }
-
-const { class: className = '', lang = 'en' } = Astro.props;
 
 // Get language from URL if not provided
 const currentLang = getLangFromUrl(Astro.url);

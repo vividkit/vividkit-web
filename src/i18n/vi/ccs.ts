@@ -170,6 +170,8 @@ export const ccs = {
   'ccs.guide.dashboard_launch_default': 'Mở dashboard (tự mở trình duyệt)',
   'ccs.guide.dashboard_launch_custom': 'Chỉ định port tùy chỉnh',
   'ccs.guide.dashboard_access_note': 'Dashboard sẽ tự động mở trong trình duyệt. Nếu không, truy cập thủ công tại http://localhost:PORT',
+  'ccs.guide.dashboard_manage_title': 'Quản lý tài khoản',
+  'ccs.guide.dashboard_manage_desc': 'Các tài khoản được lưu trữ cục bộ và có thể quản lý qua web dashboard. Thêm, sửa hoặc xóa profiles trực tiếp từ giao diện.',
   'ccs.guide.dashboard_setup_title': 'Lộ trình setup cho người mới',
   'ccs.guide.dashboard_step1_title': 'Mở app cục bộ',
   'ccs.guide.dashboard_step1_desc': 'Bắt đầu bằng dashboard thay vì tự sửa YAML.',

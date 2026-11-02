@@ -216,7 +216,7 @@ const wizardSteps = isVi
               { kind: 'cmd' as const, text: 'ak kit refresh engineer --yes' },
             ],
           },
-        ] as const
+        ] as { q: string; parts: { kind: 'cmd' | 'sep' | 'or' | 'note'; text: string }[]; hint?: string }[]
       ).map((item) => (
         <div class="rounded-2xl border border-slate-200/80 bg-white/80 p-4 dark:border-slate-700 dark:bg-slate-900/50">
           <div class="text-sm font-semibold text-slate-900 dark:text-white">{item.q}</div>
@@ -567,6 +567,12 @@ ak recover <id> --allow-root /absolute/project
     </p>
   </AkSection>
 
+  <AkCallout variant="info" title={isVi ? 'Từ v2 lên v3' : 'From v2 to v3'}>
+    {isVi
+      ? 'v3 giờ là bản stable, nên update trên kênh stable sẽ đưa bạn từ v2 lên v3: lệnh skill đổi sang dạng gạch ngang, ak-ak gộp vào ak-agentkit, có thời hạn nhận bản cập nhật và skill store tùy chọn. Cách quay về v2 cũng ở trang '
+      : 'v3 is now the stable release, so updating on the stable channel moves you from v2 to v3: skill commands switch to the dash form, ak-ak merges into ak-agentkit, and it adds a license update window and an opt-in skill store. How to roll back to v2 is on '}<a href={translatePath('/guides/agentkit/upgrading-to-v3')} class="font-semibold underline underline-offset-2">{isVi ? 'Nâng lên v3' : 'Upgrading to v3'}</a>.
+  </AkCallout>
+
 
   <AkCallout variant="info" title={isVi ? 'Mã thoát (ak update)' : 'Exit codes (ak update)'}>
     {isVi
@@ -606,6 +612,7 @@ ak recover <id> --allow-root /absolute/project
     lang={currentLang}
     title={isVi ? 'Liên quan' : 'Related'}
     links={[
+      { href: '/guides/agentkit/upgrading-to-v3', label: isVi ? 'Nâng lên v3' : 'Upgrading to v3' },
       { href: '/guides/agentkit/configuration', label: isVi ? 'config.yaml (updates.*)' : 'config.yaml (updates.*)' },
       { href: '/guides/agentkit/helper', label: 'AgentKit Helper', desc: isVi ? 'Menu từng bước: hỏi rồi chạy lệnh CLI ak giúp bạn' : 'Step-by-step menu: asks, then runs the ak CLI for you' },
       { href: '/guides/agentkit/clean-reinstall', label: isVi ? 'Cài lại clean' : 'Clean reinstall' },

@@ -125,3 +125,4 @@ export const customHooksTranslations = {
 } as const;
 
 export type CustomHooksLang = keyof typeof customHooksTranslations;
+export type CustomHooksCopy = (typeof customHooksTranslations)[CustomHooksLang];

@@ -16,9 +16,10 @@
  *   node scripts/check-ak-kit-skill-inventory.mjs --kit-root <ak-cli>
  *   AK_CLI=<ak-cli> node scripts/check-ak-kit-skill-inventory.mjs
  *   node scripts/check-ak-kit-skill-inventory.mjs --kit-root <ak-cli> --write-lock
+ *   --verbose  one contract-updated / package-updated line per skill instead of grouped lines
  */
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
-import { dirname, join, resolve } from 'node:path';
+import { join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import {
   CHANNELS,
@@ -40,10 +41,12 @@ function parseArgs(argv) {
     stableRef: 'origin/main',
     betaRef: 'origin/dev',
     writeLock: false,
+    verbose: false,
   };
   for (let i = 0; i < argv.length; i++) {
     const a = argv[i];
     if (a === '--write-lock') out.writeLock = true;
+    else if (a === '--verbose') out.verbose = true;
     else if (a === '--kit-root') out.kitRoot = argv[++i] || '';
     else if (a === '--stable-ref') out.stableRef = argv[++i] || out.stableRef;
     else if (a === '--beta-ref') out.betaRef = argv[++i] || out.betaRef;
@@ -203,6 +206,27 @@ function fingerprintDrift(prev, next) {
   return lines;
 }
 
+/**
+ * One line per (kind, channel, impact) instead of one per skill: a kit bump touches most skills, and
+ * per-skill contract-updated / package-updated lines bury the rest. --verbose keeps one per skill.
+ */
+function groupUpdateLines(lines) {
+  const groups = new Map();
+  const rest = [];
+  for (const line of lines) {
+    const m = /^(contract-updated|package-updated) (\S+) (\S+) (impact=\[[^\]]*\])$/.exec(line);
+    if (!m) {
+      rest.push(line);
+      continue;
+    }
+    const head = `${m[1]} ${m[3]} ${m[4]}`;
+    if (!groups.has(head)) groups.set(head, []);
+    groups.get(head).push(m[2]);
+  }
+  const grouped = [...groups].map(([head, keys]) => `${head} (${keys.length}): ${keys.join(', ')}`);
+  return [...rest, ...grouped];
+}
+
 function lockDrift(prev, next) {
   const lines = [];
   if (!prev) return ['missing lock'];
@@ -325,7 +349,8 @@ function main() {
   }
 
   const sheet = cheatsheetDrift(snapshot, kitRoot);
-  const lock = opts.writeLock ? [] : lockDrift(loadLock(), snapshot);
+  const lockLines = opts.writeLock ? [] : lockDrift(loadLock(), snapshot);
+  const lock = opts.verbose ? lockLines : groupUpdateLines(lockLines);
   const problems = [...lock, ...sheet];
   if (problems.length) {
     process.stderr.write(`Drift (${problems.length})\n`);

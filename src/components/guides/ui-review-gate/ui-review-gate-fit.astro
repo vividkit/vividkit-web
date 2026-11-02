@@ -1,4 +1,5 @@
 ---
+import { akInvocationText, withAkInvocation } from '@/data/guides/agentkit-invocation';
 import type { Language } from '@/i18n';
 import TerminalSnippet from '../TerminalSnippet.astro';
 import { CheckCircle2, Info } from 'lucide-astro';
@@ -10,10 +11,10 @@ interface Props {
 
 const { lang } = Astro.props;
 const isVi = lang === 'vi';
-const t = (en: string, vi: string) => isVi ? vi : en;
+const t = (en: string, vi: string) => akInvocationText(isVi ? vi : en);
 
 // AgentKit produces the artifact; Plannotator is the human review gate.
-const workflow = [
+const workflow = withAkInvocation([
   {
     step: t('Plan with AgentKit, then gate the artifact', 'Plan bằng AgentKit, rồi gate artifact'),
     command: '/ak:plan → /plannotator-annotate plans/.../plan.md',
@@ -32,9 +33,9 @@ const workflow = [
     command: '/plannotator-annotate ./docs',
     body: t('Annotate Markdown, HTML, or folders such as `./docs` with the same review surface, no extra setup.', 'Annotate Markdown, HTML, hoặc folder như `./docs` trên cùng một review surface, không cần setup thêm.'),
   },
-];
+]);
 
-const planGateCode = isVi
+const planGateCode = akInvocationText(isVi
   ? `# 1) Bảo AgentKit tạo file plan
 /ak:plan "Build the feature and save a phased implementation plan"
 
@@ -64,9 +65,9 @@ const planGateCode = isVi
 
 # 4) Send feedback / finish the browser review
 # The annotations return to this agent session.
-# The agent should revise the plan from those notes before implementation.`;
+# The agent should revise the plan from those notes before implementation.`);
 
-const downstreamGateCode = isVi
+const downstreamGateCode = akInvocationText(isVi
   ? `# Sau khi plan được duyệt, để AgentKit implement
 /ak:cook
 
@@ -86,7 +87,7 @@ const downstreamGateCode = isVi
 # Review other artifacts AgentKit or the agent produced
 /plannotator-annotate reports/<run>/test-report.md
 /plannotator-annotate reports/<run>/review.md
-/plannotator-annotate ./docs`;
+/plannotator-annotate ./docs`);
 
 const reviewTargets = [
   t('Comprehensive plan: requirements, scope, constraints, assumptions, risks, and unresolved questions.', 'Comprehensive plan: yêu cầu, scope, ràng buộc, giả định, rủi ro, và câu hỏi còn mở.'),

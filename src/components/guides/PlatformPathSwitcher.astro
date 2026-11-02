@@ -3,8 +3,7 @@
  * PlatformPathSwitcher - A reusable component for displaying platform-specific paths
  * Supports macOS, Linux, and Windows with tabbed UI for switching between platforms
  */
-import { useTranslations } from '@/i18n/utils';
-import { getLangFromUrl, type Language } from '@/i18n';
+import type { Language } from '@/i18n';
 
 interface Props {
   lang?: Language;
@@ -21,16 +20,12 @@ interface Props {
 }
 
 const {
-  lang,
   pathAfterHome,
   label,
   variant = 'block',
   id,
   color = 'slate'
 } = Astro.props;
-
-const currentLang = lang || getLangFromUrl(Astro.url);
-const t = useTranslations(currentLang);
 
 // Generate platform-specific paths
 const paths = {

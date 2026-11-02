@@ -67,7 +67,7 @@ function extractField(block, key) {
 
 function stripCommand(headline) {
   return String(headline || '')
-    .replace(/^[/\$]ak:[^\s—–]+(?:\s*[—–-]\s*)?/i, '')
+    .replace(/^[/\$]ak[:-][^\s—–]+(?:\s*[—–-]\s*)?/i, '')
     .trim();
 }
 

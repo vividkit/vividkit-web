@@ -1,4 +1,5 @@
 ---
+import type { TranslationKey } from '@/i18n/utils';
 // Section 3: What ck init Creates - Interactive file tree
 import { useTranslations } from "@/i18n/utils";
 import { type Language } from "@/i18n";
@@ -112,7 +113,7 @@ const fileTree = [
               <code class="text-xs px-2 py-1 rounded bg-green-100 dark:bg-green-500/20 text-green-700 dark:text-green-400 font-mono whitespace-nowrap">
                 {item.flag}
               </code>
-              <span class="text-sm text-slate-600 dark:text-slate-400" set:html={t(`guides.claude_mechanics.ck_init.${item.desc}`)} />
+              <span class="text-sm text-slate-600 dark:text-slate-400" set:html={t(`guides.claude_mechanics.ck_init.${item.desc}` as TranslationKey)} />
             </div>
           ))}
         </div>

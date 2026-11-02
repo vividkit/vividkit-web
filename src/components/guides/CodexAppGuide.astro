@@ -207,7 +207,25 @@ setx CLIPROXY_API_KEY "ccs-internal-managed"
 [Environment]::GetEnvironmentVariable("CLIPROXY_API_KEY", "User")
 codex doctor --summary --no-color --ascii`);
 
-const setupSteps = [
+type SnippetMode = 'shell' | 'plain';
+interface SetupStep {
+  icon: typeof Shuffle;
+  accent: keyof typeof setupAccentMap;
+  title: string;
+  body: string;
+  label: string;
+  code: string;
+  mode?: SnippetMode;
+  copyMode?: 'commands' | 'raw';
+  beforeLabel?: string;
+  beforeCode?: string;
+  beforeMode?: SnippetMode;
+  extraLabel?: string;
+  extraCode?: string;
+  extraMode?: SnippetMode;
+}
+
+const setupSteps: SetupStep[] = [
   {
     icon: Shuffle,
     accent: 'cyan',

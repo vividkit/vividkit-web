@@ -2,7 +2,7 @@
 import MainLayout from '@/layouts/MainLayout.astro';
 import Header from '@/components/layout/Header.astro';
 import Footer from '@/components/layout/Footer.astro';
-import { Palette, Type, Square, Sparkles, Layout, Eye, Moon, Sun, Check, ArrowRight, Menu, X, Terminal, Layers, Zap, Code } from 'lucide-astro';
+import { Palette, Type, Square, Sparkles, Layout, Eye, Moon, Sun, ArrowRight, Layers, Zap } from 'lucide-astro';
 
 // Only allow access in development mode
 if (!import.meta.env.DEV) {
@@ -13,7 +13,7 @@ const title = 'Design System Preview - VividKit';
 const description = 'Preview all design system components, colors, typography, and UI elements.';
 ---
 
-<MainLayout {title} {description} lang="en">
+<MainLayout {title} {description} canonical="/dev/design-system" lang="en">
   <Header lang="en" />
 
   <div class="max-w-7xl mx-auto px-4 lg:px-8 pt-28 pb-16">

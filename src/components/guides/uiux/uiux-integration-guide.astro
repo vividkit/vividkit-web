@@ -1,4 +1,5 @@
 ---
+import type { TranslationKey } from '@/i18n/utils';
 // UIUX Integration Guide - Magic syntax, steps, and real examples with copy functionality
 import { useTranslations } from '@/i18n/utils';
 import { getLangFromUrl, type Language } from '@/i18n';
@@ -118,10 +119,10 @@ const colorClasses: Record<string, { bg: string; border: string; text: string; c
             {promptCategories.map((cat) => (
               <div class="group p-4 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-indigo-500/30 transition-all">
                 <div class="flex items-center justify-between mb-2">
-                  <span class={`text-xs font-medium ${colorClasses[cat.color].text}`}>{t(`uiux.guide.prompt.${cat.id}.label`)}</span>
+                  <span class={`text-xs font-medium ${colorClasses[cat.color].text}`}>{t(`uiux.guide.prompt.${cat.id}.label` as TranslationKey)}</span>
                   <button
                     class="copy-btn opacity-0 group-hover:opacity-100 transition-opacity p-1.5 rounded hover:bg-slate-100 dark:hover:bg-slate-800"
-                    data-prompt={t(`uiux.guide.prompt.${cat.id}.text`)}
+                    data-prompt={t(`uiux.guide.prompt.${cat.id}.text` as TranslationKey)}
                     title={t('uiux.guide.copy')}
                   >
                     <svg class="w-4 h-4 text-slate-400 copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -135,7 +136,7 @@ const colorClasses: Record<string, { bg: string; border: string; text: string; c
                 </div>
                 <div class={`${colorClasses[cat.color].bg} rounded p-3 ${colorClasses[cat.color].border} border`}>
                   <code class={`text-xs ${colorClasses[cat.color].text} font-mono block leading-relaxed`}>
-                    {t(`uiux.guide.prompt.${cat.id}.text`)}
+                    {t(`uiux.guide.prompt.${cat.id}.text` as TranslationKey)}
                   </code>
                 </div>
               </div>

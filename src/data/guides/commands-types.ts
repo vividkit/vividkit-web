@@ -8,6 +8,8 @@ export interface CommandItem {
   detail: string;
   isSkill?: boolean;
   isBeta?: boolean;
+  // Routes to specialized skills; rendered with a "router" tag
+  isRouter?: boolean;
   // Colon-separated subcommands: /mkt:plan:cro → subcommands: ["cro"]
   subcommands?: string[];
   // Space-separated arguments: /mkt:ask [question] → args: ["[question]"]

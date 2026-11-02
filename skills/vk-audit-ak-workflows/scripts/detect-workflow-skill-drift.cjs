@@ -162,10 +162,7 @@ function parseWorkflowFile(filePath) {
 
     /** @type {{ number: number, command: string }[]} */
     const steps = [];
-    // number before command in same step object (generated layout)
-    const stepRe =
-      /number:\s*(\d+)[\s\S]*?(?:command:\s*"((?:\\.|[^"\\])*)")?/g;
-    // More reliable: walk command fields and nearest preceding number
+    // Walk command fields and take the nearest preceding step number
     const cmdRe = /command:\s*"((?:\\.|[^"\\])*)"/g;
     let cm;
     while ((cm = cmdRe.exec(block))) {
@@ -298,8 +295,7 @@ function parseCheatsheet(filePath) {
   const text = fs.readFileSync(filePath, "utf8");
   // engineer skills only — stop at marketing export if present
   const eng = text.split("export const akMarketingSkills")[0] || text;
-  const blockRe = /\{\s*id:\s*"(ak-[^"]+)"[\s\S]*?\n\s*\}(?=,\s*\n\s*\{|\s*\n\];)/g;
-  // Simpler: split on id: "ak-
+  // Split on id: "ak-
   const parts = eng.split(/(?=id:\s*"ak-)/);
   for (const part of parts) {
     const idM = part.match(/^id:\s*"(ak-[^"]+)"/);

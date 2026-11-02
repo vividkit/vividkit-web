@@ -89,7 +89,7 @@ export const guideSections = [
       {
         title: 'AgentKit Workflows',
         path: '/guides/agentkit/workflows',
-        desc: 'Recommended /ak: skill chains (flagship + more recipes) — when and how to combine plan, cook, fix, review, ship, and --advice compose. Marketing tab Coming soon.',
+        desc: 'Recommended AgentKit skill chains (flagship + more recipes) — when and how to combine plan, cook, fix, review, ship, and --advice compose. Marketing tab Coming soon.',
       },
       {
         title: 'Statusline',
@@ -105,6 +105,11 @@ export const guideSections = [
         title: 'Updating',
         path: '/guides/agentkit/updating',
         desc: 'Update CLI & Kits: ak self-update vs ak update vs kit refresh — scope of each command.',
+      },
+      {
+        title: 'Upgrading to v3',
+        path: '/guides/agentkit/upgrading-to-v3',
+        desc: 'AgentKit v2 to v3 (now stable): ak-<slug> skill names, ak-ak merged into ak-agentkit, license update window, opt-in skill store, upgrade and rollback-to-v2 steps.',
       },
       {
         title: 'Troubleshooting',

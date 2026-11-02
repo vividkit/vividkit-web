@@ -23,12 +23,15 @@ const DETAILS = join(ROOT, 'src/data/guides/agentkit-skill-details');
 const FLAG_RE = /^--[a-z0-9][a-z0-9-]*$/;
 const INVOKE_RE = /^[/$@]*ak[:\-]/i;
 
+const BLOB_ONLY = '  blob differs; no argument-hint/flag delta';
+
 function parseArgs(argv) {
   const out = {
     kitRoot: '',
     akDocs: '',
     kit: 'engineer',
     selfTest: false,
+    verbose: false,
     stableRef: 'origin/main',
     betaRef: 'origin/dev',
     akDocsStableRef: 'origin/main',
@@ -44,9 +47,10 @@ function parseArgs(argv) {
     else if (a === '--ak-docs-stable-ref') out.akDocsStableRef = argv[++i] || out.akDocsStableRef;
     else if (a === '--ak-docs-beta-ref') out.akDocsBetaRef = argv[++i] || out.akDocsBetaRef;
     else if (a === '--self-test') out.selfTest = true;
+    else if (a === '--verbose') out.verbose = true;
     else if (a === '--help' || a === '-h') {
       process.stdout.write(
-        'Usage: check-ak-skill-detail-claims --kit-root <ak-cli> [--ak-docs <ak-docs>] [--kit engineer|marketing|all] [--stable-ref] [--beta-ref] [--ak-docs-stable-ref] [--ak-docs-beta-ref] [--self-test]\n',
+        'Usage: check-ak-skill-detail-claims --kit-root <ak-cli> [--ak-docs <ak-docs>] [--kit engineer|marketing|all] [--stable-ref] [--beta-ref] [--ak-docs-stable-ref] [--ak-docs-beta-ref] [--verbose] [--self-test]\n',
       );
       process.exit(0);
     }
@@ -351,7 +355,7 @@ function extractDetailFlags(src) {
 }
 
 function extractDeclaredCommand(src) {
-  const m = src.match(/["']?command["']?\s*:\s*['"`](\/ak:[a-z0-9-]+)['"`]/);
+  const m = src.match(/["']?command["']?\s*:\s*['"`](\/ak[:-][a-z0-9-]+)['"`]/);
   return m ? m[1] : '';
 }
 
@@ -378,9 +382,16 @@ function slugFromId(id) {
   return id.replace(/^ak-/, '');
 }
 
+/**
+ * v3 runtimes (stable since v3.0.0) register skills as ak-<slug>. Guide data may still be authored in
+ * the v2 colon form (/ak:<slug>), which the site rewrites to the dash form at render time, so both
+ * separators name the same skill.
+ */
 function allowedInvokes(id) {
   const slug = slugFromId(id);
   return new Set([
+    `/ak-${slug}`,
+    `$ak-${slug}`,
     `/ak:${slug}`,
     `$ak:${slug}`,
     `ak:${slug}`,
@@ -397,12 +408,12 @@ function firstInvoke(tokens) {
   return '';
 }
 
-function checkFile({ id, kit, src, skillMd, argumentHint, extraAllowedFlags }) {
+function checkFile({ id, kit, src, skillMd, argumentHint, extraAllowedFlags, channel = 'stable' }) {
   const violations = [];
   const slug = slugFromId(id);
   const declared = extractDeclaredCommand(src);
-  const expectedCmd = `/ak:${slug}`;
-  if (declared && declared !== expectedCmd) {
+  const expectedCmd = `/ak-${slug}`;
+  if (declared && declared !== expectedCmd && declared !== `/ak:${slug}`) {
     violations.push(`command field ${declared} !== ${expectedCmd}`);
   }
 
@@ -443,11 +454,7 @@ function checkFile({ id, kit, src, skillMd, argumentHint, extraAllowedFlags }) {
         invoke === 'ak' && tokens[1] && !tokens[1].startsWith('-')
           ? `ak ${tokens[1]}`
           : invoke;
-      const ok =
-        invokes.has(invoke) ||
-        invokes.has(joined) ||
-        invoke === expectedCmd ||
-        invoke === `$ak:${slug}`;
+      const ok = invokes.has(invoke) || invokes.has(joined);
       if (!ok && (INVOKE_RE.test(invoke) || joined.startsWith('ak '))) {
         violations.push(`wrong-skill invoke in \`${command}\``);
       }
@@ -474,7 +481,7 @@ function checkFile({ id, kit, src, skillMd, argumentHint, extraAllowedFlags }) {
 
   const hasPrompts = /["']?promptExamples["']?\s*:/.test(src);
   if (hasPrompts) {
-    const prompts = extractPromptCommands(src, expectedCmd);
+    const prompts = extractPromptCommands(src, declared || expectedCmd);
     const promptStart = src.search(/["']?promptExamples["']?\s*:/);
     const promptSlice = promptStart >= 0 ? src.slice(promptStart) : src;
     if (isUserFacing(skillMd)) {
@@ -716,6 +723,11 @@ const data = {
   if (!a.some((v) => v.includes('--not-a-real-flag'))) fail.push('invented-flag case');
   if (!b.some((v) => v.includes('wrong-skill'))) fail.push('wrong-skill case');
   if (c.length) fail.push(`allowed case had ${c.join('; ')}`);
+  const dashGood = good.replaceAll('/ak:plan', '/ak-plan');
+  const stableDash = checkFile({ id: 'ak-plan', src: dashGood, skillMd, argumentHint: '[task] [--fast|--html] OR [archive|validate]' });
+  if (stableDash.length) fail.push(`dash invoke had ${stableDash.join('; ')}`);
+  const wrongDash = checkFile({ id: 'ak-plan', src: dashGood.replace("command: '/ak-plan'", "command: '/ak-cook'"), skillMd, argumentHint: '[task] [--fast|--html] OR [archive|validate]' });
+  if (!wrongDash.some((v) => v.includes('command field'))) fail.push('dash command field for another skill');
   if (!d.some((v) => v.includes('--not-a-real-flag'))) fail.push('json-style invented-flag case');
   if (!e.some((v) => v.includes('--not-a-real-flag'))) fail.push('invented invocation option');
   if (!f.some((v) => v.includes('explode'))) fail.push('invented subcommand');
@@ -785,7 +797,7 @@ function collectBetaDelta(kitRoot, snapshot, kit, id, src, akDocs, docsRefs) {
       lines.push(`  docs-beta: no mdx at ${docsRefs.beta} content/docs/beta/kits/${kit}/skills/${slugFromId(id)}.en.mdx`);
     }
   }
-  if (lines.length === 1) lines.push('  blob differs; no argument-hint/flag delta');
+  if (lines.length === 1) lines.push(BLOB_ONLY);
   return lines;
 }
 
@@ -856,15 +868,26 @@ function main() {
         skillMd,
         argumentHint: fm.argumentHint,
         extraAllowedFlags,
+        channel: resolved.channel,
       });
       if (violations.length) rows.push({ id: `${kit}/${id}`, violations });
     }
   }
 
   if (betaDeltas.length) {
-    process.stdout.write(`beta-delta ${betaDeltas.length} shared pages (advisory, not gated)\n`);
-    for (const lines of betaDeltas) {
+    // Most shared pages differ only in SKILL.md text; print those as a count, the rest in full.
+    const textOnly = betaDeltas.filter((lines) => lines[1] === BLOB_ONLY);
+    const withDelta = betaDeltas.filter((lines) => lines[1] !== BLOB_ONLY);
+    process.stdout.write(
+      `beta-delta ${betaDeltas.length} shared pages (advisory, not gated): ` +
+        `${withDelta.length} with hint/flag/docs delta, ${textOnly.length} SKILL.md text only\n`,
+    );
+    for (const lines of withDelta) {
       for (const line of lines) process.stdout.write(`${line}\n`);
+    }
+    if (args.verbose && textOnly.length) {
+      const ids = textOnly.map((lines) => lines[0].split(' ')[1]);
+      process.stdout.write(`beta-delta text only: ${ids.join(', ')}\n`);
     }
   }
 

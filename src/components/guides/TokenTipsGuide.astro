@@ -11,8 +11,6 @@ const currentLang = lang || getLangFromUrl(Astro.url);
 const t = useTranslations(currentLang);
 
 // Code examples for copy functionality
-const clearCommand = `/clear`;
-const compactCommand = `/compact`;
 const subagentExample = `# Instead of doing everything in main context
 # Delegate to specialized subagents
 
@@ -34,12 +32,6 @@ const scoutExample = `# Use scout for exploration (isolated context)
 
 # Instead of manual searching in main context
 # (which adds results to your context)`;
-
-const resumeExample = `# End session cleanly
-/clear
-
-# Resume later with context
-/resume <session-id>`;
 
 
 

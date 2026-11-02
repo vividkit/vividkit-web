@@ -132,6 +132,13 @@ const REGISTRY = [
       'src/components/guides/agentkit/AgentKitUpdatingGuide.astro',
     ],
   },
+  {
+    identity: '/guides/agentkit/upgrading-to-v3',
+    files: [
+      'src/pages/guides/agentkit/upgrading-to-v3.astro',
+      'src/components/guides/agentkit/AgentKitUpgradingToV3Guide.astro',
+    ],
+  },
 ];
 
 function parseArgs(argv) {
@@ -410,12 +417,18 @@ function loadStringConsts(kitRoot, ref) {
   return map;
 }
 
+/**
+ * Cobra command tree keyed by node, not by name: a node is the function that builds the command plus
+ * its Use, so `ak kit` and `ak skills kit` stay separate. Values flowing through the parser are
+ * { use, key }; a bare string whose builder is unknown has key null and falls back to name lookup.
+ */
 function buildCobraTree(kitRoot, ref) {
+  const empty = { roots: new Set(), edgeCount: 0, walk: () => ({ nodes: null, brokenAt: 0 }), childNames: () => new Set() };
   let listing = '';
   try {
     listing = git(kitRoot, ['ls-tree', '-r', '--name-only', ref, 'apps/cli/internal/commands', 'apps/cli/internal/cmdtree']);
   } catch {
-    return { roots: new Set(), children: new Map() };
+    return empty;
   }
   const funcs = [];
   for (const path of listing.split('\n')) {
@@ -426,13 +439,21 @@ function buildCobraTree(kitRoot, ref) {
     funcs.push(...parseFuncs(stripGoComments(text), pkg));
   }
   const consts = loadStringConsts(kitRoot, ref);
-  const children = new Map();
+  const lit = (use) => ({ use, key: null });
+  const built = (fn, use) => ({ use, key: fn ? `${fn.pkg}.${fn.name}#${asCmd(use)}` : null });
+  const nodeKey = (n) => n.key || `name:${asCmd(n.use)}`;
+  const useOf = new Map();
+  const edges = new Map();
   function addEdge(parent, child) {
-    const p = asCmd(parent);
-    const c = asCmd(child);
+    const p = asCmd(parent.use);
+    const c = asCmd(child.use);
     if (!p || !c || p === c) return;
-    if (!children.has(p)) children.set(p, new Set());
-    children.get(p).add(c);
+    const pk = nodeKey(parent);
+    const ck = nodeKey(child);
+    useOf.set(pk, p);
+    useOf.set(ck, c);
+    if (!edges.has(pk)) edges.set(pk, new Set());
+    edges.get(pk).add(ck);
   }
   function lookup(pkgAlias, funcName, callerPkg) {
     let hits = funcs.filter((f) => f.name === funcName);
@@ -449,21 +470,21 @@ function buildCobraTree(kitRoot, ref) {
     if (locals && locals.has(text)) return locals.get(text);
     if (text.startsWith('"')) {
       const m = /^"([^"]*)"/.exec(text);
-      return m ? [m[1]] : [];
+      return m ? [lit(m[1])] : [];
     }
     if (/^[A-Za-z0-9_]+$/.test(text)) {
       const idx = caller ? caller.paramNames.indexOf(text) : -1;
-      if (idx >= 0 && lits[idx]) return [String(lits[idx])];
-      if (caller) return rangeConstValues(caller.body, text, consts);
+      if (idx >= 0 && lits[idx] && lits[idx].use) return [lits[idx]];
+      if (caller) return rangeConstValues(caller.body, text, consts).map(lit);
       return [];
     }
     if (text.startsWith('&cobra.Command')) {
       const parsed = parseCompositeUse(text, 0);
       if (!parsed || !parsed.use) return [];
-      if (parsed.use.lit) return [parsed.use.lit];
+      if (parsed.use.lit) return [built(caller, parsed.use.lit)];
       if (parsed.use.param && caller) {
         const idx = caller.paramNames.indexOf(parsed.use.param);
-        if (idx >= 0 && lits[idx]) return [String(lits[idx])];
+        if (idx >= 0 && lits[idx] && lits[idx].use) return [built(caller, lits[idx].use)];
       }
       return [];
     }
@@ -476,18 +497,18 @@ function buildCobraTree(kitRoot, ref) {
     if (!target) return [];
     const lists = target.paramNames.map((_, idx) => {
       const vals = call.args[idx] == null ? [] : exprUses(call.args[idx], caller, lits, locals, stack);
-      return vals.length ? vals : [''];
+      return vals.length ? vals : [lit('')];
     });
     const combos = lists.length ? cartesian(lists) : [[]];
-    const out = [];
+    const out = new Map();
     for (const combo of combos) {
       const sig = target.pkg + ':' + target.name + ':' + JSON.stringify(combo);
       if (stack.has(sig)) continue;
       stack.add(sig);
-      out.push(...returnedUses(target, combo, stack));
+      for (const n of returnedUses(target, combo, stack)) out.set(nodeKey(n), n);
       stack.delete(sig);
     }
-    return [...new Set(out)];
+    return [...out.values()];
   }
   function returnedUses(fn, lits, stack) {
     const locals = new Map();
@@ -497,7 +518,7 @@ function buildCobraTree(kitRoot, ref) {
         const rhs = fn.body.slice(ev.rhsAt).trimStart();
         locals.set(ev.name, rhs.startsWith('func') ? [] : exprUses(rhs, fn, lits, locals, stack));
       } else if (ev.kind === 'useset') {
-        locals.set(ev.name, [ev.use]);
+        locals.set(ev.name, [built(fn, ev.use)]);
       } else if (ev.kind === 'add') {
         for (const parent of locals.get(ev.recv) || []) {
           for (const arg of ev.args) {
@@ -515,10 +536,38 @@ function buildCobraTree(kitRoot, ref) {
         returned = exprUses(line, fn, lits, locals, stack);
       }
     }
-    return returned.map(asCmd).filter(Boolean);
+    return returned.filter((n) => asCmd(n.use));
   }
   for (const fn of funcs) returnedUses(fn, [], new Set());
-  return { roots: new Set(children.get('ak') || []), children };
+
+  const keysByName = new Map();
+  for (const [key, name] of useOf) {
+    if (!keysByName.has(name)) keysByName.set(name, new Set());
+    keysByName.get(name).add(key);
+  }
+  // A name-only node stands for every node with that Use, as the name-keyed tree did.
+  const expand = (key) => (key.startsWith('name:') ? [...(keysByName.get(key.slice(5)) || [])] : [key]);
+  const kidsOf = (keys) => {
+    const out = new Set();
+    for (const key of keys) for (const k of expand(key)) for (const c of edges.get(k) || []) out.add(c);
+    return out;
+  };
+  const rootKeys = kidsOf(keysByName.get('ak') || []);
+  const roots = new Set([...rootKeys].map((k) => useOf.get(k)));
+  /** Follow `ak <parts...>` by path; brokenAt is the first part that is not a child of the one before. */
+  function walk(parts) {
+    let nodes = new Set([...rootKeys].filter((k) => useOf.get(k) === parts[0]));
+    if (!parts.length || !nodes.size) return { nodes: null, brokenAt: 0 };
+    for (let i = 1; i < parts.length; i++) {
+      const next = new Set([...kidsOf(nodes)].filter((k) => useOf.get(k) === parts[i]));
+      if (!next.size) return { nodes: null, brokenAt: i };
+      nodes = next;
+    }
+    return { nodes, brokenAt: -1 };
+  }
+  const childNames = (nodes) => new Set([...kidsOf(nodes || [])].map((k) => useOf.get(k)));
+  const edgeCount = [...edges.values()].reduce((n, set) => n + set.size, 0);
+  return { roots, edgeCount, walk, childNames };
 }
 
 function cartesian(lists) {
@@ -545,7 +594,7 @@ function cheatsheetEntries(repo, rel = 'src/data/guides/agentkit-cli-cheatsheet.
   });
 }
 
-/** Commands beta adds/removes vs stable under ak and under each cheatsheet command. */
+/** Commands beta adds/removes vs stable under ak and under each cheatsheet command path. */
 function betaCliDelta(stable, beta, entries, listedBetaRoots = new Set()) {
   const lines = [];
   const diff = (a, b) => [...b].filter((x) => !a.has(x)).sort();
@@ -554,20 +603,25 @@ function betaCliDelta(stable, beta, entries, listedBetaRoots = new Set()) {
   if (addedRoots.length) lines.push(`beta adds ak ${addedRoots.join(', ')}`);
   if (removedRoots.length) lines.push(`beta removes ak ${removedRoots.join(', ')}`);
   for (const entry of entries) {
-    const cmd = entry.name.split(/\s+/).map((p) => p.split(/[<\[]/)[0]).filter(Boolean).pop();
-    if (!cmd) continue;
-    const s = stable.children.get(cmd) || new Set();
-    const b = beta.children.get(cmd) || new Set();
+    const parts = commandParts(entry.name);
+    if (!parts.length) continue;
+    const s = stable.childNames(stable.walk(parts).nodes);
+    const b = beta.childNames(beta.walk(parts).nodes);
     const added = diff(s, b);
     const removed = diff(b, s);
     if (!added.length && !removed.length) continue;
     const note = entry.betaNote ? 'betaNote present' : 'no betaNote';
-    const parts = [];
-    if (added.length) parts.push(`+${added.join(' +')}`);
-    if (removed.length) parts.push(`-${removed.join(' -')}`);
-    lines.push(`ak ${entry.name}: ${parts.join(' ')} (${note})`);
+    const parts2 = [];
+    if (added.length) parts2.push(`+${added.join(' +')}`);
+    if (removed.length) parts2.push(`-${removed.join(' -')}`);
+    lines.push(`ak ${entry.name}: ${parts2.join(' ')} (${note})`);
   }
   return lines;
+}
+
+/** `skills install <name>` -> ['skills', 'install'] */
+function commandParts(name) {
+  return name.split(/\s+/).map((part) => part.split(/[<\[]/)[0]).filter(Boolean);
 }
 
 function main(argv) {
@@ -614,33 +668,25 @@ function main(argv) {
   }
 
   const tree = buildCobraTree(kitRoot, opts.stableRef);
-  const edgeCount = [...tree.children.values()].reduce((n, set) => n + set.size, 0);
   if (tree.roots.size === 0) {
     problems.push(`no cobra commands registered under ak at ${opts.stableRef}`);
   } else {
     for (const entry of cheatsheetEntries(repo)) {
-      const parts = entry.name.split(/\s+/).map((part) => part.split(/[<\[]/)[0]).filter(Boolean);
-      if (!parts.length || !tree.roots.has(parts[0])) {
+      const parts = commandParts(entry.name);
+      const { nodes, brokenAt } = tree.walk(parts);
+      if (brokenAt === 0) {
         problems.push(`cheatsheet unknown-root ak ${entry.name} (not registered under ak)`);
         continue;
       }
-      let cur = parts[0];
-      let broken = false;
-      for (let i = 1; i < parts.length; i++) {
-        const kids = tree.children.get(cur) || new Set();
-        if (!kids.has(parts[i])) {
-          problems.push(`cheatsheet unknown-child ak ${entry.name} (${parts[i]} is not a child of ${cur})`);
-          broken = true;
-          break;
-        }
-        cur = parts[i];
+      if (brokenAt > 0) {
+        problems.push(`cheatsheet unknown-child ak ${entry.name} (${parts[brokenAt]} is not a child of ${parts.slice(0, brokenAt).join(' ')})`);
+        continue;
       }
-      if (broken) continue;
+      const kids = tree.childNames(nodes);
       for (const sub of entry.subs) {
         const child = sub.split(/\s+/)[0];
-        const kids = tree.children.get(cur) || new Set();
         if (!kids.has(child)) {
-          problems.push(`cheatsheet unknown-subcommand ak ${entry.name} ${sub} (not a child of ${cur})`);
+          problems.push(`cheatsheet unknown-subcommand ak ${entry.name} ${sub} (not a child of ${parts.join(' ')})`);
         }
       }
     }
@@ -648,17 +694,13 @@ function main(argv) {
 
   process.stdout.write(
     `ak-guide-pages identities=${registered.length} walked=${walked.length} ` +
-      `cobraRoots=${tree.roots.size} cobraEdges=${edgeCount} ${opts.stableRef}\n`,
+      `cobraRoots=${tree.roots.size} cobraEdges=${tree.edgeCount} ${opts.stableRef}\n`,
   );
   const betaEntries = cheatsheetEntries(repo, BETA_CLI_REL);
   const betaTree = resolveRef(kitRoot, opts.betaRef) ? buildCobraTree(kitRoot, opts.betaRef) : null;
   for (const entry of betaEntries) {
-    const parts = entry.name.split(/\s+/).map((part) => part.split(/[<\[]/)[0]).filter(Boolean);
-    const known = (t) => {
-      if (!t || !parts.length || !t.roots.has(parts[0])) return false;
-      for (let i = 1; i < parts.length; i++) if (!(t.children.get(parts[i - 1]) || new Set()).has(parts[i])) return false;
-      return true;
-    };
+    const parts = commandParts(entry.name);
+    const known = (t) => Boolean(t && parts.length && t.walk(parts).brokenAt === -1);
     if (known(tree)) problems.push(`beta-cli promoted ak ${entry.name} (now on ${opts.stableRef}; move it to the main cheatsheet)`);
     else if (betaTree && !known(betaTree)) problems.push(`beta-cli unknown ak ${entry.name} (not registered at ${opts.betaRef})`);
   }

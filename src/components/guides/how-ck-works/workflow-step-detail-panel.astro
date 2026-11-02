@@ -2,15 +2,11 @@
 // Drill-down detail panel — Explain + Code for the active step
 // Includes prev/next navigation so users don't need to scroll back to pipeline
 // Content formatted with bullet indentation for readability
-import { getLangFromUrl, type Language } from '@/i18n';
+import type { Language } from '@/i18n';
 
 interface Props {
   lang?: Language;
 }
-
-const { lang } = Astro.props;
-const currentLang = lang || getLangFromUrl(Astro.url);
-const isVi = currentLang === 'vi';
 ---
 
 <div

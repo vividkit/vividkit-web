@@ -12,7 +12,6 @@ const coreSkillInfographics: SkillInfographic[] = [
   {
     id: 'brainstorm',
     command: '/ck:brainstorm',
-        commandVi: '/ck:brainstorm',
     kit: 'engineer',
 
     header: {
@@ -182,7 +181,6 @@ const coreSkillInfographics: SkillInfographic[] = [
   {
     id: 'plan',
     command: '/ck:plan',
-        commandVi: '/ck:plan',
     kit: 'engineer',
 
     header: {
@@ -487,7 +485,6 @@ const coreSkillInfographics: SkillInfographic[] = [
   {
     id: 'cook',
     command: '/ck:cook',
-        commandVi: '/ck:cook',
     kit: 'engineer',
 
     header: {
@@ -617,7 +614,6 @@ const coreSkillInfographics: SkillInfographic[] = [
   {
     id: 'fix',
     command: '/ck:fix',
-        commandVi: '/ck:fix',
     kit: 'engineer',
 
     header: {
@@ -742,7 +738,6 @@ const coreSkillInfographics: SkillInfographic[] = [
   {
     id: 'team',
     command: '/ck:team',
-        commandVi: '/ck:team',
     kit: 'engineer',
 
     header: {
@@ -957,7 +952,6 @@ const coreSkillInfographics: SkillInfographic[] = [
   {
     id: 'preview',
     command: '/ck:preview',
-        commandVi: '/ck:preview',
     kit: 'engineer',
 
     header: {
@@ -1195,7 +1189,6 @@ const coreSkillInfographics: SkillInfographic[] = [
   {
     id: 'code-review',
     command: '/ck:code-review',
-        commandVi: '/ck:code-review',
     kit: 'engineer',
 
     header: {

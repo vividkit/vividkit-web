@@ -3,7 +3,7 @@
  * Inventory, lock, and claims import this. Does not run a CLI.
  */
 import { execFileSync } from 'node:child_process';
-import { dirname, join, relative, resolve } from 'node:path';
+import { dirname, relative, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 export const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '../..');

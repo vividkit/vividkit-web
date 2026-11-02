@@ -1,4 +1,5 @@
 ---
+import { akCmd, withAkInvocation } from '@/data/guides/agentkit-invocation';
 import { getLangFromUrl, type Language } from '@/i18n';
 import LLMProviderIcon from '@/components/ui/LLMProviderIcon.astro';
 import AkCodeBlock from './agentkit/AkCodeBlock.astro';
@@ -389,7 +390,7 @@ const triggerNo = isVi
   ? ['Rename thuần', 'Refactor nội bộ, topology không đổi', 'Chỉ test', 'Formatting', 'Bug fix không đổi architectural contract']
   : ['Pure rename', 'Internal refactor with the same topology', 'Test-only change', 'Formatting', 'Bug fix that does not change the architectural contract'];
 
-const akPrinciples = isVi
+const akPrinciples = withAkInvocation(isVi
   ? [
       { title: 'Cần evidence, không luôn cần scout', body: 'AgentKit đi hiểu → quyết định → làm → kiểm tra → ship. Chưa hiểu repo thì `/ak:scout` trước. Đã có plan, debug notes, hoặc PR diff thì Archify dùng evidence đó.' },
       { title: 'Sơ đồ để review, không phải verdict', body: 'Không thay `/ak:test`, `/ak:security`, `/ak:code-review`, hay quyền quyết của người review.' },
@@ -401,9 +402,9 @@ const akPrinciples = isVi
       { title: 'A review artifact, not a verdict', body: 'It does not replace `/ak:test`, `/ak:security`, `/ak:code-review`, or human review authority.' },
       { title: 'Use it at high-risk gates', body: 'Auth, payments, PII, tokens, webhooks, migrations, background jobs, incidents — diagram before locking plan/cook.' },
       { title: 'Do not force it into the quick path', body: 'Small tasks keep the shortest useful workflow (`/ak:cook --fast`). Add Archify only when the diagram reduces risk or clarifies a handoff.' },
-    ];
+    ]);
 
-const akChains = isVi
+const akChains = withAkInvocation(isVi
   ? [
       {
         title: 'Xây feature mới',
@@ -499,7 +500,7 @@ const akChains = isVi
           { label: 'Architecture Delta', prompt: `Use Archify Architecture Delta on the current PR.\n\nBaseline: the validated architecture JSON in the repo. Keep stable IDs for unchanged components. Add, remove, change, or reroute only with code evidence.\n\nReturn exactly: added, removed, changed, moved, rerouted. Do not infer blast radius, production impact, risk, or merge safety. Reviewers read the JSON, the receipt, and the rendered delta. ${promptFooterEn}` },
         ],
       },
-    ];
+    ]);
 
 const antiPatterns = isVi
   ? [
@@ -927,9 +928,9 @@ const heroCtaClass =
       <h2 class="mt-2 text-3xl font-black tracking-tight text-slate-900 dark:text-white">{isVi ? 'Dùng Archify với workflow AgentKit' : 'Using Archify with AgentKit workflows'}</h2>
       <p class="mt-2 text-sm leading-relaxed text-slate-600 dark:text-slate-400">
         {isVi ? (
-          <>Archify không phải skill <code class={codeClass}>/ak:</code> chính thức. Cài riêng, rồi chèn vào cổng review của <a href="/guides/agentkit/workflows" class="whitespace-nowrap font-semibold text-cyan-800 underline decoration-cyan-300 underline-offset-2 dark:text-cyan-300">workflow AgentKit</a>.</>
+          <>Archify không phải skill <code class={codeClass}>{akCmd('')}</code> chính thức. Cài riêng, rồi chèn vào cổng review của <a href="/guides/agentkit/workflows" class="whitespace-nowrap font-semibold text-cyan-800 underline decoration-cyan-300 underline-offset-2 dark:text-cyan-300">workflow AgentKit</a>.</>
         ) : (
-          <>Archify is not an official <code class={codeClass}>/ak:</code> skill. Install it, then pause at a review gate in the <a href="/guides/agentkit/workflows" class="whitespace-nowrap font-semibold text-cyan-800 underline decoration-cyan-300 underline-offset-2 dark:text-cyan-300">AgentKit workflows</a>.</>
+          <>Archify is not an official <code class={codeClass}>{akCmd('')}</code> skill. Install it, then pause at a review gate in the <a href="/guides/agentkit/workflows" class="whitespace-nowrap font-semibold text-cyan-800 underline decoration-cyan-300 underline-offset-2 dark:text-cyan-300">AgentKit workflows</a>.</>
         )}
       </p>
       <aside class="mt-4 rounded-2xl border border-amber-200 bg-amber-50 p-4 dark:border-amber-500/25 dark:bg-amber-950/20">

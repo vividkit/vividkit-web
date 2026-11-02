@@ -1,0 +1,27 @@
+---
+/**
+ * Shown on the frozen ClaudeKit guides (no upstream sync since AgentKit replaced them).
+ * Rendered by GuidesLayout for the tabs listed in FROZEN_CLAUDEKIT_TABS.
+ */
+import { useTranslatedPath, type Language } from '@/i18n';
+
+interface Props {
+  lang: Language;
+}
+
+const { lang } = Astro.props;
+const isVi = lang === 'vi';
+const translatePath = useTranslatedPath(lang);
+---
+
+<aside class="mb-6 rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm leading-6 text-amber-900 dark:border-amber-500/30 dark:bg-amber-950/30 dark:text-amber-100">
+  <p class="font-semibold">{isVi ? 'Hướng dẫn ClaudeKit này không còn được cập nhật' : 'This ClaudeKit guide is no longer updated'}</p>
+  <p class="mt-1">
+    {isVi
+      ? 'Thiết lập ClaudeKit hiện có vẫn chạy được. Trang này giữ lại để tra cứu và mô tả ClaudeKit ở lần cập nhật cuối, nên lệnh hoặc hành vi có thể đã khác. Với thiết lập mới, xem '
+      : 'Existing ClaudeKit setups keep working. This page stays for reference and describes ClaudeKit as of its last update, so commands or behavior may have changed since. For a new setup, see '}
+    <a href={translatePath('/guides/agentkit')} class="font-semibold underline underline-offset-2">{isVi ? 'hướng dẫn AgentKit' : 'the AgentKit guides'}</a>
+    {isVi ? ' hoặc ' : ' or '}
+    <a href={translatePath('/guides/migrate-claudekit-to-agentkit')} class="font-semibold underline underline-offset-2">{isVi ? 'chuyển từ ClaudeKit sang AgentKit' : 'move from ClaudeKit to AgentKit'}</a>.
+  </p>
+</aside>

@@ -6,13 +6,14 @@
 
 import type { AkWorkflow } from "./types";
 import { akWorkflowPublicIds } from "./publish";
+import { withAkInvocation } from "../agentkit-invocation";
 
 function isPublicWorkflow(w: AkWorkflow): boolean {
   if (akWorkflowPublicIds === null) return true;
   return akWorkflowPublicIds.includes(w.id);
 }
 
-export const akEngineerWorkflows: AkWorkflow[] = [
+export const akEngineerWorkflows: AkWorkflow[] = withAkInvocation([
 {
     id: "A1",
     featured: true,
@@ -2441,7 +2442,7 @@ export const akEngineerWorkflows: AkWorkflow[] = [
     iconColor: "text-blue-600 dark:text-blue-400",
     borderColor: "border-blue-500/20",
   },
-];
+]);
 
 /** Full catalog (ignore publish gate) — for audits / maintainers */
 export const akEngineerAllFlagshipWorkflows = akEngineerWorkflows.filter((w) => w.featured);

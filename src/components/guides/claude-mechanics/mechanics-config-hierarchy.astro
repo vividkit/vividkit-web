@@ -1,4 +1,5 @@
 ---
+import type { TranslationKey } from '@/i18n/utils';
 // Section 2: Config Hierarchy - Visual diagram showing load order
 import { useTranslations } from "@/i18n/utils";
 import { type Language } from "@/i18n";
@@ -97,7 +98,7 @@ const hierarchyLevels = [
                   ${level.color === 'green' ? 'text-green-700 dark:text-green-400' : ''}
                   ${level.color === 'amber' ? 'text-amber-700 dark:text-amber-400' : ''}
                 `}>
-                  {t(`guides.claude_mechanics.hierarchy.${level.key}`)}
+                  {t(`guides.claude_mechanics.hierarchy.${level.key}` as TranslationKey)}
                 </span>
                 <code class="text-xs px-2 py-0.5 rounded bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-400 font-mono">
                   {level.path}

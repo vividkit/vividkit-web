@@ -1,15 +1,11 @@
 ---
 // Single combo card showing title, description, and skill sequence
 // Used by workflow-combo-grid.astro - receives combo data and renders interactive card
-import { getLangFromUrl, type Language } from '@/i18n';
+import type { Language } from '@/i18n';
 
 interface Props {
   lang?: Language;
 }
-
-const { lang } = Astro.props;
-const currentLang = lang || getLangFromUrl(Astro.url);
-const isVi = currentLang === 'vi';
 ---
 
 <!--
@@ -20,22 +16,22 @@ const isVi = currentLang === 'vi';
 <template id="combo-card-template">
   <div
     class="group bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-xl p-5 cursor-pointer transition-all hover:shadow-lg dark:hover:shadow-none"
-    :class="[
+    x-bind:class="[
       selectedCombo === combo.id ? 'ring-2 ring-offset-2 dark:ring-offset-gray-900' : '',
       `hover:border-${combo.accentColor}-500/50`,
       selectedCombo === combo.id ? `ring-${combo.accentColor}-500` : ''
     ]"
-    @click="selectCombo(combo.id)"
+    x-on:click="selectCombo(combo.id)"
   >
     <!-- Header -->
     <div class="flex items-start gap-3 mb-3">
       <div
         class="w-10 h-10 rounded-lg flex items-center justify-center shrink-0"
-        :class="`bg-${combo.accentColor}-500/10`"
+        x-bind:class="`bg-${combo.accentColor}-500/10`"
       >
         <svg
           class="w-5 h-5"
-          :class="`text-${combo.accentColor}-500`"
+          x-bind:class="`text-${combo.accentColor}-500`"
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"
@@ -57,11 +53,11 @@ const isVi = currentLang === 'vi';
 
     <!-- Skill sequence badges -->
     <div class="flex flex-wrap gap-1.5">
-      <template x-for="(scenarioId, i) in combo.scenarios" :key="scenarioId">
+      <template x-for="(scenarioId, i) in combo.scenarios" x-bind:key="scenarioId">
         <span class="inline-flex items-center gap-1 px-2 py-0.5 text-xs rounded-full bg-gray-100 dark:bg-white/10 text-gray-700 dark:text-white/70 transition-colors group-hover:bg-gray-200 dark:group-hover:bg-white/15">
           <span
             class="w-4 h-4 flex items-center justify-center rounded-full text-[10px] font-medium text-white"
-            :class="`bg-${combo.accentColor}-500`"
+            x-bind:class="`bg-${combo.accentColor}-500`"
             x-text="i + 1"
           ></span>
           <span x-text="'/ck:' + scenarioId"></span>

@@ -1,0 +1,19 @@
+---
+import GuidesLayout from '@/layouts/GuidesLayout.astro';
+import AgentKitUpgradingToV3Guide from '@/components/guides/agentkit/AgentKitUpgradingToV3Guide.astro';
+import { useTranslations } from '@/i18n/utils';
+import { getLangFromUrl } from '@/i18n';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+---
+
+<GuidesLayout
+  title={`${t('guides.agentkit.upgrading_v3.title')} - VividKit Guides`}
+  description={t('guides.agentkit.upgrading_v3.description')}
+  canonicalPath="/guides/agentkit/upgrading-to-v3"
+  activeTab="agentkit-upgrading-v3"
+  lang={lang}
+>
+  <AgentKitUpgradingToV3Guide lang={lang} />
+</GuidesLayout>
