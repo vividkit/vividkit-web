@@ -85,8 +85,8 @@ const data: SkillInfographic = {
     "type": "warning",
     "titleEn": "Read-only metrics; never invent data",
     "titleVi": "Chỉ đọc chỉ số; không bịa dữ liệu",
-    "contentEn": "The skill must gather facts from git history, optional gh issue data, and plan files only. Empty or unavailable data is reported as 0 or N/A; it must not commit, push, or modify source files.",
-    "contentVi": "Skill chỉ lấy dữ kiện từ lịch sử git, dữ liệu issue gh tùy chọn và file plan. Dữ liệu rỗng hoặc không có phải ghi 0 hoặc N/A; không commit, push hoặc sửa source file."
+    "contentEn": "The skill must gather facts from git history, optional gh issue data, and plan files only. Empty or unavailable data is reported as 0 or N/A; it must not commit, push, or modify source files. Commit counts, LOC, churn, and test-file changes are limited proxies that prompt investigation, not a score to rank contributors or prove product quality.",
+    "contentVi": "Skill chỉ lấy dữ kiện từ lịch sử git, dữ liệu issue gh tùy chọn và file plan. Dữ liệu rỗng hoặc không có phải ghi 0 hoặc N/A; không commit, push hoặc sửa source file. Số commit, LOC, churn và thay đổi file test chỉ là chỉ báo gián tiếp để gợi ý chỗ cần xem kỹ, không phải điểm số để xếp hạng người đóng góp hay chứng minh chất lượng sản phẩm."
   },
   "processFlow": [
     {

@@ -10,6 +10,13 @@ const data: SkillInfographic = {
     "taglineEn": "Expand a feature or code path into edge cases and test scenarios across 12 dimensions, with one-shot or iterative saturation modes.",
     "taglineVi": "Mở rộng một feature hoặc code path thành edge case và kịch bản test qua 12 chiều, bằng chế độ one-shot hoặc lặp đến bão hòa."
   },
+  "hardGate": {
+    "type": "warning",
+    "titleEn": "Scenarios are hypotheses, not verified defects",
+    "titleVi": "Kịch bản là giả thuyết, chưa phải lỗi đã xác minh",
+    "contentEn": "A Critical or High row marks a consequence worth testing. It does not prove exploitability, production behavior, or compliance impact; require implementation evidence, tests, and specialist review before any release decision.",
+    "contentVi": "Một dòng Critical hay High chỉ đánh dấu một hậu quả đáng kiểm thử. Nó không chứng minh lỗi khai thác được, hành vi thật trên production hay ảnh hưởng về tuân thủ; cần bằng chứng từ code, test và review của chuyên gia trước mọi quyết định phát hành."
+  },
   "processFlow": [
     {
       "number": 1,

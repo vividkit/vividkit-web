@@ -86,6 +86,13 @@ const data: SkillInfographic = {
     "taglineEn": "Builds Three.js WebGL/WebGPU scenes with models, animation, physics, XR, particles, shaders, optimization, 556 searchable examples, 60 API classes, and 20 use-case templates.",
     "taglineVi": "Xây scene Three.js WebGL/WebGPU với model, animation, physics, XR, particle, shader, tối ưu, 556 ví dụ có thể tìm kiếm, 60 API class và 20 template use case."
   },
+  "hardGate": {
+    "type": "warning",
+    "titleEn": "A scene compiling is not runtime proof",
+    "titleVi": "Scene build được chưa chứng minh là chạy được",
+    "contentEn": "WebGPU, XR, codecs, GPU limits, CORS, and model complexity vary by browser and device. Test the actual target browsers and devices, and keep a fallback or a clear unsupported state when the experience matters.",
+    "contentVi": "WebGPU, XR, codec, giới hạn GPU, CORS và độ phức tạp của model khác nhau theo trình duyệt và thiết bị. Hãy test trên đúng trình duyệt và thiết bị mục tiêu, và giữ phương án dự phòng hoặc thông báo rõ là không hỗ trợ khi trải nghiệm đó quan trọng."
+  },
   "processFlow": [
     {
       "number": 1,

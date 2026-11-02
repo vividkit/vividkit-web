@@ -14,8 +14,8 @@ const data: SkillInfographic = {
     "type": "critical",
     "titleEn": "Do not force delegation",
     "titleVi": "Không ép dùng subagent",
-    "contentEn": "Do not spawn subagents merely because the skill mentions Explore. If runtime policy or the user request does not permit delegation, scout in the main agent with search_files and read_file; `--ultra` hard-stops if five read-only candidates cannot run.",
-    "contentVi": "Không spawn subagent chỉ vì skill nhắc Explore. Nếu runtime policy hoặc yêu cầu người dùng không cho phép delegation, hãy scout trong agent chính bằng search_files và read_file; `--ultra` phải dừng cứng nếu không chạy được năm candidate chỉ đọc."
+    "contentEn": "Do not spawn subagents merely because the skill mentions Explore. If runtime policy or the user request does not permit delegation, scout in the main agent with search_files and read_file; `--ultra` hard-stops if five read-only candidates cannot run. Use the ext route only for scopes you may send to the configured OpenCode provider; never send secrets, unrelated private files, or whole large files just to save local context.",
+    "contentVi": "Không spawn subagent chỉ vì skill nhắc Explore. Nếu runtime policy hoặc yêu cầu người dùng không cho phép delegation, hãy scout trong agent chính bằng search_files và read_file; `--ultra` phải dừng cứng nếu không chạy được năm candidate chỉ đọc. Chỉ dùng route ext cho phạm vi bạn được phép gửi tới provider OpenCode đã cấu hình; không gửi secret, file riêng tư không liên quan hay cả file lớn chỉ để đỡ tốn context trên máy."
   },
   "processFlow": [
     {

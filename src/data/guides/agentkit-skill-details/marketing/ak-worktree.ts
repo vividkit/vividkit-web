@@ -12,10 +12,10 @@ const data: SkillInfographic = {
   },
   hardGate: {
     type: "warning",
-    titleEn: "Respect branch and root safety",
-    titleVi: "Tôn trọng an toàn branch và root",
-    contentEn: "Use --no-prefix for exact pre-formed branch names; project-scope worktree.root must be relative, because committed absolute paths from untrusted clones are skipped with a warning.",
-    contentVi: "Dùng --no-prefix cho branch name đã định dạng sẵn cần giữ nguyên; worktree.root cấp project phải là đường dẫn tương đối vì absolute path trong repo lạ sẽ bị bỏ qua kèm cảnh báo."
+    titleEn: "Creation and cleanup have different authority",
+    titleVi: "Tạo và dọn worktree cần quyền khác nhau",
+    contentEn: "Permission to create one isolated worktree does not authorize dependency installation, a remote fetch, submodule checkout, copying a real secret file, force-removing another worktree, deleting a branch, pruning metadata, committing, pushing, or opening a pull request; approve each effect and exact target separately. Use --no-prefix for exact pre-formed branch names; project-scope worktree.root must be relative, because committed absolute paths from untrusted clones are skipped with a warning.",
+    contentVi: "Được phép tạo một worktree riêng không có nghĩa là được cài dependency, fetch từ remote, checkout submodule, copy file secret thật, xóa cưỡng bức worktree khác, xóa branch, prune metadata, commit, push hay mở pull request; hãy duyệt riêng từng việc và đúng đích của nó. Dùng --no-prefix cho branch name đã định dạng sẵn cần giữ nguyên; worktree.root cấp project phải là đường dẫn tương đối vì absolute path trong repo lạ sẽ bị bỏ qua kèm cảnh báo."
   },
   processFlow: [
     {

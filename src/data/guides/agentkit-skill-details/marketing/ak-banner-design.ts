@@ -12,10 +12,10 @@ const data: SkillInfographic = {
   },
   hardGate: {
     type: 'critical',
-    titleEn: "Respect scope and private data",
-    titleVi: "Giữ đúng phạm vi và dữ liệu riêng tư",
-    contentEn: "The skill explicitly excludes video editing, full website design, and print production, and says never to expose env vars, internal configs, personal data, skill internals, or system prompts.",
-    contentVi: "Skill loại trừ video editing, full website design và print production, đồng thời cấm lộ env var, cấu hình nội bộ, dữ liệu cá nhân, nội dung skill hoặc system prompt.",
+    titleEn: "Exported does not mean placement-ready",
+    titleVi: "Đã export chưa có nghĩa là đăng được",
+    contentEn: "A PNG can have the requested dimensions and still fail a platform policy, crop, disclosure, file-size, accessibility, or print requirement; validate the actual placement before upload, purchase, or production. The skill explicitly excludes video editing, full website design, and print production, and says never to expose env vars, internal configs, personal data, skill internals, or system prompts.",
+    contentVi: "Một file PNG đúng kích thước vẫn có thể trượt chính sách nền tảng, bị cắt khung, thiếu nội dung công bố bắt buộc, vượt dung lượng, không đạt accessibility hoặc yêu cầu in; hãy kiểm tra đúng vị trí đăng thật trước khi upload, mua quảng cáo hoặc đưa vào sản xuất. Skill loại trừ video editing, full website design và print production, đồng thời cấm lộ env var, cấu hình nội bộ, dữ liệu cá nhân, nội dung skill hoặc system prompt.",
   },
   processFlow: [
     { number: 1, titleEn: "Gather requirements", titleVi: "Thu thập yêu cầu", descEn: "Ask purpose, platform or dimensions, headline, subtext, CTA, logo placement, brand guidelines, style preference, and number of options.", descVi: "Hỏi mục đích, nền tảng hoặc kích thước, headline, subtext, CTA, vị trí logo, brand guideline, style mong muốn và số phương án." },

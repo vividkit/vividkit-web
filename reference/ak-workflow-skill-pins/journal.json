@@ -1,13 +1,13 @@
 {
   "slug": "journal",
-  "hash": "52a9c51dc26f73c7a15ffb7359729c6ec30471116e87138a250ac1ffecf3ce2c",
+  "hash": "40cd83b26f6471bd92c47978af35f6f082e7f3a6fc7566011c1b5b46fc0c347c",
   "source": "kit",
   "path": "ak-cli@origin/main:kits/core/skills/ak-journal/SKILL.md",
-  "pinnedAt": "2026-10-02T21:25:37.468Z",
+  "pinnedAt": "2026-11-02T21:11:20.827Z",
   "snapshot": {
-    "name": "ak:journal",
-    "description": "Write chronological technical journals for session reflection and change analysis. Journals preserve work history; they do not replace current docs or ADRs.",
-    "when_to_use": "Invoke for technical session reflection or chronological work records.",
+    "name": "ak-journal",
+    "description": "Write chronological technical journals that preserve work history without replacing current docs or ADRs.",
+    "when_to_use": "Invoke for session reflection or change analysis.",
     "argument_hint": "[topic or reflection]",
     "version": null
   }

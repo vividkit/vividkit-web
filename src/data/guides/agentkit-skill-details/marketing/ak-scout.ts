@@ -14,8 +14,8 @@ const data: SkillInfographic = {
     type: 'warning',
     titleEn: 'DELEGATE ONLY WHEN POLICY ALLOWS',
     titleVi: 'CHỈ DELEGATE KHI POLICY CHO PHÉP',
-    contentEn: 'Do not spawn subagents merely because Scout mentions Explore. If the user request or runtime policy does not permit delegation, scout in the main agent. In --ultra mode, hard-stop if five read-only candidates cannot be dispatched; do not degrade to a main-agent run.',
-    contentVi: 'Không spawn subagent chỉ vì Scout nhắc Explore. Nếu yêu cầu người dùng hoặc runtime policy không cho phép delegation, scout trong main agent. Với --ultra, hard-stop nếu không dispatch được năm candidate read-only; không degrade về chạy một mình.',
+    contentEn: 'Do not spawn subagents merely because Scout mentions Explore. If the user request or runtime policy does not permit delegation, scout in the main agent. In --ultra mode, hard-stop if five read-only candidates cannot be dispatched; do not degrade to a main-agent run. Scouting is read-only: permission to search does not allow edits, generated output, installs, network access, sending private files to a provider, commits, or publishing. Approve ordinary delegation and the ext route separately; --ultra allows only its read-only fan-out.',
+    contentVi: 'Không spawn subagent chỉ vì Scout nhắc Explore. Nếu yêu cầu người dùng hoặc runtime policy không cho phép delegation, scout trong main agent. Với --ultra, hard-stop nếu không dispatch được năm candidate read-only; không degrade về chạy một mình. Scout chỉ có quyền đọc: được phép tìm kiếm không có nghĩa là được sửa file, tạo output, cài dependency, truy cập mạng, gửi file riêng tư tới provider, commit hay đăng tải. Duyệt riêng việc giao subagent thông thường và route ext; --ultra chỉ cho phép phần chạy song song chỉ đọc của nó.',
   },
   processFlow: [
     { number: 1, titleEn: 'Analyze Target', titleVi: 'Phân tích mục tiêu', descEn: 'Parse the prompt for search targets, directories, patterns, file types, and expected code relationships.', descVi: 'Đọc prompt để xác định mục tiêu search, thư mục, pattern, loại file và quan hệ code cần tìm.' },

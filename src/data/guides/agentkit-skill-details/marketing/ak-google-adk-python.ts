@@ -12,10 +12,10 @@ const data: SkillInfographic = {
   },
   hardGate: {
     type: 'info',
-    titleEn: 'Follow the ADK agent convention',
-    titleVi: 'Theo convention agent của ADK',
-    contentEn: 'An agent package uses __init__.py importing agent and agent.py exposing root_agent = Agent(...) or app = App(...).',
-    contentVi: 'Một package agent dùng __init__.py import agent và agent.py khai báo root_agent = Agent(...) hoặc app = App(...).',
+    titleEn: 'Implementation is not deployment authority',
+    titleVi: 'Viết code không đồng nghĩa được phép deploy',
+    contentEn: 'Package installation, model calls, MCP connections, A2A endpoints, persistent memory, artifact storage, container builds, and cloud deployment each have different filesystem, network, data, account, and spend effects; approve each boundary separately. An agent package uses __init__.py importing agent and agent.py exposing root_agent = Agent(...) or app = App(...).',
+    contentVi: 'Cài package, gọi model, kết nối MCP, endpoint A2A, bộ nhớ lâu dài, lưu artifact, build container và deploy lên cloud đều có tác động khác nhau tới file, mạng, dữ liệu, tài khoản và chi phí; hãy duyệt riêng từng ranh giới. Một package agent dùng __init__.py import agent và agent.py khai báo root_agent = Agent(...) hoặc app = App(...).',
   },
   processFlow: [
     { number: 1, titleEn: 'Identify use case', titleVi: 'Xác định use case', descEn: 'Decide whether the work is a single agent, multi-agent system, A2A integration, MCP toolset, workflow, state, memory, callback, deployment, or evaluation.', descVi: 'Xác định việc cần làm là single agent, multi-agent, tích hợp A2A, MCP toolset, workflow, state, memory, callback, deploy hay evaluation.' },

@@ -1,13 +1,13 @@
 {
   "slug": "ui-styling",
-  "hash": "e7a645be15ab7454eb180b21704d3b9fa79b2c8cc545f1318b70d303970fcc9c",
+  "hash": "c8a768ac1e0aa11a5c68d53b55d1ec5b32dc5c333a0290c7c2720b094581905a",
   "source": "kit",
   "path": "ak-cli@origin/main:kits/engineer/skills/ak-ui-styling/SKILL.md",
-  "pinnedAt": "2026-10-02T21:25:37.472Z",
+  "pinnedAt": "2026-11-02T21:11:20.828Z",
   "snapshot": {
-    "name": "ak:ui-styling",
-    "description": "Style UIs with shadcn/ui components (Radix UI + Tailwind CSS). Use for accessible components, themes, dark mode, responsive layouts, design systems, color customization.",
-    "when_to_use": "Invoke for shadcn, Tailwind, themes, or component styling.",
+    "name": "ak-ui-styling",
+    "description": "Style UIs with shadcn/ui (Radix UI + Tailwind CSS): accessible components, themes, dark mode, responsive layouts, design systems.",
+    "when_to_use": "Invoke for component styling or color customization.",
     "argument_hint": "[component or layout]",
     "version": null
   }

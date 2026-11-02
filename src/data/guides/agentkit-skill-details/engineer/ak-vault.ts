@@ -1,6 +1,6 @@
 import type { SkillInfographic } from '@/data/guides/how-ck-works';
 
-// Beta-only core skill: authored from the beta SKILL.md and its references (no ak-docs page yet).
+// Core skill: authored from the stable SKILL.md, its references and the same-kit ak-docs page.
 const data: SkillInfographic = {
   id: 'ak-vault',
   command: '/ak-vault',
@@ -33,13 +33,13 @@ const data: SkillInfographic = {
     'The ak secrets vault is recommended, not required; your recorded choice of dotenv files or another manager is followed.',
     'Report refs, counts, exit codes and [redacted], never a value.',
     'Ask only when a decision is genuinely missing, then record the answer so it is not asked again.',
-    'Commands that refuse to run under an agent are handed to you as the exact command, not worked around.',
+    'Commands that refuse to run under an agent are handed to you as the exact command, not worked around. In a shared vault this includes changing a member\'s role or removing a member; after a removal, each secret that member could read still needs rotating at its provider.',
   ],
   corePrinciplesVi: [
     'Vault ak secrets là khuyến nghị, không bắt buộc; lựa chọn bạn đã ghi là file dotenv hay trình quản lý khác vẫn được làm theo.',
     'Chỉ báo ref, số lượng, mã thoát và [redacted], không bao giờ báo giá trị.',
     'Chỉ hỏi khi thật sự thiếu một quyết định, rồi ghi lại câu trả lời để không phải hỏi lại.',
-    'Lệnh nào từ chối chạy dưới agent thì được đưa lại cho bạn đúng câu lệnh, không tìm đường vòng.',
+    'Lệnh nào từ chối chạy dưới agent thì được đưa lại cho bạn đúng câu lệnh, không tìm đường vòng. Với vault dùng chung, việc này gồm cả đổi vai trò hay gỡ một thành viên; sau khi gỡ, mọi secret thành viên đó từng đọc được vẫn cần xoay vòng ở provider.',
   ],
   invocation: {
     syntax: '/ak-vault [store|find|sync|use|rotate|import] [ref or .env path]',

@@ -17,8 +17,8 @@ const data: SkillInfographic = {
     type: 'critical',
     titleEn: 'Scout and diagnose before fixing',
     titleVi: 'Khảo sát và chẩn đoán trước khi sửa',
-    contentEn: 'Do not propose or implement fixes before completing scout and root-cause diagnosis. After 3 failed attempts, stop and question the architecture.',
-    contentVi: 'Không được đề xuất hoặc sửa trước khi khảo sát và xác định nguyên nhân gốc. Sau 3 lần sửa thất bại, phải dừng và xét lại kiến trúc.',
+    contentEn: 'Do not propose or implement fixes before completing scout and root-cause diagnosis. After 3 failed attempts, stop and question the architecture. A fix request, even with --auto, covers only the scoped workspace correction: secret access, live provider or campaign changes, publishing, contacting the audience, spend, commit, push, pull request, deployment, destructive actions, breaking public contracts, or accepting a regression each need separate permission.',
+    contentVi: 'Không được đề xuất hoặc sửa trước khi khảo sát và xác định nguyên nhân gốc. Sau 3 lần sửa thất bại, phải dừng và xét lại kiến trúc. Yêu cầu fix, kể cả với --auto, chỉ cho phép sửa trong workspace đúng phạm vi: truy cập secret, thay đổi provider hay campaign đang chạy, đăng tải, liên hệ audience, chi tiền, commit, push, pull request, deploy, thao tác phá hủy, làm vỡ hợp đồng công khai hay chấp nhận regression đều cần được cho phép riêng.',
   },
   processFlow: [
     { number: 1, titleEn: 'Frame intent', titleVi: 'Đóng khung ý định', descEn: 'Capture outcome, constraints, non-goals, and acceptance criteria before selecting a mode.', descVi: 'Ghi nhận kết quả mong muốn, ràng buộc, phần không làm và tiêu chí hoàn tất trước khi chọn chế độ.' },

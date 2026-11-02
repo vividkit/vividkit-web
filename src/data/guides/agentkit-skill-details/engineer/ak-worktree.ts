@@ -10,6 +10,13 @@ const data: SkillInfographic = {
     taglineEn: 'Create, inspect, and clean isolated git worktrees for parallel feature work, worktree audits, stale metadata cleanup, monorepos, and submodule workflows.',
     taglineVi: 'Tạo, kiểm tra và dọn Git worktree tách biệt cho làm feature song song, audit worktree, dọn metadata stale, monorepo và submodule.',
   },
+  hardGate: {
+    type: 'critical',
+    titleEn: 'Remove force-deletes the worktree checkout',
+    titleVi: 'Remove xóa cưỡng bức thư mục worktree',
+    contentEn: 'The bundled remove operation runs a forced worktree removal, so uncommitted changes inside that worktree can be lost. Always inspect status, identify the exact path, and run remove ... --dry-run before approving removal.',
+    contentVi: 'Thao tác remove đi kèm chạy xóa worktree cưỡng bức, nên thay đổi chưa commit trong worktree đó có thể mất. Luôn xem status, xác định đúng đường dẫn và chạy remove ... --dry-run trước khi duyệt việc xóa.',
+  },
   processFlow: [
     { number: 1, titleEn: 'Read repo info', titleVi: 'Đọc thông tin repo', descEn: 'Run node scripts/worktree.cjs info --json, then parse repo type, base branch, projects, root location/source, dirty state, and dirty details.', descVi: 'Chạy node scripts/worktree.cjs info --json, rồi đọc loại repo, base branch, project, vị trí/nguồn root, trạng thái dirty và chi tiết dirty.' },
     { number: 2, titleEn: 'Detect exact names', titleVi: 'Nhận dạng tên chính xác', descEn: 'If the caller provides uppercase, issue keys, slashes, or an explicit exact branch name, choose --no-prefix and preserve it as the slug.', descVi: 'Nếu người gọi đưa chữ hoa, mã issue, dấu slash hoặc yêu cầu tên branch chính xác, chọn --no-prefix và giữ nguyên làm slug.' },

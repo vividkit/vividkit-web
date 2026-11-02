@@ -1,6 +1,6 @@
 import type { SkillInfographic, SkillSubcommand } from '@/data/guides/how-ck-works';
 
-// Beta-only skill: authored from the beta SKILL.md and the beta marketing ak-docs page.
+// Authored from the marketing kit SKILL.md and the stable marketing ak-docs page.
 const stage = (
   name: string,
   titleEn: string,

@@ -1,13 +1,13 @@
 {
   "slug": "research",
-  "hash": "ec6e6e5020cfe96aeb5cb223a036cc2c30b81aaae9421428d43c3d1d5c6c3578",
+  "hash": "02b18ba506f868d82bbf2cca3a6ad6461da61b045fa7f96e7e2c58f9d83439c0",
   "source": "kit",
   "path": "ak-cli@origin/main:kits/engineer/skills/ak-research/SKILL.md",
-  "pinnedAt": "2026-10-02T21:25:37.469Z",
+  "pinnedAt": "2026-11-02T21:11:20.828Z",
   "snapshot": {
-    "name": "ak:research",
-    "description": "Research technical solutions, analyze architectures, gather requirements thoroughly. Use for technology evaluation, best practices research, solution design, scalability/security/maintainability analysis.",
-    "when_to_use": "Invoke for deep technical research before implementation.",
+    "name": "ak-research",
+    "description": "Research technical solutions, analyze architectures and gather requirements.",
+    "when_to_use": "Invoke before implementation to evaluate technology or best practices.",
     "argument_hint": "[topic] [--ultra] [--yagni]",
     "version": null
   }

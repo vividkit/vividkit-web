@@ -7,8 +7,15 @@ const data: SkillInfographic = {
   header: {
     titleEn: '/ak:marketing-psychology — Behavioral-science models for marketing',
     titleVi: '/ak:marketing-psychology — Mental model hành vi cho marketing',
-    taglineEn: "Apply 70+ mental models and behavioral-science principles to ethical marketing decisions, buyer behavior, persuasion, pricing, design, and growth.",
-    taglineVi: "Áp dụng hơn 70 mental model và nguyên lý behavioral science vào quyết định marketing có đạo đức, hành vi mua, thuyết phục, pricing, design và growth."
+    taglineEn: "Pick the two or three mental models and behavioral-science mechanisms that fit the observed behavior, then turn each into an ethical intervention with a metric and a harm guardrail, across buyer behavior, persuasion, pricing, design, and growth.",
+    taglineVi: "Chọn hai hoặc ba mental model và cơ chế behavioral science khớp với hành vi đang thấy, rồi biến mỗi cái thành can thiệp có đạo đức kèm chỉ số đo và giới hạn chống gây hại, cho hành vi mua, thuyết phục, pricing, design và growth."
+  },
+  hardGate: {
+    type: 'warning',
+    titleEn: 'Influence must preserve agency',
+    titleVi: 'Tác động phải giữ quyền tự quyết',
+    contentEn: 'No fake scarcity, fabricated authority or social proof, misleading anchors, hidden fees, obstructed cancellation, preselected paid options, coerced consent, disguised advertising, or fear-based pressure. Defaults and framing must be visible, truthful, easy to reverse, and lawful. The Skill recommends and designs tests; it does not ship copy or prices or publish claims.',
+    contentVi: 'Không tạo khan hiếm giả, không bịa uy tín hay social proof, không neo giá gây hiểu lầm, không phí ẩn, không làm khó việc huỷ, không chọn sẵn tuỳ chọn trả phí, không ép đồng ý, không quảng cáo trá hình, không gây áp lực bằng nỗi sợ. Default và cách trình bày phải hiển thị rõ, đúng sự thật, dễ đảo ngược và hợp pháp. Skill chỉ đề xuất và thiết kế test; không tự đưa copy hay giá lên chạy, không công bố claim.',
   },
   processFlow: [
     {

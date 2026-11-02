@@ -10,6 +10,13 @@ const data: SkillInfographic = {
     "taglineEn": "Persist chronological technical journals under plans/journals using the first-class CLI, preserving work history without replacing current docs, ADRs, or product decision sources.",
     "taglineVi": "Lưu nhật ký kỹ thuật theo thời gian dưới plans/journals bằng CLI chính thức, giữ lịch sử công việc mà không thay thế docs hiện tại, ADR hoặc nguồn quyết định sản phẩm."
   },
+  "hardGate": {
+    "type": "warning",
+    "titleEn": "A journal is not durable authority",
+    "titleVi": "Journal không phải nguồn quyết định lâu dài",
+    "contentEn": "Journals record what happened. They do not replace current product docs, specifications, runbooks, or architecture decision records. Put lasting decisions in the surface that owns them and link the history when useful.",
+    "contentVi": "Journal ghi lại những gì đã xảy ra. Nó không thay thế tài liệu sản phẩm hiện hành, đặc tả, runbook hay ADR. Hãy đưa quyết định lâu dài vào đúng nơi quản lý nó và dẫn link tới lịch sử khi cần."
+  },
   "processFlow": [
     {
       "number": 1,

@@ -32,12 +32,14 @@ const data: SkillInfographic = {
     'Packaging, pricing metric, and price point are separate decisions that must fit together.',
     'A good value metric is easy to understand, hard to game, and scales with customer success.',
     'Tier design should map to real personas, feature needs, buying processes, and willingness to pay.',
+    'Keep your decided prices and constraints; when evidence cannot identify a price, give a research or experiment plan instead of an invented optimum, and give existing customers advance notice and an easy way to downgrade or leave.',
   ],
   corePrinciplesVi: [
     'Đặt giá nằm giữa lựa chọn thay thế tốt nhất và perceived value; cost chỉ là sàn, không phải nền tảng định giá.',
     'Packaging, pricing metric và price point là ba quyết định riêng nhưng phải ăn khớp với nhau.',
     'Value metric tốt phải dễ hiểu, khó lách và tăng cùng mức độ thành công của khách hàng.',
     'Thiết kế tier phải gắn với persona thật, nhu cầu feature, buying process và willingness to pay.',
+    'Giữ nguyên mức giá và ràng buộc bạn đã chốt; khi bằng chứng chưa đủ để xác định giá, đưa ra kế hoạch research hoặc thử nghiệm thay vì bịa ra một mức giá tối ưu, và báo trước cho khách hàng hiện tại kèm cách hạ gói hoặc rời đi dễ dàng.',
   ],
   expertiseAreasEn: ['Value-based pricing', 'Van Westendorp', 'MaxDiff packaging', 'Value metrics', 'Good-Better-Best tiers', 'Freemium vs trial', 'Price increases', 'Enterprise pricing'],
   expertiseAreasVi: ['Value-based pricing', 'Van Westendorp', 'MaxDiff cho packaging', 'Value metric', 'Tier Good-Better-Best', 'Freemium vs trial', 'Tăng giá', 'Enterprise pricing'],
@@ -50,11 +52,11 @@ const data: SkillInfographic = {
   ],
   promptExamples: [
     { labelEn: 'New SaaS pricing', labelVi: 'Định giá SaaS mới', command: '/ak:pricing-strategy AI meeting notes app',
-      commandVi: '/ak:pricing-strategy ứng dụng ghi chú cuộc họp AI', whenEn: 'You need initial pricing, packaging, and metric decisions.', whenVi: 'Khi cần quyết định pricing, packaging và metric ban đầu.', expectedEn: 'The pricing strategy defines the value metric, tier structure, research plan, and validation checklist for testing assumptions.', expectedVi: 'Value metric, cấu trúc tier, kế hoạch research và checklist kiểm chứng.', recommended: true },
+      commandVi: '/ak:pricing-strategy ứng dụng ghi chú cuộc họp AI', whenEn: 'You need initial pricing, packaging, and metric decisions.', whenVi: 'Khi cần quyết định pricing, packaging và metric ban đầu.', expectedEn: 'The pricing strategy defines the value metric, tier structure, research plan, and validation checklist for testing assumptions.', expectedVi: 'Chiến lược giá xác định value metric, cấu trúc tier, kế hoạch research và checklist kiểm chứng để thử các giả định.', recommended: true },
     { labelEn: 'Tier redesign', labelVi: 'Thiết kế lại tier', command: '/ak:pricing-strategy Pro tier restructure',
       commandVi: '/ak:pricing-strategy tái cấu trúc gói Pro', whenEn: 'Existing packages are confusing or do not map to customer segments.', whenVi: 'Khi package hiện tại rối hoặc không khớp segment khách hàng.', expectedEn: 'This strategy covers persona-based packaging choices and explains how each tier differs to serve distinct customer needs.', expectedVi: 'Chiến lược này mô tả packaging theo persona và cách tạo khác biệt rõ ràng giữa từng tier.' },
     { labelEn: 'Price increase', labelVi: 'Tăng giá', command: '/ak:pricing-strategy price increase for existing customers',
-      commandVi: '/ak:pricing-strategy tăng giá cho khách hàng hiện tại', whenEn: 'You are considering raising prices and need a low-risk rollout.', whenVi: 'Khi cân nhắc tăng giá và cần rollout giảm rủi ro.', expectedEn: 'The plan includes the increase strategy, communication plan, target cohorts, and the metrics teams should monitor after launch.', expectedVi: 'Chiến lược tăng giá, kế hoạch truyền thông, cohort và chỉ số cần theo dõi.' },
+      commandVi: '/ak:pricing-strategy tăng giá cho khách hàng hiện tại', whenEn: 'You are considering raising prices and need a low-risk rollout.', whenVi: 'Khi cân nhắc tăng giá và cần rollout giảm rủi ro.', expectedEn: 'The plan includes the increase strategy, advance notice with an easy downgrade or exit for existing customers, target cohorts, and the metrics teams should monitor after launch.', expectedVi: 'Kế hoạch gồm chiến lược tăng giá, thông báo trước kèm cách hạ gói hoặc rời đi dễ dàng cho khách hiện tại, các cohort mục tiêu và chỉ số team cần theo dõi sau khi áp dụng.' },
   ],
 };
 

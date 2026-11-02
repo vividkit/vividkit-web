@@ -99,8 +99,8 @@ const data: SkillInfographic = {
     "type": "warning",
     "titleEn": "Pre-delivery checklist, not a visual-only pass",
     "titleVi": "Checklist trước bàn giao, không chỉ nhìn bằng mắt",
-    "contentEn": "Before delivering UI code, verify visual quality, interaction, light/dark contrast, layout, accessibility, touch targets, safe areas, reduced motion, and dynamic text; a palette or style recommendation is not proof.",
-    "contentVi": "Trước khi bàn giao UI code, kiểm visual quality, interaction, contrast light/dark, layout, accessibility, vùng chạm, safe area, reduced motion và dynamic text; palette hoặc style recommendation chưa phải bằng chứng."
+    "contentEn": "Before delivering UI code, verify visual quality, interaction, light/dark contrast, layout, accessibility, touch targets, safe areas, reduced motion, and dynamic text; a palette or style recommendation is not proof. The bundled datasets and checklist are a point-in-time snapshot, not a live standard; verify version-sensitive or high-stakes requirements (WCAG, platform, browser, framework, brand) at their primary source.",
+    "contentVi": "Trước khi bàn giao UI code, kiểm visual quality, interaction, contrast light/dark, layout, accessibility, vùng chạm, safe area, reduced motion và dynamic text; palette hoặc style recommendation chưa phải bằng chứng. Bộ dữ liệu và checklist đi kèm chỉ phản ánh một thời điểm, không phải chuẩn đang cập nhật; với yêu cầu phụ thuộc phiên bản hoặc rủi ro cao (WCAG, nền tảng, trình duyệt, framework, brand), hãy kiểm tại nguồn gốc."
   },
   "processFlow": [
     {

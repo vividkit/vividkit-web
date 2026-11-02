@@ -12,10 +12,10 @@ const data: SkillInfographic = {
   },
   hardGate: {
     type: "critical",
-    titleEn: "SECRET SCAN STOPS COMMIT",
-    titleVi: "QUÉT SECRET CHẶN COMMIT",
-    contentEn: "Stage and inspect changes, scan staged diff for secrets before committing, split mixed commits, and stop if secrets are detected. Default mode asks the user to choose cm, cp, pr, merge, merge-pr, or stack.",
-    contentVi: "Stage và kiểm tra thay đổi, quét secret trong diff đã stage trước khi commit, tách commit khi nội dung bị trộn và dừng nếu phát hiện secret. Khi không có argument, hỏi user chọn cm, cp, pr, merge, merge-pr hoặc stack.",
+    titleEn: "Choose the operation before you invoke it",
+    titleVi: "Chọn thao tác trước khi gọi skill",
+    contentEn: "cm stages the entire repository with git add -A, and cp, pr, merge, and merge-pr can change remote state; review unrelated work, branch targets, and repository policy before proceeding. Stage and inspect changes, scan staged diff for secrets before committing, split mixed commits, and stop if secrets are detected. Default mode asks the user to choose cm, cp, pr, merge, merge-pr, or stack.",
+    contentVi: "cm stage toàn bộ repo bằng git add -A, còn cp, pr, merge và merge-pr có thể thay đổi trạng thái trên remote; hãy xem lại phần việc không liên quan, branch đích và quy định của repo trước khi tiếp tục. Stage và kiểm tra thay đổi, quét secret trong diff đã stage trước khi commit, tách commit khi nội dung bị trộn và dừng nếu phát hiện secret. Khi không có argument, hỏi user chọn cm, cp, pr, merge, merge-pr hoặc stack.",
   },
   processFlow: [
     { number: 1, titleEn: "Select Operation", titleVi: "Chọn thao tác", descEn: "If no arguments are supplied, ask the user to choose cm, cp, pr, merge, merge-pr, or stack.", descVi: "Nếu không có argument, hỏi user chọn cm, cp, pr, merge, merge-pr hoặc stack." },

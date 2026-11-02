@@ -14,6 +14,13 @@ const data: SkillInfographic = {
           exampleCommandVi: '/ak:payment-integration "stripe Add một sandbox subscription checkout và xác minh webhook signatures trên raw body"' },
     ],
   },
+  hardGate: {
+    type: "warning",
+    titleEn: "A successful API call can move money or access",
+    titleVi: "Một lệnh API thành công có thể chuyển tiền hoặc cấp quyền",
+    contentEn: "Live checkout, subscription changes, refunds, benefit grants, bank events, product edits, and webhook replays can affect customers and financial records. Sandbox authority never implies production authority, and PayFS has no sandbox at all.",
+    contentVi: "Checkout thật, đổi subscription, hoàn tiền, cấp quyền lợi, sự kiện ngân hàng, sửa sản phẩm và phát lại webhook đều có thể ảnh hưởng khách hàng và sổ sách tài chính. Được phép trên sandbox không có nghĩa là được phép trên production, và PayFS hoàn toàn không có sandbox."
+  },
   processFlow: [
     { number: 1, titleEn: 'Define payment job', titleVi: 'Xác định việc thanh toán', descEn: 'Clarify checkout, subscription, webhook, VietQR, order management, benefits, or enterprise payment needs.', descVi: 'Làm rõ nhu cầu checkout, subscription, webhook, VietQR, quản lý đơn hàng, benefit hoặc thanh toán enterprise.' },
     { number: 2, titleEn: 'Select provider', titleVi: 'Chọn provider', descEn: 'Choose SePay or PayFS for Vietnamese bank transfers and VietQR; Polar, Creem, Dodo Payments, Paddle, or Lemon Squeezy (existing stores only, maintenance mode) as Merchant of Record for SaaS and digital products; Stripe for enterprise and Connect; PayPal for wallet and card checkout where you own tax. Provider versions, limits, and fees are dated facts to recheck in official docs.', descVi: 'Chọn SePay hoặc PayFS cho chuyển khoản ngân hàng Việt Nam và VietQR; Polar, Creem, Dodo Payments, Paddle hoặc Lemon Squeezy (chỉ cho store đang có, đang ở chế độ bảo trì) làm Merchant of Record cho SaaS và sản phẩm số; Stripe cho enterprise và Connect; PayPal cho checkout ví và thẻ khi bạn tự lo thuế. Phiên bản, giới hạn và phí của provider là dữ kiện có thời điểm, cần kiểm lại ở tài liệu chính thức.' },

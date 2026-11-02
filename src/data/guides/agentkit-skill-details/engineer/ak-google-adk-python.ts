@@ -29,6 +29,13 @@ const data: SkillInfographic = {
     "taglineEn": "Guide code-first Google ADK Python work: agents, workflow agents, A2A, MCP tools, state, memory, callbacks, plugins, evaluation, and deployment.",
     "taglineVi": "Hướng dẫn xây Google ADK Python theo code-first: agent, workflow agent, A2A, MCP tools, state, memory, callback, plugin, evaluation và deployment."
   },
+  "hardGate": {
+    "type": "warning",
+    "titleEn": "Agent tests can call real services",
+    "titleVi": "Test agent có thể gọi dịch vụ thật",
+    "contentEn": "Running an ADK agent may invoke a model, MCP server, database, remote agent, or cloud API. That can transmit data, change systems, consume quota, and incur cost even when the command is described as a test.",
+    "contentVi": "Chạy một agent ADK có thể gọi model, MCP server, database, agent từ xa hoặc cloud API. Việc này có thể gửi dữ liệu đi, thay đổi hệ thống, tiêu quota và phát sinh chi phí, kể cả khi lệnh được gọi là test."
+  },
   "processFlow": [
     {
       "number": 1,

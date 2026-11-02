@@ -1,7 +1,7 @@
 import type { SkillInfographic, SkillInvocation } from '@/data/guides/how-ck-works';
 
 const invocation: SkillInvocation = {
-  syntax: '/ak:explain [subject|path|URL] [--html] [--eli5]',
+  syntax: '/ak:explain [subject|path|URL] [--html] [--ak-render] [--eli5]',
   arguments: [
     {
       token: '[subject|path|URL]',
@@ -39,6 +39,17 @@ const invocation: SkillInvocation = {
       exampleCommand: '/ak:explain docs/architecture.md --html',
       exampleCommandVi: '/ak:explain docs/architecture.md --html',
     },
+    {
+      token: '--ak-render',
+      titleEn: 'AK Render route',
+      titleVi: 'Route AK Render',
+      descEn:
+        'Opt-in route that implies --html. The skill writes explain-{slug}.page.yaml beside the HTML and compiles it with the pinned AK Render package (needs Node 20.11+; the first npx run downloads it). A project with an .ak-render/ folder selects this route automatically. If Node, npx, or the package is unavailable, it falls back to the default HTML route and says why.',
+      descVi:
+        'Route tùy chọn bật thêm, tự bật --html. Skill ghi explain-{slug}.page.yaml cạnh file HTML rồi compile bằng package AK Render đã ghim phiên bản (cần Node 20.11+; lần chạy npx đầu tiên sẽ tải package). Project có thư mục .ak-render/ sẽ tự chọn route này. Nếu thiếu Node, npx hoặc package, skill quay về route HTML mặc định và nêu lý do.',
+      exampleCommand: '/ak:explain docs/architecture.md --ak-render',
+      exampleCommandVi: '/ak:explain docs/architecture.md --ak-render',
+    },
   ],
 };
 
@@ -68,8 +79,8 @@ const data: SkillInfographic = {
       number: 1,
       titleEn: 'Parse flags and subject',
       titleVi: 'Tách cờ và chủ đề',
-      descEn: 'Extract --html and --eli5, then resolve the subject from the prompt, active file, or conversation. If the subject is clear, start immediately. If it is completely absent, ask one focused question.',
-      descVi: 'Tách --html và --eli5, rồi xác định chủ đề từ prompt, file đang mở, hoặc hội thoại. Nếu chủ đề đã rõ, làm ngay. Nếu hoàn toàn thiếu, hỏi đúng một câu tập trung.',
+      descEn: 'Extract --html, --ak-render, and --eli5, then resolve the subject from the prompt, active file, or conversation. If the subject is clear, start immediately. If it is completely absent, ask one focused question.',
+      descVi: 'Tách --html, --ak-render và --eli5, rồi xác định chủ đề từ prompt, file đang mở, hoặc hội thoại. Nếu chủ đề đã rõ, làm ngay. Nếu hoàn toàn thiếu, hỏi đúng một câu tập trung.',
     },
     {
       number: 2,
@@ -118,9 +129,9 @@ const data: SkillInfographic = {
   expertiseAreasVi: ['Walkthrough mã', 'Mô hình kiến trúc', 'Stack lỗi', 'Ví dụ ELI5', 'Trang HTML trực quan'],
   invocation,
   composableFlagsEn:
-    '--html and --eli5 compose in any order. Combined --html --eli5 uses plain ELI5 copy, intuitive diagram labels, and prominent warning panels. Unknown flags return concise usage help.',
+    '--html and --eli5 compose in any order. --ak-render implies --html and compiles the same page from a page spec with AK Render. Combined --html --eli5 uses plain ELI5 copy, intuitive diagram labels, and prominent warning panels. Unknown flags return concise usage help.',
   composableFlagsVi:
-    '--html và --eli5 ghép được theo thứ tự bất kỳ. --html --eli5 dùng lời ELI5, nhãn sơ đồ dễ hiểu, và khung cảnh báo nổi. Cờ lạ trả hướng dẫn dùng ngắn.',
+    '--html và --eli5 ghép được theo thứ tự bất kỳ. --ak-render tự bật --html và compile cùng trang đó từ page spec bằng AK Render. --html --eli5 dùng lời ELI5, nhãn sơ đồ dễ hiểu, và khung cảnh báo nổi. Cờ lạ trả hướng dẫn dùng ngắn.',
   promptExamples: [
     {
       labelEn: 'Default Markdown explanation',
@@ -162,6 +173,16 @@ const data: SkillInfographic = {
       whenVi: 'Dùng khi trang trực quan cần ví dụ đời thường và cảnh báo phải nhìn thấy rõ.',
       expectedEn: 'Composes both flags so the HTML uses ELI5 copy, intuitive diagram labels, and prominent warning panels without dropping safety.',
       expectedVi: 'Ghép cả hai cờ để HTML dùng lời ELI5, nhãn sơ đồ dễ hiểu, và khung cảnh báo nổi, không bỏ phần an toàn.',
+    },
+    {
+      labelEn: 'HTML through AK Render',
+      labelVi: 'HTML qua AK Render',
+      command: '/ak:explain docs/architecture.md --ak-render',
+      commandVi: '/ak:explain docs/architecture.md --ak-render',
+      whenEn: 'Use when you want the visual page compiled from an editable spec instead of hand-written HTML.',
+      whenVi: 'Dùng khi muốn trang trực quan được compile từ một spec sửa được, thay vì HTML viết tay.',
+      expectedEn: 'Writes explain-{slug}.page.yaml beside the HTML, compiles an offline page with AK Render, and reports the path; if the compiler is unavailable it uses the default HTML route and says why.',
+      expectedVi: 'Ghi explain-{slug}.page.yaml cạnh file HTML, compile trang offline bằng AK Render rồi báo đường dẫn; nếu không có compiler thì dùng route HTML mặc định và nêu lý do.',
     },
   ],
   reportOutput: {

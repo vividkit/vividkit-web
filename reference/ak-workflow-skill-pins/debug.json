@@ -1,13 +1,13 @@
 {
   "slug": "debug",
-  "hash": "9be38485e2b9c753795936de89e61b88bc545e64974736e76d5cbd6122ce3a01",
+  "hash": "649014edb29eca1c9daa05317d1d0541573cb8830e614eb1af305a4fdfa42ae2",
   "source": "kit",
   "path": "ak-cli@origin/main:kits/core/skills/ak-debug/SKILL.md",
-  "pinnedAt": "2026-10-02T21:25:37.468Z",
+  "pinnedAt": "2026-11-02T21:11:20.826Z",
   "snapshot": {
-    "name": "ak:debug",
-    "description": "Debug systematically with root cause analysis before fixes. Use for bugs, test failures, unexpected behavior, performance issues, call stack tracing, multi-layer validation, log analysis, CI/CD failures, database diagnostics, system investigation.",
-    "when_to_use": "Invoke when root cause must be proven before a fix.",
+    "name": "ak-debug",
+    "description": "Debug failing or misbehaving code by proving the root cause before any fix; diagnose why something fails, gives wrong output or is flaky in CI.",
+    "when_to_use": "Invoke before editing code for any error, stack trace or failing test; writing new tests is ak-test.",
     "argument_hint": "[error or issue description] [--ultra]",
     "version": null
   }

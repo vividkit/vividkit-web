@@ -7,8 +7,8 @@ const data: SkillInfographic = {
   "header": {
     "titleEn": "/ak:skill-creator — Skill Creator",
     "titleVi": "/ak:skill-creator — Tạo Skill",
-    "taglineEn": "Creates or updates Claude skills through intent capture, research, progressive-disclosure planning, scaffolding, SKILL.md/resources, evals, description optimization, packaging, and optional Kongming advice.",
-    "taglineVi": "Tạo hoặc cập nhật Claude skill qua ghi nhận intent, research, lập progressive disclosure, scaffold, SKILL.md/tài nguyên, eval, tối ưu description, đóng gói và cố vấn Kongming tùy chọn."
+    "taglineEn": "Creates, updates, audits, optimizes, validates, and packages agent skills and their SKILL.md resources, or diagnoses skill routing, through intent capture, a placement check, progressive-disclosure planning, scaffolding, evals, and optional Kongming advice.",
+    "taglineVi": "Tạo, cập nhật, audit, tối ưu, kiểm tra và đóng gói agent skill cùng tài nguyên SKILL.md, hoặc chẩn đoán routing của skill, qua ghi nhận intent, kiểm tra có nên tạo skill mới không, lập progressive disclosure, scaffold, eval và cố vấn Kongming tùy chọn."
   },
   "invocation": {
     "syntax": "/ak:skill-creator <create|update|audit|optimize> [skill-name|path|kit|--all] [--kit <kit>|--project|--user] [--long-horizon] [--apply] [--from-audit <report>] [--advice]",
@@ -44,29 +44,29 @@ const data: SkillInfographic = {
       },
       {
         "name": "update",
-        "syntax": "/ak:skill-creator update [skill-name|path] [--apply] [--from-audit <report>] [--advice]",
+        "syntax": "/ak:skill-creator update <skill-name|path> <change> [--advice]",
         "titleEn": "Update",
         "titleVi": "Cập nhật",
-        "descEn": "Change an existing skill from a request or an audit report. --apply writes accepted edits.",
-        "descVi": "Sửa skill có sẵn từ yêu cầu hoặc báo cáo audit. --apply ghi các sửa đã chấp nhận.",
-        "exampleCommand": "/ak:skill-creator update release-notes --apply"
+        "descEn": "Inspect the existing skill and its users, apply only the requested change in place, lint every changed line, and bump metadata.version. update writes files directly.",
+        "descVi": "Xem skill có sẵn và nơi đang dùng nó, chỉ áp dụng đúng thay đổi được yêu cầu tại chỗ, lint mọi dòng đã đổi và tăng metadata.version. update ghi file trực tiếp.",
+        "exampleCommand": "/ak:skill-creator update release-notes \"validate that every heading matches the changelog template\""
       },
       {
         "name": "audit",
         "syntax": "/ak:skill-creator audit [skill-name|path|kit|--all] [--kit <kit>] [--advice]",
         "titleEn": "Audit",
         "titleVi": "Audit",
-        "descEn": "Diagnose routing, description, and behavior, using measured usage from local sessions without printing their content. Does not rewrite the skill unless you follow with update --apply.",
-        "descVi": "Chẩn đoán routing, description và hành vi, dựa trên số liệu sử dụng đo từ các session local mà không in nội dung của chúng. Không viết lại skill trừ khi chạy tiếp update --apply.",
+        "descEn": "Diagnose routing, description, and behavior, using measured usage from local sessions without printing their content. Writes a report only and never edits skill files; follow with optimize --apply --from-audit <report> to apply findings.",
+        "descVi": "Chẩn đoán routing, description và hành vi, dựa trên số liệu sử dụng đo từ các session local mà không in nội dung của chúng. Chỉ ghi báo cáo, không bao giờ sửa file skill; chạy tiếp optimize --apply --from-audit <report> để áp dụng finding.",
         "exampleCommand": "/ak:skill-creator audit release-notes"
       },
       {
         "name": "optimize",
-        "syntax": "/ak:skill-creator optimize [skill-name|path|--all] [--apply] [--advice]",
+        "syntax": "/ak:skill-creator optimize <skill-name|path> [--apply] [--from-audit <report>] [--advice]",
         "titleEn": "Optimize",
         "titleVi": "Tối ưu",
-        "descEn": "Tighten trigger metadata, evals, and progressive disclosure. --apply writes the accepted metadata changes.",
-        "descVi": "Siết metadata kích hoạt, eval và progressive disclosure. --apply ghi thay đổi metadata đã chấp nhận.",
+        "descEn": "Rewrite High and Medium findings from an audit report or path, keeping instructions that still have a purpose. Without --apply it only proposes the diff; --apply writes it.",
+        "descVi": "Viết lại các finding mức High và Medium từ báo cáo audit hoặc từ path, giữ lại hướng dẫn vẫn còn mục đích. Không có --apply thì chỉ đề xuất diff; có --apply mới ghi.",
         "exampleCommand": "/ak:skill-creator optimize release-notes --apply"
       }
     ],
@@ -107,17 +107,17 @@ const data: SkillInfographic = {
         "token": "--apply",
         "titleEn": "Write accepted edits",
         "titleVi": "Ghi sửa đã chấp nhận",
-        "descEn": "Write the accepted update or optimize edits. Without --apply, report the proposed patch only.",
-        "descVi": "Ghi các sửa update hoặc optimize đã chấp nhận. Không có --apply thì chỉ báo patch đề xuất.",
-        "exampleCommand": "/ak:skill-creator update release-notes --apply"
+        "descEn": "Write the optimize rewrite. Without --apply, optimize reports the proposed diff only.",
+        "descVi": "Ghi bản viết lại của optimize. Không có --apply thì optimize chỉ báo diff đề xuất.",
+        "exampleCommand": "/ak:skill-creator optimize release-notes --apply"
       },
       {
         "token": "--from-audit",
         "titleEn": "From audit report",
         "titleVi": "Từ báo cáo audit",
-        "descEn": "Feed an audit report path into update so the patch stays scoped to diagnosed issues.",
-        "descVi": "Đưa path báo cáo audit vào update để patch bám đúng vấn đề đã chẩn đoán.",
-        "exampleCommand": "/ak:skill-creator update release-notes --from-audit plans/reports/skill-audit.md --apply"
+        "descEn": "Feed an audit report path into optimize so the rewrite stays scoped to diagnosed findings.",
+        "descVi": "Đưa path báo cáo audit vào optimize để bản viết lại bám đúng finding đã chẩn đoán.",
+        "exampleCommand": "/ak:skill-creator optimize release-notes --apply --from-audit plans/reports/skill-audit.md"
       },
       {
         "token": "--advice",
@@ -131,10 +131,10 @@ const data: SkillInfographic = {
   },
   "hardGate": {
     "type": "warning",
-    "titleEn": "Project scope and security are mandatory",
-    "titleVi": "Bắt buộc đúng scope và bảo mật",
-    "contentEn": "Create new skills in the current project scope unless the user explicitly asks for user-scope authoring, and include refusal/leakage-prevention policy before packaging or distribution.",
-    "contentVi": "Skill mới phải được tạo trong scope dự án hiện tại trừ khi người dùng yêu cầu rõ user-scope, và phải có policy từ chối/chống rò rỉ trước khi đóng gói hoặc phân phối."
+    "titleEn": "Scaffolding and packaging write to disk",
+    "titleVi": "Scaffold và đóng gói sẽ ghi xuống đĩa",
+    "contentEn": "Approve the exact project path before initialization and the output directory before packaging. New skills stay in the current project unless you explicitly ask for user scope, and create refuses to write over an existing directory. Treat unfamiliar third-party skill content as untrusted: do not execute copied scripts or expose secrets while evaluating it.",
+    "contentVi": "Duyệt đúng đường dẫn project trước khi khởi tạo và thư mục output trước khi đóng gói. Skill mới nằm trong project hiện tại trừ khi bạn yêu cầu rõ user scope, và create từ chối ghi đè lên thư mục đã tồn tại. Coi nội dung skill bên thứ ba lạ là không tin cậy: không chạy script sao chép về và không để lộ secret khi đánh giá."
   },
   "processFlow": [
     {
@@ -155,8 +155,8 @@ const data: SkillInfographic = {
       "number": 3,
       "titleEn": "Plan resources",
       "titleVi": "Lập tài nguyên",
-      "descEn": "Choose which instructions stay in SKILL.md and which details belong in scripts, references, agents, or assets.",
-      "descVi": "Chọn phần nào đặt trong SKILL.md và phần nào đưa vào script, reference, agent hoặc asset."
+      "descEn": "Before scaffolding, prove a new skill is the right unit: prefer extending an existing owner, a reference, script, validator, template, or project context when that meets the need. Then choose which instructions stay in SKILL.md and which details belong in scripts, references, agents, or assets.",
+      "descVi": "Trước khi scaffold, chứng minh skill mới là đơn vị đóng gói phù hợp: ưu tiên mở rộng skill sẵn có, reference, script, validator, template hoặc ngữ cảnh project nếu đã đáp ứng được nhu cầu. Sau đó chọn phần nào đặt trong SKILL.md và phần nào đưa vào script, reference, agent hoặc asset."
     },
     {
       "number": 4,
@@ -169,8 +169,8 @@ const data: SkillInfographic = {
       "number": 5,
       "titleEn": "Write instructions",
       "titleVi": "Viết hướng dẫn",
-      "descEn": "Keep instructions imperative, concise, pushy in metadata, and free of duplicated material across references.",
-      "descVi": "Viết hướng dẫn ở dạng mệnh lệnh, ngắn gọn, metadata kích hoạt mạnh và không lặp nội dung giữa các reference."
+      "descEn": "Keep the SKILL.md core on outcome, authority, done criteria, high-value constraints, and failure modes; move frameworks, catalogs, and examples to references. Use guardrails, not step-by-step railroads, and avoid duplicated material across references.",
+      "descVi": "Giữ phần lõi SKILL.md tập trung vào kết quả, thẩm quyền, tiêu chí hoàn thành, ràng buộc giá trị cao và các kiểu lỗi; chuyển framework, catalog và ví dụ sang reference. Đặt rào chắn thay vì ép từng bước cứng nhắc, và không lặp nội dung giữa các reference."
     },
     {
       "number": 6,
@@ -183,8 +183,8 @@ const data: SkillInfographic = {
       "number": 7,
       "titleEn": "Optimize description",
       "titleVi": "Tối ưu description",
-      "descEn": "Refine pushy metadata, standard terminology, examples, and scope language for trigger accuracy and benchmark scoring.",
-      "descVi": "Tinh chỉnh metadata kích hoạt mạnh, thuật ngữ chuẩn, ví dụ và ngôn ngữ scope để tăng độ chính xác trigger và điểm benchmark."
+      "descEn": "Keep routing metadata concise and specific: what the skill does, when to use it, and what it does not cover. Length and emphatic wording do not prove activation quality; check routing with positives and adjacent negatives.",
+      "descVi": "Giữ metadata routing ngắn gọn và cụ thể: skill làm gì, khi nào dùng và không bao gồm việc gì. Mô tả dài hay nhấn mạnh không chứng minh skill kích hoạt tốt; kiểm routing bằng ca nên kích hoạt và ca lân cận không nên kích hoạt."
     },
     {
       "number": 8,
@@ -241,13 +241,13 @@ const data: SkillInfographic = {
       "recommended": true
     },
     {
-      "labelEn": "Update from an audit",
-      "labelVi": "Cập nhật từ audit",
-      "command": "/ak:skill-creator update release-notes --from-audit plans/reports/skill-audit.md --apply",
-      "whenEn": "An audit report already diagnosed routing or instruction issues that should be written back.",
-      "whenVi": "Báo cáo audit đã chẩn đoán lỗi routing hoặc hướng dẫn cần ghi lại vào skill.",
-      "expectedEn": "Reads the audit report, patches only diagnosed issues, writes accepted edits because --apply is set, and leaves unrelated skill files unchanged.",
-      "expectedVi": "Đọc báo cáo audit, chỉ vá vấn đề đã chẩn đoán, ghi sửa đã chấp nhận vì có --apply, và không đụng file skill không liên quan."
+      "labelEn": "Update a skill in place",
+      "labelVi": "Cập nhật skill tại chỗ",
+      "command": "/ak:skill-creator update release-notes \"validate that every heading matches the changelog template\"",
+      "whenEn": "An existing skill needs one bounded behavior change, not a full audit-driven rewrite.",
+      "whenVi": "Skill có sẵn cần một thay đổi hành vi có giới hạn, không phải viết lại toàn bộ theo audit.",
+      "expectedEn": "Inspects the skill and its users, applies only the requested change, lints every changed line, bumps metadata.version, and leaves unrelated skill files unchanged.",
+      "expectedVi": "Xem skill và nơi đang dùng nó, chỉ áp dụng thay đổi được yêu cầu, lint mọi dòng đã đổi, tăng metadata.version và không đụng file skill không liên quan."
     },
     {
       "labelEn": "Audit one skill",
@@ -255,17 +255,17 @@ const data: SkillInfographic = {
       "command": "/ak:skill-creator audit release-notes",
       "whenEn": "Routing, description, or behavior looks wrong and you need a diagnosis before rewriting.",
       "whenVi": "Routing, description hoặc hành vi trông sai và cần chẩn đoán trước khi viết lại.",
-      "expectedEn": "Reports routing, description, and behavior findings without rewriting SKILL.md unless a later update --apply is requested.",
-      "expectedVi": "Báo finding về routing, description và hành vi mà không viết lại SKILL.md trừ khi sau đó chạy update --apply."
+      "expectedEn": "Reports routing, description, and behavior findings as a report only, without editing SKILL.md; a later optimize --apply --from-audit <report> applies them.",
+      "expectedVi": "Báo finding về routing, description và hành vi chỉ dưới dạng báo cáo, không sửa SKILL.md; sau đó chạy optimize --apply --from-audit <report> để áp dụng."
     },
     {
-      "labelEn": "Optimize metadata",
-      "labelVi": "Tối ưu metadata",
-      "command": "/ak:skill-creator optimize release-notes --apply",
-      "whenEn": "An existing skill undertriggers, overtriggers, or has vague discovery metadata.",
-      "whenVi": "Skill hiện có kích hoạt thiếu, kích hoạt quá rộng hoặc metadata khám phá còn mơ hồ.",
-      "expectedEn": "Tightens when-to-use language and eval coverage, writes accepted metadata changes because --apply is set, and keeps progressive disclosure intact.",
-      "expectedVi": "Siết ngôn ngữ when-to-use và coverage eval, ghi metadata đã chấp nhận vì có --apply, và giữ progressive disclosure."
+      "labelEn": "Optimize from an audit",
+      "labelVi": "Tối ưu từ báo cáo audit",
+      "command": "/ak:skill-creator optimize release-notes --apply --from-audit plans/reports/skill-audit.md",
+      "whenEn": "You reviewed an audit report and want its High and Medium findings rewritten into the skill.",
+      "whenVi": "Bạn đã xem báo cáo audit và muốn viết lại các finding mức High và Medium vào skill.",
+      "expectedEn": "Rewrites only the diagnosed findings, keeps constraints that still have a purpose, compares original and candidate output, and writes the diff because --apply is set.",
+      "expectedVi": "Chỉ viết lại các finding đã chẩn đoán, giữ ràng buộc vẫn còn mục đích, so output bản gốc với bản ứng viên và ghi diff vì có --apply."
     },
     {
       "labelEn": "Advised authoring",

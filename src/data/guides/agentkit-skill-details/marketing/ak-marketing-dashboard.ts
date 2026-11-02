@@ -56,10 +56,10 @@ const data: SkillInfographic = {
   ],
   hardGate: {
     type: "critical",
-    titleEn: "Dashboard docs authority",
-    titleVi: "Tài liệu dashboard là nguồn đúng",
-    contentEn: "Do not infer behavior from the dashboard name or old versions. Resolve the installed skill directory through the live catalog before running referenced scripts.",
-    contentVi: "Không suy đoán hành vi từ tên dashboard hoặc bản cũ. Phải xác định thư mục skill đã cài qua live catalog trước khi chạy script được nhắc tới."
+    titleEn: "The API-key field is not an active security boundary",
+    titleVi: "Ô API key không phải lớp bảo vệ đang hoạt động",
+    contentEn: "The server's API-key middleware is disabled; Settings stores a legacy value in sessionStorage but the server does not enforce it. Keep the service on a trusted local environment, do not expose it as a protected production API, and do not enter a real secret expecting access control. Do not infer behavior from the dashboard name or old versions. Resolve the installed skill directory through the live catalog before running referenced scripts.",
+    contentVi: "Middleware API key của server đang tắt; Settings lưu một giá trị cũ trong sessionStorage nhưng server không kiểm tra nó. Chỉ chạy service trong môi trường local đáng tin cậy, không mở nó ra như một API production có bảo vệ, và không nhập secret thật với kỳ vọng sẽ được kiểm soát truy cập. Không suy đoán hành vi từ tên dashboard hoặc bản cũ. Phải xác định thư mục skill đã cài qua live catalog trước khi chạy script được nhắc tới."
   },
   corePrinciplesEn: [
     "Current dashboard docs beat assumptions",

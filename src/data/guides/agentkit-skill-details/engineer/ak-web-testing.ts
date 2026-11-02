@@ -19,6 +19,13 @@ const data: SkillInfographic = {
           exampleCommandVi: '/ak:web-testing load "Đo ngưỡng độ trễ API và tỷ lệ lỗi bằng k6 chỉ trên các endpoint staging"' },
     ],
   },
+  hardGate: {
+    type: 'warning',
+    titleEn: "A test can mutate the system it targets",
+    titleVi: "Test có thể thay đổi chính hệ thống nó nhắm tới",
+    contentEn: "Browser, API, contract, database, load, and security tests can create users, submit forms, charge integrations, delete records, send email, exhaust quotas, or disrupt service. Use an isolated environment and explicit cleanup.",
+    contentVi: "Test browser, API, contract, database, load và bảo mật có thể tạo user, gửi form, phát sinh phí ở dịch vụ tích hợp, xóa record, gửi email, dùng hết quota hoặc làm gián đoạn dịch vụ. Hãy dùng môi trường cô lập và dọn dẹp rõ ràng sau khi chạy.",
+  },
   processFlow: [
     { number: 1, titleEn: 'Choose model', titleVi: 'Chọn mô hình', descEn: 'Select pyramid, trophy, or honeycomb testing strategy based on monolith, SPA, or microservice shape.', descVi: 'Chọn chiến lược pyramid, trophy hoặc honeycomb theo dạng monolith, SPA hay microservice.' },
     { number: 2, titleEn: 'Pick layer', titleVi: 'Chọn tầng test', descEn: 'Map the request to unit, integration, E2E, component, contract, API, load, visual, accessibility, performance, or security testing.', descVi: 'Ánh xạ yêu cầu vào unit, integration, E2E, component, contract, API, load, visual, accessibility, performance hoặc security testing.' },

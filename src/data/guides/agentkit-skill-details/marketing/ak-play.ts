@@ -14,8 +14,8 @@ const data: SkillInfographic = {
     type: 'critical',
     titleEn: 'STATE, TEMPLATE, AND SECRET SAFETY',
     titleVi: 'AN TOÀN STATE, TEMPLATE VÀ SECRET',
-    contentEn: 'Never expose API keys or credentials, refuse manifest changes for unnamed other playbooks, validate template JSON, reject unrecognized gates or agents, and do not execute arbitrary template commands — route only to existing /ak:* commands.',
-    contentVi: 'Không bao giờ lộ API key hoặc credential, từ chối sửa manifest của playbook khác nếu không nêu tên rõ, validate JSON template, reject gate/agent lạ và không chạy command tùy ý trong template — chỉ route tới command /ak:* có sẵn.',
+    contentEn: 'Never expose API keys or credentials, refuse manifest changes for unnamed other playbooks, validate template JSON, reject unrecognized gates or agents, and do not execute arbitrary template commands — route only to existing /ak:* commands. Approving a playbook gate only records workflow state; publishing, outreach, ad spend, purchases, account changes, credential use, or sending sensitive data to a provider still need their own approval at the point of effect.',
+    contentVi: 'Không bao giờ lộ API key hoặc credential, từ chối sửa manifest của playbook khác nếu không nêu tên rõ, validate JSON template, reject gate/agent lạ và không chạy command tùy ý trong template — chỉ route tới command /ak:* có sẵn. Approve một gate của playbook chỉ ghi lại trạng thái quy trình; publish, liên hệ khách hàng, chi tiền quảng cáo, mua hàng, đổi tài khoản, dùng credential hoặc gửi dữ liệu nhạy cảm cho nhà cung cấp vẫn phải được duyệt riêng ngay lúc thực hiện.',
   },
   processFlow: [
     { number: 1, titleEn: 'Parse Entry', titleVi: 'Đọc entry', descEn: 'Read create, next, status, list, blocked, learn, reset, gate, templates, goals, or treat a name as status.', descVi: 'Đọc create, next, status, list, blocked, learn, reset, gate, templates, goals hoặc xem token đầu là tên để hiển thị status.' },

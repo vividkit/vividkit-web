@@ -1184,8 +1184,8 @@ export const akEngineerWorkflows: AkWorkflow[] = withAkInvocation([
     titleVi: "Cook song song",
     bestFor: "Plan has disjoint phases or file ownership",
     bestForVi: "Plan có phase / ownership file tách rời",
-    tip: "Avoid parallel on tightly coupled files. Cross-CLI / multi-session: /ak:orchestrate or /ak:team.",
-    tipVi: "Tránh parallel khi file gắn chặt. Cross-CLI / multi-session: /ak:orchestrate hoặc /ak:team.",
+    tip: "Avoid parallel on tightly coupled files. Resumable parallel sessions (other runtimes only with --cross-runtime): /ak:orchestrate. Long multi-session work: /ak:team.",
+    tipVi: "Tránh parallel khi file gắn chặt. Chạy song song nhiều session có thể resume (chỉ dùng runtime khác khi thêm --cross-runtime): /ak:orchestrate. Việc dài qua nhiều session: /ak:team.",
     features: ["--parallel", "orchestrate", "team alts"],
     steps: [
 {
@@ -1230,10 +1230,10 @@ export const akEngineerWorkflows: AkWorkflow[] = withAkInvocation([
       },
 {
         number: 5,
-        typeLabel: "Cross-CLI jobs",
-        typeLabelVi: "Job cross-CLI",
-        description: "Alternative for worktree / multi-CLI",
-        descriptionVi: "Thay thế worktree / multi-CLI",
+        typeLabel: "Parallel sessions",
+        typeLabelVi: "Session song song",
+        description: "Alternative: resumable sessions in worktrees; --cross-runtime to mix runtimes",
+        descriptionVi: "Cách khác: các session resume được trong worktree; thêm --cross-runtime để dùng nhiều runtime",
         command: "/ak:orchestrate",
         isSkill: true,
         optional: true,

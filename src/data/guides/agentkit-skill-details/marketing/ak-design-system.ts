@@ -14,8 +14,8 @@ const data: SkillInfographic = {
     type: "critical",
     titleEn: "Slides must be token-compliant",
     titleVi: "Slide bắt buộc tuân thủ token",
-    contentEn: "The skill says all slides must import generated design-token CSS, use CSS variables, use Chart.js for charts instead of CSS-only bars, include navigation, center content, and focus on persuasion/conversion.",
-    contentVi: "Skill yêu cầu mọi slide phải import CSS token đã tạo, dùng biến CSS, dùng Chart.js cho chart thay vì bar chỉ bằng CSS, có điều hướng, canh giữa nội dung và tập trung vào thuyết phục/chuyển đổi.",
+    contentEn: "The skill says all slides must import generated design-token CSS, use CSS variables, use Chart.js for charts instead of CSS-only bars, include navigation, center content, and focus on persuasion/conversion. Generated output can overwrite the selected file and a broad token migration touches every consuming surface, so review the diff, themes, contrast, and component states before accepting it.",
+    contentVi: "Skill yêu cầu mọi slide phải import CSS token đã tạo, dùng biến CSS, dùng Chart.js cho chart thay vì bar chỉ bằng CSS, có điều hướng, canh giữa nội dung và tập trung vào thuyết phục/chuyển đổi. Output được tạo có thể ghi đè file đã chọn và một lần đổi token diện rộng ảnh hưởng mọi nơi đang dùng, nên hãy xem diff, theme, độ tương phản và các trạng thái component trước khi chấp nhận.",
   },
   processFlow: [
     { number: 1, titleEn: "Identify surface", titleVi: "Xác định bề mặt", descEn: "Decide whether the request is tokens, component specs, Tailwind handoff, or slide generation.", descVi: "Xác định yêu cầu là token, đặc tả component, handoff Tailwind hay tạo slide." },

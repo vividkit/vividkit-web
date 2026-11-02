@@ -5,6 +5,13 @@ const data: SkillInfographic = {
   command: '/ak:mermaidjs-v11',
   kit: 'marketer',
   header: { titleEn: '/ak:mermaidjs-v11 — Mermaid v11 diagrams', titleVi: '/ak:mermaidjs-v11 — Sơ đồ Mermaid v11', taglineEn: 'Create Mermaid v11 diagrams for architecture, APIs, data models, timelines, states, journeys, and project plans.', taglineVi: 'Tạo sơ đồ Mermaid v11 cho kiến trúc, API, mô hình dữ liệu, timeline, state, journey và kế hoạch dự án.' },
+  hardGate: {
+    type: 'warning',
+    titleEn: "Source generation is separate from installation and publication",
+    titleVi: "Viết mã sơ đồ tách biệt với cài đặt và xuất bản",
+    contentEn: "The skill may write diagram source without installing anything. Installing Mermaid CLI, pulling a container, loading CDN scripts or icon packs, editing a site integration, and publishing rendered files are separate actions. Review dependency, network, security, and licensing policy before approving them.",
+    contentVi: "Skill có thể viết mã sơ đồ mà không cần cài gì. Cài Mermaid CLI, kéo container, tải script CDN hoặc bộ icon, sửa phần tích hợp vào website và xuất bản file đã render là các hành động riêng. Xem lại chính sách về phụ thuộc, mạng, bảo mật và giấy phép trước khi duyệt từng việc.",
+  },
   processFlow: [
     { number: 1, titleEn: 'Choose diagram type', titleVi: 'Chọn loại sơ đồ', descEn: 'Map the need to flowchart, sequenceDiagram, classDiagram, stateDiagram, erDiagram, gantt, journey, or another v11 type.', descVi: 'Ghép nhu cầu với flowchart, sequenceDiagram, classDiagram, stateDiagram, erDiagram, gantt, journey hoặc loại v11 khác.' },
     { number: 2, titleEn: 'Structure syntax', titleVi: 'Dựng cú pháp', descEn: 'Start with the diagram declaration and keep content valid for that diagram family.', descVi: 'Bắt đầu bằng khai báo loại diagram và giữ nội dung đúng cú pháp của nhóm đó.' },

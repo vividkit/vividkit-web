@@ -10,6 +10,13 @@ const data: SkillInfographic = {
     taglineEn: "Plan product launches, feature releases, Product Hunt pushes, beta/early-access moments, and repeated launch momentum across owned, rented, and borrowed channels.",
     taglineVi: "Lập chiến lược launch sản phẩm, release tính năng, Product Hunt, beta/early-access và nhịp launch lặp lại trên kênh owned, rented, borrowed."
   },
+  hardGate: {
+    type: "warning",
+    titleEn: "A launch checklist contains live actions",
+    titleVi: "Checklist launch chứa các việc chạy thật",
+    contentEn: "Opening signups, enabling a feature, changing pricing or access, starting charges, publishing a site or marketplace listing, sending email, posting on social channels, contacting partners, adding in-product messages, installing tracking, and spending budget all change external state. Give each action a named owner, exact scope, credentials, approval, timing, monitoring, and a rollback or pause path.",
+    contentVi: "Mở đăng ký, bật tính năng, đổi giá hoặc quyền truy cập, bắt đầu thu tiền, đăng site hay listing trên marketplace, gửi email, đăng mạng xã hội, liên hệ đối tác, thêm thông báo trong sản phẩm, cài tracking và tiêu ngân sách đều thay đổi trạng thái bên ngoài. Mỗi việc cần người phụ trách cụ thể, phạm vi chính xác, credential, phê duyệt, thời điểm, theo dõi và cách hoàn tác hoặc tạm dừng."
+  },
   processFlow: [
     {
       number: 1,

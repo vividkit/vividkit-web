@@ -15,8 +15,8 @@ const data: SkillInfographic = {
       number: 1,
       titleEn: "Check plan state",
       titleVi: "Kiểm tra plan state",
-      descEn: "Read injected Plan Context: active plan can continue after asking; suggested plan is only a hint; none means create new.",
-      descVi: "Đọc Plan Context được inject: active plan có thể tiếp tục sau khi hỏi; suggested chỉ là gợi ý; none thì tạo plan mới."
+      descEn: "Read injected Plan Context: reuse an active plan when it matches the requested work; treat a suggested plan as a hint, reused only when its scope matches (ask only if competing plans make the target unclear); none means create new.",
+      descVi: "Đọc Plan Context được inject: active plan thì dùng lại khi khớp với việc đang yêu cầu; suggested plan chỉ là gợi ý, chỉ dùng lại khi đúng phạm vi (chỉ hỏi khi có nhiều plan cạnh tranh làm mục tiêu không rõ); none thì tạo plan mới."
     },
     {
       number: 2,
@@ -79,8 +79,8 @@ const data: SkillInfographic = {
     type: "critical",
     titleEn: "Plan, don't execute",
     titleVi: "Chỉ lập kế hoạch, không thực thi",
-    contentEn: "Do not execute campaigns. If an active plan path is injected, ask whether to continue; suggested plans are hints only and must not be auto-used.",
-    contentVi: "Không chạy campaign. Nếu có active plan path được inject, phải hỏi có tiếp tục không; suggested plan chỉ là gợi ý và không được tự dùng."
+    contentEn: "Do not execute campaigns. A plan proposes external actions; it does not approve them: channel allocation, budget, targeting, pricing, offers, claims, deadlines, providers, tests, and expected results stay proposals until the responsible owner approves them against current evidence and policy. Suggested plans are hints only and must not be auto-used.",
+    contentVi: "Không chạy campaign. Plan chỉ đề xuất các việc bên ngoài, không duyệt chúng: phân bổ kênh, ngân sách, nhắm đối tượng, giá, ưu đãi, tuyên bố, hạn chót, nhà cung cấp, thử nghiệm và kết quả kỳ vọng vẫn chỉ là đề xuất cho tới khi người chịu trách nhiệm duyệt dựa trên bằng chứng và chính sách hiện hành. Suggested plan chỉ là gợi ý và không được tự dùng."
   },
   corePrinciplesEn: [
     "Research-backed plans beat brainstormed tactics",

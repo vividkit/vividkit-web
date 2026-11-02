@@ -1,6 +1,6 @@
 import type { SkillInfographic } from '@/data/guides/how-ck-works';
 
-// Beta-only skill: authored from the beta SKILL.md and its references (no ak-docs page yet).
+// Authored from the kit SKILL.md and its references; the same-kit ak-docs page has no Callout to map.
 const data: SkillInfographic = {
   id: 'ak-atoz',
   command: '/ak-atoz',

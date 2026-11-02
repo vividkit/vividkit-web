@@ -17,9 +17,9 @@ const data: SkillInfographic = {
     titleEn: 'Do not imitate missing routes',
     titleVi: 'Không giả lập tuyến thiếu',
     contentEn:
-      'Discover the live catalog first. If no installed route owns the outcome, state the missing capability; do not invent a local alias or imitate an upstream command.',
+      'Discover the live catalog first. If no installed route owns the outcome, state the missing capability; do not invent a local alias or imitate an upstream command. Routing does not approve edits, long-running compute, provider spend, secret access, publication, push, or deployment; approve those separately.',
     contentVi:
-      'Trước hết phải kiểm tra catalog live. Nếu không có tuyến đã cài sở hữu kết quả, báo năng lực còn thiếu; không tự chế alias local hoặc bắt chước lệnh upstream.',
+      'Trước hết phải kiểm tra catalog live. Nếu không có tuyến đã cài sở hữu kết quả, báo năng lực còn thiếu; không tự chế alias local hoặc bắt chước lệnh upstream. Việc định tuyến không đồng nghĩa được phép sửa file, chạy tính toán dài, tốn tiền provider, truy cập secret, xuất bản, push hay deploy; duyệt riêng các việc đó.',
   },
   processFlow: [
     { number: 1, titleEn: 'Identify intent', titleVi: 'Nhận diện ý định', descEn: 'Separate the measurable objective from any proposed method and decide whether the work is optimization, prediction, scenario coverage, or security review.', descVi: 'Tách objective đo được khỏi phương pháp được đề xuất và xác định công việc là tối ưu, dự đoán, phủ scenario hay security review.' },

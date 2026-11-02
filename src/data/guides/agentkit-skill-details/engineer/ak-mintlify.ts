@@ -10,6 +10,13 @@ const data: SkillInfographic = {
     taglineEn: 'Build and maintain Mintlify docs sites across docs.json, MDX components, navigation, frontmatter, theming, API docs, AI assets, deployment, and local Mintlify CLI checks.',
     taglineVi: 'Xây và bảo trì site docs Mintlify qua docs.json, component MDX, navigation, frontmatter, theme, docs API, asset AI, deploy và kiểm tra cục bộ bằng Mintlify CLI.',
   },
+  hardGate: {
+    type: "warning",
+    titleEn: "A documentation configuration can expose live systems",
+    titleVi: "Cấu hình docs có thể làm lộ hệ thống thật",
+    contentEn: "API playgrounds, prefilled values, analytics, support widgets, frames, contextual AI actions, MCP endpoints, bots, custom React, and deployment integrations can send content or reader data to external services. Treat them as product and security changes, not cosmetic documentation settings.",
+    contentVi: "API playground, giá trị điền sẵn, analytics, widget hỗ trợ, frame, contextual AI action, MCP endpoint, bot, React tùy biến và tích hợp deploy đều có thể gửi nội dung hoặc dữ liệu người đọc tới dịch vụ bên ngoài. Hãy coi chúng là thay đổi về sản phẩm và bảo mật, không phải chỉnh docs cho đẹp."
+  },
   processFlow: [
     { number: 1, titleEn: 'Scope the Mintlify task', titleVi: 'Khoanh vùng việc Mintlify', descEn: 'Confirm whether the request targets site structure, MDX content, docs.json config, navigation, API docs, AI docs assets, deployment, or local checks.', descVi: 'Xác nhận yêu cầu nhắm vào cấu trúc site, nội dung MDX, cấu hình docs.json, navigation, docs API, asset AI, deploy hay kiểm tra cục bộ.' },
     { number: 2, titleEn: 'Inspect docs.json', titleVi: 'Kiểm tra docs.json', descEn: 'Review theme, branding, colors, integrations, navigation groups, tabs, anchors, products, versions, languages, and existing page frontmatter.', descVi: 'Rà theme, branding, màu, integration, nhóm navigation, tab, anchor, product, version, ngôn ngữ và frontmatter trang hiện có.' },

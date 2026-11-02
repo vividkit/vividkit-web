@@ -14,7 +14,7 @@ Shared renderer:
 
 ## Invocation
 
-- Separator: author stable skills in the colon form (`/ak:cook`, `$ak:cook`); the checkers validate that form. Author beta-only skills (`isBeta`, Beta Preview) in the dash form (`/ak-vault`). Pages render through `src/data/guides/agentkit-invocation.ts`; when v3 reaches stable, set `AK_STABLE_SKILL_SEPARATOR` to `'-'` instead of rewriting data. In components, use `akCmd()` / `akCmdPattern()` for generated commands and `akInvocationText()` / `withAkInvocation()` for authored copy that mentions `/ak:`.
+- Separator: since AgentKit v3.0.0 (stable) runtimes register `/ak-<slug>` and `$ak-<slug>`. Pages render through `src/data/guides/agentkit-invocation.ts` with `AK_STABLE_SKILL_SEPARATOR = '-'`, which rewrites the older colon form (`/ak:cook`) to the dash form, and the checkers accept either form. Keep the form an existing file already uses; write new files in the dash form. In components, use `akCmd()` / `akCmdPattern()` for generated commands and `akInvocationText()` / `withAkInvocation()` for authored copy that mentions `/ak:`.
 - Flags only from kit `argument-hint` plus ak-docs Option/Mode tables
 - `[task]` in brackets is optional unless docs say required
 - Subcommands from `OR [a|b|c]` hints or `## /ak:skill name` headings

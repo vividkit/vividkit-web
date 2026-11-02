@@ -46,6 +46,13 @@ const data: SkillInfographic = {
     taglineEn: "Read, create, and edit Office-style documents: docx, pdf, pptx, xlsx, tables, forms, slides, and spreadsheets.",
     taglineVi: "Đọc, tạo và chỉnh sửa tài liệu kiểu Office: docx, pdf, pptx, xlsx, bảng, biểu mẫu, slide và spreadsheet.",
   },
+  hardGate: {
+    type: "warning",
+    titleEn: "Office files are executable workflows, not plain text",
+    titleVi: "File Office là quy trình có thể chạy, không phải văn bản thuần",
+    contentEn: "Conversion, unpacking, recalculation, OCR, browser rendering, and repacking can create many files, change cached values, drop unsupported features, expose hidden content, or run installed tooling. Work on copies and set the output directory before starting.",
+    contentVi: "Chuyển đổi, giải nén, tính lại công thức, OCR, render bằng trình duyệt và đóng gói lại có thể tạo nhiều file, đổi giá trị đã lưu, làm mất tính năng không hỗ trợ, lộ nội dung ẩn hoặc chạy công cụ đã cài. Hãy làm trên bản sao và chọn sẵn thư mục output trước khi bắt đầu."
+  },
   processFlow: [
     { number: 1, titleEn: "Identify Format", titleVi: "Nhận diện định dạng", descEn: "Determine whether the task targets docx, pdf, pptx, xlsx, tables, forms, slides, or spreadsheets.", descVi: "Xác định tác vụ nhắm tới docx, pdf, pptx, xlsx, bảng, biểu mẫu, slide hay spreadsheet." },
     { number: 2, titleEn: "Clarify Operation", titleVi: "Làm rõ thao tác", descEn: "Classify the requested operation as read, create, edit, extract, populate, convert, or summarize.", descVi: "Phân loại thao tác cần làm là đọc, tạo, chỉnh sửa, trích xuất, điền dữ liệu, chuyển đổi hay tóm tắt." },

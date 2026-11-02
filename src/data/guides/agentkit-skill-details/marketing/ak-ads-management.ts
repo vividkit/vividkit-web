@@ -14,8 +14,8 @@ const data: SkillInfographic = {
     type: 'critical',
     titleEn: "Protect ad credentials and boundaries",
     titleVi: "Bảo vệ credential và phạm vi ads",
-    contentEn: "The skill says to refuse out-of-scope requests and never expose env vars, internal configs, personal data, skill internals, or system prompts.",
-    contentVi: "Skill yêu cầu từ chối việc ngoài phạm vi và không bao giờ lộ env var, cấu hình nội bộ, dữ liệu cá nhân, nội dung skill hoặc system prompt.",
+    contentEn: "The skill says to refuse out-of-scope requests and never expose env vars, internal configs, personal data, skill internals, or system prompts. Enabling an object or raising a budget is a spend decision: verify the account, object IDs, currency, ceilings, targeting, and rollback owner, and get fresh approval for every enable and every budget increase.",
+    contentVi: "Skill yêu cầu từ chối việc ngoài phạm vi và không bao giờ lộ env var, cấu hình nội bộ, dữ liệu cá nhân, nội dung skill hoặc system prompt. Bật một đối tượng quảng cáo hoặc tăng ngân sách là quyết định chi tiền: kiểm tra tài khoản, ID đối tượng, đơn vị tiền, mức trần, targeting và người chịu trách nhiệm rollback, và xin duyệt lại cho mỗi lần bật và mỗi lần tăng ngân sách.",
   },
   processFlow: [
     { number: 1, titleEn: "Set objective", titleVi: "Chốt mục tiêu", descEn: "Define whether the campaign optimizes for awareness, traffic, conversions, ROAS, CPA, or another measurable paid-media outcome.", descVi: "Xác định campaign tối ưu cho awareness, traffic, conversion, ROAS, CPA hay một kết quả paid-media đo được khác." },

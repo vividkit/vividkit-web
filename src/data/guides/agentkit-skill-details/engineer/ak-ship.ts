@@ -14,8 +14,8 @@ const data: SkillInfographic = {
     "type": "critical",
     "titleEn": "Fail closed on ship blockers",
     "titleVi": "Gặp chặn thì dừng an toàn",
-    "contentEn": "Abort or ask on target branch, unresolved conflicts, failing tests, critical review issues, major/minor version bumps, unknown modes or flags, downstream merge/CI uncertainty, private-repo social posting without explicit private opt-in, and any need to bypass branch protection or force-push.",
-    "contentVi": "Phải dừng hoặc hỏi khi đang ở nhánh đích, conflict không tự xử lý được, test lỗi, review có lỗi nghiêm trọng, cần tăng major/minor, mode/cờ không rõ, trạng thái merge/CI hạ nguồn chưa chắc, repo private chưa có xác nhận đăng riêng, hoặc bất kỳ việc nào đòi bỏ qua branch protection hay force-push."
+    "contentEn": "Abort or ask on target branch, unresolved conflicts, failing tests, critical review issues, major/minor version bumps, unknown modes or flags, downstream merge/CI uncertainty, private-repo social posting without explicit private opt-in, and any need to bypass branch protection or force-push. It stages everything with git add -A, so clean or isolate the worktree first; an unrelated untracked file would otherwise be committed and pushed with the release.",
+    "contentVi": "Phải dừng hoặc hỏi khi đang ở nhánh đích, conflict không tự xử lý được, test lỗi, review có lỗi nghiêm trọng, cần tăng major/minor, mode/cờ không rõ, trạng thái merge/CI hạ nguồn chưa chắc, repo private chưa có xác nhận đăng riêng, hoặc bất kỳ việc nào đòi bỏ qua branch protection hay force-push. Skill stage mọi thứ bằng git add -A, nên hãy dọn sạch hoặc tách riêng worktree trước; nếu không, một file chưa track không liên quan có thể bị commit và push cùng bản phát hành."
   },
   "processFlow": [
     {
@@ -78,8 +78,8 @@ const data: SkillInfographic = {
       "number": 9,
       "titleEn": "Optional merge/social",
       "titleVi": "Merge/social tùy chọn",
-      "descEn": "If --merge is present, hand the PR to ak:review-pr --fix --reply --merge; if --social is present, publish only after green gates and required opt-ins.",
-      "descVi": "Nếu có --merge, giao PR cho ak:review-pr --fix --reply --merge; nếu có --social, chỉ đăng sau khi các cổng xanh và các xác nhận bắt buộc đã đủ."
+      "descEn": "If --merge is present, hand the PR to ak:review-pr --fix --reply --merge; if --social is present, publish only after green gates and required opt-ins. In a repository whose own instructions name a batch-landing owner (merge train, landing bot), it stops after creating the ready PR and reports Merge=delegated, even with --merge.",
+      "descVi": "Nếu có --merge, giao PR cho ak:review-pr --fix --reply --merge; nếu có --social, chỉ đăng sau khi các cổng xanh và các xác nhận bắt buộc đã đủ. Với repo mà chính hướng dẫn của repo chỉ định một bên gom và merge PR theo lô (merge train, landing bot), skill dừng sau khi tạo PR sẵn sàng review và báo Merge=delegated, kể cả khi có --merge."
     }
   ],
   "corePrinciplesEn": [
@@ -180,8 +180,8 @@ const data: SkillInfographic = {
         "token": "--merge",
         "titleEn": "Reviewed merge",
         "titleVi": "Merge có review",
-        "descEn": "After PR creation, delegates to ak:review-pr with fix, reply, merge, and post-merge CI convergence. Without this flag, ak:ship does not merge the PR.",
-        "descVi": "Sau khi tạo PR, giao cho ak:review-pr xử lý fix, reply, merge và đưa CI sau merge về xanh. Nếu thiếu cờ này, ak:ship không merge PR.",
+        "descEn": "After PR creation, delegates to ak:review-pr with fix, reply, merge, and post-merge CI convergence. Without this flag, ak:ship does not merge the PR. In a batch-landing repository (declared in its own instructions), the merge is left to the landing owner and reported as Merge=delegated.",
+        "descVi": "Sau khi tạo PR, giao cho ak:review-pr xử lý fix, reply, merge và đưa CI sau merge về xanh. Nếu thiếu cờ này, ak:ship không merge PR. Với repo merge PR theo lô (do chính hướng dẫn của repo khai báo), việc merge để lại cho bên phụ trách merge đó và được báo là Merge=delegated.",
         "exampleCommand": "/ak:ship official --merge"
       },
       {

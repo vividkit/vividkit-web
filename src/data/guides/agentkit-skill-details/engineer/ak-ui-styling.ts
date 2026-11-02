@@ -29,6 +29,13 @@ const data: SkillInfographic = {
     "taglineEn": "Builds accessible React UI with shadcn/ui, Radix primitives, Tailwind utilities, themes, dark mode, responsive layouts, design tokens, canvas-quality visuals, and helper scripts.",
     "taglineVi": "Xây UI React accessible bằng shadcn/ui, primitive Radix, utility Tailwind, theme, dark mode, layout responsive, design token, visual chất lượng canvas và script hỗ trợ."
   },
+  "hardGate": {
+    "type": "warning",
+    "titleEn": "Component installation changes source code",
+    "titleVi": "Cài component sẽ thay đổi mã nguồn",
+    "contentEn": "shadcn/ui copies components into your codebase. Approve package installation, new component files, and any overwrite separately. Never use --overwrite to bypass a conflict you have not inspected.",
+    "contentVi": "shadcn/ui copy component thẳng vào codebase của bạn. Hãy duyệt riêng việc cài package, file component mới và mọi lần ghi đè. Không bao giờ dùng --overwrite để vượt qua một xung đột chưa được kiểm tra."
+  },
   "processFlow": [
     {
       "number": 1,

@@ -5,6 +5,13 @@ const data: SkillInfographic = {
   command: '/ak:mermaidjs-v11',
   kit: 'engineer',
   header: { titleEn: '/ak:mermaidjs-v11 — Mermaid v11 diagrams', titleVi: '/ak:mermaidjs-v11 — Sơ đồ Mermaid v11', taglineEn: 'Create inline Mermaid v11 diagrams and optional SVG/PNG/PDF exports for flows, sequences, data models, timelines, states, and journeys.', taglineVi: 'Tạo sơ đồ Mermaid v11 nhúng inline và tùy chọn xuất SVG/PNG/PDF cho flow, sequence, mô hình dữ liệu, timeline, state và journey.' },
+  hardGate: {
+    type: 'warning',
+    titleEn: "Parse success does not make a diagram safe or readable",
+    titleVi: "Cú pháp hợp lệ chưa có nghĩa là sơ đồ an toàn hay dễ đọc",
+    contentEn: "A valid graph can still expose secrets, contain unsafe interactive links, render differently on another host, or produce unreadable SVG. Validate the source, render with the target version, and inspect the actual output.",
+    contentVi: "Một sơ đồ hợp lệ vẫn có thể làm lộ secret, chứa link tương tác không an toàn, hiển thị khác trên máy khác, hoặc tạo SVG khó đọc. Kiểm tra mã nguồn, render bằng đúng phiên bản đích và xem tận mắt kết quả thực tế.",
+  },
   processFlow: [
     { number: 1, titleEn: 'Pick diagram family', titleVi: 'Chọn họ sơ đồ', descEn: 'Map the request to Mermaid syntax such as flowchart, sequenceDiagram, classDiagram, stateDiagram, erDiagram, gantt, journey, or another v11 type.', descVi: 'Ghép yêu cầu với cú pháp Mermaid như flowchart, sequenceDiagram, classDiagram, stateDiagram, erDiagram, gantt, journey hoặc loại v11 khác.' },
     { number: 2, titleEn: 'Write diagram source', titleVi: 'Viết mã sơ đồ', descEn: 'Start with the diagram declaration, then encode actors, entities, states, tasks, arrows, labels, dates, or relationships for that family.', descVi: 'Bắt đầu bằng khai báo diagram, rồi mã hóa actor, entity, state, task, mũi tên, nhãn, ngày tháng hoặc quan hệ cho đúng họ đó.' },

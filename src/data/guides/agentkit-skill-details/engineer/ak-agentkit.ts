@@ -8,9 +8,9 @@ const data: SkillInfographic = {
     titleEn: '/ak:agentkit — Skill router and workflow chain selector',
     titleVi: '/ak:agentkit — Bộ định tuyến skill và chọn chuỗi workflow',
     taglineEn:
-      'Classifies ambiguous or multi-domain work, inventories installed capabilities, chooses the shortest correct skill chain, times subagent use, and applies risk-matched verification without replacing the routed skills.',
+      'Classifies ambiguous or multi-domain work, inventories installed capabilities, chooses the shortest correct skill chain, times subagent use, and applies risk-matched verification without replacing the routed skills. It also operates the ak CLI safely when the next action is an ak subcommand.',
     taglineVi:
-      'Phân loại việc mơ hồ hoặc nhiều miền, kiểm kê năng lực đã cài, chọn chuỗi skill ngắn nhất phù hợp, quyết định thời điểm dùng subagent và áp gate kiểm chứng theo rủi ro mà không thay thế skill được định tuyến.',
+      'Phân loại việc mơ hồ hoặc nhiều miền, kiểm kê năng lực đã cài, chọn chuỗi skill ngắn nhất phù hợp, quyết định thời điểm dùng subagent và áp gate kiểm chứng theo rủi ro mà không thay thế skill được định tuyến. Skill cũng vận hành CLI ak an toàn khi bước tiếp theo là một lệnh con của ak.',
   },
   hardGate: {
     type: 'warning',
@@ -29,7 +29,8 @@ const data: SkillInfographic = {
     { number: 5, titleEn: 'Time subagents', titleVi: 'Định thời subagent', descEn: 'Spawn subagents only when they add fresh context, specialist boundaries, or parallel wall-clock benefit; avoid splitting tiny edits.', descVi: 'Chỉ spawn subagent khi chúng thêm ngữ cảnh mới, ranh giới chuyên môn hoặc lợi ích song song; tránh tách việc sửa nhỏ.' },
     { number: 6, titleEn: 'Apply risk gates', titleVi: 'Áp gate theo rủi ro', descEn: 'Low risk uses executor checks, elevated risk adds verification and self-review, high risk adds independent review and user confirmation for irreversible steps.', descVi: 'Rủi ro thấp dùng check của skill thực thi, rủi ro vừa thêm kiểm chứng và tự review, rủi ro cao thêm reviewer độc lập và xác nhận người dùng cho bước không thể đảo ngược.' },
     { number: 7, titleEn: 'Recover links', titleVi: 'Khôi phục mắt xích', descEn: 'A failed link does not advance; fix, debug, or rescope it, and after two consecutive failures report the precise blocker instead of looping.', descVi: 'Mắt xích lỗi không được đi tiếp; sửa, debug hoặc thu hẹp nó, và sau hai lần lỗi liên tiếp thì báo blocker cụ thể thay vì lặp.' },
-    { number: 8, titleEn: 'Report route', titleVi: 'Báo tuyến đi', descEn: 'Finish with delivered outcome, links run, agents used, verification evidence, and any remaining capability gaps.', descVi: 'Kết thúc bằng kết quả đã giao, các mắt xích đã chạy, agent đã dùng, bằng chứng kiểm chứng và khoảng trống năng lực còn lại.' },
+    { number: 8, titleEn: 'Operate the ak CLI', titleVi: 'Vận hành CLI ak', descEn: 'When the next action is an ak subcommand or reading its --json output, classify the effect (read-only, mutating, or diagnostic), confirm project versus global scope before any change, inspect with read-only commands first, and treat ak <cmd> --help as the authority.', descVi: 'Khi bước tiếp theo là một lệnh con của ak hoặc đọc output --json của nó, phân loại tác động (chỉ đọc, có thay đổi, hay chẩn đoán), xác nhận phạm vi project hay toàn máy trước mọi thay đổi, kiểm tra bằng lệnh chỉ đọc trước, và lấy ak <cmd> --help làm căn cứ.' },
+    { number: 9, titleEn: 'Report route', titleVi: 'Báo tuyến đi', descEn: 'Finish with delivered outcome, links run, agents used, verification evidence, and any remaining capability gaps.', descVi: 'Kết thúc bằng kết quả đã giao, các mắt xích đã chạy, agent đã dùng, bằng chứng kiểm chứng và khoảng trống năng lực còn lại.' },
   ],
   corePrinciplesEn: [
     'This skill decides and dispatches; routed skills and agents own execution.',
@@ -44,17 +45,17 @@ const data: SkillInfographic = {
     'Rủi ro quyết định gate kiểm chứng và review; càng tự tin ở việc rủi ro cao càng không được bỏ review.',
   ],
   invocation: {
-    syntax: '/ak:agentkit [task to route]',
+    syntax: '/ak:agentkit [task to route | ak goal or subcommand]',
     arguments: [
       {
-        token: '[task to route]',
-        titleEn: 'Task to route',
-        titleVi: 'Việc cần định tuyến',
+        token: '[task to route | ak goal or subcommand]',
+        titleEn: 'Task to route or ak goal',
+        titleVi: 'Việc cần định tuyến hoặc mục tiêu với ak',
         descEn:
-          'Natural-language work request, outcome, constraints, domains, and authority boundaries. The router uses it to choose installed skills, sequence a short workflow, and match verification to risk.',
+          'Natural-language work request, outcome, constraints, domains, and authority boundaries. The router uses it to choose installed skills, sequence a short workflow, and match verification to risk. It can instead be an ak goal or subcommand, such as diagnosing an install; the skill then follows its safe ak CLI operation guide.',
         descVi:
-          'Yêu cầu công việc bằng ngôn ngữ tự nhiên, outcome, ràng buộc, miền liên quan và ranh giới quyền hạn. Router dùng nội dung này để chọn skill đã cài, sắp workflow ngắn và chọn kiểm chứng theo rủi ro.',
-        required: true,
+          'Yêu cầu công việc bằng ngôn ngữ tự nhiên, outcome, ràng buộc, miền liên quan và ranh giới quyền hạn. Router dùng nội dung này để chọn skill đã cài, sắp workflow ngắn và chọn kiểm chứng theo rủi ro. Cũng có thể là một mục tiêu hoặc lệnh con của ak, ví dụ chẩn đoán bản cài; khi đó skill làm theo hướng dẫn vận hành CLI ak an toàn.',
+        required: false,
         exampleCommand:
           '/ak:agentkit "Add subscription billing and a settings page; require tests and stop before deployment"',
           exampleCommandVi: '/ak:agentkit "Add subscription billing và một trang settings; yêu cầu tests và stop trước deployment"',
@@ -102,6 +103,16 @@ const data: SkillInfographic = {
       whenVi: 'Dùng khi việc tưởng cần định tuyến nhưng nên rút gọn nếu một skill đã cài rõ ràng sở hữu nó.',
       expectedEn: 'Runs the proportionality gate first, recognizes the single-domain obvious owner, routes directly to the fix skill, and avoids an unnecessary multi-link chain or subagent split.',
       expectedVi: 'Chạy gate vừa đủ trước, nhận ra owner rõ ràng cho việc một miền, định tuyến thẳng tới skill fix và tránh chuỗi nhiều mắt xích hoặc chia subagent không cần thiết.',
+    },
+    {
+      labelEn: 'Operate the ak CLI',
+      labelVi: 'Vận hành CLI ak',
+      command: '/ak:agentkit "ak doctor reports a problem with this project install; diagnose it and fix it safely"',
+      commandVi: '/ak:agentkit "ak doctor báo lỗi bản cài của project này; chẩn đoán và sửa an toàn"',
+      whenEn: 'Use when the next action is running or interpreting an ak subcommand, such as doctor, update, or recover, rather than routing a delivery task.',
+      whenVi: 'Dùng khi bước tiếp theo là chạy hoặc đọc kết quả một lệnh con của ak, như doctor, update hay recover, thay vì định tuyến một việc giao hàng.',
+      expectedEn: 'Classifies each ak command as read-only, mutating, or diagnostic, runs read-only checks first, confirms project versus global scope, and asks before any mutation such as a recover or reinstall.',
+      expectedVi: 'Phân loại từng lệnh ak là chỉ đọc, có thay đổi hay chẩn đoán, chạy kiểm tra chỉ đọc trước, xác nhận phạm vi project hay toàn máy, và hỏi trước mọi thao tác thay đổi như recover hay cài lại.',
     },
   ],
   guardrails: [

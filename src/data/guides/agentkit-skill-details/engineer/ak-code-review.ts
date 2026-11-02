@@ -12,10 +12,10 @@ const data: SkillInfographic = {
   },
   hardGate: {
     type: 'critical',
-    titleEn: 'No completion claim without fresh verification',
-    titleVi: 'Không kết luận hoàn tất nếu chưa có kiểm chứng mới',
-    contentEn: 'Resolve the exact review target first, cite evidence for findings, and re-run relevant tests, builds, lint, or reproductions before claiming accepted fixes are complete.',
-    contentVi: 'Trước hết phải chốt đúng đối tượng review, dẫn bằng chứng cho phát hiện, rồi chạy lại test, build, lint hoặc tái hiện phù hợp trước khi nói lỗi đã nhận là hoàn tất.',
+    titleEn: 'Review evidence is not merge approval',
+    titleVi: 'Bằng chứng review không phải là duyệt merge',
+    contentEn: 'A clean-looking diff, passing happy-path tests, or a reviewer score does not prove production readiness; Critical findings block progress until they are fixed and re-verified or you make an explicit risk decision. Resolve the exact review target first, cite evidence for findings, and re-run relevant tests, builds, lint, or reproductions before claiming accepted fixes are complete.',
+    contentVi: 'Diff trông sạch, test happy-path pass hay điểm của reviewer không chứng minh code đã sẵn sàng cho production; phát hiện Critical chặn tiến độ cho đến khi được sửa và kiểm lại, hoặc bạn chủ động quyết định chấp nhận rủi ro. Trước hết phải chốt đúng đối tượng review, dẫn bằng chứng cho phát hiện, rồi chạy lại test, build, lint hoặc tái hiện phù hợp trước khi nói lỗi đã nhận là hoàn tất.',
   },
   processFlow: [
     { number: 1, titleEn: 'Resolve target', titleVi: 'Chốt đối tượng', descEn: 'Parse the first matching input: PR number or URL, 7+ char commit hash, --pending, codebase, codebase parallel, or recent context.', descVi: 'Đọc input khớp đầu tiên: số hoặc URL PR, hash commit từ 7 ký tự, --pending, codebase, codebase parallel hoặc ngữ cảnh gần đây.' },
