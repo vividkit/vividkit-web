@@ -46,12 +46,12 @@ const data: SkillInfographic = {
   },
   hardGate: {
     type: 'warning',
-    titleEn: 'Analysis only — no implementation',
-    titleVi: 'Chỉ phân tích — không triển khai',
+    titleEn: 'Consultation is not implementation approval',
+    titleVi: 'Tư vấn không phải là duyệt triển khai',
     contentEn:
-      'This command provides architectural consultation and strategic guidance. Do not start implementing changes inside the ask workflow.',
+      '`ak-ask` is analysis-only. It does not edit code, apply a migration, approve an architecture, publish anything, or authorize a later workflow to act. This command provides architectural consultation and strategic guidance.',
     contentVi:
-      'Lệnh này chỉ tư vấn kiến trúc và định hướng chiến lược. Không bắt đầu sửa đổi trong workflow ask.',
+      '`ak-ask` chỉ phân tích. Nó không sửa code, không áp dụng migration, không duyệt kiến trúc, không xuất bản gì và không cho phép một workflow sau đó tự hành động. Lệnh này đưa ra tư vấn kiến trúc và định hướng chiến lược.',
   },
   processFlow: [
     { number: 1, titleEn: 'Read the question', titleVi: 'Đọc câu hỏi', descEn: 'Identify the design decision, trade-off, or best-practice evaluation the user actually needs answered.', descVi: 'Xác định quyết định thiết kế, đánh đổi hoặc đánh giá best practice mà người dùng thật sự cần trả lời.' },

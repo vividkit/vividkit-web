@@ -12,10 +12,10 @@ const data: SkillInfographic = {
   },
   hardGate: {
     type: 'warning',
-    titleEn: 'Do not skip phases',
-    titleVi: 'Không bỏ qua phase',
-    contentEn: 'The skill must run every phase and section, preserve existing documentation authority, keep reports concise, and list unresolved questions at the end. Permission to run the interview or draft a brief does not authorize git init, creating a GitHub or GitLab repository, documentation writes, a commit, publication, outreach, account changes, or budget allocation; approve each one separately.',
-    contentVi: 'Skill phải chạy đủ mọi phase và mục, giữ cấu trúc thẩm quyền tài liệu hiện có, viết báo cáo gọn và liệt kê câu hỏi còn mở ở cuối. Được phép phỏng vấn hoặc soạn brief không có nghĩa là được git init, tạo repository GitHub hoặc GitLab, ghi tài liệu, commit, xuất bản, liên hệ bên ngoài, đổi tài khoản hay phân bổ ngân sách; duyệt riêng từng việc.',
+    titleEn: 'Project setup is not blanket approval',
+    titleVi: 'Thiết lập project không phải là phê duyệt cho mọi việc',
+    contentEn: 'Permission to conduct the interview or draft a brief does not authorize `git init`, creation of a GitHub or GitLab repository, documentation writes, a commit, website access, publication, outreach, account changes, or budget allocation. Approve each applicable boundary separately. The skill must run every phase and section, preserve existing documentation authority, keep reports concise, and list unresolved questions at the end.',
+    contentVi: 'Được phép phỏng vấn hoặc soạn brief không có nghĩa là được chạy `git init`, tạo repository GitHub hay GitLab, ghi tài liệu, commit, truy cập website, xuất bản, liên hệ bên ngoài, thay đổi tài khoản hay phân bổ ngân sách. Hãy duyệt riêng từng ranh giới liên quan. Skill phải chạy đủ mọi phase và mục, giữ nguyên vai trò nguồn chuẩn của tài liệu hiện có, viết báo cáo gọn và liệt kê câu hỏi còn mở ở cuối.',
   },
   processFlow: [
     { number: 1, titleEn: 'Check git', titleVi: 'Kiểm tra git', descEn: 'Detect whether git is initialized, ask before git init, optionally gather remote repository details, or show the existing remote.', descVi: 'Kiểm tra git đã khởi tạo chưa, hỏi trước khi git init, có thể lấy thông tin remote repo, hoặc hiển thị remote hiện có.' },

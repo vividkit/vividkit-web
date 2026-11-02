@@ -84,10 +84,10 @@ const data: SkillInfographic = {
   ],
   "hardGate": {
     "type": "critical",
-    "titleEn": "Mechanical metric, safe Verify, clean scoped git",
-    "titleVi": "Cần metric máy đo, Verify an toàn, git sạch đúng scope",
-    "contentEn": "The loop refuses subjective goals, missing mechanical metrics, unsafe Verify commands, dirty/non-git or detached workspaces, stale loop locks, empty Scope matches, changes outside Scope, Guard-file edits, and Verify commands that do not finish quickly with one number.",
-    "contentVi": "Loop từ chối mục tiêu chủ quan, thiếu metric máy đo, lệnh Verify không an toàn, workspace không phải git/chưa sạch/detached, lock loop cũ, Scope không khớp file, sửa ngoài Scope, sửa file thuộc Guard và lệnh Verify không hoàn tất nhanh với một số."
+    "titleEn": "The loop creates commits",
+    "titleVi": "Loop tạo commit",
+    "contentEn": "Starting `ak-loop` authorizes repeated scoped edits and iteration commits on the current branch only. It does not authorize push, merge, publication, deployment, secret access, destructive recovery, or changes outside `Scope`. The loop refuses subjective goals, missing mechanical metrics, unsafe Verify commands, dirty, non-git, or detached workspaces, stale loop locks, empty Scope matches, changes outside Scope, Guard-file edits, and Verify commands that do not finish quickly with one number.",
+    "contentVi": "Khởi chạy `ak-loop` là cho phép sửa lặp lại trong phạm vi và tạo commit cho mỗi vòng, chỉ trên branch hiện tại. Nó không cho phép push, merge, công bố, deploy, truy cập secret, khôi phục kiểu phá hủy hay thay đổi ngoài `Scope`. Loop từ chối mục tiêu chủ quan, thiếu metric đo được bằng máy, lệnh Verify không an toàn, workspace chưa sạch, không phải git hoặc đang detached, lock loop cũ, Scope không khớp file nào, sửa ngoài Scope, sửa file thuộc Guard và lệnh Verify không chạy xong nhanh với một con số."
   },
   "corePrinciplesEn": [
     "Constraint + mechanical metric + fast verification enables autonomous improvement.",

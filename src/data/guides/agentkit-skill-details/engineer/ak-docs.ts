@@ -12,10 +12,10 @@ const data: SkillInfographic = {
   },
   hardGate: {
     type: "warning",
-    titleEn: "OPENING GATE",
-    titleVi: "CỔNG MỞ ĐẦU",
-    contentEn: "Start with a bounded brainstorm, establish audience, outcome, evidence, evergreen/stateful boundaries, and acceptance criteria, then avoid product-code changes during docs work.",
-    contentVi: "Bắt đầu bằng brainstorm có phạm vi, xác định audience, kết quả, bằng chứng, ranh giới evergreen/stateful và tiêu chí chấp nhận, rồi tránh sửa product code trong tác vụ tài liệu.",
+    titleEn: "Documentation changes can remove stale files",
+    titleVi: "Thay đổi tài liệu có thể xoá các file đã lỗi thời",
+    contentEn: "`ak-docs` may create, edit, or delete documentation within the accepted contract. Review proposed route or authority changes before the Skill replaces existing docs. It must not edit product code. Start with a bounded brainstorm that establishes audience, outcome, evidence, evergreen/stateful boundaries, and acceptance criteria.",
+    contentVi: "`ak-docs` có thể tạo, sửa hoặc xoá tài liệu trong phạm vi hợp đồng đã chấp nhận. Hãy xem lại các đề xuất đổi tuyến hoặc đổi thẩm quyền trước khi Skill thay thế tài liệu hiện có. Nó không được sửa code sản phẩm. Bắt đầu bằng một buổi brainstorm có giới hạn để xác định người đọc, kết quả, bằng chứng, ranh giới giữa tài liệu lâu dài (evergreen) và tài liệu theo trạng thái (stateful), cùng tiêu chí chấp nhận.",
   },
   processFlow: [
     { number: 1, titleEn: "Bound Intent", titleVi: "Chốt ý định", descEn: "Establish consumers, decisions enabled, proof sources, evergreen vs stateful content, and acceptance criteria.", descVi: "Xác định người đọc, quyết định cần hỗ trợ, nguồn chứng minh, nội dung bền vững so với trạng thái, và tiêu chí chấp nhận." },

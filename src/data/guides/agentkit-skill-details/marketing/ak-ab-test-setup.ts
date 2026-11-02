@@ -12,10 +12,10 @@ const data: SkillInfographic = {
   },
   hardGate: {
     type: 'warning',
-    titleEn: "Do not peek-stop",
-    titleVi: "Không dừng sớm vì nhìn kết quả",
-    contentEn: "The skill explicitly forbids stopping early because interim results look significant. Pre-commit sample size and duration, or use a sequential-testing method.",
-    contentVi: "Skill cấm dừng sớm chỉ vì số liệu tạm thời trông có ý nghĩa. Hãy chốt trước cỡ mẫu và thời lượng, hoặc dùng phương pháp sequential testing.",
+    titleEn: "A test plan is not launch approval",
+    titleVi: "Kế hoạch test chưa phải là phê duyệt chạy test",
+    contentEn: "The Skill can recommend instrumentation and implementation steps. It does not authorize production changes, participant exposure, provider access, personal data collection, spend, publication, or an early stop. Approve those actions separately. The skill explicitly forbids stopping early because interim results look significant. Pre-commit sample size and duration, or use a sequential-testing method.",
+    contentVi: "Skill có thể đề xuất instrumentation và các bước triển khai. Nó không cấp quyền thay đổi production, đưa người tham gia vào test, truy cập provider, thu thập dữ liệu cá nhân, chi tiền, xuất bản hay dừng test sớm. Hãy duyệt riêng từng hành động đó. Skill cấm rõ việc dừng sớm chỉ vì kết quả tạm thời trông có ý nghĩa. Hãy chốt trước cỡ mẫu và thời lượng, hoặc dùng phương pháp sequential testing.",
   },
   processFlow: [
     { number: 1, titleEn: "Assess context", titleVi: "Hiểu bối cảnh", descEn: "Clarify what should improve, the proposed change, why it matters, baseline conversion, traffic, history, timeline, tools, and implementation complexity.", descVi: "Làm rõ thứ cần cải thiện, thay đổi đang cân nhắc, lý do kiểm thử, conversion nền, traffic, lịch sử test, timeline, công cụ và độ phức tạp triển khai." },

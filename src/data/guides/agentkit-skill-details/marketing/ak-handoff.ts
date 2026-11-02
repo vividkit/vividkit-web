@@ -12,10 +12,10 @@ const data: SkillInfographic = {
   },
   hardGate: {
     type: 'critical',
-    titleEn: 'Capture only, unless --dispatch',
-    titleVi: 'Chỉ ghi nhận, trừ khi --dispatch',
-    contentEn: 'Without --dispatch this skill never launches a runtime, mutates code, commits, writes outside the workspace, includes raw transcripts, or exposes secrets. With --dispatch it still captures first, then hands that one artifact to ak:orchestrate.',
-    contentVi: 'Không có --dispatch thì skill không chạy runtime, không sửa mã, không commit, không ghi ngoài workspace, không đưa transcript thô và không lộ secret. Có --dispatch thì vẫn ghi trước, rồi giao đúng artifact đó cho ak:orchestrate.',
+    titleEn: 'A handoff can enter repository history',
+    titleVi: 'Handoff có thể đi vào lịch sử repository',
+    contentEn: 'The report is a persisted project file. Review its redaction before staging or sharing it. A private fact copied into the handoff can later be committed, pushed, indexed, or shown to another provider even though the Skill itself performs none of those actions. Without --dispatch this skill never launches a runtime, mutates code, commits, writes outside the workspace, includes raw transcripts, or exposes secrets. With --dispatch it still captures first, then hands that one artifact to ak:orchestrate.',
+    contentVi: 'Báo cáo là một file được lưu trong project. Hãy review phần che thông tin nhạy cảm trước khi stage hoặc chia sẻ. Một thông tin riêng tư bị chép vào handoff sau này có thể bị commit, push, index hoặc hiển thị cho provider khác, dù bản thân skill không làm việc nào trong số đó. Không có --dispatch thì skill không bao giờ chạy runtime, sửa code, commit, ghi ra ngoài workspace, đưa transcript thô vào hay lộ secret. Có --dispatch thì skill vẫn ghi lại trước, rồi giao đúng artifact đó cho ak:orchestrate.',
   },
   processFlow: [
     { number: 1, titleEn: 'Parse target', titleVi: 'Đọc mục tiêu', descEn: 'Accept a bare invocation, optional task focus, output path, diff/status inclusion, or force overwrite flag.', descVi: 'Nhận lệnh trống, trọng tâm công việc tùy chọn, đường dẫn output, yêu cầu kèm diff/status hoặc cờ force overwrite.' },

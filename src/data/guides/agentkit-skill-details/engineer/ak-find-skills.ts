@@ -28,10 +28,10 @@ const data: SkillInfographic = {
   },
   hardGate: {
     type: 'warning',
-    titleEn: "External skills are executable third-party content",
+    titleEn: "External Skills are executable third-party content",
     titleVi: "Skill bên ngoài là nội dung chạy được của bên thứ ba",
-    contentEn: "Review the package owner, repository, skill instructions, scripts, requested tools, and data boundaries before installation. Search relevance is not a security or quality review.",
-    contentVi: "Xem lại chủ package, repository, hướng dẫn của skill, script, các tool được yêu cầu và phạm vi dữ liệu trước khi cài. Kết quả tìm kiếm khớp không thay cho việc review bảo mật hay chất lượng.",
+    contentEn: "Review the package owner, repository, Skill instructions, scripts, requested tools, and data boundaries before installation. Search relevance is not a security or quality review.",
+    contentVi: "Xem lại chủ package, repository, hướng dẫn của Skill, script, các tool được yêu cầu và ranh giới dữ liệu trước khi cài. Kết quả tìm kiếm khớp không thay cho việc review bảo mật hay chất lượng.",
   },
   processFlow: [
     { number: 1, titleEn: "Recognize Need", titleVi: "Nhận ra nhu cầu", descEn: "Trigger when the user asks how to do a specialized task, whether a skill exists, or how to extend capabilities.", descVi: "Kích hoạt khi người dùng hỏi cách làm tác vụ chuyên biệt, có skill nào không, hoặc cách mở rộng năng lực." },

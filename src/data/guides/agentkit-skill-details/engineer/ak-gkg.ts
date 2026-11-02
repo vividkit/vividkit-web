@@ -63,10 +63,10 @@ const data: SkillInfographic = {
   ],
   "hardGate": {
     "type": "warning",
-    "titleEn": "Stop the server before re-indexing",
-    "titleVi": "Dừng server trước khi lập chỉ mục lại",
-    "contentEn": "The SKILL.md states that the GKG server must be stopped before re-indexing; do not refresh an index under a live server.",
-    "contentVi": "SKILL.md ghi rõ phải dừng GKG server trước khi lập chỉ mục lại; đừng làm mới index khi server vẫn đang chạy."
+    "titleEn": "The local graph contains repository knowledge",
+    "titleVi": "Graph local chứa thông tin về repository",
+    "contentEn": "Treat `~/.gkg/` as source-derived data. Absolute paths, definitions, and relationships can reveal private code structure even when the source files themselves are not copied into the final report. Stop the GKG server before re-indexing; do not refresh an index under a live server.",
+    "contentVi": "Coi `~/.gkg/` là dữ liệu được dẫn xuất từ mã nguồn. Đường dẫn tuyệt đối, định nghĩa và quan hệ giữa chúng có thể làm lộ cấu trúc code riêng tư, kể cả khi bản thân các file nguồn không được chép vào báo cáo cuối. Dừng GKG server trước khi lập chỉ mục lại; không làm mới index khi server vẫn đang chạy."
   },
   "corePrinciplesEn": [
     "Use GKG for semantic relationships, not raw token dumps.",

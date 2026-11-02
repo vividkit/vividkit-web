@@ -12,10 +12,10 @@ const data: SkillInfographic = {
   },
   "hardGate": {
     "type": "critical",
-    "titleEn": "Brief only, no research run",
-    "titleVi": "Chỉ viết brief, không chạy nghiên cứu",
-    "contentEn": "Return exactly one focused paragraph. Do not perform the research, add headings, expose secrets, or include private URLs, credentials, or personal data.",
-    "contentVi": "Chỉ trả đúng một đoạn tập trung. Không tự nghiên cứu, không thêm heading, không lộ secret, URL riêng tư, credential hoặc dữ liệu cá nhân."
+    "titleEn": "The brief may be sent to another person or provider",
+    "titleVi": "Brief có thể được gửi cho người khác hoặc provider khác",
+    "contentEn": "Include only context the downstream researcher is authorized to receive. Sanitizing the final report later does not undo disclosure in the assignment. Return exactly one focused paragraph. Do not perform the research, add headings, expose secrets, or include private URLs, credentials, or personal data.",
+    "contentVi": "Chỉ đưa vào những context mà người nghiên cứu ở bước sau được phép nhận. Làm sạch báo cáo cuối về sau không xóa được việc đã để lộ trong phần giao việc. Chỉ trả về đúng một đoạn văn tập trung. Không tự thực hiện nghiên cứu, không thêm heading, không làm lộ secret, và không đưa URL riêng tư, credential hay dữ liệu cá nhân vào."
   },
   "processFlow": [
     {

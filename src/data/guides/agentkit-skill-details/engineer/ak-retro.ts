@@ -83,10 +83,10 @@ const data: SkillInfographic = {
   },
   "hardGate": {
     "type": "warning",
-    "titleEn": "Read-only metrics; never invent data",
-    "titleVi": "Chỉ đọc chỉ số; không bịa dữ liệu",
-    "contentEn": "The skill must gather facts from git history, optional gh issue data, and plan files only. Empty or unavailable data is reported as 0 or N/A; it must not commit, push, or modify source files. Commit counts, LOC, churn, and test-file changes are limited proxies that prompt investigation, not a score to rank contributors or prove product quality.",
-    "contentVi": "Skill chỉ lấy dữ kiện từ lịch sử git, dữ liệu issue gh tùy chọn và file plan. Dữ liệu rỗng hoặc không có phải ghi 0 hoặc N/A; không commit, push hoặc sửa source file. Số commit, LOC, churn và thay đổi file test chỉ là chỉ báo gián tiếp để gợi ý chỗ cần xem kỹ, không phải điểm số để xếp hạng người đóng góp hay chứng minh chất lượng sản phẩm."
+    "titleEn": "Git activity is evidence, not a performance score",
+    "titleVi": "Hoạt động git là bằng chứng, không phải điểm đánh giá hiệu suất",
+    "contentEn": "Commit count, LOC, churn, and test-file changes are limited proxies. Use them to prompt investigation, not to rank contributors or claim product quality. The skill must gather facts from git history, optional `gh` issue data, and plan files only. Empty or unavailable data is reported as 0 or N/A; it must not commit, push, or modify source files.",
+    "contentVi": "Số commit, LOC, churn và thay đổi ở file test chỉ là các chỉ số gián tiếp có giới hạn. Dùng chúng để gợi ý chỗ cần tìm hiểu, không để xếp hạng người đóng góp hay khẳng định chất lượng sản phẩm. Skill chỉ lấy dữ kiện từ lịch sử git, dữ liệu issue từ `gh` (tùy chọn) và file plan. Dữ liệu rỗng hoặc không có được ghi là 0 hoặc N/A; skill không được commit, push hay sửa file source."
   },
   "processFlow": [
     {

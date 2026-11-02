@@ -14,7 +14,7 @@ const data: SkillInfographic = {
     type: "warning",
     titleEn: "Browsing, editing, and cloud sync are different actions",
     titleVi: "Xem, sửa và đồng bộ cloud là các thao tác khác nhau",
-    contentEn: "Opening the Hub starts a local process and writes a manifest. Saving replaces the selected local text file. AI enhancement can send that file’s content to the configured Claude provider. None of these actions uploads to R2, publishes an asset, or approves use of generated claims.",
+    contentEn: "Opening the Hub starts a local process and writes a manifest. Saving replaces the selected local text file. AI enhancement can send that file's content to the configured Claude provider. None of these actions uploads to R2, publishes an asset, or approves use of generated claims.",
     contentVi: "Mở Hub sẽ chạy một tiến trình cục bộ và ghi manifest. Lưu sẽ ghi đè file văn bản cục bộ đang chọn. Cải thiện bằng AI có thể gửi nội dung file đó tới provider Claude đã cấu hình. Không thao tác nào trong số này tải lên R2, công bố asset hay duyệt việc dùng các claim do AI tạo."
   },
   processFlow: [

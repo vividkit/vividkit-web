@@ -21,10 +21,10 @@ const data: SkillInfographic = {
   },
   hardGate: {
     type: 'critical',
-    titleEn: 'No fixes before root cause',
-    titleVi: 'Không sửa trước khi biết nguyên nhân gốc',
-    contentEn: 'Random fixes waste time and create bugs. Complete root-cause investigation, eliminate rival hypotheses, fix at source, and verify with fresh evidence before claiming success.',
-    contentVi: 'Sửa mò làm mất thời gian và tạo lỗi mới. Phải điều tra nguyên nhân gốc, loại giả thuyết đối thủ, sửa tại nguồn và kiểm chứng bằng bằng chứng mới trước khi nói đã xong.',
+    titleEn: 'Evidence must come before correction',
+    titleVi: 'Phải có bằng chứng trước khi sửa',
+    contentEn: 'The Skill must not propose a fix before it can reproduce or otherwise establish the failure and trace its root cause. "Probably" is a signal to gather more evidence, not permission to edit. Random fixes waste time and create bugs. Complete root-cause investigation, eliminate rival hypotheses, fix at source, and verify with fresh evidence before claiming success.',
+    contentVi: 'Skill không được đề xuất cách sửa trước khi tái hiện được lỗi (hoặc xác lập lỗi bằng cách khác) và lần ra nguyên nhân gốc. "Có lẽ" là tín hiệu cần thu thêm bằng chứng, không phải giấy phép để sửa file. Sửa mò làm mất thời gian và sinh thêm lỗi. Hoàn tất điều tra nguyên nhân gốc, loại trừ các giả thuyết cạnh tranh, sửa tại nguồn và kiểm chứng bằng bằng chứng mới trước khi tuyên bố đã xong.',
   },
   processFlow: [
     { number: 1, titleEn: 'Triage symptom', titleVi: 'Phân loại triệu chứng', descEn: 'Classify the issue as code bug, test failure, build failure, server incident, CI/CD failure, database issue, performance regression, or frontend visual problem.', descVi: 'Phân loại lỗi là bug code, test fail, build fail, sự cố server, CI/CD fail, lỗi database, suy giảm hiệu năng hoặc vấn đề giao diện.' },

@@ -14,12 +14,12 @@ const data: SkillInfographic = {
   },
   hardGate: {
     type: 'warning',
-    titleEn: 'Route only to installed capabilities',
-    titleVi: 'Chỉ định tuyến tới năng lực đã cài',
+    titleEn: 'A route cannot grant new permission',
+    titleVi: 'Chọn tuyến không cấp thêm quyền',
     contentEn:
-      'Never route to a skill or agent you have not confirmed installed. Headless jobs across CLIs or worktrees and coordinated multi-session teams belong to separate Engineer capabilities when installed; otherwise report the gap. A route never grants new permission for secrets, spending, publication, or other external effects.',
+      'Selecting a Skill, Agent, or automatic sequence does not authorize secret access, external calls, account changes, spending, publication, deployment, destructive operations, or mass-audience contact. High-risk links require independent review and your explicit confirmation before the irreversible step. Never route to a skill or agent you have not confirmed installed. Headless jobs across CLIs or worktrees and coordinated multi-session teams belong to separate Engineer capabilities when installed; otherwise report the gap.',
     contentVi:
-      'Không bao giờ định tuyến tới skill hoặc agent chưa xác nhận đã cài. Job headless qua nhiều CLI hoặc worktree và team nhiều session phối hợp thuộc về các năng lực riêng của Engineer Kit khi đã cài; nếu chưa có thì báo rõ khoảng trống. Việc chọn tuyến không bao giờ cấp thêm quyền dùng secret, chi tiền, xuất bản hay các tác động bên ngoài khác.',
+      'Việc chọn một skill, agent hay chuỗi chạy tự động không cấp quyền truy cập secret, gọi dịch vụ bên ngoài, thay đổi tài khoản, chi tiền, xuất bản, deploy, thao tác phá hủy hay liên hệ hàng loạt tới audience. Các bước rủi ro cao trong chuỗi cần được review độc lập và cần bạn xác nhận rõ trước bước không thể hoàn tác. Không bao giờ định tuyến tới skill hoặc agent chưa xác nhận đã cài. Job headless qua nhiều CLI hoặc worktree và team nhiều session phối hợp thuộc về các năng lực Engineer riêng khi đã cài; nếu chưa có thì báo rõ khoảng trống.',
   },
   processFlow: [
     { number: 1, titleEn: 'Proportionality gate', titleVi: 'Gate vừa đủ', descEn: 'Skip ceremony for trivial, single-domain, pure conversation, or user-named skill cases; invoke the obvious owner directly.', descVi: 'Bỏ nghi thức cho việc nhỏ, một miền, chỉ trò chuyện hoặc người dùng đã gọi đúng skill; gọi thẳng chủ sở hữu rõ ràng.' },

@@ -12,10 +12,10 @@ const data: SkillInfographic = {
   },
   hardGate: {
     type: 'critical',
-    titleEn: "Protect ad credentials and boundaries",
-    titleVi: "Bảo vệ credential và phạm vi ads",
-    contentEn: "The skill says to refuse out-of-scope requests and never expose env vars, internal configs, personal data, skill internals, or system prompts. Enabling an object or raising a budget is a spend decision: verify the account, object IDs, currency, ceilings, targeting, and rollback owner, and get fresh approval for every enable and every budget increase.",
-    contentVi: "Skill yêu cầu từ chối việc ngoài phạm vi và không bao giờ lộ env var, cấu hình nội bộ, dữ liệu cá nhân, nội dung skill hoặc system prompt. Bật một đối tượng quảng cáo hoặc tăng ngân sách là quyết định chi tiền: kiểm tra tài khoản, ID đối tượng, đơn vị tiền, mức trần, targeting và người chịu trách nhiệm rollback, và xin duyệt lại cho mỗi lần bật và mỗi lần tăng ngân sách.",
+    titleEn: "Enabling is a spend decision",
+    titleVi: "Bật quảng cáo là quyết định chi tiền",
+    contentEn: "A paused object is still a live account mutation, and an enabled object can deliver immediately. Before any write, verify the provider account, object IDs, currency and units, total and daily ceilings, targeting, destination, creative rights, tracking consent, policy status, and rollback owner. Require a fresh approval for `enable` and every budget increase. The skill says to refuse out-of-scope requests and never expose env vars, internal configs, personal data, skill internals, or system prompts.",
+    contentVi: "Một đối tượng để ở trạng thái tạm dừng vẫn là thay đổi thật trên tài khoản, còn đối tượng đã bật có thể chạy quảng cáo ngay. Trước mọi thao tác ghi, hãy xác minh tài khoản provider, ID đối tượng, đơn vị tiền và đơn vị tính, mức trần tổng và theo ngày, targeting, đích đến, quyền dùng creative, sự đồng ý cho tracking, trạng thái chính sách và người chịu trách nhiệm rollback. Yêu cầu duyệt lại cho `enable` và cho mỗi lần tăng budget. Skill yêu cầu từ chối việc ngoài phạm vi và không bao giờ lộ env var, cấu hình nội bộ, dữ liệu cá nhân, nội dung bên trong skill hoặc system prompt.",
   },
   processFlow: [
     { number: 1, titleEn: "Set objective", titleVi: "Chốt mục tiêu", descEn: "Define whether the campaign optimizes for awareness, traffic, conversions, ROAS, CPA, or another measurable paid-media outcome.", descVi: "Xác định campaign tối ưu cho awareness, traffic, conversion, ROAS, CPA hay một kết quả paid-media đo được khác." },

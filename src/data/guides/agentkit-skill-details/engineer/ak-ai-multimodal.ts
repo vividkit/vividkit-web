@@ -45,12 +45,12 @@ const data: SkillInfographic = {
   },
   hardGate: {
     type: 'critical',
-    titleEn: 'Resolve live provider and model capability',
-    titleVi: 'Phải xác minh provider và model hiện hành',
+    titleEn: 'Media inputs can disclose more than the requested detail',
+    titleVi: 'Input media có thể làm lộ nhiều hơn chi tiết được hỏi',
     contentEn:
-      'Before generation, run the relevant npm-latest multix help, check the provider catalog, choose an explicit supported model, and never infer “latest”, “default”, or “recommended” from this skill.',
+      'Images, recordings, video frames, documents, voices, faces, screens, metadata, and background content may be uploaded to a provider. Inspect and minimize each input before sending it, and verify current retention and deletion terms. Before generation, run the relevant npm-latest multix help, check the provider catalog, choose an explicit supported model, and never infer "latest", "default", or "recommended" from this skill.',
     contentVi:
-      'Trước khi tạo nội dung, chạy help của multix bản npm mới nhất, kiểm tra catalog provider, chọn model hỗ trợ rõ ràng và không suy ra “latest”, “default” hay “recommended” từ skill này.',
+      'Ảnh, bản ghi âm, khung hình video, tài liệu, giọng nói, khuôn mặt, màn hình, metadata và nội dung ở hậu cảnh có thể bị upload tới provider. Kiểm tra và cắt bớt từng input trước khi gửi, đồng thời xác minh điều khoản lưu giữ và xoá dữ liệu hiện hành. Trước khi tạo nội dung, chạy help của multix bản npm mới nhất tương ứng, kiểm tra catalog provider, chọn rõ một model được hỗ trợ và không bao giờ suy ra "latest", "default" hay "recommended" từ skill này.',
   },
   processFlow: [
     { number: 1, titleEn: 'Resolve CLI', titleVi: 'Xác định CLI', descEn: 'Use npx --yes --prefer-online --package=@mrgoonie/multix@latest; do not install or call a global multix binary.', descVi: 'Dùng npx --yes --prefer-online --package=@mrgoonie/multix@latest; không cài hoặc gọi binary multix global.' },

@@ -14,12 +14,12 @@ const data: SkillInfographic = {
   },
   hardGate: {
     type: 'critical',
-    titleEn: 'One question and confirmed framing before advice',
-    titleVi: 'Mỗi lần một câu hỏi và phải chốt lại vấn đề trước khi tư vấn',
+    titleEn: 'Advice never executes itself',
+    titleVi: 'Lời tư vấn không bao giờ tự thực thi',
     contentEn:
-      'Ask exactly one interview question per ask-user exchange, never skip the interview, and do not give final advice until the reframed problem, requirements, goals, Done means, non-goals, constraints, and the visual preview of the outcome are explicitly confirmed.',
+      '`ak-advise` does not implement code, scaffold a project, modify product files, approve a design, or widen authority. Its only possible file changes are requested advice reports and their presentation artifacts. Ask exactly one interview question per ask-user exchange, never skip the interview, and do not give final advice until the reframed problem, requirements, goals, Done means, non-goals, constraints, and the visual preview of the outcome are explicitly confirmed.',
     contentVi:
-      'Mỗi lượt hỏi người dùng chỉ hỏi đúng một câu, không bỏ qua phần phỏng vấn, và chưa được tư vấn cuối cùng cho đến khi vấn đề, yêu cầu, mục tiêu, Done means, ngoài phạm vi, ràng buộc và bản preview kết quả đã được xác nhận rõ.',
+      '`ak-advise` không viết code, không dựng khung project, không sửa file sản phẩm, không duyệt thiết kế và không tự mở rộng quyền hạn. Thay đổi file duy nhất nó có thể tạo là báo cáo tư vấn bạn đã yêu cầu cùng các file trình bày đi kèm. Mỗi lượt hỏi người dùng chỉ hỏi đúng một câu phỏng vấn, không bỏ qua phần phỏng vấn, và chưa đưa lời tư vấn cuối cho đến khi vấn đề đã diễn đạt lại, yêu cầu, mục tiêu, Done means (thế nào là xong), phần ngoài phạm vi, ràng buộc và bản xem trước kết quả đều được xác nhận rõ.',
   },
   processFlow: [
     { number: 1, titleEn: 'Analyze input', titleVi: 'Phân tích đầu vào', descEn: 'Extract the stated problem, implied problem, hidden assumptions, and source context from free text, GitHub, specs, docs, or other URLs.', descVi: 'Rút ra vấn đề được nêu, vấn đề ngầm, giả định ẩn và bối cảnh nguồn từ văn bản tự do, GitHub, đặc tả, tài liệu hoặc URL khác.' },

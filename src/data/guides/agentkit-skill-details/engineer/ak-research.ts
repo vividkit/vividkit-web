@@ -12,10 +12,10 @@ const data: SkillInfographic = {
   },
   "hardGate": {
     "type": "critical",
-    "titleEn": "Respect scope and search budget",
-    "titleVi": "Tôn trọng phạm vi và giới hạn tìm kiếm",
-    "contentEn": "Deliver the full requested scope without adding extras. Use at most five research tool calls, cite sources, and mark unresolved questions honestly. Search queries leave the local workspace: never put private code, secret values, customer data, incident data, or confidential plans into a web query or external model request, and use a sanitized description instead.",
-    "contentVi": "Phải giao đủ phạm vi được yêu cầu, không thêm việc ngoài yêu cầu. Tối đa năm lần gọi công cụ nghiên cứu, có trích nguồn và nêu rõ câu hỏi chưa giải quyết. Truy vấn tìm kiếm rời khỏi máy local: không đưa code riêng tư, giá trị secret, dữ liệu khách hàng, dữ liệu sự cố hay kế hoạch mật vào truy vấn web hoặc request gửi model bên ngoài, mà dùng mô tả đã lược bỏ thông tin nhạy cảm."
+    "titleEn": "Search queries leave the local workspace",
+    "titleVi": "Truy vấn tìm kiếm rời khỏi workspace trên máy",
+    "contentEn": "Do not place private code, secret values, customer information, incident data, or confidential product plans in a web query or external model request. Use a sanitized description or approved local evidence instead. Deliver the full requested scope without adding extras. Use at most five research tool calls, cite sources, and mark unresolved questions honestly.",
+    "contentVi": "Không đưa code riêng tư, giá trị secret, thông tin khách hàng, dữ liệu sự cố hoặc kế hoạch sản phẩm bảo mật vào truy vấn web hay request gửi tới model bên ngoài. Thay vào đó, dùng mô tả đã làm sạch hoặc bằng chứng local đã được duyệt. Giao đủ phạm vi được yêu cầu, không thêm việc ngoài yêu cầu. Dùng tối đa năm lần gọi công cụ nghiên cứu, trích nguồn và ghi rõ trung thực các câu hỏi chưa giải quyết."
   },
   "processFlow": [
     {

@@ -77,10 +77,10 @@ const data: SkillInfographic = {
   ],
   hardGate: {
     type: "critical",
-    titleEn: "Plan, don't execute",
-    titleVi: "Chỉ lập kế hoạch, không thực thi",
-    contentEn: "Do not execute campaigns. A plan proposes external actions; it does not approve them: channel allocation, budget, targeting, pricing, offers, claims, deadlines, providers, tests, and expected results stay proposals until the responsible owner approves them against current evidence and policy. Suggested plans are hints only and must not be auto-used.",
-    contentVi: "Không chạy campaign. Plan chỉ đề xuất các việc bên ngoài, không duyệt chúng: phân bổ kênh, ngân sách, nhắm đối tượng, giá, ưu đãi, tuyên bố, hạn chót, nhà cung cấp, thử nghiệm và kết quả kỳ vọng vẫn chỉ là đề xuất cho tới khi người chịu trách nhiệm duyệt dựa trên bằng chứng và chính sách hiện hành. Suggested plan chỉ là gợi ý và không được tự dùng."
+    titleEn: "A plan proposes external actions; it does not approve them",
+    titleVi: "Plan chỉ đề xuất hành động bên ngoài, không duyệt chúng",
+    contentEn: "Channel allocation, budget, targeting, pricing, offers, claims, deadlines, providers, tests, and expected results remain proposals until the responsible owner approves them against current evidence and policy. Do not execute campaigns. Suggested plans are hints only and must not be auto-used.",
+    contentVi: "Phân bổ kênh, ngân sách, nhắm đối tượng, giá, ưu đãi, tuyên bố, hạn chót, provider, thử nghiệm và kết quả kỳ vọng vẫn chỉ là đề xuất cho tới khi người chịu trách nhiệm duyệt chúng dựa trên bằng chứng và chính sách hiện hành. Không chạy campaign. Các plan được gợi ý chỉ để tham khảo và không được tự động dùng."
   },
   corePrinciplesEn: [
     "Research-backed plans beat brainstormed tactics",

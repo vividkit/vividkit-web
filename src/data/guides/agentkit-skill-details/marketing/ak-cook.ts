@@ -12,10 +12,10 @@ const data: SkillInfographic = {
   },
   hardGate: {
     type: "critical",
-    titleEn: "Plan, scout, and side-effect gates are mandatory",
-    titleVi: "Bắt buộc qua cổng plan, scout và kiểm soát side effect",
-    contentEn: "The skill forbids writing implementation code until a reviewed plan exists, requires codebase scouting before planning, and says implementation is not done until side effects and public contracts are verified.",
-    contentVi: "Skill cấm viết code triển khai trước khi có plan đã review, bắt buộc scout codebase trước khi lập plan, và chưa coi là xong cho đến khi kiểm chứng side effect cùng public contract.",
+    titleEn: "Automation does not expand authority",
+    titleVi: "Tự động hóa không mở rộng quyền hạn",
+    contentEn: "`--auto` can remove routine pauses, but it does not authorize secret access, external cost, changes to a marketing platform or live account, publication, audience contact, commit, push, pull request, deployment, destructive action, or acceptance of a regression. Approve each external effect separately. The skill forbids writing implementation code until a reviewed plan exists, requires codebase scouting before planning, and says implementation is not done until side effects and public contracts are verified.",
+    contentVi: "`--auto` có thể bỏ các lần dừng thường lệ, nhưng không cấp quyền truy cập secret, phát sinh chi phí bên ngoài, thay đổi nền tảng marketing hay tài khoản đang chạy, xuất bản, liên hệ audience, commit, push, pull request, deploy, thao tác phá hủy hay chấp nhận regression. Hãy duyệt riêng từng tác động bên ngoài. Skill cấm viết code triển khai trước khi có plan đã review, bắt buộc scout codebase trước khi lập plan, và chưa coi là xong cho đến khi đã kiểm chứng side effect cùng public contract.",
   },
   processFlow: [
     { number: 1, titleEn: "Capture contract", titleVi: "Chốt hợp đồng", descEn: "State outcome, constraints, non-goals, and observable acceptance criteria before planning or coding.", descVi: "Nêu rõ outcome, ràng buộc, non-goal và tiêu chí nghiệm thu quan sát được trước khi plan hoặc code." },

@@ -37,10 +37,10 @@ const data: SkillInfographic = {
   },
   hardGate: {
     type: "info",
-    titleEn: "SCRIPT-FIRST ROUTE",
-    titleVi: "TUYẾN SCRIPT-FIRST",
-    contentEn: "Always run detect-topic.js, then fetch-docs.js, and analyze the fetched llms.txt content when multiple URLs need prioritization. Do not manually construct context7 URLs first.",
-    contentVi: "Luôn chạy detect-topic.js, rồi fetch-docs.js, và phân tích nội dung llms.txt đã tải khi nhiều URL cần được ưu tiên hóa. Không tự dựng URL context7 trước.",
+    titleEn: "Documentation lookup can leave the local project",
+    titleVi: "Tra cứu tài liệu có thể đi ra ngoài project local",
+    contentEn: "The fetch path contacts Context7 and the linked documentation sites. A repository fallback can clone source and create a Repomix bundle. Approve the provider, private source, destination, and retention boundary before using sensitive material. Always run `detect-topic.js`, then `fetch-docs.js`, and analyze the fetched `llms.txt` content when multiple URLs need prioritization. Do not manually construct context7 URLs first.",
+    contentVi: "Luồng fetch sẽ liên hệ Context7 và các site tài liệu được liên kết. Phương án dự phòng qua repository có thể clone mã nguồn và tạo bundle Repomix. Hãy duyệt provider, nguồn riêng tư, nơi nhận dữ liệu và ranh giới lưu giữ trước khi dùng tài liệu nhạy cảm. Luôn chạy `detect-topic.js`, rồi `fetch-docs.js`, và phân tích nội dung `llms.txt` đã tải khi cần xếp ưu tiên nhiều URL. Không tự dựng URL context7 trước.",
   },
   processFlow: [
     { number: 1, titleEn: "Read Query", titleVi: "Đọc truy vấn", descEn: "Capture the library or framework and the topic the user needs, such as an API, feature, or repository behavior.", descVi: "Xác định thư viện hoặc framework và chủ đề người dùng cần, như API, tính năng hoặc hành vi repository." },

@@ -78,10 +78,10 @@ const data: SkillInfographic = {
   ],
   "hardGate": {
     "type": "warning",
-    "titleEn": "Do not rely on bundled or remembered catalogs",
-    "titleVi": "Không dựa vào catalog đóng gói hoặc trí nhớ",
-    "contentEn": "The skill must use the runtime catalog when available, or discover current SKILL.md frontmatter; copied counts and remembered skill lists are not authoritative.",
-    "contentVi": "Skill phải dùng catalog runtime nếu có, hoặc khám phá frontmatter SKILL.md hiện tại; số lượng copy sẵn và danh sách nhớ được không có thẩm quyền."
+    "titleEn": "The installed catalog is the authority",
+    "titleVi": "Catalog đã cài là nguồn chuẩn",
+    "contentEn": "Skill counts, names, and availability can change with kit, scope, and runtime. `ak-help` does not rely on a bundled list or a remembered count. It uses the runtime catalog when available, or reads the current `SKILL.md` frontmatter.",
+    "contentVi": "Số lượng, tên và khả năng dùng của skill có thể thay đổi theo kit, scope và runtime. `ak-help` không dựa vào danh sách đóng gói sẵn hay số đếm đã nhớ. Skill dùng catalog của runtime khi có, nếu không thì đọc frontmatter `SKILL.md` hiện tại."
   },
   "invocation": {
     "syntax": "/ak:help [topic|skill|command]",

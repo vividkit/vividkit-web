@@ -12,10 +12,10 @@ const data: SkillInfographic = {
   },
   "hardGate": {
     "type": "critical",
-    "titleEn": "Fail closed on ship blockers",
-    "titleVi": "Gặp chặn thì dừng an toàn",
-    "contentEn": "Abort or ask on target branch, unresolved conflicts, failing tests, critical review issues, major/minor version bumps, unknown modes or flags, downstream merge/CI uncertainty, private-repo social posting without explicit private opt-in, and any need to bypass branch protection or force-push. It stages everything with git add -A, so clean or isolate the worktree first; an unrelated untracked file would otherwise be committed and pushed with the release.",
-    "contentVi": "Phải dừng hoặc hỏi khi đang ở nhánh đích, conflict không tự xử lý được, test lỗi, review có lỗi nghiêm trọng, cần tăng major/minor, mode/cờ không rõ, trạng thái merge/CI hạ nguồn chưa chắc, repo private chưa có xác nhận đăng riêng, hoặc bất kỳ việc nào đòi bỏ qua branch protection hay force-push. Skill stage mọi thứ bằng git add -A, nên hãy dọn sạch hoặc tách riêng worktree trước; nếu không, một file chưa track không liên quan có thể bị commit và push cùng bản phát hành."
+    "titleEn": "Uncommitted changes are included automatically",
+    "titleVi": "Thay đổi chưa commit sẽ tự động bị gộp vào",
+    "contentEn": "`ak-ship` intentionally stages with `git add -A`. Clean or isolate the worktree before running it. An unrelated untracked file can otherwise be committed and pushed with the release. Abort or ask when on the target branch, or on unresolved conflicts, failing tests, critical review issues, major/minor version bumps, unknown modes or flags, downstream merge/CI uncertainty, private-repo social posting without explicit private opt-in, and any need to bypass branch protection or force-push.",
+    "contentVi": "`ak-ship` cố ý stage bằng `git add -A`. Hãy dọn sạch hoặc tách riêng worktree trước khi chạy. Nếu không, một file untracked không liên quan có thể bị commit và push cùng bản release. Dừng hoặc hỏi lại khi đang ở branch đích, có conflict chưa xử lý, test fail, review có lỗi nghiêm trọng, cần tăng version major/minor, mode hoặc flag không rõ, trạng thái merge/CI phía sau chưa chắc chắn, đăng mạng xã hội cho repo private mà chưa có xác nhận rõ ràng, hoặc bất kỳ việc nào cần bỏ qua branch protection hay force-push."
   },
   "processFlow": [
     {

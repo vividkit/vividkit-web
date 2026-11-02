@@ -12,10 +12,10 @@ const data: SkillInfographic = {
   },
   hardGate: {
     type: 'warning',
-    titleEn: 'BRIEF WRITER, NOT RESEARCH RUNNER',
-    titleVi: 'VIẾT BRIEF, KHÔNG CHẠY RESEARCH',
-    contentEn: 'This skill writes exactly one paragraph. It must not perform the research, manufacture facts, include secrets/private URLs/credentials/personal data, add headings, add a preface, or create a second deliverable.',
-    contentVi: 'Skill này viết đúng một đoạn văn. Nó không được tự research, bịa sự thật, đưa secret/private URL/credential/dữ liệu cá nhân, thêm heading, thêm lời dẫn hoặc tạo deliverable thứ hai.',
+    titleEn: 'The brief is not research evidence',
+    titleVi: 'Brief không phải là bằng chứng nghiên cứu',
+    contentEn: 'Do not cite the generated paragraph as a finding. A later researcher must execute it, retrieve current sources, document conflicts, and produce the requested report. Review that report before changing messaging, publishing, contacting an audience, or spending budget. This skill writes exactly one paragraph. It must not perform the research, manufacture facts, include secrets/private URLs/credentials/personal data, add headings, add a preface, or create a second deliverable.',
+    contentVi: 'Đừng trích dẫn đoạn văn được tạo ra như một kết quả nghiên cứu. Người research sau đó phải chạy brief, lấy nguồn hiện tại, ghi lại các điểm mâu thuẫn và tạo báo cáo được yêu cầu. Hãy review báo cáo đó trước khi đổi thông điệp, xuất bản, liên hệ audience hoặc chi ngân sách. Skill này viết đúng một đoạn văn. Nó không được tự research, bịa dữ kiện, đưa secret/private URL/credential/dữ liệu cá nhân vào, thêm heading, thêm lời dẫn hay tạo deliverable thứ hai.',
   },
   processFlow: [
     { number: 1, titleEn: 'Collect Context', titleVi: 'Gom bối cảnh', descEn: 'Gather the decision, audience, deadline, known facts, constraints, and intended use from conversation or files.', descVi: 'Gom quyết định cần hỗ trợ, audience, deadline, facts đã biết, ràng buộc và cách dùng kết quả từ hội thoại hoặc file.' },

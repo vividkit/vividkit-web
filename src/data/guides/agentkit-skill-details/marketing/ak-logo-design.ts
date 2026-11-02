@@ -7,8 +7,8 @@ const data: SkillInfographic = {
   header: {
     titleEn: '/ak:logo-design — Logo intelligence and generation',
     titleVi: '/ak:logo-design — Tư vấn và tạo logo',
-    taglineEn: "Logo intelligence and generation workflow spanning 55+ styles, 30 palettes, 25 industry guides, Gemini Nano Banana prompts, and optional HTML preview galleries.",
-    taglineVi: "Quy trình tư vấn và tạo logo với hơn 55 style, 30 bảng màu, 25 guide ngành, prompt Gemini Nano Banana và gallery HTML preview tùy chọn."
+    taglineEn: "Logo intelligence and generation workflow spanning 55 styles, 55 color palettes, 55 industry guides, Gemini Nano Banana prompts, and optional HTML preview galleries.",
+    taglineVi: "Quy trình tư vấn và tạo logo với 55 style, 55 bảng màu, 55 guide ngành, prompt Gemini Nano Banana và gallery HTML preview tùy chọn."
   },
   processFlow: [
     {

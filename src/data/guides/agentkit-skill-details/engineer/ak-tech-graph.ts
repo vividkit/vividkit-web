@@ -26,10 +26,10 @@ const data: SkillInfographic = {
   },
   "hardGate": {
     "type": "critical",
-    "titleEn": "Validate SVG and inspect visuals",
-    "titleVi": "Phải kiểm SVG và hình render",
-    "contentEn": "Verify rsvg-convert before use, generate complete SVGs with the Python list method for complex work, validate with rsvg-convert, export PNG, and visually self-review when image reading is available. Do not guess that syntax-valid diagrams are visually correct.",
-    "contentVi": "Phải kiểm rsvg-convert trước khi dùng, sinh SVG đầy đủ bằng phương pháp Python list cho việc phức tạp, validate bằng rsvg-convert, export PNG và tự review hình khi có thể đọc ảnh. Không đoán rằng sơ đồ đúng cú pháp là đã đúng về hình ảnh."
+    "titleEn": "A polished diagram can still be factually wrong",
+    "titleVi": "Diagram đẹp vẫn có thể sai về nội dung",
+    "contentEn": "SVG validation proves structure and renderability, not architecture truth. Trace every material node and edge to primary project evidence, and label inferred or proposed relationships. Verify `rsvg-convert` before use, generate complete SVGs with the Python list method for complex work, validate with `rsvg-convert`, export PNG, and visually self-review when image reading is available. Do not guess that syntax-valid diagrams are visually correct.",
+    "contentVi": "Kiểm tra SVG hợp lệ chỉ chứng minh cấu trúc và khả năng render, không chứng minh kiến trúc là đúng. Truy từng node và cạnh quan trọng về bằng chứng gốc trong project, và ghi nhãn cho các quan hệ được suy ra hoặc đề xuất. Kiểm tra `rsvg-convert` trước khi dùng, sinh SVG đầy đủ bằng phương pháp Python list cho việc phức tạp, validate bằng `rsvg-convert`, export PNG và tự xem lại hình khi đọc được ảnh. Đừng đoán rằng sơ đồ đúng cú pháp là đã đúng về hình ảnh."
   },
   "processFlow": [
     {

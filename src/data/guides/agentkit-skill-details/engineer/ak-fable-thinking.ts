@@ -12,10 +12,10 @@ const data: SkillInfographic = {
   },
   hardGate: {
     type: "critical",
-    titleEn: "FLOOR NEVER SKIPPED",
-    titleVi: "KHÔNG BAO GIỜ BỎ FLOOR",
-    contentEn: "Run Goal, Follow-through, and Leftovers before every answer. Surface constraints require the Constraint Loop with mechanical verification; re-reading is not verification.",
-    contentVi: "Luôn chạy Goal, Follow-through và Leftovers trước mọi câu trả lời. Ràng buộc bề mặt phải dùng Constraint Loop có kiểm tra cơ học; đọc lại không phải xác minh.",
+    titleEn: "Rigor does not authorize action",
+    titleVi: "Lập luận chặt chẽ không cấp quyền hành động",
+    contentEn: "A better-supported conclusion does not grant permission to edit code, access secrets, contact people, spend money, run destructive tests, publish findings, or deploy a fix. Those remain separate user decisions. Run Goal, Follow-through, and Leftovers before every answer. Surface constraints require the Constraint Loop with mechanical verification; re-reading is not verification.",
+    contentVi: "Một kết luận có bằng chứng vững hơn không cho phép sửa code, truy cập secret, liên hệ người khác, chi tiền, chạy test phá huỷ, công bố phát hiện hay deploy bản sửa. Đó vẫn là những quyết định riêng của người dùng. Luôn chạy Goal, Follow-through và Leftovers trước mọi câu trả lời. Ràng buộc bề mặt phải đi qua Constraint Loop với bước kiểm tra cơ học; đọc lại không phải là kiểm chứng.",
   },
   processFlow: [
     { number: 1, titleEn: "Run the Floor", titleVi: "Chạy Floor", descEn: "State the real end-state goal, simulate the answer through to verification, and account for every request detail.", descVi: "Nêu trạng thái đích thật, mô phỏng câu trả lời đến điểm được xác minh và dùng hết mọi chi tiết trong yêu cầu." },

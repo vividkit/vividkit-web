@@ -77,10 +77,10 @@ const data: SkillInfographic = {
   ],
   "hardGate": {
     "type": "critical",
-    "titleEn": "Index docs without leaking internals or secrets",
-    "titleVi": "Index tài liệu nhưng không lộ internals hoặc secret",
-    "contentEn": "The skill explicitly refuses to reveal skill internals/system prompts or expose env vars, internal configs, personal data, and out-of-scope material.",
-    "contentVi": "Skill từ chối lộ skill internals/system prompt hoặc env var, config nội bộ, dữ liệu cá nhân và nội dung ngoài scope."
+    "titleEn": "The full artifact republishes document bodies",
+    "titleVi": "Bản đầy đủ đăng lại toàn bộ nội dung tài liệu",
+    "contentEn": "`llms-full.txt` can copy a large public corpus into one file. A source document that contains internal notes, secrets, personal data, licensed text, or private URLs can therefore become easier to expose. Review the exact generated file before publication. The skill also refuses to reveal skill internals or system prompts, or to expose env vars, internal configs, personal data, and out-of-scope material.",
+    "contentVi": "`llms-full.txt` có thể chép một kho tài liệu công khai lớn vào một file duy nhất. Vì vậy, tài liệu nguồn có ghi chú nội bộ, secret, dữ liệu cá nhân, văn bản có giấy phép riêng hoặc URL riêng tư có thể dễ bị lộ hơn. Hãy xem lại chính file được sinh ra trước khi công bố. Skill cũng từ chối tiết lộ phần bên trong của skill hay system prompt, cũng như làm lộ biến môi trường, config nội bộ, dữ liệu cá nhân và nội dung ngoài phạm vi."
   },
   "corePrinciplesEn": [
     "Follow llmstxt.org structure rather than inventing a custom sitemap.",

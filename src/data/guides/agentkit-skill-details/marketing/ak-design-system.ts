@@ -12,10 +12,10 @@ const data: SkillInfographic = {
   },
   hardGate: {
     type: "critical",
-    titleEn: "Slides must be token-compliant",
-    titleVi: "Slide bắt buộc tuân thủ token",
-    contentEn: "The skill says all slides must import generated design-token CSS, use CSS variables, use Chart.js for charts instead of CSS-only bars, include navigation, center content, and focus on persuasion/conversion. Generated output can overwrite the selected file and a broad token migration touches every consuming surface, so review the diff, themes, contrast, and component states before accepting it.",
-    contentVi: "Skill yêu cầu mọi slide phải import CSS token đã tạo, dùng biến CSS, dùng Chart.js cho chart thay vì bar chỉ bằng CSS, có điều hướng, canh giữa nội dung và tập trung vào thuyết phục/chuyển đổi. Output được tạo có thể ghi đè file đã chọn và một lần đổi token diện rộng ảnh hưởng mọi nơi đang dùng, nên hãy xem diff, theme, độ tương phản và các trạng thái component trước khi chấp nhận.",
+    titleEn: "A token recommendation is not a safe migration by itself",
+    titleVi: "Đề xuất token tự nó chưa phải là migration an toàn",
+    contentEn: "Generated output can overwrite the selected file, and a broad token migration can change every consuming surface. Review the diff, themes, contrast, and component states before accepting it. Keep package installation, hosted fonts, CDN scripts, image fetching, publication, and deployment as separate approvals. The skill says all slides must import generated design-token CSS, use CSS variables, use Chart.js for charts instead of CSS-only bars, include navigation, center content, and focus on persuasion/conversion.",
+    contentVi: "Output được tạo có thể ghi đè file đã chọn, và một lần migration token diện rộng có thể thay đổi mọi nơi đang dùng token đó. Hãy review diff, theme, độ tương phản và các trạng thái component trước khi chấp nhận. Giữ việc cài package, font host bên ngoài, script CDN, tải ảnh, xuất bản và deploy thành các phê duyệt riêng. Skill yêu cầu mọi slide phải import CSS design token đã tạo, dùng biến CSS, dùng Chart.js cho chart thay vì bar chỉ bằng CSS, có điều hướng, canh giữa nội dung và tập trung vào thuyết phục/chuyển đổi.",
   },
   processFlow: [
     { number: 1, titleEn: "Identify surface", titleVi: "Xác định bề mặt", descEn: "Decide whether the request is tokens, component specs, Tailwind handoff, or slide generation.", descVi: "Xác định yêu cầu là token, đặc tả component, handoff Tailwind hay tạo slide." },

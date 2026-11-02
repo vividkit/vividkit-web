@@ -12,10 +12,10 @@ const data: SkillInfographic = {
   },
   hardGate: {
     type: "warning",
-    titleEn: "NO DEFAULT PROJECT STACK",
-    titleVi: "KHÔNG ÁP STACK MẶC ĐỊNH",
-    contentEn: "The Skill defines no default stack, flags, or named modes. Treat bundled names such as SuspenseLoader, useMuiSnackbar, apiClient, import aliases, and route formats as patterns only when the current project provides those contracts. Components, loaders, mutations, and browser tests can send requests or change remote data when pointed at a live environment; confirm endpoints, accounts, fixtures, and mutation authority before running them.",
-    contentVi: "Skill không định nghĩa stack mặc định, flag hay mode có tên. Chỉ xem các tên đi kèm như SuspenseLoader, useMuiSnackbar, apiClient, alias import và format route là pattern khi dự án hiện tại có đúng các contract đó. Component, loader, mutation và browser test có thể gửi request hoặc đổi dữ liệu từ xa khi trỏ vào môi trường thật; hãy xác nhận endpoint, tài khoản, fixture và quyền thay đổi dữ liệu trước khi chạy.",
+    titleEn: "Frontend implementation can call real services",
+    titleVi: "Code frontend có thể gọi tới service thật",
+    contentEn: "Components, loaders, mutations, and browser tests can send requests or change remote data when pointed at a live environment. Confirm endpoints, accounts, fixtures, and mutation authority before running them. The Skill defines no default stack, flags, or named modes. Treat bundled names such as `SuspenseLoader`, `useMuiSnackbar`, `apiClient`, import aliases, and route formats as patterns only when the current project provides those contracts.",
+    contentVi: "Component, loader, mutation và browser test có thể gửi request hoặc thay đổi dữ liệu từ xa khi trỏ tới một môi trường đang chạy thật. Hãy xác nhận endpoint, tài khoản, fixture và quyền thực hiện mutation trước khi chạy chúng. Skill không định nghĩa stack mặc định, cờ hay chế độ có tên nào. Chỉ coi các tên đi kèm như `SuspenseLoader`, `useMuiSnackbar`, `apiClient`, alias import và định dạng route là mẫu tham khảo khi project hiện tại có đúng các contract đó.",
   },
   processFlow: [
     { number: 1, titleEn: "Classify Work", titleVi: "Phân loại việc", descEn: "Decide whether the request is a component, page, feature, data-fetching path, route, styling task, performance pass, or TypeScript cleanup.", descVi: "Xác định yêu cầu là component, page, feature, data fetching, route, styling, tối ưu hiệu năng hay dọn TypeScript." },

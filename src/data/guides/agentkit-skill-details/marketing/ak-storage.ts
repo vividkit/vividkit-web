@@ -12,10 +12,10 @@ const data: SkillInfographic = {
   },
   hardGate: {
     type: 'critical',
-    titleEn: 'CREDENTIALS STAY PRIVATE',
-    titleVi: 'GIỮ KÍN CREDENTIAL',
-    contentEn: 'S3 credentials belong only in the user .env file, must never be logged or exposed, and should use least-privilege bucket-scoped tokens. If not configured or SDK is missing, operations fail gracefully instead of throwing.',
-    contentVi: 'Credential S3 chỉ nằm trong file .env của người dùng, không bao giờ log hoặc tiết lộ, và nên dùng token giới hạn theo bucket. Nếu chưa cấu hình hoặc thiếu SDK, thao tác trả lỗi nhẹ nhàng thay vì throw.',
+    titleEn: 'Credentials do not authorize storage effects',
+    titleVi: 'Có credential chưa có nghĩa là được phép thao tác storage',
+    contentEn: 'Approve the exact provider, bucket, prefix, object keys, local paths, and data classification before a read or write. Storage requests can create or delete provider-side data, transfer local content, generate network traffic, and incur cost. S3 credentials belong only in the user .env file, must never be logged or exposed, and should use least-privilege bucket-scoped tokens. If not configured or SDK is missing, operations fail gracefully instead of throwing.',
+    contentVi: 'Hãy duyệt chính xác provider, bucket, prefix, object key, đường dẫn trên máy và phân loại dữ liệu trước mỗi thao tác đọc hoặc ghi. Request storage có thể tạo hoặc xóa dữ liệu phía provider, truyền nội dung trên máy đi, tạo lưu lượng mạng và phát sinh chi phí. Credential S3 chỉ được nằm trong file .env của người dùng, không bao giờ được log hay để lộ, và nên dùng token quyền tối thiểu giới hạn theo bucket. Nếu chưa cấu hình hoặc thiếu SDK, thao tác sẽ báo lỗi nhẹ nhàng thay vì throw.',
   },
   processFlow: [
     { number: 1, titleEn: 'Identify Operation', titleVi: 'Xác định thao tác', descEn: 'Decide whether the user needs upload, download, list, get public URL, delete, sync, or local-only fallback.', descVi: 'Xác định người dùng cần upload, download, list, lấy public URL, delete, sync hay fallback local-only.' },

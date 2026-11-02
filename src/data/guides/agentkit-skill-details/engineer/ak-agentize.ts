@@ -14,12 +14,12 @@ const data: SkillInfographic = {
   },
   hardGate: {
     type: 'critical',
-    titleEn: 'Track and scout before designing wrappers',
-    titleVi: 'Phải lập kế hoạch và rà soát trước khi thiết kế lớp bọc',
+    titleEn: 'The default mode writes a release-ready surface',
+    titleVi: 'Chế độ mặc định ghi ra bản sẵn sàng phát hành',
     contentEn:
-      'Phase 0 project-management and Phase 1 scout are mandatory. Do not decide CLI/MCP shape or scaffold until the target behavior, side effects, config, credentials, and existing tests have been read.',
+      '`--both --auto` is an implementation mode, not an advisory preview. It can restructure code, add packages, tests, documentation, CI, deployment configuration, and a companion Skill. Use `--ask` or narrow the target when those decisions need review first. Phase 0 project-management and Phase 1 scout are mandatory. Do not decide CLI/MCP shape or scaffold until the target behavior, side effects, config, credentials, and existing tests have been read.',
     contentVi:
-      'Bắt buộc có pha 0 project-management và pha 1 scout. Chưa được quyết định dạng CLI/MCP hoặc scaffold trước khi đọc hành vi đích, side effect, cấu hình, credential và test hiện có.',
+      '`--both --auto` là chế độ triển khai thật, không phải bản xem trước để tư vấn. Nó có thể tái cấu trúc code, thêm package, test, tài liệu, CI, cấu hình deploy và một Skill đi kèm. Dùng `--ask` hoặc thu hẹp target khi các quyết định đó cần được review trước. Pha 0 project-management và pha 1 scout là bắt buộc. Chưa quyết định dạng CLI/MCP hay scaffold cho đến khi đã đọc hành vi đích, side effect, cấu hình, credential và test hiện có.',
   },
   processFlow: [
     { number: 1, titleEn: 'Track the plan', titleVi: 'Theo dõi kế hoạch', descEn: 'Create the dated plan directory, register phase tasks, store invocation mode and target, and resolve blockers before touching code.', descVi: 'Tạo thư mục kế hoạch theo ngày, đăng ký task từng pha, lưu mode và mục tiêu gọi lệnh, rồi gỡ blocker trước khi đụng mã.' },

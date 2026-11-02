@@ -12,10 +12,10 @@ const data: SkillInfographic = {
   },
   hardGate: {
     type: 'critical',
-    titleEn: 'Public information is not a license to harm',
-    titleVi: 'Dữ liệu công khai không cho phép gây hại',
-    contentEn: 'Operate strictly within publicly available information. Stalking, harassment, doxing, unauthorized access, social engineering, deception campaigns, and illegal activity are prohibited; --yolo never bypasses ethics or legal boundaries. Public information can still be sensitive: collect no more personal data than the stated purpose needs, and never publish raw credentials, private keys, breach contents, precise locations, or personal identifiers just because a source exposed them.',
-    contentVi: 'Chỉ làm việc trong phạm vi thông tin công khai. Cấm stalking, quấy rối, doxing, truy cập trái phép, social engineering, chiến dịch lừa dối và mọi hoạt động vi phạm luật; --yolo không bao giờ bỏ qua ranh giới đạo đức hoặc pháp lý. Thông tin công khai vẫn có thể nhạy cảm: không thu thập dữ liệu cá nhân nhiều hơn mục đích đã nêu, và không bao giờ công bố credential thô, private key, nội dung bị rò rỉ, vị trí chính xác hay thông tin định danh cá nhân chỉ vì một nguồn đã làm lộ chúng.',
+    titleEn: 'Public information can still be sensitive',
+    titleVi: 'Thông tin công khai vẫn có thể nhạy cảm',
+    contentEn: 'Do not collect more personal data than the stated purpose requires. Never publish raw credentials, private keys, breach contents, precise locations, or personal identifiers merely because a source exposed them. Operate strictly within publicly available information. Stalking, harassment, doxing, unauthorized access, social engineering, deception campaigns, and illegal activity are prohibited; --yolo never bypasses ethics or legal boundaries.',
+    contentVi: 'Không thu thập dữ liệu cá nhân nhiều hơn mức mục đích đã nêu cần tới. Không bao giờ công bố credential thô, private key, nội dung bị rò rỉ, vị trí chính xác hay thông tin định danh cá nhân chỉ vì một nguồn đã để lộ chúng. Chỉ làm việc trong phạm vi thông tin công khai. Cấm theo dõi lén (stalking), quấy rối, doxing, truy cập trái phép, social engineering, chiến dịch lừa dối và mọi hoạt động phạm pháp; --yolo không bao giờ vượt qua ranh giới đạo đức hay pháp lý.',
   },
   processFlow: [
     { number: 1, titleEn: 'Acquire', titleVi: 'Thu thập', descEn: 'Collect public raw data for the bounded target with /case, /sweep, /query, username, phone, email-deep, subdomain, breach, traffic, techstack, secrets, threat-check, and target-specific techniques as applicable.', descVi: 'Thu dữ liệu công khai thô cho target đã giới hạn bằng /case, /sweep, /query, username, phone, email-deep, subdomain, breach, traffic, techstack, secrets, threat-check và kỹ thuật theo loại target khi phù hợp.' },

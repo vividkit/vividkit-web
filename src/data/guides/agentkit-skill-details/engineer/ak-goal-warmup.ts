@@ -84,10 +84,10 @@ const data: SkillInfographic = {
   ],
   "hardGate": {
     "type": "critical",
-    "titleEn": "Approved contract before planning; never auto-start /goal",
-    "titleVi": "Phải duyệt contract trước khi plan; không tự chạy /goal",
-    "contentEn": "Planning is forbidden before explicit ask_user approval, the approved contract is immutable, and Ready is impossible until the user confirms the final summary. The skill stops at a packet.",
-    "contentVi": "Cấm lập plan trước khi ask_user duyệt rõ ràng, contract đã duyệt là bất biến, và không được báo Ready trước khi user xác nhận tóm tắt cuối. Skill chỉ dừng ở packet."
+    "titleEn": "Warmup never authorizes or starts execution",
+    "titleVi": "Warmup không bao giờ cấp quyền hay tự bắt đầu thực thi",
+    "contentEn": "The Skill must refuse requests to auto-start `/goal`. It does not create, update, or delete remote resources, run chargeable probes, reveal secret values, approve deployment, or silently remove acceptance criteria. Planning is forbidden before explicit `ask_user` approval, the approved contract is immutable, and Ready is impossible until the user confirms the final summary. The skill stops at a packet.",
+    "contentVi": "Skill phải từ chối yêu cầu tự khởi chạy `/goal`. Nó không tạo, cập nhật hay xoá tài nguyên từ xa, không chạy probe tốn phí, không để lộ giá trị secret, không duyệt deploy và không âm thầm bỏ bớt tiêu chí chấp nhận. Cấm lập plan trước khi có phê duyệt rõ ràng qua `ask_user`, hợp đồng đã duyệt là bất biến, và không thể báo Ready cho tới khi người dùng xác nhận bản tóm tắt cuối. Skill dừng lại ở một packet."
   },
   "corePrinciplesEn": [
     "Lock the observable outcome before spending long-run compute.",

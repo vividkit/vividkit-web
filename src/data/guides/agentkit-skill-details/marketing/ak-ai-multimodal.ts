@@ -12,10 +12,10 @@ const data: SkillInfographic = {
   },
   hardGate: {
     type: 'critical',
-    titleEn: "Resolve real provider models",
-    titleVi: "Xác minh model provider thật",
-    contentEn: "The skill says never to infer a provider model as latest, default, or recommended. Run help, check current provider docs, select an explicit supported model, and report missing capability upstream.",
-    contentVi: "Skill cấm suy đoán model provider là latest, default hoặc recommended. Phải chạy help, kiểm tra docs provider hiện tại, chọn model hỗ trợ rõ ràng và báo gap capability nếu thiếu.",
+    titleEn: "Provider execution needs explicit authority",
+    titleVi: "Chạy qua provider cần được cho phép rõ ràng",
+    contentEn: "A prompt can trigger network upload, provider processing, usage charges, and local artifact writes. Confirm the data may be sent, the provider and account are approved, and the expected operation is within budget before execution. Generation does not authorize publication. The skill says never to infer a provider model as latest, default, or recommended. Run help, check current provider docs, select an explicit supported model, and report missing capability upstream.",
+    contentVi: "Một prompt có thể kích hoạt việc tải dữ liệu lên mạng, xử lý tại provider, phí sử dụng và ghi file kết quả trên máy. Trước khi chạy, hãy xác nhận dữ liệu được phép gửi đi, provider và tài khoản đã được duyệt, và thao tác dự kiến nằm trong ngân sách. Tạo ra nội dung không đồng nghĩa với được phép xuất bản. Skill cấm suy đoán model của provider là latest, default hay recommended. Hãy chạy help, kiểm tra tài liệu provider hiện tại, chọn rõ một model được hỗ trợ và báo lên upstream phần năng lực còn thiếu.",
   },
   processFlow: [
     { number: 1, titleEn: "Check environment", titleVi: "Kiểm tra môi trường", descEn: "Require Node.js 20+, provider keys in env, project .env, or ~/.multix/.env, plus FFmpeg or provider access when the operation needs them.", descVi: "Cần Node.js 20+, key provider trong env, .env của project hoặc ~/.multix/.env, cùng FFmpeg hoặc quyền provider khi thao tác cần." },

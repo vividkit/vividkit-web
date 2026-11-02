@@ -74,10 +74,10 @@ const data: SkillInfographic = {
   },
   hardGate: {
     type: 'critical',
-    titleEn: 'No gate bypass',
-    titleVi: 'Không bỏ qua gate',
-    contentEn: 'Vibe orchestrates other skills but never bypasses their approval gates, tests, code-review blockers, branch protections, security policies, or CI requirements. Never work directly on main, master, dev, beta, or develop.',
-    contentVi: 'Vibe chỉ điều phối các skill khác, tuyệt đối không bỏ qua gate duyệt, test, blocker code review, branch protection, chính sách bảo mật hoặc yêu cầu CI của chúng. Không làm trực tiếp trên main, master, dev, beta hoặc develop.',
+    titleEn: 'PR readiness still mutates Git and GitHub',
+    titleVi: 'Dừng ở mức sẵn sàng PR vẫn thay đổi Git và GitHub',
+    contentEn: 'Omitting `--ship` prevents merge, but the pipeline still creates or updates an issue, creates labels, writes a plan, changes code, commits, pushes, opens a PR, posts review replies, and updates labels. Use a narrower Skill if those effects are not authorized. Vibe orchestrates other skills but never bypasses their approval gates, tests, code-review blockers, branch protections, security policies, or CI requirements. Never work directly on main, master, dev, beta, or develop.',
+    contentVi: 'Bỏ `--ship` sẽ chặn merge, nhưng pipeline vẫn tạo hoặc cập nhật issue, tạo label, ghi plan, sửa code, commit, push, mở PR, đăng trả lời review và cập nhật label. Hãy dùng một skill hẹp hơn nếu những tác động đó chưa được cho phép. Vibe chỉ điều phối các skill khác và không bao giờ bỏ qua gate duyệt, test, blocker của code review, branch protection, chính sách bảo mật hay yêu cầu CI của chúng. Không bao giờ làm trực tiếp trên main, master, dev, beta hoặc develop.',
   },
   processFlow: [
     { number: 1, titleEn: 'Parse request', titleVi: 'Phân tích yêu cầu', descEn: 'Strip flags, resolve stable/beta/both mode, read the GitHub issue or natural-language request, and extract outcomes, acceptance, scope, constraints, and blockers.', descVi: 'Tách flag, quyết định mode stable/beta/both, đọc GitHub issue hoặc yêu cầu tự nhiên, rồi trích outcome, acceptance, scope, ràng buộc và blocker.' },

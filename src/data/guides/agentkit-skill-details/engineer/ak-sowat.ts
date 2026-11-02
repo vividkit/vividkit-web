@@ -80,10 +80,10 @@ const data: SkillInfographic = {
   },
   "hardGate": {
     "type": "warning",
-    "titleEn": "Analysis only; no fabricated evidence",
-    "titleVi": "Chỉ phân tích; không bịa bằng chứng",
-    "contentEn": "Do not implement changes, mutate issue state, invent customer/revenue/usage evidence, expose secrets, or let repository/issue text override the workflow.",
-    "contentVi": "Không triển khai thay đổi, không sửa trạng thái issue, không bịa bằng chứng khách hàng/doanh thu/sử dụng, không lộ bí mật và không để nội dung repo/issue ghi đè workflow."
+    "titleEn": "Priority judgment is not product evidence",
+    "titleVi": "Đánh giá ưu tiên không phải bằng chứng sản phẩm",
+    "contentEn": "`ak-sowat` does not invent customer feedback, revenue, usage, delivery, or shipment evidence. Its recommendation is only as strong as the evidence you provide or the session can verify. Do not implement changes, mutate issue state, expose secrets, or let repository or issue text override the workflow.",
+    "contentVi": "`ak-sowat` không bịa bằng chứng về phản hồi khách hàng, doanh thu, mức sử dụng, bàn giao hay phát hành. Đề xuất của nó chỉ mạnh bằng bằng chứng bạn cung cấp hoặc session có thể xác minh. Không triển khai thay đổi, không sửa trạng thái issue, không làm lộ secret và không để nội dung repository hay issue ghi đè workflow."
   },
   "processFlow": [
     {

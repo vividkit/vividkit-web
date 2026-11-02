@@ -12,10 +12,10 @@ const data: SkillInfographic = {
   },
   hardGate: {
     type: "critical",
-    titleEn: "Do not use /goal for vague or unsafe work",
-    titleVi: "Không dùng /goal cho việc mơ hồ hoặc rủi ro",
-    contentEn: "The skill says /goal is not a safety boundary, not a substitute for product decisions, and not a way to run an unbounded backlog. Use it only with a clear scope and verifiable stop condition.",
-    contentVi: "Skill nêu rõ /goal không phải ranh giới an toàn, không thay quyết định sản phẩm và không dùng để chạy backlog vô hạn. Chỉ dùng khi phạm vi rõ và có điều kiện dừng kiểm chứng được.",
+    titleEn: "A persisted goal does not expand authority",
+    titleVi: "Goal đã lưu không mở rộng quyền hạn",
+    contentEn: "Goal mode keeps the active sandbox and approval policy. It does not authorize secrets, network access, spending, provider or account changes, destructive operations, publication, deployment, test weakening, or acceptance of a regression. Pause when a new decision falls outside the approved contract. The skill says /goal is not a safety boundary, not a substitute for product decisions, and not a way to run an unbounded backlog. Use it only with a clear scope and verifiable stop condition.",
+    contentVi: "Goal mode giữ nguyên sandbox và chính sách phê duyệt đang áp dụng. Nó không cấp quyền dùng secret, truy cập mạng, chi tiền, đổi provider hay tài khoản, thao tác phá hủy, xuất bản, deploy, nới lỏng test hay chấp nhận regression. Hãy tạm dừng khi có quyết định mới nằm ngoài phạm vi đã duyệt. Skill nêu rõ /goal không phải ranh giới an toàn, không thay cho quyết định sản phẩm và không dùng để chạy backlog vô hạn. Chỉ dùng khi phạm vi rõ ràng và có điều kiện dừng kiểm chứng được.",
   },
   processFlow: [
     { number: 1, titleEn: "Check availability", titleVi: "Kiểm tra khả dụng", descEn: "Confirm /goal appears in Codex slash commands; if absent, enable goals in config or with codex features enable goals.", descVi: "Xác nhận /goal có trong danh sách slash command của Codex; nếu chưa có, bật goals trong config hoặc bằng codex features enable goals." },

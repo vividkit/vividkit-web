@@ -70,10 +70,10 @@ const data: SkillInfographic = {
   ],
   "hardGate": {
     "type": "critical",
-    "titleEn": "User answers are the source of truth",
-    "titleVi": "Câu trả lời của user là nguồn sự thật",
-    "contentEn": "This skill does not invent content, prioritize unordered user lists, derive docs from source code, or record unapproved architectural decisions.",
-    "contentVi": "Skill này không bịa nội dung, không tự xếp hạng danh sách chưa có thứ tự, không suy tài liệu từ source code và không ghi quyết định kiến trúc chưa được duyệt."
+    "titleEn": "The interview records decisions; it does not make them",
+    "titleVi": "Buổi phỏng vấn ghi lại quyết định, không tự ra quyết định",
+    "contentEn": "An ADR is not permission for the assistant to choose an architecture. If an answer leaves a material decision open, the document must preserve that state or the Skill must ask; it cannot turn a suggestion into an approved decision. It also does not invent content, rank unordered user lists, or derive docs from source code.",
+    "contentVi": "ADR không cho phép assistant tự chọn kiến trúc. Nếu một câu trả lời còn để ngỏ một quyết định quan trọng, tài liệu phải giữ nguyên trạng thái đó hoặc Skill phải hỏi; nó không được biến một gợi ý thành quyết định đã duyệt. Skill cũng không bịa nội dung, không tự xếp hạng danh sách chưa có thứ tự của user và không suy tài liệu từ source code."
   },
   "corePrinciplesEn": [
     "The document should preserve the user’s knowledge, taste, and decisions.",

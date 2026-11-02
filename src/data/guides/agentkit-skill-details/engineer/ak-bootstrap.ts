@@ -14,12 +14,12 @@ const data: SkillInfographic = {
   },
   hardGate: {
     type: 'warning',
-    titleEn: 'Default --auto stops only at authorization boundaries',
-    titleVi: 'Mặc định --auto chỉ dừng ở ranh giới uỷ quyền',
+    titleEn: 'Automatic and parallel modes can change repository state',
+    titleVi: 'Chế độ tự động và song song có thể thay đổi trạng thái repository',
     contentEn:
-      'Without a mode flag, bootstrap decides open gaps itself and records them as assumptions. It stops for a missing secret, a destructive or outward-facing action the brief does not authorize, or spending the brief does not cover. Bootstrap alone never authorizes publication: create a remote repository, deploy, or release only when the brief asks for those targets.',
+      '`--auto`, `--fast`, and `--parallel` proceed without a routine approval pause once the opening contract is locked. Use `--full` or `--ask` when a decision needs review before it is made. Without a mode flag, bootstrap decides open gaps itself and records them as assumptions. It stops for a missing secret, a destructive or outward-facing action the brief does not authorize, or spending the brief does not cover. Bootstrap alone never authorizes publication: create a remote repository, deploy, or release only when the brief asks for those targets.',
     contentVi:
-      'Khi không có cờ mode, bootstrap tự quyết các chỗ còn hở và ghi lại thành giả định. Nó chỉ dừng khi thiếu secret, khi gặp thao tác phá huỷ hoặc ra bên ngoài mà brief chưa cho phép, hoặc khi phát sinh chi phí brief không bao gồm. Bản thân bootstrap không cấp quyền publish: chỉ tạo repo từ xa, deploy hay release khi brief yêu cầu đúng các đích đó.',
+      '`--auto`, `--fast` và `--parallel` chạy tiếp mà không dừng chờ duyệt thường lệ sau khi hợp đồng mở đầu đã chốt. Dùng `--full` hoặc `--ask` khi một quyết định cần được review trước khi đưa ra. Khi không có cờ mode, bootstrap tự quyết các chỗ còn bỏ ngỏ và ghi lại thành giả định. Nó dừng khi thiếu secret, khi gặp thao tác phá huỷ hoặc tác động ra bên ngoài mà brief chưa cho phép, hoặc khi phát sinh chi phí brief không bao gồm. Riêng bootstrap không bao giờ cấp quyền xuất bản: chỉ tạo repository từ xa, deploy hay release khi brief yêu cầu đúng các đích đó.',
   },
   processFlow: [
     { number: 1, titleEn: 'Lock the contract', titleVi: 'Chốt hợp đồng', descEn: 'Before Git, research, design, or scaffolding, capture outcome, constraints, non-goals, acceptance criteria, and definition of done, checked against the project-brief checklist for each surface. --auto decides gaps as recorded assumptions; --ask interviews through ak:advise until you confirm.', descVi: 'Trước Git, nghiên cứu, thiết kế hay scaffold, chốt kết quả cần đạt, ràng buộc, ngoài phạm vi, tiêu chí nghiệm thu và định nghĩa hoàn thành, đối chiếu với checklist brief cho từng bề mặt. --auto tự quyết chỗ hở và ghi thành giả định; --ask phỏng vấn qua ak:advise tới khi bạn xác nhận.' },

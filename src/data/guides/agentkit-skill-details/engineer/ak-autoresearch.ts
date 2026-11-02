@@ -14,12 +14,12 @@ const data: SkillInfographic = {
   },
   hardGate: {
     type: 'critical',
-    titleEn: 'Do not imitate missing routes',
-    titleVi: 'Không giả lập tuyến thiếu',
+    titleEn: 'Routing does not grant autonomy',
+    titleVi: 'Định tuyến không trao quyền tự chủ',
     contentEn:
-      'Discover the live catalog first. If no installed route owns the outcome, state the missing capability; do not invent a local alias or imitate an upstream command. Routing does not approve edits, long-running compute, provider spend, secret access, publication, push, or deployment; approve those separately.',
+      'Invoking `ak-autoresearch` does not approve edits, long-running compute, provider spend, secret access, publication, push, or deployment. Put those boundaries in the request and approve external effects separately. Discover the live catalog first. If no installed route owns the outcome, state the missing capability; do not invent a local alias or imitate an upstream command.',
     contentVi:
-      'Trước hết phải kiểm tra catalog live. Nếu không có tuyến đã cài sở hữu kết quả, báo năng lực còn thiếu; không tự chế alias local hoặc bắt chước lệnh upstream. Việc định tuyến không đồng nghĩa được phép sửa file, chạy tính toán dài, tốn tiền provider, truy cập secret, xuất bản, push hay deploy; duyệt riêng các việc đó.',
+      'Gọi `ak-autoresearch` không đồng nghĩa với duyệt chỉnh sửa, chạy tính toán kéo dài, chi tiền cho provider, truy cập secret, xuất bản, push hay deploy. Hãy ghi rõ các ranh giới đó trong yêu cầu và duyệt riêng những tác động ra bên ngoài. Trước hết, kiểm tra catalog skill đang cài thực tế. Nếu không có tuyến đã cài nào phụ trách kết quả cần làm, nêu rõ năng lực còn thiếu; không tự chế alias local hay bắt chước lệnh upstream.',
   },
   processFlow: [
     { number: 1, titleEn: 'Identify intent', titleVi: 'Nhận diện ý định', descEn: 'Separate the measurable objective from any proposed method and decide whether the work is optimization, prediction, scenario coverage, or security review.', descVi: 'Tách objective đo được khỏi phương pháp được đề xuất và xác định công việc là tối ưu, dự đoán, phủ scenario hay security review.' },

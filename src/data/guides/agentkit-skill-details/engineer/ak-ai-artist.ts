@@ -114,12 +114,12 @@ const data: SkillInfographic = {
   },
   hardGate: {
     type: 'warning',
-    titleEn: 'Validation interview before generation',
-    titleVi: 'Phải phỏng vấn kiểm chứng trước khi tạo ảnh',
+    titleEn: 'Generation sends creative material to an external provider',
+    titleVi: 'Tạo ảnh sẽ gửi tư liệu sáng tạo tới provider bên ngoài',
     contentEn:
-      'Run the style, mood, color, and intent validation interview before generating unless --skip is explicitly requested.',
+      'Prompts, brand details, exact text, and any provider metadata leave the local environment. Do not include secrets, private customer data, protected source assets, or identity references without permission and appropriate rights. Run the style, mood, color, and intent validation interview before generating unless --skip is explicitly requested.',
     contentVi:
-      'Phải hỏi kiểm chứng về phong cách, cảm xúc, màu sắc và ý định trước khi tạo ảnh, trừ khi người dùng nêu rõ --skip.',
+      'Prompt, thông tin thương hiệu, đoạn chữ chính xác và mọi metadata của provider đều rời khỏi môi trường local. Không đưa secret, dữ liệu riêng tư của khách hàng, tài nguyên gốc được bảo vệ hay tham chiếu danh tính vào nếu chưa được cho phép và chưa có quyền sử dụng phù hợp. Phải phỏng vấn kiểm chứng phong cách, cảm xúc, màu sắc và ý định trước khi tạo ảnh, trừ khi người dùng nêu rõ --skip.',
   },
   processFlow: [
     { number: 1, titleEn: 'Validate brief', titleVi: 'Xác minh brief', descEn: 'Interview for subject, purpose, audience, style, mood, colors, text, aspect ratio, output intent, and constraints unless --skip explicitly bypasses validation.', descVi: 'Phỏng vấn để làm rõ subject, mục đích, người xem, style, mood, màu sắc, text, aspect ratio, output intent và ràng buộc trừ khi --skip được nêu rõ để bỏ qua.' },

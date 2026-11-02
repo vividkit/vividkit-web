@@ -67,10 +67,10 @@ const data: SkillInfographic = {
   },
   hardGate: {
     type: 'warning',
-    titleEn: 'Offline compile, route other artifacts away',
-    titleVi: 'Compile offline, chuyển artifact khác đi nơi khác',
-    contentEn: 'Typed-IR compilation stays offline in Node.js with no remote calls, telemetry, or font downloads, and compiled typed-IR pages make zero network requests. Use ak:excalidraw for whiteboard sketches, ak:tech-graph for static publication charts, and ak:mermaidjs-v11 for raw markdown inline diagrams.',
-    contentVi: 'Compile IR có kiểu chạy offline trong Node.js, không gọi mạng, telemetry hay tải font, và trang IR có kiểu đã compile không gửi request mạng nào. Dùng ak:excalidraw cho phác thảo whiteboard, ak:tech-graph cho biểu đồ xuất bản tĩnh, và ak:mermaidjs-v11 cho sơ đồ markdown inline.',
+    titleEn: 'Rendering writes files and launches local tools',
+    titleVi: 'Render sẽ ghi file và chạy công cụ local',
+    contentEn: 'A run reads your `.mmd`, JSON, or HTML source, writes artifacts to the selected destination, and can replace same-named outputs. Browser rendering launches headless Chromium. Video capture creates temporary frames and runs `ffmpeg`. Review input content and output names before proceeding. Typed-IR compilation stays offline in Node.js with no remote calls, telemetry, or font downloads, and compiled typed-IR pages make zero network requests.',
+    contentVi: 'Mỗi lần chạy sẽ đọc nguồn `.mmd`, JSON hoặc HTML của bạn, ghi artifact vào nơi đích đã chọn và có thể thay thế output trùng tên. Render bằng trình duyệt sẽ khởi động Chromium headless. Quay video sẽ tạo các frame tạm và chạy `ffmpeg`. Hãy xem lại nội dung input và tên output trước khi tiếp tục. Việc compile typed-IR chạy offline trong Node.js, không gọi mạng, không gửi telemetry hay tải font, và các trang typed-IR đã compile không gửi request mạng nào.',
   },
   processFlow: [
     { number: 1, titleEn: 'Select archetype', titleVi: 'Chọn archetype', descEn: 'Match intent to architecture, workflow, sequence, dataflow, or lifecycle before writing IR.', descVi: 'Khớp ý định với architecture, workflow, sequence, dataflow hoặc lifecycle trước khi viết IR.' },

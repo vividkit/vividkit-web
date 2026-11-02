@@ -14,12 +14,12 @@ const data: SkillInfographic = {
   },
   hardGate: {
     type: 'warning',
-    titleEn: 'Route only to installed capabilities',
-    titleVi: 'Chỉ định tuyến tới năng lực đã cài',
+    titleEn: 'Routing does not authorize execution',
+    titleVi: 'Định tuyến không đồng nghĩa với cho phép thực thi',
     contentEn:
-      'Never route to a skill or agent you have not confirmed installed. If work is explicitly headless, cross-CLI, or multi-worktree orchestration, hand off to ak-orchestrate and stop.',
+      'Selecting a Skill, tool, or Agent does not approve secret access, paid API calls, external mutations, destructive operations, publication, deployment, or Git delivery. Approve those actions separately when the routed owner reaches them. Never route to a skill or agent you have not confirmed installed. If work is explicitly headless, cross-CLI, or multi-worktree orchestration, hand off to ak-orchestrate and stop.',
     contentVi:
-      'Không bao giờ định tuyến tới skill hoặc agent chưa xác nhận đã cài. Nếu công việc rõ ràng là orchestration headless, đa CLI hoặc nhiều worktree, chuyển sang ak-orchestrate rồi dừng.',
+      'Việc chọn một Skill, tool hay Agent không đồng nghĩa với duyệt truy cập secret, gọi API trả phí, thay đổi hệ thống bên ngoài, thao tác phá huỷ, xuất bản, deploy hay giao code qua Git. Hãy duyệt riêng từng hành động đó khi bên được định tuyến tới thực sự cần làm. Không bao giờ định tuyến tới skill hoặc agent chưa xác nhận là đã cài. Nếu công việc rõ ràng là điều phối headless, nhiều CLI hoặc nhiều worktree, chuyển sang ak-orchestrate rồi dừng.',
   },
   processFlow: [
     { number: 1, titleEn: 'Proportionality gate', titleVi: 'Gate vừa đủ', descEn: 'Skip ceremony for trivial, single-domain, pure conversation, or user-named skill cases; invoke the obvious owner directly.', descVi: 'Bỏ nghi thức cho việc nhỏ, một miền, chỉ trò chuyện hoặc người dùng đã gọi đúng skill; gọi thẳng chủ sở hữu rõ ràng.' },

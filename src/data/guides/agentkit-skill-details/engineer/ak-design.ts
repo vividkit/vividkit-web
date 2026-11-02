@@ -12,10 +12,10 @@ const data: SkillInfographic = {
   },
   hardGate: {
     type: 'critical',
-    titleEn: 'Real brands require real assets',
-    titleVi: 'Brand thật cần asset thật',
-    contentEn: 'When a task names a real brand or product, load the brand-asset protocol before generating. If the logo cannot be located, stop and ask; never fabricate it.',
-    contentVi: 'Khi nhiệm vụ nêu brand hoặc sản phẩm thật, phải nạp brand-asset protocol trước khi tạo. Nếu không tìm được logo, dừng và hỏi; không được bịa logo.',
+    titleEn: 'A design brief is not provider approval',
+    titleVi: 'Duyệt design brief không phải là duyệt gửi cho provider',
+    contentEn: 'Approving a concept does not authorize sending brand assets to an external model, incurring API charges, browsing third-party sites, overwriting files, or publishing the result. Approve those actions separately. When a task names a real brand or product, load the brand-asset protocol before generating. If the logo cannot be located, stop and ask; never fabricate it.',
+    contentVi: 'Duyệt một concept không cho phép gửi tài nguyên thương hiệu tới model bên ngoài, phát sinh phí API, truy cập site của bên thứ ba, ghi đè file hay xuất bản kết quả. Hãy duyệt riêng từng hành động đó. Khi nhiệm vụ nêu tên một thương hiệu hoặc sản phẩm thật, phải nạp brand-asset protocol trước khi tạo. Nếu không tìm được logo, dừng lại và hỏi; không bao giờ tự bịa logo.',
   },
   processFlow: [
     { number: 1, titleEn: 'Design read', titleVi: 'Đọc brief thiết kế', descEn: 'Declare: “Reading this as: <deliverable> for <audience>, leaning <aesthetic direction>.” Ask exactly one clarifying question only if the brief is truly ambiguous.', descVi: 'Tuyên bố: “Reading this as: <deliverable> for <audience>, leaning <aesthetic direction>.” Chỉ hỏi đúng một câu nếu brief thật sự mơ hồ.' },

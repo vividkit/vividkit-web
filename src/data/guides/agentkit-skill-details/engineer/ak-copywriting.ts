@@ -15,7 +15,7 @@ const data: SkillInfographic = {
     titleEn: 'A persuasive pattern is not evidence',
     titleVi: 'Mẫu thuyết phục không phải bằng chứng',
     contentEn:
-      'Do not turn a template’s sample numbers, guarantees, urgency, testimonials, or superiority language into real claims. Each factual statement needs approved support, and regulated or contractual copy still needs the appropriate human review.',
+      'Do not turn a template\'s sample numbers, guarantees, urgency, testimonials, or superiority language into real claims. Each factual statement needs approved support, and regulated or contractual copy still needs the appropriate human review.',
     contentVi:
       'Không biến số mẫu, cam kết, sự khẩn cấp, testimonial hoặc ngôn ngữ vượt trội trong template thành claim thật. Mỗi phát biểu sự thật cần có bằng chứng đã duyệt, và copy chịu quản lý hoặc ràng buộc hợp đồng vẫn cần review phù hợp của con người.',
   },
@@ -25,7 +25,7 @@ const data: SkillInfographic = {
     { number: 3, titleEn: 'Choose formula', titleVi: 'Chọn công thức', descEn: 'Map the job to a documented structure such as AIDA, PAS, BAB, 4Ps, 4Us, or FAB.', descVi: 'Gắn nhiệm vụ với cấu trúc đã ghi như AIDA, PAS, BAB, 4Ps, 4Us hoặc FAB.' },
     { number: 4, titleEn: 'Draft core message', titleVi: 'Soạn thông điệp chính', descEn: 'Lead with the benefit, match awareness level, make the promise specific, and avoid unsupported claims.', descVi: 'Mở bằng lợi ích, khớp mức nhận thức của khách hàng, làm lời hứa thật cụ thể và tránh tuyên bố thiếu bằng chứng.' },
     { number: 5, titleEn: 'Build channel shape', titleVi: 'Định dạng theo kênh', descEn: 'Apply the right structure: subject-line angles for email, promise→how→CTA→social proof for landing pages, and platform-specific social copy.', descVi: 'Áp dụng cấu trúc đúng kênh: góc subject line cho email, promise→how→CTA→social proof cho landing page, và copy theo từng nền tảng social.' },
-    { number: 6, titleEn: 'Optimize CTA', titleVi: 'Tối ưu CTA', descEn: 'Use one clear action per piece, benefit-led wording, and CTA patterns such as “Start [verb]ing”, “Get [benefit]”, or “Yes, I want [benefit]”.', descVi: 'Dùng một hành động rõ cho mỗi nội dung, câu chữ dẫn bằng lợi ích và mẫu CTA như “Start [verb]ing”, “Get [benefit]” hoặc “Yes, I want [benefit]”.' },
+    { number: 6, titleEn: 'Optimize CTA', titleVi: 'Tối ưu CTA', descEn: 'Use one clear action per piece, benefit-led wording, and CTA patterns such as "Start [verb]ing", "Get [benefit]", or "Yes, I want [benefit]".', descVi: 'Dùng một hành động rõ cho mỗi nội dung, câu chữ dẫn bằng lợi ích và mẫu CTA như "Start [verb]ing", "Get [benefit]" hoặc "Yes, I want [benefit]".' },
     { number: 7, titleEn: 'Polish and organize', titleVi: 'Chỉnh và sắp xếp', descEn: 'Read the copy aloud, remove awkward phrasing, test headline alternatives first, and invoke engineer project-organization to organize outputs.', descVi: 'Đọc thành tiếng, bỏ câu gượng, ưu tiên thử các headline trước và gọi engineer project-organization để sắp xếp đầu ra.' },
   ],
   corePrinciplesEn: ['Lead with benefit, not feature.', 'One CTA per piece.', 'Specificity beats vague claims.', 'Match copy to awareness level.', 'If it sounds awkward aloud, rewrite it.'],

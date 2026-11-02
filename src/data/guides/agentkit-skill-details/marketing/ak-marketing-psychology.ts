@@ -66,6 +66,13 @@ const data: SkillInfographic = {
       titleVi: "Đề xuất test",
       descEn: "Recommend experiments when psychology is a hypothesis, especially for pricing, urgency, copy, onboarding, or trust.",
       descVi: "Đề xuất thử nghiệm khi psychology chỉ là giả thuyết, nhất là pricing, urgency, copy, onboarding hoặc trust."
+    },
+    {
+      number: 8,
+      titleEn: "Check done criteria",
+      titleVi: "Kiểm tra điều kiện xong",
+      descEn: "Done only when each chosen model is tied to evidence about this audience or labeled a hypothesis, each intervention names its confirming metric and a harm guardrail (refunds, complaints, churn, regret), the user can still decline easily, and every claim in the intervention is true.",
+      descVi: "Chỉ xong khi mỗi model được chọn gắn với bằng chứng về đúng nhóm khách này hoặc được ghi rõ là giả thuyết, mỗi can thiệp nêu metric xác nhận và ngưỡng chặn tác hại (hoàn tiền, khiếu nại, rời bỏ, hối tiếc), người dùng vẫn từ chối dễ dàng và mọi tuyên bố trong can thiệp đều đúng."
     }
   ],
   corePrinciplesEn: [
