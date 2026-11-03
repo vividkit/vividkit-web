@@ -31,7 +31,7 @@ const changes = isVi
       {
         title: 'ak-ak gộp vào ak-agentkit',
         auto: '`ak update --global` và `ak kit refresh <kit>` tự xóa file `ak-ak` cũ.',
-        you: 'Muốn agent giúp chạy lệnh ak thì dùng `/ak-agentkit`. Update ở phạm vi project có thể để sót thư mục `ak-ak`; xóa tay, không gì đọc tới nó nữa.',
+        you: 'Muốn agent giúp chạy lệnh ak thì dùng `/ak-agentkit`. Update ở phạm vi project, hoặc thư mục còn chứa file không do AgentKit quản lý, có thể để sót thư mục `ak-ak`. Không gì đọc tới nó nữa, nhưng hãy kiểm tra trước khi xóa: sao lưu thư mục, chuyển ra ngoài các skill hay file bạn tự tạo, và dừng lại nếu không chắc một file từ đâu ra.',
       },
       {
         title: 'Thời hạn nhận bản cập nhật',
@@ -68,7 +68,7 @@ const changes = isVi
       {
         title: 'ak-ak is merged into ak-agentkit',
         auto: '`ak update --global` and `ak kit refresh <kit>` remove the old `ak-ak` files.',
-        you: 'For help running ak commands, use `/ak-agentkit`. A project-scope update can leave an `ak-ak` folder behind; delete it by hand, nothing reads it.',
+        you: 'For help running ak commands, use `/ak-agentkit`. A project-scope update, or a folder that also holds files AgentKit does not own, can leave an `ak-ak` folder behind. Nothing reads it, but check it before you delete it: back it up, move out any skills or files you made yourself, and stop if you are not sure where a file came from.',
       },
       {
         title: 'License update window',
