@@ -12,10 +12,10 @@ const data: SkillInfographic = {
   },
   hardGate: {
     type: 'critical',
-    titleEn: 'Protect keys and model spend',
-    titleVi: 'Bảo vệ key và chi phí model',
-    contentEn: 'Confirm uv, git, Docker, Docker daemon, and OPENROUTER_API_KEY without printing the key. Run one task before any subset, and get explicit confirmation before the full 113-task corpus.',
-    contentVi: 'Kiểm tra uv, git, Docker, Docker daemon và OPENROUTER_API_KEY mà không in key. Chạy một task trước mọi subset và phải có xác nhận rõ trước corpus đầy đủ 113 task.',
+    titleEn: 'A full corpus run needs fresh approval',
+    titleVi: 'Chạy toàn bộ corpus cần được duyệt lại',
+    contentEn: 'A successful smoke task does not authorize a subset or full benchmark. Before expanding, review the exact command, model slug, task count, timeout, expected spend exposure, Docker and disk impact, and stop condition. Confirm uv, git, Docker, Docker daemon, and `OPENROUTER_API_KEY` without printing the key. Run one task before any subset, and get explicit confirmation before the full 113-task corpus.',
+    contentVi: 'Một smoke task chạy thành công không cho phép chạy một tập con hay toàn bộ benchmark. Trước khi mở rộng, hãy xem lại lệnh chính xác, model slug, số task, timeout, mức chi phí dự kiến có thể phát sinh, tác động lên Docker và ổ đĩa, cùng điều kiện dừng. Kiểm tra uv, git, Docker, Docker daemon và `OPENROUTER_API_KEY` mà không in key ra. Chạy một task trước mọi tập con, và phải có xác nhận rõ ràng trước khi chạy toàn bộ corpus 113 task.',
   },
   processFlow: [
     { number: 1, titleEn: 'Confirm scope', titleVi: 'Chốt phạm vi', descEn: 'Use this only for a costed external DeepSWE model benchmark, not repository-local optimization.', descVi: 'Chỉ dùng cho benchmark model DeepSWE bên ngoài có chi phí, không dùng cho tối ưu metric trong repo hiện tại.' },

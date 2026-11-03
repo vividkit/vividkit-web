@@ -1,4 +1,5 @@
 ---
+import { akCmd, akCmdPattern } from '@/data/guides/agentkit-invocation';
 import { getLangFromUrl, type Language } from '@/i18n';
 import LLMProviderIcon from '@/components/ui/LLMProviderIcon.astro';
 import AkPageHero from './AkPageHero.astro';
@@ -152,18 +153,18 @@ const runtimes = isVi
         <tbody class="divide-y divide-slate-200 bg-white dark:divide-slate-700 dark:bg-slate-900/60">
           <tr class="transition hover:bg-teal-50/50 dark:hover:bg-teal-950/20">
             <td class="px-4 py-3.5 font-medium text-slate-900 dark:text-white">Claude Code</td>
-            <td class="px-4 py-3.5"><AkInlineCode text="/ak:<skill>" /></td>
-            <td class="px-4 py-3.5 space-x-2"><AkInlineCode text="/ak:cook" /> <AkInlineCode text="/ak:plan" /></td>
+            <td class="px-4 py-3.5"><AkInlineCode text={akCmdPattern()} /></td>
+            <td class="px-4 py-3.5 space-x-2"><AkInlineCode text={akCmd('cook')} /> <AkInlineCode text={akCmd('plan')} /></td>
           </tr>
           <tr class="transition hover:bg-cyan-50/50 dark:hover:bg-cyan-950/20">
             <td class="px-4 py-3.5 font-medium text-slate-900 dark:text-white">Cursor</td>
-            <td class="px-4 py-3.5"><AkInlineCode text="/ak:<skill>" /></td>
-            <td class="px-4 py-3.5 space-x-2"><AkInlineCode text="/ak:cook" /> <AkInlineCode text="/ak:plan" /></td>
+            <td class="px-4 py-3.5"><AkInlineCode text={akCmdPattern()} /></td>
+            <td class="px-4 py-3.5 space-x-2"><AkInlineCode text={akCmd('cook')} /> <AkInlineCode text={akCmd('plan')} /></td>
           </tr>
           <tr class="transition hover:bg-violet-50/50 dark:hover:bg-violet-950/20">
             <td class="px-4 py-3.5 font-medium text-slate-900 dark:text-white">Codex</td>
-            <td class="px-4 py-3.5"><AkInlineCode text="$ak:<skill>" /></td>
-            <td class="px-4 py-3.5 space-x-2"><AkInlineCode text="$ak:cook" /> <AkInlineCode text="$ak:plan" /></td>
+            <td class="px-4 py-3.5"><AkInlineCode text={akCmdPattern('codex')} /></td>
+            <td class="px-4 py-3.5 space-x-2"><AkInlineCode text={akCmd('cook', 'codex')} /> <AkInlineCode text={akCmd('plan', 'codex')} /></td>
           </tr>
         </tbody>
       </table>

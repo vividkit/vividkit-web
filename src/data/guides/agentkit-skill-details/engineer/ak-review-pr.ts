@@ -12,10 +12,10 @@ const data: SkillInfographic = {
   },
   "hardGate": {
     "type": "critical",
-    "titleEn": "Merge only ready PRs",
-    "titleVi": "Chỉ merge PR đã sẵn sàng",
-    "contentEn": "`--merge` is allowed only when verdict is Approve, no fix-loop blocker remains, PR is open and mergeable, no external changes-requested review exists, and CI is passing or pending.",
-    "contentVi": "`--merge` chỉ được dùng khi verdict là Approve, không còn blocker từ fix loop, PR đang open và mergeable, không có review yêu cầu sửa từ người khác, và CI đang pass hoặc pending."
+    "titleEn": "The default is read-only; each flag adds authority",
+    "titleVi": "Mặc định chỉ đọc, mỗi flag mở thêm một quyền",
+    "contentEn": "`--fix` authorizes edits, commits, and pushes to the pull request branch. `--reply` authorizes a GitHub review. `--merge` authorizes merging a ready pull request and handling post-merge CI. `--advice` and `--ultra` do not add write authority. Use only the stages you intend.",
+    "contentVi": "`--fix` cho phép sửa, commit và push lên branch của pull request. `--reply` cho phép đăng một review trên GitHub. `--merge` cho phép merge pull request đã sẵn sàng và xử lý CI sau khi merge. `--advice` và `--ultra` không thêm quyền ghi. Chỉ dùng những bước bạn thực sự muốn chạy."
   },
   "processFlow": [
     {

@@ -14,12 +14,12 @@ const data: SkillInfographic = {
   },
   hardGate: {
     type: 'warning',
-    titleEn: 'Missing evidence is never a pass',
-    titleVi: 'Thiếu bằng chứng không bao giờ là pass',
+    titleEn: 'A review can propose broad changes; only --auto and --loop implement them',
+    titleVi: 'Review có thể đề xuất thay đổi rộng; chỉ --auto và --loop mới thực hiện chúng',
     contentEn:
-      'Write the DONE contract before any implementation and do not weaken it later. A check that could not run (no server, no browser, no network) is reported as not run. Never type credentials, create accounts, or submit real forms while auditing; ask before destructive overwrites, removing content, or anything that publishes or deploys.',
+      'The default mode never edits the project. `--auto` and `--loop` make additive, reversible edits without asking, but stop and ask before a destructive overwrite, removing content, or any change that publishes, deploys, or alters production data or a third-party account. Write the DONE contract before any implementation and do not weaken it later. A check that could not run (no server, no browser, no network) is reported as not run. Never type credentials, create accounts, or submit real forms while auditing.',
     contentVi:
-      'Viết DONE contract trước khi sửa code và không nới lỏng nó sau đó. Check không chạy được (không có server, trình duyệt hay mạng) phải báo là chưa chạy. Không gõ credential, tạo tài khoản hay gửi form thật khi audit; hỏi trước khi ghi đè phá huỷ, xoá nội dung, hoặc bất cứ thứ gì publish hay deploy.',
+      'Chế độ mặc định không bao giờ sửa project. `--auto` và `--loop` thực hiện các chỉnh sửa bổ sung, có thể hoàn tác mà không hỏi, nhưng sẽ dừng lại hỏi trước khi ghi đè mang tính phá huỷ, xoá nội dung, hoặc bất kỳ thay đổi nào xuất bản, deploy hay sửa dữ liệu production hoặc tài khoản bên thứ ba. Viết DONE contract trước khi triển khai bất cứ thứ gì và không nới lỏng nó về sau. Một check không chạy được (không có server, trình duyệt hay mạng) phải được báo là chưa chạy. Không bao giờ gõ credential, tạo tài khoản hay gửi form thật trong lúc audit.',
   },
   processFlow: [
     { number: 1, titleEn: 'Scope and capture', titleVi: 'Chốt phạm vi và chụp', descEn: 'Identify product type, stack, public routes, and how to run it. Reuse one dev server per project and capture baseline screenshots at 1440×900, 768×1024, and 375×812.', descVi: 'Xác định loại sản phẩm, stack, route public và cách chạy. Dùng lại một dev server cho mỗi project và chụp ảnh gốc ở 1440×900, 768×1024 và 375×812.' },

@@ -10,6 +10,13 @@ const data: SkillInfographic = {
     taglineEn: "Persist chronological technical journals under plans/journals using the first-class CLI, preserving work history without replacing current docs, ADRs, or product decision sources.",
     taglineVi: "Lưu nhật ký kỹ thuật theo thời gian dưới plans/journals bằng CLI chính thức, giữ lịch sử công việc mà không thay thế docs hiện tại, ADR hoặc nguồn quyết định sản phẩm."
   },
+  hardGate: {
+    type: "warning",
+    titleEn: "A journal is historical, not current authority",
+    titleVi: "Journal là lịch sử, không phải quy định hiện hành",
+    contentEn: "The CLI adds a notice that the entry is a historical work record. Move any lasting decision into the project's current docs, specification, or ADR, and do not let a later reader infer current policy from an old journal alone.",
+    contentVi: "CLI thêm ghi chú rằng entry là bản ghi lịch sử công việc. Hãy chuyển mọi quyết định lâu dài vào tài liệu hiện hành, đặc tả hoặc ADR của dự án, và đừng để người đọc sau suy ra quy định hiện tại chỉ từ một journal cũ."
+  },
   processFlow: [
     {
       number: 1,
@@ -43,8 +50,8 @@ const data: SkillInfographic = {
       number: 5,
       titleEn: "Skip AgentWiki publish",
       titleVi: "Bỏ qua publish AgentWiki",
-      descEn: "Report “AgentWiki publish skipped” because publishing from this skill is deferred and the local file remains source of truth.",
-      descVi: "Báo “AgentWiki publish skipped” vì publish từ skill này đang deferred và file local vẫn là source of truth."
+      descEn: "Report \"AgentWiki publish skipped\" because publishing from this skill is deferred and the local file remains source of truth.",
+      descVi: "Báo \"AgentWiki publish skipped\" vì publish từ skill này đang deferred và file local vẫn là source of truth."
     },
     {
       number: 6,

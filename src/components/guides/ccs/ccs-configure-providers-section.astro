@@ -37,8 +37,8 @@ const t = useTranslations(currentLang);
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <!-- Option A: Manual via Decision Tree -->
         <button
-          @click="configMode = 'tree'"
-          :class="configMode === 'tree'
+          x-on:click="configMode = 'tree'"
+          x-bind:class="configMode === 'tree'
             ? 'border-violet-500 dark:border-violet-400 bg-violet-50 dark:bg-violet-500/10 shadow-md ring-2 ring-violet-500/20'
             : 'border-slate-200 dark:border-slate-700 bg-white/50 dark:bg-slate-900/50 hover:border-violet-300 dark:hover:border-violet-500/30'"
           class="relative p-5 rounded-xl border-2 text-left transition-all group cursor-pointer"
@@ -72,8 +72,8 @@ const t = useTranslations(currentLang);
 
         <!-- Option B: UI via Dashboard -->
         <button
-          @click="configMode = 'dashboard'"
-          :class="configMode === 'dashboard'
+          x-on:click="configMode = 'dashboard'"
+          x-bind:class="configMode === 'dashboard'
             ? 'border-blue-500 dark:border-blue-400 bg-blue-50 dark:bg-blue-500/10 shadow-md ring-2 ring-blue-500/20'
             : 'border-slate-200 dark:border-slate-700 bg-white/50 dark:bg-slate-900/50 hover:border-blue-300 dark:hover:border-blue-500/30'"
           class="relative p-5 rounded-xl border-2 text-left transition-all group cursor-pointer"

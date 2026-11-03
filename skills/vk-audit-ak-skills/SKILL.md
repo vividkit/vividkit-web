@@ -128,6 +128,8 @@ Runs every step below (each checker's `--self-test` first) without stopping on f
 
 `--skip-inventory` skips step 1. The umbrella `/vk:audit-ak-guides` passes it because it runs inventory itself.
 
+Output is grouped: inventory prints one `contract-updated` / `package-updated` line per channel and impact with the skill list, and beta-delta prints counts plus only the pages with a hint, flag or docs delta. Add `--verbose` for one line per skill and the full beta-delta page list.
+
 A red claims checker is a real finding unless the latest `reference/changelog-reports/*-ak-skill-details-audit.md` already lists the same page. Claims failures are not inventory drift.
 
 ### `--report`

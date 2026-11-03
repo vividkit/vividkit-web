@@ -12,10 +12,10 @@ const data: SkillInfographic = {
   },
   hardGate: {
     type: 'warning',
-    titleEn: 'A goal is not an unbounded backlog',
-    titleVi: 'Goal không phải backlog vô hạn',
-    contentEn: 'Use /goal only for longer mainly mechanical work with clear scope and a testable stop condition. Avoid exploratory, destructive, credential, or product-decision-heavy tasks.',
-    contentVi: 'Chỉ dùng /goal cho việc dài hơn một lượt, chủ yếu cơ học, phạm vi rõ và có điều kiện dừng kiểm được. Tránh việc khám phá, phá huỷ, đụng credential hoặc cần quyết định sản phẩm liên tục.',
+    titleEn: 'A goal is not a safety boundary',
+    titleVi: 'Goal không phải ranh giới an toàn',
+    contentEn: 'Starting `/goal` does not grant broader filesystem, network, credential, deployment, destructive, or external-service authority. The same sandbox and approval policy continue to apply, and unresolved product decisions still require the user. Use `/goal` only for longer mainly mechanical work with clear scope and a testable stop condition. Avoid exploratory, destructive, credential, or product-decision-heavy tasks.',
+    contentVi: 'Bắt đầu `/goal` không mở rộng quyền với filesystem, mạng, credential, deploy, thao tác phá huỷ hay dịch vụ bên ngoài. Sandbox và chính sách duyệt vẫn áp dụng như cũ, và các quyết định sản phẩm còn bỏ ngỏ vẫn cần người dùng. Chỉ dùng `/goal` cho việc dài hơi, chủ yếu mang tính cơ học, có phạm vi rõ và điều kiện dừng kiểm chứng được. Tránh các việc mang tính khám phá, phá huỷ, đụng tới credential hoặc cần nhiều quyết định sản phẩm.',
   },
   processFlow: [
     { number: 1, titleEn: 'Check availability', titleVi: 'Kiểm tra khả dụng', descEn: 'Confirm /goal appears in Codex slash commands; if missing, enable the documented goals feature.', descVi: 'Xác nhận /goal có trong danh sách slash command của Codex; nếu thiếu, bật feature goals theo tài liệu.' },

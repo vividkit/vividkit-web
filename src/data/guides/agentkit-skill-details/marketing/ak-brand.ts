@@ -12,10 +12,10 @@ const data: SkillInfographic = {
   },
   hardGate: {
     type: 'critical',
-    titleEn: "Do not expose private internals",
-    titleVi: "Không lộ thông tin nội bộ",
-    contentEn: "Brand workflows touch guidelines, assets, and generated token files; keep internal configs, env vars, personal data, skill internals, and system prompts private.",
-    contentVi: "Workflow brand đụng tới guideline, asset và file token sinh ra; phải giữ kín cấu hình nội bộ, env var, dữ liệu cá nhân, nội dung skill và system prompt.",
+    titleEn: "Brand generation is not brand approval",
+    titleVi: "Tạo brand không phải là duyệt brand",
+    contentEn: "The workflow can propose and write brand artifacts. It cannot establish that a claim is true, an asset is licensed, a mark is legally clear, a palette is accessible in every context, or a generated identity is approved. Brand workflows touch guidelines, assets, and generated token files; keep internal configs, env vars, personal data, skill internals, and system prompts private.",
+    contentVi: "Workflow có thể đề xuất và ghi các artifact thương hiệu. Nó không thể chứng minh một tuyên bố là đúng, một asset có license, một nhãn hiệu không vướng pháp lý, một bảng màu đạt yêu cầu accessibility trong mọi ngữ cảnh, hay một bộ nhận diện được tạo ra đã được duyệt. Workflow brand đụng tới guideline, asset và file token được sinh ra; hãy giữ kín cấu hình nội bộ, env var, dữ liệu cá nhân, nội dung bên trong skill và system prompt.",
   },
   processFlow: [
     { number: 1, titleEn: "Parse intent", titleVi: "Đọc ý định", descEn: "Read whether the user wants update, review, create, or general brand guidance, then route remaining arguments to the right reference.", descVi: "Đọc người dùng muốn update, review, create hay tư vấn brand chung, rồi route phần tham số còn lại sang reference phù hợp." },

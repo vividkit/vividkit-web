@@ -33,6 +33,13 @@ const data: SkillInfographic = {
     "taglineEn": "Guides Shopify app, extension, theme, API, Polaris, Liquid, checkout, webhook, and billing work with Shopify CLI-centered workflows.",
     "taglineVi": "Hướng dẫn xây app, extension, theme, API, Polaris, Liquid, checkout, webhook và billing cho Shopify bằng quy trình xoay quanh Shopify CLI."
   },
+  "hardGate": {
+    "type": "warning",
+    "titleEn": "Shopify CLI commands can change a remote store",
+    "titleVi": "Lệnh Shopify CLI có thể thay đổi store thật",
+    "contentEn": "Development commands can open tunnels or sync development assets. Pull, push, deploy, billing, API mutations, webhook registration, and theme publish can change remote state. Confirm the exact store and action first.",
+    "contentVi": "Lệnh development có thể mở tunnel hoặc đồng bộ asset development. Pull, push, deploy, billing, API mutation, đăng ký webhook và publish theme có thể thay đổi trạng thái trên store thật. Hãy xác nhận đúng store và thao tác trước."
+  },
   "processFlow": [
     {
       "number": 1,

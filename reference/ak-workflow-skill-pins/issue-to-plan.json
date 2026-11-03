@@ -1,13 +1,13 @@
 {
   "slug": "issue-to-plan",
-  "hash": "4b1f603596caa8bd3dc011679769e130e3ae33307bf14ace98e6b92313c6b202",
+  "hash": "84265d3bc9f7955c068e3fb6f1bd221a8b4371c2bac1d3ce5645bb3e6c30330f",
   "source": "kit",
   "path": "ak-cli@origin/main:kits/engineer/skills/ak-issue-to-plan/SKILL.md",
-  "pinnedAt": "2026-10-02T21:25:37.468Z",
+  "pinnedAt": "2026-11-02T21:11:20.827Z",
   "snapshot": {
-    "name": "ak:issue-to-plan",
-    "description": "Turn a GitHub issue into an audited, validated implementation plan. Reads the issue, scouts the codebase, runs a hard brainstorm gate, and only then plans with mandatory --html --wiki, validate, and red-team, before pushing a plan branch and handing off on the issue. Use to convert a GitHub issue into a validated plan that is ready for plan audit.",
-    "when_to_use": "Invoke when a user wants one command to take a GitHub issue through scouting, an audit/brainstorm gate, and (only if it passes) plan generation, validation, red-team, a pushed plan branch, and an issue handoff — stopping before implementation.",
+    "name": "ak-issue-to-plan",
+    "description": "Turn a GitHub issue into a validated plan: scout, pass a hard brainstorm gate, plan with --html --wiki, validate, red-team, push a plan branch.",
+    "when_to_use": "Invoke to plan from an issue in one command, stopping before implementation.",
     "argument_hint": "<github-issue-url | issue-number> [--repo owner/name] [--plan-ready-label <name>] [--decision-label <name>]",
     "version": null
   }

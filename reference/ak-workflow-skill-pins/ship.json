@@ -1,13 +1,13 @@
 {
   "slug": "ship",
-  "hash": "01c06416de91094e57d0afec227832c337d13aecbd24e866668e3bcbc837849b",
+  "hash": "e2940a9cba638d43a6e888e4f17be8af0a156fb9a20b295688e29cf64f2d82ba",
   "source": "kit",
   "path": "ak-cli@origin/main:kits/engineer/skills/ak-ship/SKILL.md",
-  "pinnedAt": "2026-10-02T21:25:37.472Z",
+  "pinnedAt": "2026-11-02T21:11:20.828Z",
   "snapshot": {
-    "name": "ak:ship",
-    "description": "Ship a completed branch through tests, review, commit, push, and PR creation. Supports official/beta aliases, Kongming advice, and optional reviewed merge with CI convergence.",
-    "when_to_use": "Invoke when a completed branch needs PR shipping workflow.",
+    "name": "ak-ship",
+    "description": "Ship a completed branch via tests, review, commit, push and PR, with official/beta aliases, Kongming advice and reviewed merge plus CI convergence.",
+    "when_to_use": "Invoke when work is done and needs a PR.",
     "argument_hint": "[official|stable|main|beta|dev|next] [--both] [--advice] [--merge] [--skip-tests] [--skip-review] [--skip-journal] [--skip-docs] [--social] [--yes-post] [--yes-post-private] [--dry-run]",
     "version": null
   }

@@ -1,13 +1,13 @@
 {
   "slug": "backend-development",
-  "hash": "291f89e20d2294560f39a9d8a669d41f49f6f2612d26fba0a6a2431186e8ffe9",
+  "hash": "af23074457b505bec5bed7339217b8ab7f0c3bb46402c37676651c9cc176771a",
   "source": "kit",
   "path": "ak-cli@origin/main:kits/engineer/skills/ak-backend-development/SKILL.md",
-  "pinnedAt": "2026-10-02T21:25:37.467Z",
+  "pinnedAt": "2026-11-02T21:11:20.825Z",
   "snapshot": {
-    "name": "ak:backend-development",
-    "description": "Build backends with Node.js, Python, Go (NestJS, FastAPI, Django). Use for REST/GraphQL/gRPC APIs, auth (OAuth, JWT), databases, microservices, security (OWASP), Docker/K8s.",
-    "when_to_use": "Invoke when backend/API implementation is the main surface.",
+    "name": "ak-backend-development",
+    "description": "Implement server code in Node.js, Python or Go (Express, NestJS, FastAPI, Django): endpoints, services, data access, auth, tests.",
+    "when_to_use": "Invoke for handlers, slow endpoints or N+1 queries; schema-only design is ak-databases.",
     "argument_hint": "[framework] [task]",
     "version": null
   }

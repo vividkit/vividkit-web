@@ -67,10 +67,10 @@ const data: SkillInfographic = {
   },
   hardGate: {
     type: 'warning',
-    titleEn: 'Offline compile, route other artifacts away',
-    titleVi: 'Compile offline, chuyển artifact khác đi nơi khác',
-    contentEn: 'Compilation stays offline in Node.js with no remote calls, telemetry, or font downloads. Use ak:excalidraw for whiteboard sketches, ak:tech-graph for static publication charts, and ak:mermaidjs-v11 for raw markdown inline diagrams.',
-    contentVi: 'Compile chạy offline trong Node.js, không gọi mạng, telemetry hay tải font. Dùng ak:excalidraw cho phác thảo whiteboard, ak:tech-graph cho biểu đồ xuất bản tĩnh, và ak:mermaidjs-v11 cho sơ đồ markdown inline.',
+    titleEn: 'Rendering writes files and launches local tools',
+    titleVi: 'Render sẽ ghi file và chạy công cụ local',
+    contentEn: 'A run reads your `.mmd`, JSON, or HTML source, writes artifacts to the selected destination, and can replace same-named outputs. Browser rendering launches headless Chromium. Video capture creates temporary frames and runs `ffmpeg`. Review input content and output names before proceeding. Typed-IR compilation stays offline in Node.js with no remote calls, telemetry, or font downloads, and compiled typed-IR pages make zero network requests.',
+    contentVi: 'Mỗi lần chạy sẽ đọc nguồn `.mmd`, JSON hoặc HTML của bạn, ghi artifact vào nơi đích đã chọn và có thể thay thế output trùng tên. Render bằng trình duyệt sẽ khởi động Chromium headless. Quay video sẽ tạo các frame tạm và chạy `ffmpeg`. Hãy xem lại nội dung input và tên output trước khi tiếp tục. Việc compile typed-IR chạy offline trong Node.js, không gọi mạng, không gửi telemetry hay tải font, và các trang typed-IR đã compile không gửi request mạng nào.',
   },
   processFlow: [
     { number: 1, titleEn: 'Select archetype', titleVi: 'Chọn archetype', descEn: 'Match intent to architecture, workflow, sequence, dataflow, or lifecycle before writing IR.', descVi: 'Khớp ý định với architecture, workflow, sequence, dataflow hoặc lifecycle trước khi viết IR.' },
@@ -116,7 +116,8 @@ const data: SkillInfographic = {
   ],
   invocation,
   specialOperations: [
-    { id: 'zero-network', titleEn: 'Zero network', titleVi: 'Không mạng', descEn: 'Compilation operates offline in pure Node.js; no remote calls, telemetry, or font downloads.', descVi: 'Compile chạy offline trong Node.js thuần; không gọi mạng, telemetry hay tải font.', color: 'amber' },
+    { id: 'zero-network', titleEn: 'Zero network', titleVi: 'Không mạng', descEn: 'Typed-IR compilation operates offline in pure Node.js; no remote calls, telemetry, or font downloads. Two exceptions: the first npx run of the AK Render page wrapper downloads the pinned package from npm (cached afterwards), and a .mmd diagram the bundled renderer rejects falls back to a page that loads Mermaid 11.4.1 from jsDelivr.', descVi: 'Compile IR có kiểu chạy offline trong Node.js thuần; không gọi mạng, telemetry hay tải font. Có hai ngoại lệ: lần chạy npx đầu tiên của wrapper trang AK Render tải package đã ghim từ npm (các lần sau dùng cache), và sơ đồ .mmd bị renderer đi kèm từ chối sẽ chuyển sang trang tải Mermaid 11.4.1 từ jsDelivr.', color: 'amber' },
+    { id: 'ak-render-embed', titleEn: 'AK Render page embedding', titleVi: 'Nhúng vào trang AK Render', descEn: 'Skills that compile an HTML page with AK Render put the typed IR in a diagram-panel block and compile the whole page through scripts/render-page.mjs, which refuses any AK Render version other than the pin. A failed panel keeps a structured fallback: repair the IR and recompile.', descVi: 'Skill compile trang HTML bằng AK Render đặt IR có kiểu vào block diagram-panel rồi compile cả trang qua scripts/render-page.mjs; wrapper này từ chối mọi phiên bản AK Render khác bản đã ghim. Panel lỗi giữ bản fallback có cấu trúc: sửa IR rồi compile lại.', color: 'violet' },
     { id: 'reduced-motion', titleEn: 'Reduced motion', titleVi: 'Giảm chuyển động', descEn: 'Trace animation stays finite and disables automatically under prefers-reduced-motion.', descVi: 'Animation trace luôn hữu hạn và tự tắt khi prefers-reduced-motion.', color: 'sky' },
   ],
   skillStack: [

@@ -14,11 +14,11 @@ import {
 } from "lucide-astro";
 import TerminalSnippet from "../TerminalSnippet.astro";
 import { colorMap, type HookViewModel } from "./custom-hooks-ui";
-import type { customHooksTranslations } from "@/data/guides/custom-hooks/custom-hooks-translations";
+import type { CustomHooksCopy } from "@/data/guides/custom-hooks/custom-hooks-translations";
 
 interface Props {
   hook: HookViewModel;
-  t: (typeof customHooksTranslations)["en"];
+  t: CustomHooksCopy;
   isVi: boolean;
 }
 

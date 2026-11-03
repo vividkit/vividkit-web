@@ -70,10 +70,10 @@ const data: SkillInfographic = {
   ],
   "hardGate": {
     "type": "info",
-    "titleEn": "Privacy depends on input type",
-    "titleVi": "Quyền riêng tư phụ thuộc loại input",
-    "contentEn": "Code is processed locally through tree-sitter and media is transcribed locally, but docs/images may be sent to the configured model provider.",
-    "contentVi": "Code được xử lý local qua tree-sitter và media được transcript local, nhưng docs/images có thể được gửi tới model provider đã cấu hình."
+    "titleEn": "Input type changes the data boundary",
+    "titleVi": "Loại input quyết định ranh giới dữ liệu",
+    "contentEn": "Code AST extraction and supported media transcription are described as local. Selected documents and images are sent to the configured model provider for semantic extraction. Exclude sensitive files or obtain approval before that transfer.",
+    "contentVi": "Việc trích xuất AST từ code và chuyển media được hỗ trợ thành văn bản được mô tả là chạy local. Tài liệu và hình ảnh đã chọn sẽ được gửi tới model provider đã cấu hình để trích xuất ngữ nghĩa. Hãy loại các file nhạy cảm ra hoặc xin phê duyệt trước lần chuyển dữ liệu đó."
   },
   "corePrinciplesEn": [
     "Use graphs to navigate relationships, not to replace source-level inspection.",

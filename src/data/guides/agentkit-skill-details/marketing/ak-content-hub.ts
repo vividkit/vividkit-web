@@ -10,6 +10,13 @@ const data: SkillInfographic = {
     taglineEn: "Opens, scans, searches, and serves a browser-based asset gallery with filters, brand context, preview/edit actions, and an R2-ready manifest.",
     taglineVi: "Mở, quét, tìm kiếm và phục vụ thư viện asset trên browser với bộ lọc, ngữ cảnh brand, thao tác preview/edit và manifest sẵn sàng cho R2.",
   },
+  hardGate: {
+    type: "warning",
+    titleEn: "Browsing, editing, and cloud sync are different actions",
+    titleVi: "Xem, sửa và đồng bộ cloud là các thao tác khác nhau",
+    contentEn: "Opening the Hub starts a local process and writes a manifest. Saving replaces the selected local text file. AI enhancement can send that file's content to the configured Claude provider. None of these actions uploads to R2, publishes an asset, or approves use of generated claims.",
+    contentVi: "Mở Hub sẽ chạy một tiến trình cục bộ và ghi manifest. Lưu sẽ ghi đè file văn bản cục bộ đang chọn. Cải thiện bằng AI có thể gửi nội dung file đó tới provider Claude đã cấu hình. Không thao tác nào trong số này tải lên R2, công bố asset hay duyệt việc dùng các claim do AI tạo."
+  },
   processFlow: [
     { number: 1, titleEn: "Choose action", titleVi: "Chọn hành động", descEn: "Read whether the user wants to open, browse, or search the content hub.", descVi: "Đọc xem người dùng muốn mở, duyệt hay tìm kiếm trong content hub." },
     { number: 2, titleEn: "Start gallery", titleVi: "Khởi động gallery", descEn: "Open the local gallery server when the user needs the browser grid.", descVi: "Mở server gallery local khi người dùng cần lưới asset trên trình duyệt." },

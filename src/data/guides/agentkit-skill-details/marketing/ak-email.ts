@@ -10,6 +10,13 @@ const data: SkillInfographic = {
     taglineEn: 'Creates newsletters, cold emails, launches, nurture flows, welcome and winback campaigns with subject lines, preview text, body, and CTA.',
     taglineVi: 'Tạo newsletter, cold email, launch, nurture, welcome và winback cùng tiêu đề, preview text, nội dung và CTA.',
   },
+  hardGate: {
+    type: "warning",
+    titleEn: "Generated email is not permission to contact people",
+    titleVi: "Email được tạo không đồng nghĩa với được phép gửi",
+    contentEn: "The Skill writes email and flow drafts. It does not verify consent, import a list, configure SPF/DKIM/DMARC, create provider automation, or send a message. Never turn a cold draft into outreach without the required legal, policy, privacy, suppression, and account approvals.",
+    contentVi: "Skill chỉ viết bản nháp email và flow. Nó không kiểm tra sự đồng ý, không nhập danh sách, không cấu hình SPF/DKIM/DMARC, không tạo automation trên provider và không gửi thư. Đừng biến bản nháp cold thành outreach thật khi chưa có đủ phê duyệt về pháp lý, chính sách, quyền riêng tư, danh sách loại trừ và tài khoản."
+  },
   processFlow: [
     { number: 1, titleEn: 'Parse type', titleVi: 'Đọc loại email', descEn: 'Read newsletter, cold, followup, launch, nurture, welcome, winback, flow, or sequence from the first argument.', descVi: 'Đọc newsletter, cold, followup, launch, nurture, welcome, winback, flow hoặc sequence từ tham số đầu.' },
     { number: 2, titleEn: 'Gather context', titleVi: 'Lấy bối cảnh', descEn: 'Ask for audience, message, offer, CTA, timing, and any deliverability constraints.', descVi: 'Hỏi audience, thông điệp, ưu đãi, CTA, thời điểm gửi và ràng buộc deliverability nếu có.' },

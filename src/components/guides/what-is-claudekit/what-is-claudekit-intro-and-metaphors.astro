@@ -1,4 +1,5 @@
 ---
+import type { TranslationKey } from '@/i18n/utils';
 // Intro banner, house building metaphor, and team metaphor with image
 import { useTranslations } from "@/i18n/utils";
 import { getLangFromUrl, type Language } from "@/i18n";
@@ -72,7 +73,7 @@ const metaphorItems = [
           <div class={`w-8 h-8 rounded-lg bg-${item.color}-100 dark:bg-${item.color}-500/20 flex items-center justify-center text-${item.color}-600 dark:text-${item.color}-400`}>
             <Fragment set:html={item.icon} />
           </div>
-          <span class="text-slate-700 dark:text-slate-300 text-sm" set:html={t(`guides.what_is_claudekit.metaphor_${item.key}`)} />
+          <span class="text-slate-700 dark:text-slate-300 text-sm" set:html={t(`guides.what_is_claudekit.metaphor_${item.key}` as TranslationKey)} />
         </div>
       ))}
     </div>

@@ -169,7 +169,7 @@ const isDocsLeft = variant === 'docs-left';
           observeTarget: section,
         };
       })
-      .filter(Boolean);
+      .filter((target): target is NonNullable<typeof target> => target !== null);
 
     const tocTargets = headingTargets.length > 0 ? headingTargets : fallbackSectionTargets;
 
@@ -192,8 +192,8 @@ const isDocsLeft = variant === 'docs-left';
       });
     }, observerOptions);
 
-    function setActive(id) {
-      document.querySelectorAll('.toc-link').forEach((link) => {
+    function setActive(id: string) {
+      document.querySelectorAll<HTMLElement>('.toc-link').forEach((link) => {
         link.dataset.active = link.getAttribute('href') === `#${id}` ? 'true' : 'false';
       });
     }
@@ -218,7 +218,7 @@ const isDocsLeft = variant === 'docs-left';
         const yOffset = -140;
         const y = item.target.getBoundingClientRect().top + window.scrollY + yOffset;
         window.scrollTo({ top: y, behavior: 'smooth' });
-        history.pushState(null, null, `#${item.id}`);
+        history.pushState(null, '', `#${item.id}`);
         setActive(item.id);
       });
 

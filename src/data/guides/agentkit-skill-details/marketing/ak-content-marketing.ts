@@ -10,6 +10,13 @@ const data: SkillInfographic = {
     taglineEn: "Builds content strategies, editorial calendars, blog plans, pillar maps, audits, and repurposing workflows tied to buyer journey and ROI.",
     taglineVi: "Xây chiến lược nội dung, lịch biên tập, kế hoạch blog, content pillar, audit và workflow tái sử dụng nội dung gắn với hành trình mua và ROI.",
   },
+  hardGate: {
+    type: 'warning',
+    titleEn: "A calendar is not publishing authority",
+    titleVi: "Lịch nội dung không phải quyền xuất bản",
+    contentEn: "A Scheduled or Published status in a template is planning data. The skill does not authorize a CMS write, URL redirect, deletion, audience contact, media spend, or platform account change. Approve and run those actions in their own controlled workflow.",
+    contentVi: "Trạng thái Scheduled hoặc Published trong template chỉ là dữ liệu lập kế hoạch. Skill không cấp quyền ghi vào CMS, redirect URL, xóa nội dung, liên hệ audience, chi ngân sách media hay đổi tài khoản nền tảng. Hãy duyệt và thực hiện các việc đó trong workflow được kiểm soát riêng.",
+  },
   processFlow: [
     { number: 1, titleEn: "Classify content need", titleVi: "Phân loại nhu cầu", descEn: "Determine whether the request is strategy, calendar, blog planning, pillar mapping, audit, or repurposing.", descVi: "Xác định yêu cầu là chiến lược, lịch biên tập, kế hoạch blog, mapping pillar, audit hay tái sử dụng." },
     { number: 2, titleEn: "Load framework", titleVi: "Tải khung làm việc", descEn: "Open the relevant reference: strategy framework, calendar template, blog templates, or audit checklist.", descVi: "Mở tài liệu phù hợp: khung chiến lược, mẫu lịch biên tập, mẫu blog hoặc checklist audit." },

@@ -146,6 +146,32 @@ function readDocMdx(akDocs, channel, kit, slug, locale, refs) {
 }
 
 
+// Titled ak-docs <Callout> blocks are the reader-facing safety gates; the page
+// hardGate must carry one of those titles (authoring.md "Hard gates").
+function calloutTitles(mdx) {
+  return [...String(mdx || '').matchAll(/<Callout\b[^>]*\btitle="([^"]+)"/g)].map((m) => m[1]);
+}
+
+function hardGateTitle(src) {
+  const m = String(src || '').match(
+    /["']?hardGate["']?:\s*\{[\s\S]*?["']?titleEn["']?:\s*(['"])((?:(?!\1)[^\\]|\\.)*)\1/,
+  );
+  if (!m) return null;
+  return m[1] === '"' ? JSON.parse(`"${m[2]}"`) : m[2].replace(/\\(['\\])/g, '$1');
+}
+
+// Pages use straight ASCII quotes; ak-docs may use typographic ones.
+const straightQuotes = (s) => s.replace(/[\u2018\u2019]/g, "'").replace(/[\u201c\u201d]/g, '"');
+
+function checkGate(detailSrc, enMdx) {
+  const titles = calloutTitles(enMdx);
+  if (!titles.length) return [];
+  const gate = hardGateTitle(detailSrc);
+  if (!gate) return [`hardGate missing; ak-docs Callout: ${titles.join(' | ')}`];
+  if (!titles.map(straightQuotes).includes(straightQuotes(gate))) return [`hardGate "${gate}" is not an ak-docs Callout title: ${titles.join(' | ')}`];
+  return [];
+}
+
 function checkFile(detailSrc, enMdx, viMdx, skillMd = '', helperFlags = []) {
   const detail = extractDetailFlags(detailSrc);
   const en = extractDocFlags(enMdx);
@@ -161,7 +187,7 @@ function checkFile(detailSrc, enMdx, viMdx, skillMd = '', helperFlags = []) {
   const missed = notOnPage.filter((f) => hintFlags.has(f) || !helper.has(f));
   const helperKept = notOnPage.filter((f) => !hintFlags.has(f) && helper.has(f));
   const localeDrift = [...en].filter((f) => !vi.has(f)).concat([...vi].filter((f) => !en.has(f))).sort();
-  return { invented, missed, localeDrift, docsOmit, helperKept };
+  return { invented, missed, localeDrift, docsOmit, helperKept, gate: checkGate(detailSrc, enMdx) };
 }
 
 function selfTest() {
@@ -194,6 +220,11 @@ function selfTest() {
   if (typed.missed.includes('--html')) throw new Error('typed invocation const not parsed');
   if (!k.helperKept.includes('--copy')) throw new Error('helper');
   if (!k.missed.includes('--fast')) throw new Error('hint flag must stay missed even if listed as helper');
+  const callout = `<Callout type="warn" title="Remove deletes files">\n  Body.\n</Callout>\n`;
+  if (checkGate(`hardGate: { titleEn: 'Remove deletes files' }`, callout).length) throw new Error('gate match');
+  if (!checkGate(`"hardGate": { "titleEn": "Other title" }`, callout).length) throw new Error('gate mismatch');
+  if (!checkGate(`header: {}`, callout).length) throw new Error('gate missing');
+  if (checkGate(`header: {}`, `<Callout type="warning">\n  Untitled.\n</Callout>`).length) throw new Error('untitled callout');
   process.stdout.write('self-test ok\n');
 }
 
@@ -265,7 +296,7 @@ function main(argv) {
         const result = checkFile(src, en, vi, skillMd, helperFlags[`${kit}/${id}`]);
         docsOmitCount += result.docsOmit.length;
         helperCount += result.helperKept.length;
-        if (result.invented.length || result.missed.length || result.localeDrift.length) {
+        if (result.invented.length || result.missed.length || result.localeDrift.length || result.gate.length) {
           rows.push({ kit, id, channel, ...result });
         }
       }
@@ -305,7 +336,7 @@ function main(argv) {
       if (row.missing) process.stdout.write(`  - ${row.missing}\n`);
       for (const f of row.invented || []) process.stdout.write(`  - wrong ${f}\n`);
       for (const f of row.missed || []) process.stdout.write(`  - missed ${f}\n`);
-      for (const f of row.localeDrift || []) process.stdout.write(`  - en/vi drift ${f}\n`);
+      if (row.localeDrift?.length) process.stdout.write(`  - en/vi drift (${row.localeDrift.length}): ${row.localeDrift.join(' ')}\n`);
     }
   }
   process.stdout.write(
@@ -320,9 +351,10 @@ function main(argv) {
     process.stdout.write(`\n${row.kit}/${row.id} channel=${row.channel}\n`);
     for (const f of row.invented) process.stdout.write(`  - wrong ${f}\n`);
     for (const f of row.missed) process.stdout.write(`  - missed ${f}\n`);
-    for (const f of row.localeDrift) process.stdout.write(`  - en/vi drift ${f}\n`);
+    if (row.localeDrift.length) process.stdout.write(`  - en/vi drift (${row.localeDrift.length}): ${row.localeDrift.join(' ')}\n`);
+    for (const g of row.gate) process.stdout.write(`  - gate ${g}\n`);
   }
-  process.exit(rows.some((r) => r.invented.length || r.missed.length) ? 1 : 0);
+  process.exit(rows.some((r) => r.invented.length || r.missed.length || r.gate.length) ? 1 : 0);
 
 }
 

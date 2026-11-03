@@ -147,8 +147,8 @@ const data: SkillInfographic = {
         "syntax": "/ak:test audit [scope] [--advice] [--ultra] [--interview]",
         "titleEn": "Audit suite",
         "titleVi": "Audit suite",
-        "descEn": "Searches the suite and CI for deceptive, disabled, unfinished, ineffective, redundant, outdated, or unsafe tests, then repairs evidence-backed findings.",
-        "descVi": "Tìm trong suite và CI các test gian lận, bị tắt, chưa xong, kém hiệu quả, trùng lặp, lỗi thời hoặc không an toàn, rồi sửa finding có bằng chứng.",
+        "descEn": "Searches the suite and CI for deceptive, disabled, unfinished, ineffective, redundant, outdated, or unsafe tests, then reports ranked findings with proposed repairs. Audit alone does not authorize edits; repairs need separate suite-repair authority.",
+        "descVi": "Tìm trong suite và CI các test gian lận, bị tắt, chưa xong, kém hiệu quả, trùng lặp, lỗi thời hoặc không an toàn, rồi báo finding đã xếp hạng kèm đề xuất sửa. Riêng audit không cho phép sửa; muốn sửa cần được cấp quyền sửa suite riêng.",
         "arguments": [
           {
             "token": "[scope]",
@@ -186,18 +186,18 @@ const data: SkillInfographic = {
             "exampleCommand": "/ak:test audit frontend tests --interview"
           }
         ],
-        "outcomeEn": "Evidence-backed weak-test findings, deduplicated repair plan, applied approved repairs, and remaining trust or product-root-cause handoff notes.",
-        "outcomeVi": "Finding test yếu có bằng chứng, kế hoạch sửa đã loại trùng, các sửa được duyệt đã áp dụng và ghi chú bàn giao về độ tin cậy hoặc nguyên nhân gốc product còn lại.",
+        "outcomeEn": "Evidence-backed weak-test findings, a deduplicated repair proposal, repairs applied only when suite repair was separately authorized, and remaining trust or product-root-cause handoff notes.",
+        "outcomeVi": "Finding test yếu có bằng chứng, đề xuất sửa đã loại trùng, chỉ áp dụng sửa khi đã được cấp quyền sửa suite riêng, và ghi chú bàn giao về độ tin cậy hoặc nguyên nhân gốc product còn lại.",
         "exampleCommand": "/ak:test audit \"Check skipped and ineffective authorization tests\" --ultra"
       }
     ]
   },
   "hardGate": {
     "type": "critical",
-    "titleEn": "Never ignore failing tests",
-    "titleVi": "Không bao giờ bỏ qua test lỗi",
-    "contentEn": "Fix root causes, not symptoms. Do not mock, cheat, comment out, or skip tests merely to pass a build; failing tests remain blockers unless the user explicitly changes the scope.",
-    "contentVi": "Sửa nguyên nhân gốc, không chữa triệu chứng. Không mock giả, lách, comment out hoặc skip test chỉ để build xanh; test lỗi vẫn là blocker trừ khi người dùng đổi scope rõ ràng."
+    "titleEn": "A failed test remains failed",
+    "titleVi": "Test lỗi vẫn là test lỗi",
+    "contentEn": "Every observed failure is investigated. The skill does not weaken assertions or policy, add dishonest mocks, skip failures, or manipulate coverage to make a build appear green. It reports the failure and routes root-cause work to ak-debug and ak-fix.",
+    "contentVi": "Mọi lỗi quan sát được đều được điều tra. Skill không nới assertion hay policy, không thêm mock gian lận, không skip lỗi và không chỉnh coverage để build trông xanh. Skill báo lỗi và chuyển việc tìm nguyên nhân gốc sang ak-debug và ak-fix."
   },
   "processFlow": [
     {
@@ -211,8 +211,8 @@ const data: SkillInfographic = {
       "number": 2,
       "titleEn": "Identify scope",
       "titleVi": "Xác định phạm vi",
-      "descEn": "Use recent changes, requirements, coverage thresholds, UI needs, build concerns, or CI pain to choose the workflow.",
-      "descVi": "Dùng thay đổi gần đây, yêu cầu, ngưỡng coverage, nhu cầu UI, lo ngại build hoặc vấn đề CI để chọn workflow."
+      "descEn": "Resolve repository policy, the accepted contract and its authority, changed scope, and risk; name the suitable existing check and the missing evidence before adding tests or broad checks. A covered refactor may need no new tests.",
+      "descVi": "Xác định policy của repo, hợp đồng hành vi đã chấp nhận và nguồn căn cứ, phạm vi thay đổi và rủi ro; nêu check có sẵn phù hợp và bằng chứng còn thiếu trước khi thêm test hoặc chạy check diện rộng. Refactor đã có test bao phủ có thể không cần test mới."
     },
     {
       "number": 3,
@@ -232,8 +232,8 @@ const data: SkillInfographic = {
       "number": 5,
       "titleEn": "Execute tests",
       "titleVi": "Chạy test",
-      "descEn": "Use the project runner for unit, integration, e2e, coverage, build, or UI/browser verification.",
-      "descVi": "Dùng runner của dự án cho unit, integration, e2e, coverage, build hoặc kiểm UI/browser."
+      "descEn": "Use the project runner for unit, integration, e2e, coverage, build, or UI/browser verification. Reuse earlier results only when their source, inputs, configuration, and environment still match; mandatory gates always run.",
+      "descVi": "Dùng runner của dự án cho unit, integration, e2e, coverage, build hoặc kiểm UI/browser. Chỉ dùng lại kết quả cũ khi source, input, cấu hình và môi trường vẫn khớp; gate bắt buộc luôn được chạy."
     },
     {
       "number": 6,
@@ -246,8 +246,8 @@ const data: SkillInfographic = {
       "number": 7,
       "titleEn": "Create or improve suites",
       "titleVi": "Tạo hoặc cải thiện suite",
-      "descEn": "For create, optimize, or audit, scout coverage, CI, history, and docs, then implement coverage, speed, or trust improvements.",
-      "descVi": "Với create, optimize hoặc audit, scout coverage, CI, lịch sử và docs, rồi triển khai cải thiện coverage, tốc độ hoặc độ tin cậy."
+      "descEn": "For create, optimize, or audit, inspect the affected coverage, CI, history, and docs. Create and optimize then implement coverage or speed improvements; audit reports findings and proposed repairs and edits only with separate suite-repair authority.",
+      "descVi": "Với create, optimize hoặc audit, xem xét coverage, CI, lịch sử và docs bị ảnh hưởng. Create và optimize sau đó triển khai cải thiện coverage hoặc tốc độ; audit báo finding và đề xuất sửa, chỉ sửa khi được cấp quyền sửa suite riêng."
     },
     {
       "number": 8,
@@ -326,8 +326,8 @@ const data: SkillInfographic = {
       "commandVi": "/ak:test optimize CI suite --interview",
       "whenEn": "Use when test cost or runtime is high and suite/CI changes should be approved before applying.",
       "whenVi": "Dùng khi chi phí hoặc thời gian chạy test cao và thay đổi suite/CI cần được duyệt trước khi áp dụng.",
-      "expectedEn": "Parallel-scouts CI/CD, git history, codebase, and docs; proposes speed or cost reductions that preserve safety; and applies only approved change groups.",
-      "expectedVi": "Scout song song CI/CD, lịch sử git, codebase và docs; đề xuất giảm thời gian hoặc chi phí mà vẫn giữ an toàn; và chỉ áp dụng nhóm thay đổi đã duyệt."
+      "expectedEn": "Inspects the affected CI/CD workflows, history, code, and docs; proposes measured speed or cost reductions that preserve safety and mandatory gates; and applies only approved change groups.",
+      "expectedVi": "Xem xét workflow CI/CD, lịch sử, code và docs bị ảnh hưởng; đề xuất giảm thời gian hoặc chi phí có đo đạc mà vẫn giữ an toàn và gate bắt buộc; và chỉ áp dụng nhóm thay đổi đã duyệt."
     },
     {
       "labelEn": "Audit weak tests",
@@ -336,8 +336,8 @@ const data: SkillInfographic = {
       "commandVi": "/ak:test audit frontend tests --advice",
       "whenEn": "Use when a suite may contain skipped, deceptive, redundant, outdated, unfinished, or security-gap tests.",
       "whenVi": "Dùng khi suite có thể có test bị skip, gian lận, trùng lặp, lỗi thời, chưa hoàn tất hoặc thiếu kiểm lỗ hổng bảo mật.",
-      "expectedEn": "Parallel-scouts the suite and CI, gathers evidence for weak or deceptive tests, asks Kongming for advisory checkpoints, then repairs validated issues without bypassing failing-test gates.",
-      "expectedVi": "Scout song song suite và CI, thu bằng chứng về test yếu hoặc gian lận, hỏi Kongming ở các điểm cố vấn rồi sửa vấn đề đã xác thực mà không lách gate test lỗi."
+      "expectedEn": "Inspects the affected suite and CI, gathers evidence for weak or deceptive tests, asks Kongming for advisory checkpoints, then reports ranked findings with proposed repairs without editing tests unless suite repair is separately authorized.",
+      "expectedVi": "Xem xét suite và CI bị ảnh hưởng, thu bằng chứng về test yếu hoặc gian lận, hỏi Kongming ở các điểm cố vấn rồi báo finding đã xếp hạng kèm đề xuất sửa, không sửa test trừ khi được cấp quyền sửa suite riêng."
     }
   ],
   "outputFlags": [
@@ -405,7 +405,7 @@ const data: SkillInfographic = {
       "modeVi": "Audit suite",
       "research": "Suite + CI",
       "redTeam": "Weak/deceptive tests",
-      "validation": "Trust repairs"
+      "validation": "Ranked findings + proposed repairs"
     }
   ]
 };

@@ -1,13 +1,13 @@
 {
   "slug": "scout",
-  "hash": "abacd0dbf4a21e6c65d6ff72cc1cc5b619c6a48f814b4714f3c439855b57a92c",
+  "hash": "9307ec0ac6befcf76f71fef1f49121e17a7bffe8e5c3d38d75ea73e707aff176",
   "source": "kit",
   "path": "ak-cli@origin/main:kits/core/skills/ak-scout/SKILL.md",
-  "pinnedAt": "2026-10-02T21:25:37.472Z",
+  "pinnedAt": "2026-11-02T21:11:20.828Z",
   "snapshot": {
-    "name": "ak:scout",
-    "description": "Fast codebase scouting using native search, optional Explore agents, and user-permitted OpenCode probes. Use for file discovery, task context gathering, and scoped searches across directories.",
-    "when_to_use": "Invoke for fast file discovery and codebase orientation.",
+    "name": "ak-scout",
+    "description": "Scout a codebase fast with native search, optional Explore agents and user-permitted OpenCode probes.",
+    "when_to_use": "Invoke for file discovery, task context or scoped searches.",
     "argument_hint": "[search-target] [ext] [--ultra]",
     "version": null
   }

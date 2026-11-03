@@ -329,7 +329,7 @@ const copy = currentLang === 'vi'
     </div>
 
     <div class="space-y-2">
-      {copy.decisionRows.map((row, i) => {
+      {copy.decisionRows.map((row) => {
         const isHighlight = row.cmd.includes('--deep') || row.cmd.includes('--tdd');
         const bgClass = isHighlight
           ? 'bg-gradient-to-r from-blue-50 to-emerald-50/50 dark:from-blue-950/30 dark:to-emerald-950/20 border-blue-200/70 dark:border-blue-800/50'

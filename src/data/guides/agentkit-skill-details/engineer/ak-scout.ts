@@ -12,10 +12,10 @@ const data: SkillInfographic = {
   },
   "hardGate": {
     "type": "critical",
-    "titleEn": "Do not force delegation",
-    "titleVi": "Không ép dùng subagent",
-    "contentEn": "Do not spawn subagents merely because the skill mentions Explore. If runtime policy or the user request does not permit delegation, scout in the main agent with search_files and read_file; `--ultra` hard-stops if five read-only candidates cannot run.",
-    "contentVi": "Không spawn subagent chỉ vì skill nhắc Explore. Nếu runtime policy hoặc yêu cầu người dùng không cho phép delegation, hãy scout trong agent chính bằng search_files và read_file; `--ultra` phải dừng cứng nếu không chạy được năm candidate chỉ đọc."
+    "titleEn": "External scouting can cross a provider boundary",
+    "titleVi": "Scout bên ngoài có thể vượt qua ranh giới provider",
+    "contentEn": "Use `ext` only for scopes you are permitted to send to the configured OpenCode provider. Do not send secrets, unrelated private files, or whole large files merely to avoid local context limits. Do not spawn subagents merely because the skill mentions Explore. If runtime policy or the user request does not permit delegation, scout in the main agent with `search_files` and `read_file`; `--ultra` hard-stops if five read-only candidates cannot run.",
+    "contentVi": "Chỉ dùng `ext` cho những phạm vi bạn được phép gửi tới OpenCode provider đã cấu hình. Không gửi secret, file riêng tư không liên quan hoặc nguyên một file lớn chỉ để né giới hạn context trên máy. Không spawn subagent chỉ vì skill có nhắc tới Explore. Nếu runtime policy hoặc yêu cầu của user không cho phép giao việc cho subagent, hãy scout ngay trong agent chính bằng `search_files` và `read_file`; `--ultra` dừng cứng nếu không chạy được năm candidate chỉ đọc."
   },
   "processFlow": [
     {

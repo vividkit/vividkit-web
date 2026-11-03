@@ -70,10 +70,10 @@ const data: SkillInfographic = {
   ],
   hardGate: {
     type: "critical",
-    titleEn: "Research cap and path authority",
-    titleVi: "Giới hạn research và quyền quyết định path",
-    contentEn: "At most five research tool calls are allowed, and user-requested lower limits must be respected. Reports must use the Report path from Naming; if unavailable, ask the main agent for the output path.",
-    contentVi: "Tối đa năm lượt gọi research, và nếu user yêu cầu ít hơn thì phải tôn trọng. Report phải dùng Report path trong Naming; nếu không có, hỏi main agent path output."
+    titleEn: "A citation supports only the claim it actually establishes",
+    titleVi: "Một nguồn trích dẫn chỉ chứng minh đúng điều nó xác lập",
+    contentEn: "Do not turn correlation into causation, a vendor statement into independent validation, a single case study into a benchmark, or an old source into a current market fact; label inference, disagreement, and missing evidence. At most five research tool calls are allowed, and user-requested lower limits must be respected. Reports must use the Report path from Naming; if unavailable, ask the main agent for the output path.",
+    contentVi: "Không biến tương quan thành nhân quả, lời của nhà cung cấp thành xác nhận độc lập, một case study thành chuẩn so sánh, hay một nguồn cũ thành sự thật thị trường hiện tại; ghi rõ đâu là suy luận, đâu là ý kiến trái chiều và đâu còn thiếu bằng chứng. Tối đa năm lượt gọi research, và nếu user yêu cầu ít hơn thì phải tôn trọng. Report phải dùng Report path trong Naming; nếu không có, hỏi main agent path output."
   },
   corePrinciplesEn: [
     "Actionable intelligence over raw source collection",

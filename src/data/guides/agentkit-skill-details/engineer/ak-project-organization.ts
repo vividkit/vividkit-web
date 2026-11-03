@@ -26,10 +26,10 @@ const data: SkillInfographic = {
   },
   "hardGate": {
     "type": "warning",
-    "titleEn": "Confirm before moving files",
-    "titleVi": "Phải xác nhận trước khi di chuyển file",
-    "contentEn": "Organize mode scans and proposes first; execution happens only after user approval. Never overwrite existing files, touch .git/, node_modules/, or .env files.",
-    "contentVi": "Chế độ organize phải quét và đề xuất trước; chỉ thực thi sau khi người dùng đồng ý. Không ghi đè file sẵn có, không chạm vào .git/, node_modules/ hoặc file .env."
+    "titleEn": "A rename can be a code change",
+    "titleVi": "Đổi tên file có thể là một thay đổi code",
+    "contentEn": "Moving a file can break imports, links, build inputs, ownership rules, or generated-file contracts even when content is unchanged. Review downstream references and validation before approving the migration. Organize mode scans and proposes first; execution happens only after user approval. Never overwrite existing files, or touch `.git/`, `node_modules/`, or `.env` files.",
+    "contentVi": "Di chuyển file có thể làm hỏng import, link, đầu vào build, quy tắc ownership hoặc ràng buộc của file được sinh tự động, dù nội dung không đổi. Hãy rà các tham chiếu phụ thuộc và bước kiểm chứng trước khi duyệt việc di chuyển. Chế độ organize quét và đề xuất trước; chỉ thực thi sau khi user đồng ý. Không bao giờ ghi đè file đã có, hay đụng tới `.git/`, `node_modules/` hoặc file `.env`."
   },
   "processFlow": [
     {

@@ -35,6 +35,13 @@ const data: SkillInfographic = {
     taglineEn: 'Build modern React web apps with Next.js App Router, RSC, SSR/SSG/ISR, Turborepo monorepos, shared packages, caching, SEO/GEO surfaces, and RemixIcon UI polish.',
     taglineVi: 'Xây app React hiện đại với Next.js App Router, RSC, SSR/SSG/ISR, monorepo Turborepo, package dùng chung, cache, bề mặt SEO/GEO và polish UI bằng RemixIcon.',
   },
+  hardGate: {
+    type: "warning",
+    titleEn: "Scaffolding and migration write project files",
+    titleVi: "Tạo khung và migration sẽ ghi file vào dự án",
+    contentEn: "Run the initializer only at a new, reviewed path. Run the Turborepo migrator with --dry-run first, keep the root manifest, and review every generated task and output before the real run. Neither utility deploys, but both can prepare files that later commands execute.",
+    contentVi: "Chỉ chạy initializer ở một đường dẫn mới đã kiểm tra. Chạy migrator của Turborepo với --dry-run trước, giữ nguyên manifest ở root, và xem lại mọi task, output được tạo trước khi chạy thật. Cả hai công cụ đều không deploy, nhưng có thể tạo ra file mà các lệnh sau sẽ chạy."
+  },
   processFlow: [
     { number: 1, titleEn: 'Choose shape', titleVi: 'Chọn mô hình', descEn: 'Decide between a single Next.js app and a Turborepo monorepo based on shared apps, packages, and team needs.', descVi: 'Chọn app Next.js đơn lẻ hay monorepo Turborepo dựa trên nhu cầu nhiều app, package dùng chung và đội nhóm.' },
     { number: 2, titleEn: 'Initialize stack', titleVi: 'Khởi tạo stack', descEn: 'Create the project with create-next-app or create-turbo, then add RemixIcon where the UI needs professional iconography.', descVi: 'Tạo dự án bằng create-next-app hoặc create-turbo, rồi thêm RemixIcon nơi UI cần bộ icon chuyên nghiệp.' },

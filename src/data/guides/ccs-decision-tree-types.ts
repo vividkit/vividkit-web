@@ -56,7 +56,7 @@ export type CCSPath = Omit<FlowchartPath, 'name' | 'description'> & {
   payload?: CCSProviderPayload;
 };
 
-export interface CCSDecisionTreeData extends FlowchartData {
+export interface CCSDecisionTreeData extends Omit<FlowchartData, 'paths'> {
   paths: CCSPath[];
 }
 

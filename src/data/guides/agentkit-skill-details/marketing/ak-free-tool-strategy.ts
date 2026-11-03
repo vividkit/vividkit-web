@@ -10,6 +10,13 @@ const data: SkillInfographic = {
     taglineEn: 'Plans and evaluates engineering-as-marketing tools that create lead generation, SEO value, brand awareness, or product education.',
     taglineVi: 'Lập kế hoạch và đánh giá free tool theo hướng engineering-as-marketing để tạo lead, SEO, nhận diện thương hiệu hoặc giáo dục sản phẩm.',
   },
+  hardGate: {
+    type: 'warning',
+    titleEn: "A strategy does not authorize a launch",
+    titleVi: "Chiến lược không phải quyền ra mắt",
+    contentEn: "Building changes code and storage; no-code or embedded tools can add cost and provider dependency; lead capture processes personal data; promotion can publish or contact people. Scope and approve each effect separately.",
+    contentVi: "Việc build thay đổi code và nơi lưu dữ liệu; công cụ no-code hoặc nhúng có thể phát sinh chi phí và phụ thuộc nhà cung cấp; thu lead xử lý dữ liệu cá nhân; quảng bá có thể đăng bài hoặc liên hệ người khác. Hãy xác định phạm vi và duyệt riêng từng tác động.",
+  },
   processFlow: [
     { number: 1, titleEn: 'Assess business', titleVi: 'Hiểu doanh nghiệp', descEn: 'Clarify core product, target audience, audience problems, current lead generation, resources, timeline, and budget.', descVi: 'Làm rõ sản phẩm chính, audience, vấn đề của họ, cách lấy lead hiện tại, nguồn lực, thời gian và ngân sách.' },
     { number: 2, titleEn: 'Choose goal', titleVi: 'Chọn mục tiêu', descEn: 'Decide whether the tool primarily serves lead generation, SEO traffic, brand awareness, product education, or a mix.', descVi: 'Xác định tool phục vụ chính cho lead gen, traffic SEO, nhận diện thương hiệu, giáo dục sản phẩm hoặc kết hợp.' },

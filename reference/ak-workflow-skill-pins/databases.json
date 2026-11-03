@@ -1,13 +1,13 @@
 {
   "slug": "databases",
-  "hash": "ab7c78b1409659e5d8a8e62cbccb8125ac2f3102e287035ce884e6a0e3672ec5",
+  "hash": "167ab937fde76f87aab846f976e14e8b6d94c55e2f065c7fb9aee19cbf8de5d9",
   "source": "kit",
   "path": "ak-cli@origin/main:kits/engineer/skills/ak-databases/SKILL.md",
-  "pinnedAt": "2026-10-02T21:25:37.467Z",
+  "pinnedAt": "2026-11-02T21:11:20.826Z",
   "snapshot": {
-    "name": "ak:databases",
-    "description": "Design schemas, write queries for MongoDB and PostgreSQL. Use for database design, SQL/NoSQL queries, aggregation pipelines, indexes, migrations, replication, performance optimization, psql CLI.",
-    "when_to_use": "Invoke when schema, query, migration, or index work is central.",
+    "name": "ak-databases",
+    "description": "Design schemas and SQL/NoSQL queries for MongoDB and PostgreSQL: aggregation, indexes, migrations, replication, performance, psql CLI.",
+    "when_to_use": "Invoke when database design, not app code, is the main work.",
     "argument_hint": "[query or schema task]",
     "version": null
   }

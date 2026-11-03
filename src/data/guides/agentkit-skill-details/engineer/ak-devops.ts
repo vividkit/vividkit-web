@@ -34,6 +34,13 @@ const data: SkillInfographic = {
     taglineEn: "Deploy and manage infrastructure across Cloudflare, Docker, Google Cloud, Kubernetes, CI/CD, GitOps, and security audits.",
     taglineVi: "Triển khai và vận hành hạ tầng trên Cloudflare, Docker, Google Cloud, Kubernetes, CI/CD, GitOps và rà soát bảo mật.",
   },
+  hardGate: {
+    type: "warning",
+    titleEn: "Planning does not grant deployment authority",
+    titleVi: "Lập kế hoạch không cấp quyền deploy",
+    contentEn: "The skill can prepare commands and configuration, but it does not authorize a production login, deploy, secret write, IAM change, traffic cutover, data deletion, or billable resource. Confirm the exact target and effect before each operation that crosses that boundary.",
+    contentVi: "Skill có thể chuẩn bị lệnh và cấu hình, nhưng không cấp quyền đăng nhập production, deploy, ghi secret, đổi IAM, chuyển traffic, xóa dữ liệu hay tạo tài nguyên tính phí. Xác nhận đúng đích và tác động trước mỗi thao tác vượt ranh giới đó.",
+  },
   processFlow: [
     { number: 1, titleEn: "Classify Platform", titleVi: "Chọn nền tảng", descEn: "Map the request to Cloudflare Workers/Pages/R2/D1, Docker, GCP Cloud Run/GKE/Cloud SQL, Kubernetes, Helm, or GitOps.", descVi: "Gắn yêu cầu với Cloudflare Workers/Pages/R2/D1, Docker, GCP Cloud Run/GKE/Cloud SQL, Kubernetes, Helm hoặc GitOps." },
     { number: 2, titleEn: "Select Fit", titleVi: "Chọn hướng phù hợp", descEn: "Use the platform table: edge latency to Workers, large egress to R2, containers to Docker plus Cloud Run/GKE, enterprise clusters to GKE.", descVi: "Dùng bảng chọn nền tảng: độ trễ biên dùng Workers, egress lớn dùng R2, container dùng Docker với Cloud Run/GKE, cụm doanh nghiệp dùng GKE." },

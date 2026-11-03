@@ -27,6 +27,7 @@ export { akWorkflowPublicIds } from "./publish";
 
 export { akMarketingWorkflows, akMarketingWorkflowCount } from "./marketing";
 
+import { akCmd, withAkInvocation } from "../agentkit-invocation";
 import type {
   AkWorkflow,
   AkWorkflowCategory,
@@ -56,7 +57,7 @@ export const akWorkflowCategoryOrder: AkWorkflowCategoryMeta[] = [
 ];
 
 /** Page chrome — bilingual fields (skills-cheatsheet pattern). UI phase resolves by locale. */
-export const akWorkflowPageChrome: AkWorkflowPageChrome = {
+export const akWorkflowPageChrome: AkWorkflowPageChrome = withAkInvocation({
   skeleton: {
     titleEn: "A simple way to work",
     titleVi: "Cách làm việc đơn giản",
@@ -215,12 +216,12 @@ export const akWorkflowPageChrome: AkWorkflowPageChrome = {
         "cook đã chạy tester + reviewer; cổng thêm chỉ khi muốn kiểm độc lập",
     },
   ],
-};
+});
 
 /** Invocation hint for page chrome (Claude Code / Cursor vs Codex) */
 export const akWorkflowInvocationHint = {
-  en: "In Claude Code or Cursor type /ak:… · In Codex type $ak:…",
-  vi: "Claude Code hoặc Cursor: gõ /ak:… · Codex: gõ $ak:…",
+  en: `In Claude Code or Cursor type ${akCmd('…')} · In Codex type ${akCmd('…', 'codex')}`,
+  vi: `Claude Code hoặc Cursor: gõ ${akCmd('…')} · Codex: gõ ${akCmd('…', 'codex')}`,
 } as const;
 
 export function getAkWorkflowById(id: string): AkWorkflow | undefined {
@@ -250,8 +251,8 @@ export function extractAkWorkflowSkillCommands(
   for (const w of list) {
     for (const s of w.steps) {
       if (!s.command) continue;
-      // Normalize to base /ak:slug (strip args/flags for inventory keys)
-      const m = s.command.match(/^(\/ak:[a-z0-9-]+)/i);
+      // Normalize to base /ak:slug or /ak-slug (strip args/flags for inventory keys)
+      const m = s.command.match(/^(\/ak[:-][a-z0-9-]+)/i);
       if (m) set.add(m[1]);
     }
   }

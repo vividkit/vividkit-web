@@ -1,4 +1,5 @@
 ---
+import { akInvocationText, akStableUsesColon, akCmd } from '@/data/guides/agentkit-invocation';
 import { getLangFromUrl, useTranslatedPath, type Language } from '@/i18n';
 import {
   akEngineerSkills,
@@ -14,6 +15,7 @@ import {
   type AkGroupMeta,
 } from '@/data/guides/agentkit-skills-cheatsheet';
 import AkNextLinks from './AkNextLinks.astro';
+import { akInlineCodeClass } from './ak-inline-code-class';
 
 interface Props {
   lang?: Language;
@@ -328,13 +330,13 @@ const mktCommonCount = akMarketingSkills.filter((s) => s.isCommon).length;
 
 const legend = isVi
   ? [
-      { sample: 'archive', label: 'Nhánh lệnh', desc: 'Ví dụ: /ak:plan archive', tone: 'purple' },
+      { sample: 'archive', label: 'Nhánh lệnh', desc: akInvocationText('Ví dụ: /ak:plan archive'), tone: 'purple' },
       { sample: '[task]', label: 'Tham số', desc: 'Chỗ điền nội dung, ví dụ [task]', tone: 'slate' },
       { sample: '--fast', label: 'Flag', desc: 'Tùy chọn dạng --flag', tone: 'teal' },
       { sample: 'hint', label: 'Cú pháp đầy đủ', desc: 'argument-hint trong kit', tone: 'amber' },
     ]
   : [
-      { sample: 'archive', label: 'Subcommand', desc: 'Skill branch: /ak:plan archive', tone: 'purple' },
+      { sample: 'archive', label: 'Subcommand', desc: akInvocationText('Skill branch: /ak:plan archive'), tone: 'purple' },
       { sample: '[task]', label: 'Argument', desc: 'Positional / placeholder args', tone: 'slate' },
       { sample: '--fast', label: 'Flag', desc: 'Dash options like --flag', tone: 'teal' },
       { sample: 'hint', label: 'argument-hint', desc: 'Full syntax from SKILL.md', tone: 'amber' },
@@ -376,14 +378,21 @@ const accent = {
         </h1>
         <p class="text-lg text-slate-600 dark:text-slate-300">
           {isVi
-            ? 'Danh sách skill của Engineer Kit và Marketing Kit, xếp theo việc bạn đang làm, kèm nhánh lệnh, tham số và flag. Claude Code & Cursor: /ak:<skill> · Codex: $ak:<skill>.'
-            : 'Skill catalog by workflow group, with subcommands, args, and flags. Claude Code & Cursor: /ak:<skill> · Codex: $ak:<skill>.'}
+            ? akInvocationText('Danh sách skill của Engineer Kit và Marketing Kit, xếp theo việc bạn đang làm, kèm nhánh lệnh, tham số và flag. Claude Code & Cursor: /ak:<skill> · Codex: $ak:<skill>.')
+            : akInvocationText('Skill catalog by workflow group, with subcommands, args, and flags. Claude Code & Cursor: /ak:<skill> · Codex: $ak:<skill>.')}
         </p>
         <p class="text-sm text-slate-500 dark:text-slate-400">
           {isVi
             ? 'Engineer Kit: skill cốt lõi + kỹ thuật. Marketing Kit: skill marketing. Đừng giả định trùng 1:1 với /ck:*. Cú pháp lấy từ kit đang cài.'
             : 'Engineer = core + engineer skills. Marketing owns domain skills. Do not assume 1:1 with /ck:*. Syntax from kit argument-hint and SKILL.md.'}
         </p>
+        {akStableUsesColon && (
+        <p class="rounded-xl border border-purple-200 bg-purple-50 px-3 py-2 text-sm leading-6 text-purple-900 dark:border-purple-800/50 dark:bg-purple-950/40 dark:text-purple-100">
+          <span class="mr-1.5 rounded-md bg-purple-100 px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wide text-purple-700 dark:bg-purple-500/15 dark:text-purple-300">Beta</span>
+          {isVi ? 'Trên beta (v3), sau khi làm mới kit, skill được gọi bằng ' : 'On beta (v3), after a kit refresh, skills are called as '}<code class={akInlineCodeClass}>/ak-&lt;skill&gt;</code>{isVi ? ' và ' : ' and '}<code class={akInlineCodeClass}>$ak-&lt;skill&gt;</code>{isVi ? '; dạng /ak: không còn chạy. Thẻ Beta Preview và các skill chỉ có trên beta bên dưới đã viết theo dạng mới. ' : '; the /ak: form stops working. Beta Preview cards and beta-only skills below already use the new form. '}
+          <a href={translatePath('/guides/agentkit/upgrading-to-v3')} class="font-medium underline underline-offset-2">{isVi ? 'Những thay đổi khác của v3' : 'Other v3 changes'}</a>
+        </p>
+        )}
       </div>
       <div class="grid gap-3 sm:grid-cols-3">
         <div class="rounded-2xl border border-teal-200/80 bg-teal-50/80 p-4 dark:border-teal-500/20 dark:bg-teal-950/30">
@@ -395,7 +404,7 @@ const accent = {
           <div class="mt-1 text-xs font-semibold uppercase tracking-wider text-fuchsia-700/80 dark:text-fuchsia-300/80">Marketing</div>
         </div>
         <div class="rounded-2xl border border-slate-200 bg-white/80 p-4 dark:border-white/10 dark:bg-white/[0.04]">
-          <div class="font-mono text-2xl font-bold text-slate-900 dark:text-white">/ak: · $ak:</div>
+          <div class="font-mono text-2xl font-bold text-slate-900 dark:text-white">{akCmd('')} · {akCmd('', 'codex')}</div>
           <div class="mt-1 text-xs font-semibold uppercase tracking-wider text-slate-500">{isVi ? 'Cú pháp' : 'Syntax'}</div>
         </div>
       </div>
@@ -482,7 +491,7 @@ const accent = {
                   <span class="rounded-full bg-emerald-100 px-1.5 py-0.5 text-[9px] font-bold uppercase text-emerald-600 dark:bg-emerald-900/30 dark:text-emerald-400">{item.badge}</span>
                 </div>
                 <p class="font-mono text-[10px] text-slate-400">{item.commandCodex}</p>
-                <p class="mt-1 text-xs font-medium text-slate-700 dark:text-slate-300">{skillDesc(item)}</p>
+                <p class="mt-1 text-xs font-medium text-slate-700 dark:text-slate-300">{skillDesc(item).split('`').map((part, i) => (i % 2 ? <code class={akInlineCodeClass}>{part}</code> : part))}</p>
                 {item.args && item.args.length > 0 && (
                   <div class="mt-1.5 flex flex-wrap gap-1">
                     {item.args.map((arg) => (
@@ -558,7 +567,7 @@ const accent = {
                   <span class="opacity-60">{s.command}</span>{' '}{s.argumentHint}
                 </p>
               )}
-              <p class="mt-2 flex-1 text-xs leading-5 text-slate-600 dark:text-slate-400">{skillDesc(s)}</p>
+              <p class="mt-2 flex-1 text-xs leading-5 text-slate-600 dark:text-slate-400">{skillDesc(s).split('`').map((part, i) => (i % 2 ? <code class={akInlineCodeClass}>{part}</code> : part))}</p>
               <a href={translatePath(`/guides/agentkit/skills/engineer/${s.id}`)} class="mt-2 text-[11px] font-semibold text-teal-700 hover:underline dark:text-teal-300">
                 {isVi ? 'Xem giải thích trực quan →' : 'Open visual guide →'}
               </a>
@@ -627,7 +636,7 @@ const accent = {
                   <code class="rounded bg-purple-100 px-1.5 py-0.5 font-mono text-xs font-medium text-purple-600 dark:bg-purple-900/30 dark:text-purple-400">{item.command}</code>
                   <span class="rounded-full bg-emerald-100 px-1.5 py-0.5 text-[9px] font-bold uppercase text-emerald-600 dark:bg-emerald-900/30 dark:text-emerald-400">{item.badge}</span>
                 </div>
-                <p class="mt-1 text-xs font-medium text-slate-700 dark:text-slate-300">{skillDesc(item)}</p>
+                <p class="mt-1 text-xs font-medium text-slate-700 dark:text-slate-300">{skillDesc(item).split('`').map((part, i) => (i % 2 ? <code class={akInlineCodeClass}>{part}</code> : part))}</p>
               </div>
             ))}
           </div>
@@ -689,7 +698,7 @@ const accent = {
                   <span class="opacity-60">{s.command}</span>{' '}{s.argumentHint}
                 </p>
               )}
-              <p class="mt-2 flex-1 text-xs leading-5 text-slate-600 dark:text-slate-400">{skillDesc(s)}</p>
+              <p class="mt-2 flex-1 text-xs leading-5 text-slate-600 dark:text-slate-400">{skillDesc(s).split('`').map((part, i) => (i % 2 ? <code class={akInlineCodeClass}>{part}</code> : part))}</p>
               <a href={translatePath(`/guides/agentkit/skills/marketing/${s.id}`)} class="mt-2 text-[11px] font-semibold text-fuchsia-700 hover:underline dark:text-fuchsia-300">
                 {isVi ? 'Xem giải thích trực quan →' : 'Open visual guide →'}
               </a>

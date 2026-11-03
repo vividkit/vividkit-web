@@ -1,4 +1,5 @@
 ---
+import { akInvocationText } from '@/data/guides/agentkit-invocation';
 import { getLangFromUrl, useTranslatedPath, type Language } from '@/i18n';
 import AkPageHero from './AkPageHero.astro';
 import AkSection from './AkSection.astro';
@@ -135,7 +136,7 @@ const faqs = isVi
     lang={currentLang}
     title={isVi ? 'Tiếp theo' : 'Next'}
     links={[
-      { href: '/guides/agentkit/skills', label: isVi ? 'Bảng Skills' : 'Skills cheatsheet', desc: isVi ? 'Mọi skill /ak:' : 'Every /ak: skill' },
+      { href: '/guides/agentkit/skills', label: isVi ? 'Bảng Skills' : 'Skills cheatsheet', desc: isVi ? akInvocationText('Mọi skill /ak:') : akInvocationText('Every /ak: skill') },
       { href: '/guides/agentkit/workflows', label: isVi ? 'Workflows' : 'Workflows', desc: isVi ? 'Chuỗi skill gợi ý' : 'Recommended skill chains' },
       { href: '/guides/agentkit/runtime-support', label: isVi ? 'Hỗ trợ runtime' : 'Runtime support' },
       { href: '/guides/agentkit/how-it-works', label: isVi ? 'Cách hoạt động' : 'How it works' },

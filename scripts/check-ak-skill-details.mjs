@@ -6,8 +6,7 @@
  */
 import { createHash } from 'node:crypto';
 import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from 'node:fs';
-import { dirname, join, relative, resolve } from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { join, relative, resolve } from 'node:path';
 import {
   ROOT,
   buildSnapshot,
@@ -27,6 +26,7 @@ function parseArgs(argv) {
     stableRef: 'origin/main',
     betaRef: 'origin/dev',
     selfTest: false,
+    verbose: false,
   };
   for (let i = 0; i < argv.length; i++) {
     const a = argv[i];
@@ -35,9 +35,10 @@ function parseArgs(argv) {
     else if (a === '--stable-ref') out.stableRef = argv[++i] || out.stableRef;
     else if (a === '--beta-ref') out.betaRef = argv[++i] || out.betaRef;
     else if (a === '--self-test') out.selfTest = true;
+    else if (a === '--verbose') out.verbose = true;
     else if (a === '--help' || a === '-h') {
       process.stdout.write(
-        'Usage: check-ak-skill-details --kit-root <agentkit-checkout> [--stable-ref] [--beta-ref] [--write-lock] [--self-test]\n',
+        'Usage: check-ak-skill-details --kit-root <agentkit-checkout> [--stable-ref] [--beta-ref] [--write-lock] [--verbose] [--self-test]\n',
       );
       process.exit(0);
     }
@@ -282,8 +283,11 @@ function main() {
   for (const e of changed) process.stdout.write(`  ~ ${e.id} ${e.sourceChannel || ''} ${e.source}\n`);
   for (const e of missingSource) process.stdout.write(`  ? ${e.kit}/${e.id} no SKILL.md channel=${e.sourceChannel || 'none'}\n`);
   if (betaDeltas.length) {
-    process.stdout.write(`beta-delta ${betaDeltas.length} shared pages (advisory, not gated)\n`);
-    for (const id of betaDeltas) process.stdout.write(`  beta-delta ${id}\n`);
+    const perKit = {};
+    for (const id of betaDeltas) perKit[id.split('/')[0]] = (perKit[id.split('/')[0]] || 0) + 1;
+    const counts = Object.entries(perKit).map(([kit, n]) => `${kit} ${n}`).join(', ');
+    process.stdout.write(`beta-delta ${betaDeltas.length} shared pages (advisory, not gated): ${counts}\n`);
+    if (opts.verbose) for (const id of betaDeltas) process.stdout.write(`  beta-delta ${id}\n`);
   }
 
   if (added.length || removed.length || changed.length || missingSource.length) {

@@ -70,10 +70,10 @@ const data: SkillInfographic = {
   ],
   "hardGate": {
     "type": "critical",
-    "titleEn": "Capture only, unless --dispatch",
-    "titleVi": "Chỉ capture, trừ khi --dispatch",
-    "contentEn": "Without --dispatch, ak:handoff never launches a runtime, edits code, commits, deletes, or writes outside the workspace. With --dispatch it captures the artifact, then hands that one job to ak:orchestrate. Credential-looking task text is refused, and an existing output still needs --force.",
-    "contentVi": "Không có --dispatch thì ak:handoff không chạy runtime, không sửa code, không commit, không xóa và không ghi ngoài workspace. Có --dispatch thì skill ghi artifact rồi giao đúng một job cho ak:orchestrate. Chuỗi giống credential bị từ chối, và file đã có vẫn cần --force."
+    "titleEn": "A handoff always creates a project artifact",
+    "titleVi": "Handoff luôn tạo artifact trong project",
+    "contentEn": "The Skill writes `plans/reports/handoff-YYYYMMDD-HHmm-<slug>.md`. If the project has no `plans/` directory, it asks you for a safe output location before writing. Without `--dispatch`, `ak-handoff` never launches a runtime, edits code, commits, deletes, or writes outside the workspace. With `--dispatch` it captures the artifact, then hands that one job to `ak-orchestrate`. Credential-looking task text is refused, and an existing output still needs `--force`.",
+    "contentVi": "Skill ghi `plans/reports/handoff-YYYYMMDD-HHmm-<slug>.md`. Nếu project chưa có thư mục `plans/`, Skill hỏi bạn chỗ lưu output an toàn trước khi ghi. Không có `--dispatch` thì `ak-handoff` không chạy runtime, không sửa code, không commit, không xóa và không ghi ra ngoài workspace. Có `--dispatch` thì skill ghi artifact rồi giao đúng một job đó cho `ak-orchestrate`. Nội dung task trông giống credential sẽ bị từ chối, và nếu file output đã có thì vẫn cần `--force`."
   },
   "corePrinciplesEn": [
     "Write a continuation contract, not a transcript dump.",

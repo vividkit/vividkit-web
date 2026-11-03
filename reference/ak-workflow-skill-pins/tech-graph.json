@@ -1,13 +1,13 @@
 {
   "slug": "tech-graph",
-  "hash": "19ec7363e054d30a66a831827c90fbbd279ea398b6ed4176e7f5c83e4c0642f6",
+  "hash": "902b0f58c82536f11d43f3fd0f376d2884c7495fb57b906069b3993091bc2405",
   "source": "kit",
   "path": "ak-cli@origin/main:kits/core/skills/ak-tech-graph/SKILL.md",
-  "pinnedAt": "2026-10-02T21:25:37.472Z",
+  "pinnedAt": "2026-11-02T21:11:20.828Z",
   "snapshot": {
-    "name": "ak:tech-graph",
-    "description": ">-",
-    "when_to_use": "Invoke for publish-grade architecture or flow diagrams.",
+    "name": "ak-tech-graph",
+    "description": "Generate publish-grade SVG+PNG technical diagrams such as architecture, data flow, flowchart, sequence or concept maps in 7 visual styles.",
+    "when_to_use": "Invoke for illustrated diagrams; use /ak-preview --diagram to self-review, /ak-mermaidjs-v11 for inline docs.",
     "argument_hint": "[diagram-type or system description]",
     "version": null
   }

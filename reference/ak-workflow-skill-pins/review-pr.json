@@ -1,13 +1,13 @@
 {
   "slug": "review-pr",
-  "hash": "585b95947063697e1e093739868c9db61aa8cdac6693a0dbfc6d34cb394b14a9",
+  "hash": "6dab7704f30250ba664bfcecfb1a6ce97451b3e08bc26d4159660099c8308ee1",
   "source": "kit",
   "path": "ak-cli@origin/main:kits/engineer/skills/ak-review-pr/SKILL.md",
-  "pinnedAt": "2026-10-02T21:25:37.469Z",
+  "pinnedAt": "2026-11-02T21:11:20.828Z",
   "snapshot": {
-    "name": "ak:review-pr",
-    "description": "Review GitHub pull requests for correctness, regressions and security. Optional fix, reply and merge modes authorize their respective delivery steps.",
-    "when_to_use": "Invoke to review one or more GitHub PRs by number/URL, optionally fix findings, optionally post the review back to GitHub, optionally merge when ready and watch CI.",
+    "name": "ak-review-pr",
+    "description": "Review GitHub PRs for correctness, regressions and security; fix, reply and merge modes authorize those steps.",
+    "when_to_use": "Invoke for PR numbers or URLs, to fix findings, post the review back to GitHub or merge when ready and watch CI.",
     "argument_hint": "<PR number or URL> [<PR number or URL> ...] [--fix] [--reply] [--merge] [--advice] [--ultra]",
     "version": null
   }

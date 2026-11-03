@@ -7,7 +7,7 @@ const FB_PIXEL_ID = import.meta.env.PUBLIC_FB_PIXEL_ID;
 
 {GA_ID && (
   <>
-    <script async src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}></script>
+    <script is:inline async src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}></script>
     <script is:inline define:vars={{ GA_ID }}>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}

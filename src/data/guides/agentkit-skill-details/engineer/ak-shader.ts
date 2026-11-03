@@ -10,6 +10,13 @@ const data: SkillInfographic = {
     "taglineEn": "Author GLSL fragment shaders for procedural textures, SDF shapes, gradients, noise, fBm, tiling, animation, WebGL, Three.js, and generative effects.",
     "taglineVi": "Viết GLSL fragment shader cho texture thủ tục, hình SDF, gradient, noise, fBm, tiling, animation, WebGL, Three.js và hiệu ứng tạo sinh."
   },
+  "hardGate": {
+    "type": "warning",
+    "titleEn": "A compiling shader is not yet a safe visual",
+    "titleVi": "Shader compile được chưa chắc đã an toàn khi hiển thị",
+    "contentEn": "Animated contrast, flashing, rapid movement, high-frequency detail, and heavy fragment loops can affect accessibility, battery, heat, and frame stability. Review the rendered effect with real content on target devices.",
+    "contentVi": "Tương phản chuyển động, nhấp nháy, chuyển động nhanh, chi tiết tần số cao và vòng lặp fragment nặng có thể ảnh hưởng khả năng tiếp cận, pin, nhiệt độ máy và độ ổn định khung hình. Hãy xem hiệu ứng đã render với nội dung thật trên thiết bị đích."
+  },
   "processFlow": [
     {
       "number": 1,

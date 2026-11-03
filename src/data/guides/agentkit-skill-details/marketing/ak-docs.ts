@@ -12,14 +12,14 @@ const data: SkillInfographic = {
   },
   hardGate: {
     type: 'warning',
-    titleEn: 'Docs are not product code',
-    titleVi: 'Tài liệu không phải mã sản phẩm',
-    contentEn: 'The skill must not implement product code, impose a fixed docs tree, or invent claims. It asks when the operation is empty or unclear.',
-    contentVi: 'Skill không được sửa mã sản phẩm, ép một cấu trúc tài liệu cố định, hoặc bịa nội dung. Khi yêu cầu trống hoặc mơ hồ thì phải hỏi lại.',
+    titleEn: 'Documentation work does not authorize external action',
+    titleVi: 'Làm tài liệu không đồng nghĩa được phép hành động bên ngoài',
+    contentEn: 'A local document does not approve publishing, changing a live campaign or account, contacting an audience, spending budget, sending data to a provider, or implementing product code; approve those separately. The skill must not impose a fixed docs tree or invent claims, and it asks when the operation is empty or unclear.',
+    contentVi: 'Một tài liệu local không phải là phê duyệt để publish, đổi campaign hay tài khoản đang chạy, liên hệ khách hàng, chi ngân sách, gửi dữ liệu cho nhà cung cấp hoặc sửa mã sản phẩm; các việc đó cần duyệt riêng. Skill không được ép một cấu trúc tài liệu cố định hay bịa nội dung, và phải hỏi lại khi yêu cầu trống hoặc mơ hồ.',
   },
   processFlow: [
     { number: 1, titleEn: 'Frame intent', titleVi: 'Chốt mục tiêu', descEn: 'Bound the consumer, outcome, proof sources, evergreen versus stateful material, and acceptance criteria.', descVi: 'Xác định người đọc, kết quả cần đạt, nguồn bằng chứng, phần bền vững so với phần tạm thời, và tiêu chí hoàn tất.' },
-    { number: 2, titleEn: 'Route command', titleVi: 'Định tuyến lệnh', descEn: 'Parse init, update, summarize, agent-context, agents, llms, or ask the user instead of assuming init.', descVi: 'Đọc init, update, summarize, agent-context, agents, llms; nếu không rõ thì hỏi người dùng thay vì tự chọn init.' },
+    { number: 2, titleEn: 'Route command', titleVi: 'Định tuyến lệnh', descEn: 'Parse init, update, summarize, agent-context, agents, philosophy, llms, or ask the user instead of assuming init.', descVi: 'Đọc init, update, summarize, agent-context, agents, philosophy, llms; nếu không rõ thì hỏi người dùng thay vì tự chọn init.' },
     { number: 3, titleEn: 'Load rules', titleVi: 'Nạp quy tắc', descEn: 'Load the matching reference workflow plus doc-content or agent-context rules before writing.', descVi: 'Nạp workflow tham chiếu tương ứng cùng quy tắc viết tài liệu hoặc quy tắc ngữ cảnh agent trước khi soạn.' },
     { number: 4, titleEn: 'Discover authority', titleVi: 'Tìm nguồn thẩm quyền', descEn: 'Inspect repo instructions, README, docs navigation, existing docs, source, tests, scripts, and live evidence in order.', descVi: 'Đọc lần lượt hướng dẫn repo, README, điều hướng docs, tài liệu hiện có, mã, test, script và bằng chứng đang chạy.' },
     { number: 5, titleEn: 'Choose owners', titleVi: 'Chọn nơi sở hữu', descEn: 'Update only documents whose contract or evidence changed; link to executable owners instead of duplicating facts.', descVi: 'Chỉ cập nhật tài liệu có hợp đồng hoặc bằng chứng đổi; liên kết đến nơi sở hữu thực thi thay vì chép lại dữ kiện.' },
@@ -54,6 +54,8 @@ const data: SkillInfographic = {
       commandVi: '/ak:docs agents 30d --source', whenEn: 'Recent git, CI, and source markers should become confirmed DO or DON’T rules.', whenVi: 'Lịch sử git, CI và dấu hiệu trong mã gần đây cần được chuyển thành luật NÊN hoặc KHÔNG NÊN đã xác nhận.', expectedEn: 'Ranks recurring signals, includes the default kongming review, and distills only corroborated rules into root agent context.', expectedVi: 'Xếp hạng tín hiệu lặp lại, kèm review kongming mặc định, và chỉ đưa luật có chứng cứ vào ngữ cảnh agent ở gốc.' },
     { labelEn: 'Dry-run rule mining', labelVi: 'Chạy thử rút luật', command: '/ak:docs agents 30d --dry-run',
       commandVi: '/ak:docs agents 30d --dry-run', whenEn: 'You want ranked recurring signals without advisor proposals or file writes.', whenVi: 'Cần xếp hạng tín hiệu lặp lại mà không tạo đề xuất cố vấn hoặc ghi file.', expectedEn: 'Stops after signal ranking, makes no rule proposals, spawns no advisor, and writes no file.', expectedVi: 'Dừng sau bước xếp hạng tín hiệu, không đề xuất luật, không gọi cố vấn và không ghi file.' },
+    { labelEn: 'Record product principles', labelVi: 'Ghi nguyên tắc sản phẩm', command: '/ak:docs philosophy',
+      commandVi: '/ak:docs philosophy', whenEn: 'You explicitly want the product author to decide durable boundaries and priorities through an interview.', whenVi: 'Bạn chủ động muốn tác giả sản phẩm tự quyết ranh giới và ưu tiên lâu dài qua một buổi phỏng vấn.', expectedEn: 'Asks one unresolved question at a time using repo evidence and recent same-project sessions, previews the exact diff, and writes nothing until you approve it.', expectedVi: 'Hỏi từng câu chưa rõ một, dựa trên bằng chứng trong repo và các session gần đây của cùng project, cho xem trước đúng diff và không ghi gì cho đến khi bạn duyệt.' },
   ],
   skillStack: [
     { name: 'kongming', type: 'agent' },

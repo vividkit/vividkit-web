@@ -103,7 +103,7 @@ const outputFlags = (data.outputFlags || []).map(f => ({
   flag: f.flag,
   title: isVi ? f.titleVi : f.titleEn,
   desc: isVi ? f.descVi : f.descEn,
-  example: f.exampleCommand || '',
+  example: (isVi ? f.exampleCommandVi || f.exampleCommand : f.exampleCommand) || '',
   accent: outputFlagAccent[f.flag] || 'border-slate-200 bg-slate-50/80 dark:border-white/10 dark:bg-white/[0.04]',
 }));
 

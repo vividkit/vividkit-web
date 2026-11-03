@@ -1,4 +1,5 @@
 import type { SkillInfographic } from '@/data/guides/how-ck-works';
+import { withAkInvocation } from '@/data/guides/agentkit-invocation';
 
 export type AkSkillDetailKit = 'engineer' | 'marketing';
 
@@ -14,7 +15,7 @@ for (const [path, mod] of Object.entries(modules)) {
   const data = mod.default;
   if (!data?.id || !data.kit) continue;
   const kit = data.kit === 'marketer' ? 'marketing' : 'engineer';
-  byKey.set(`${kit}/${data.id}`, data);
+  byKey.set(`${kit}/${data.id}`, withAkInvocation(data));
 }
 
 export function listAkSkillDetails(): Array<{ kit: AkSkillDetailKit; skill: string }> {
@@ -36,8 +37,8 @@ export function listAkSkillJumpItems(): AkSkillJumpItem[] {
   return [...byKey.values()]
     .map((data) => {
       const kit: AkSkillDetailKit = data.kit === 'marketer' ? 'marketing' : 'engineer';
-      const titleEn = data.header.titleEn.replace(/^[/$@]*ak:[^\s]+(?:\s*[-–—]\s*)?/i, '').trim();
-      const titleVi = data.header.titleVi.replace(/^[/$@]*ak:[^\s]+(?:\s*[-–—]\s*)?/i, '').trim();
+      const titleEn = data.header.titleEn.replace(/^[/$@]*ak[:-][^\s]+(?:\s*[-–—]\s*)?/i, '').trim();
+      const titleVi = data.header.titleVi.replace(/^[/$@]*ak[:-][^\s]+(?:\s*[-–—]\s*)?/i, '').trim();
       return {
         kit,
         skill: data.id,

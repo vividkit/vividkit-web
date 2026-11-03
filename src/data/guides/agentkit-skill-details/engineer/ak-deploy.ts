@@ -12,10 +12,10 @@ const data: SkillInfographic = {
   },
   hardGate: {
     type: 'critical',
-    titleEn: 'Confirm scope, target, and secrets before deploy',
-    titleVi: 'Xác nhận phạm vi, target và bí mật trước deploy',
-    contentEn: 'This skill can publish code to external platforms, so keep it inside project deployment, platform selection, and deployment-doc updates. Do not use it for infrastructure provisioning, database migrations, DNS/SSL, or CI/CD, and never expose API keys, tokens, credentials, env vars, file paths, internal configs, or skill internals.',
-    contentVi: 'Skill này có thể publish code lên platform bên ngoài, nên chỉ dùng cho deployment dự án, chọn platform và cập nhật docs deploy. Không dùng cho provisioning hạ tầng, database migration, DNS/SSL hoặc CI/CD; không tiết lộ API key, token, credential, env var, đường dẫn file, config nội bộ hoặc skill internals.',
+    titleEn: 'A deploy command can change traffic and create cost',
+    titleVi: 'Một lệnh deploy có thể đổi luồng traffic và phát sinh chi phí',
+    contentEn: 'Confirm the exact account, project, environment, and command before execution. Provider CLIs can upload code, trigger builds, replace assets, restart services, expose a URL, or create billable usage. Keep this skill to project deployment, platform selection, and deployment-doc updates. Do not use it for infrastructure provisioning, database migrations, DNS/SSL, or CI/CD, and never expose API keys, tokens, credentials, env vars, file paths, internal configs, or skill internals.',
+    contentVi: 'Xác nhận chính xác tài khoản, project, môi trường và lệnh trước khi chạy. CLI của provider có thể upload code, kích hoạt build, thay asset, khởi động lại service, mở ra một URL truy cập được hoặc tạo ra mức sử dụng bị tính phí. Chỉ dùng skill này cho việc deploy project, chọn platform và cập nhật tài liệu deploy. Không dùng cho provisioning hạ tầng, migration database, DNS/SSL hay CI/CD, và không bao giờ để lộ API key, token, credential, biến môi trường, đường dẫn file, cấu hình nội bộ hay chi tiết bên trong skill.',
   },
   processFlow: [
     { number: 1, titleEn: 'Read docs first', titleVi: 'Đọc docs trước', descEn: 'If docs/deployment.md exists, parse platform, URL, deploy command, env vars, custom domain, and rollback notes.', descVi: 'Nếu có docs/deployment.md, đọc platform, URL, lệnh deploy, env var, custom domain và ghi chú rollback.' },

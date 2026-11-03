@@ -10,6 +10,13 @@ const data: SkillInfographic = {
     taglineEn: "Analyzes competitors, content gaps, SEO position, alternative pages, comparison pages, tracking lists, and sales battlecards.",
     taglineVi: "Phân tích đối thủ, khoảng trống nội dung, SEO, trang alternative, trang so sánh, danh sách theo dõi và battlecard bán hàng.",
   },
+  hardGate: {
+    type: "warning",
+    titleEn: "Comparative content must stay accurate and fair",
+    titleVi: "Nội dung so sánh phải chính xác và công bằng",
+    contentEn: "A competitor's public statement is evidence of what it says, not proof of how it performs everywhere. A generated strength, weakness, score, testimonial, or recommendation is not publishable until it is verified and reviewed.",
+    contentVi: "Tuyên bố công khai của đối thủ chỉ là bằng chứng về điều họ nói, không chứng minh sản phẩm của họ chạy tốt ở mọi nơi. Điểm mạnh, điểm yếu, điểm số, lời chứng thực hay khuyến nghị do AI tạo ra chưa được đăng cho tới khi đã xác minh và review."
+  },
   processFlow: [
     { number: 1, titleEn: "Parse target", titleVi: "Đọc đối tượng", descEn: "Extract the action plus competitor URL or name from the arguments.", descVi: "Tách hành động và URL hoặc tên đối thủ từ tham số." },
     { number: 2, titleEn: "Analyze competitor", titleVi: "Phân tích đối thủ", descEn: "For analyze, gather web data and use researcher for value proposition, pricing, audience, channels, strengths, and weaknesses.", descVi: "Với analyze, thu thập dữ liệu web và dùng researcher để xem value prop, giá, audience, kênh, điểm mạnh và điểm yếu." },

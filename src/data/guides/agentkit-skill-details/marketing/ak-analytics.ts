@@ -10,6 +10,13 @@ const data: SkillInfographic = {
     taglineEn: "Measure campaign performance, KPIs, attribution, ROI, A/B results, funnel health, and reporting dashboards so marketing decisions are driven by comparable evidence.",
     taglineVi: "Đo hiệu suất campaign, KPI, attribution, ROI, kết quả A/B, sức khỏe funnel và dashboard báo cáo để quyết định marketing dựa trên bằng chứng có thể so sánh.",
   },
+  hardGate: {
+    type: "warning",
+    titleEn: "Analysis does not authorize instrumentation or spend",
+    titleVi: "Phân tích không cho phép sửa tracking hay chi tiền",
+    contentEn: "A report may recommend changing events, GA4 properties, campaigns, budgets, audiences, or experiments. Each is a separate change with account, provider, privacy, cost, and publication effects; review and approve them one by one. A reporting request grants read and analysis scope only.",
+    contentVi: "Báo cáo có thể đề xuất đổi event, GA4 property, campaign, ngân sách, audience hoặc experiment. Mỗi việc là một thay đổi riêng, ảnh hưởng tới tài khoản, provider, quyền riêng tư, chi phí và việc công khai; hãy review và duyệt từng việc. Yêu cầu làm báo cáo chỉ cho phép đọc và phân tích."
+  },
   processFlow: [
     { number: 1, titleEn: "Define success", titleVi: "Định nghĩa thành công", descEn: "Clarify the metric or report type and select the KPI framework for acquisition, engagement, conversion, retention, and revenue.", descVi: "Làm rõ metric hoặc loại báo cáo và chọn khung KPI cho acquisition, engagement, conversion, retention và revenue." },
     { number: 2, titleEn: "Load templates", titleVi: "Nạp template", descEn: "Use marketing-kpis, report-templates, attribution-models, and analysis-workflows references to ground the analysis structure.", descVi: "Dùng các reference marketing-kpis, report-templates, attribution-models và analysis-workflows để đặt cấu trúc phân tích." },

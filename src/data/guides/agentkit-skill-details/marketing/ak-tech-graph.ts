@@ -12,10 +12,10 @@ const data: SkillInfographic = {
   },
   hardGate: {
     type: "critical",
-    titleEn: "SVG safety gates",
-    titleVi: "Cổng an toàn SVG",
-    contentEn: "Verify rsvg-convert before use; always load the selected style reference; arrow labels need background rects; arrows must not cross component interiors; never retry the same failing command endlessly.",
-    contentVi: "Kiểm tra rsvg-convert trước khi dùng; luôn nạp style reference đã chọn; nhãn mũi tên phải có nền; mũi tên không được đâm xuyên qua component; không lặp lại mãi cùng một lệnh đang lỗi."
+    titleEn: "Generation writes artifacts; publication remains separate",
+    titleVi: "Tạo file là ghi artifact, còn xuất bản vẫn là việc riêng",
+    contentEn: "By default the Skill writes SVG and PNG into the current directory. Confirm a custom destination before using `--output`. Generating files does not approve committing, uploading, embedding, publishing, deploying, or replacing an existing brand asset. Verify rsvg-convert before use and always load the selected style reference, with background rects behind arrow labels and no arrows crossing component interiors. Never retry the same failing command endlessly.",
+    contentVi: "Mặc định skill ghi SVG và PNG vào thư mục hiện tại. Hãy xác nhận thư mục đích tùy chỉnh trước khi dùng `--output`. Việc tạo file không đồng nghĩa với được phép commit, upload, nhúng, xuất bản, deploy hay thay thế brand asset hiện có. Kiểm tra rsvg-convert trước khi dùng và luôn nạp style reference đã chọn, với nền phía sau nhãn mũi tên và không có mũi tên nào cắt qua bên trong component. Không bao giờ lặp lại mãi cùng một lệnh đang lỗi."
   },
   processFlow: [
     {

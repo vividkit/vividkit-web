@@ -48,10 +48,6 @@ export interface AkWorkflowStep {
     note: string;
     noteVi?: string;
   }>;
-  /** @deprecated Prefer optionalModes — kept for simple single-note cases */
-  optionalFlags?: string[];
-  optionalFlagsNote?: string;
-  optionalFlagsNoteVi?: string;
   /** Optional card accent classes (UI phase) */
   color?: string;
 }

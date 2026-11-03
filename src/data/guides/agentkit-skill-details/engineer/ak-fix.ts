@@ -12,10 +12,10 @@ const data: SkillInfographic = {
   },
   hardGate: {
     type: "critical",
-    titleEn: "INTENT, SCOUT, DIAGNOSE",
-    titleVi: "Ý ĐỊNH, SCOUT, CHẨN ĐOÁN",
-    contentEn: "Begin with a bounded intent frame, then scan the codebase before hypotheses. Do not propose or implement fixes before Steps 1-2 (Scout + Diagnose) and a concrete root-cause sentence covering exact symptom, repro, expected/actual, file:line cause, why now, and blast radius. After 3+ failed fix attempts, stop and discuss the architecture with the user; only --quick narrows this for trivial lint/type issues.",
-    contentVi: "Bắt đầu bằng khung ý định có giới hạn, rồi quét codebase trước khi lập giả thuyết. Không đề xuất hoặc triển khai fix trước Steps 1-2 (Scout + Diagnose) và một câu nguyên nhân gốc cụ thể gồm triệu chứng chính xác, repro, expected/actual, nguyên nhân ở file:line, lý do xuất hiện bây giờ và blast radius. Sau 3+ lần fix thất bại, dừng lại và bàn lại kiến trúc với user; chỉ --quick mới thu hẹp quy trình cho lỗi lint/type nhỏ.",
+    titleEn: "Automation does not permit guessing",
+    titleVi: "Tự động hoá không cho phép đoán mò",
+    contentEn: "No mode may propose or implement a repair before scouting and diagnosis. The root-cause record must name the exact symptom, reproduction, expected versus actual behavior, specific defect, why it surfaced now, and blast radius. Begin with a bounded intent frame, then scan the codebase before hypotheses. After 3+ failed fix attempts, stop and discuss the architecture with the user; only `--quick` narrows this process for trivial lint/type issues.",
+    contentVi: "Không chế độ nào được đề xuất hay thực hiện bản sửa trước khi scout và chẩn đoán. Bản ghi nguyên nhân gốc phải nêu đúng triệu chứng, cách tái hiện, hành vi mong đợi so với thực tế, lỗi cụ thể, vì sao lỗi xuất hiện lúc này và phạm vi ảnh hưởng. Bắt đầu bằng một khung ý định có giới hạn, rồi quét codebase trước khi đưa ra giả thuyết. Sau 3 lần sửa thất bại trở lên, dừng lại và bàn lại kiến trúc với người dùng; chỉ `--quick` mới rút gọn quy trình này cho lỗi lint/type nhỏ.",
   },
   processFlow: [
     { number: 1, titleEn: "Frame Intent", titleVi: "Đóng khung ý định", descEn: "Capture outcome, constraints, non-goals, and acceptance criteria before choosing a mode or diagnosis path.", descVi: "Ghi outcome, ràng buộc, non-goal và tiêu chí chấp nhận trước khi chọn mode hoặc hướng chẩn đoán." },

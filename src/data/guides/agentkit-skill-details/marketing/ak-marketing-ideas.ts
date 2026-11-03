@@ -10,6 +10,13 @@ const data: SkillInfographic = {
     taglineEn: "Choose 3-5 context-fit growth ideas from a 140-tactic SaaS marketing library, then explain fit, first steps, outcomes, and required resources.",
     taglineVi: "Chọn 3-5 ý tưởng growth phù hợp bối cảnh từ thư viện 140 tactic marketing SaaS, rồi giải thích độ phù hợp, bước đầu, kết quả và nguồn lực cần."
   },
+  hardGate: {
+    type: "warning",
+    titleEn: "The catalog is inspiration, not evidence or permission",
+    titleVi: "Danh mục là gợi ý, không phải bằng chứng hay sự cho phép",
+    contentEn: "The catalog calls its approaches \"proven\" but gives no citations, effect sizes, success rates, or fit tests. Validate every idea against your market, users, policies, platform terms, and current law.",
+    contentVi: "Danh mục gọi các cách làm là \"đã được chứng minh\" nhưng không có trích dẫn, mức hiệu quả, tỷ lệ thành công hay cách kiểm tra độ phù hợp. Hãy kiểm chứng từng ý tưởng với thị trường, người dùng, chính sách, điều khoản nền tảng và luật hiện hành."
+  },
   processFlow: [
     {
       number: 1,

@@ -12,10 +12,10 @@ const data: SkillInfographic = {
   },
   hardGate: {
     type: 'critical',
-    titleEn: 'Operate only on approved real profiles',
-    titleVi: 'Chỉ thao tác trên profile thật đã được chấp thuận',
-    contentEn: 'If the requested profile is not configured or approved, ask before operating. Never expose profile emails, mappings, or JSON open payloads unless the task requires it.',
-    contentVi: 'Nếu profile được yêu cầu chưa cấu hình hoặc chưa được người dùng chấp thuận, phải hỏi trước khi thao tác. Không tiết lộ email, ánh xạ profile hoặc payload JSON mở tab trừ khi nhiệm vụ thật sự cần.',
+    titleEn: 'This workflow operates inside your real signed-in browser',
+    titleVi: 'Workflow này chạy trong trình duyệt thật đang đăng nhập của bạn',
+    contentEn: 'A correctly bound tab can read or change data available to that Chrome account. Opening the tab is not approval to send messages, upload files, change settings, accept terms, purchase, delete, publish, or disclose data. If the requested profile is not configured or approved, ask before operating. Never expose profile emails, mappings, or JSON open payloads unless the task requires it.',
+    contentVi: 'Một tab được gắn đúng có thể đọc hoặc thay đổi dữ liệu mà tài khoản Chrome đó truy cập được. Mở tab không có nghĩa là được phép gửi tin nhắn, upload file, đổi cài đặt, chấp nhận điều khoản, mua hàng, xoá, xuất bản hay tiết lộ dữ liệu. Nếu profile được yêu cầu chưa được cấu hình hoặc chưa được chấp thuận, phải hỏi trước khi thao tác. Không bao giờ để lộ email của profile, bảng ánh xạ profile hay payload JSON khi mở tab, trừ khi nhiệm vụ thật sự cần.',
   },
   processFlow: [
     { number: 1, titleEn: 'Decide need', titleVi: 'Xác định nhu cầu', descEn: 'Use this skill only when real Chrome identity matters; otherwise use agent-browser, web-testing, Playwright, or ordinary DevTools navigation.', descVi: 'Chỉ dùng khi trạng thái Chrome thật quan trọng; nếu không, dùng agent-browser, web-testing, Playwright hoặc điều hướng DevTools thông thường.' },

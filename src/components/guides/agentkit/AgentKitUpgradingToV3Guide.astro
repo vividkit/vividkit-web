@@ -1,0 +1,275 @@
+---
+/**
+ * Upgrading to AgentKit v3 — what changes for a v2 owner, what happens on its own, what to do.
+ * Source: ak-cli origin/main docs/guides/v2-to-v3-migration.md and ak-docs stable guides
+ * upgrading-to-v3 / rolling-back-to-v2. v3.0.0 is the stable release (2026-10-29).
+ */
+import { getLangFromUrl, useTranslatedPath, type Language } from '@/i18n';
+import AkPageHero from './AkPageHero.astro';
+import AkSection from './AkSection.astro';
+import AkCodeBlock from './AkCodeBlock.astro';
+import AkCallout from './AkCallout.astro';
+import AkNextLinks from './AkNextLinks.astro';
+import AkInlineCode from './AkInlineCode.astro';
+
+interface Props {
+  lang?: Language;
+}
+
+const { lang } = Astro.props;
+const currentLang = lang || getLangFromUrl(Astro.url);
+const isVi = currentLang === 'vi';
+const translatePath = useTranslatedPath(currentLang);
+
+const changes = isVi
+  ? [
+      {
+        title: 'Một tên skill: ak-<slug>',
+        auto: 'Kit làm mới xong thì mọi skill mang tên `ak-<slug>`. CLI ak và các tùy chọn đã lưu vẫn nhận dạng cũ `ak:<slug>`.',
+        you: 'Gõ `/ak-cook` (Claude Code) hoặc `$ak-cook` (Codex) thay cho `/ak:cook`. Dạng có dấu hai chấm không còn chạy trong runtime.',
+      },
+      {
+        title: 'ak-ak gộp vào ak-agentkit',
+        auto: '`ak update --global` và `ak kit refresh <kit>` tự xóa file `ak-ak` cũ.',
+        you: 'Muốn agent giúp chạy lệnh ak thì dùng `/ak-agentkit`. Update ở phạm vi project, hoặc thư mục còn chứa file không do AgentKit quản lý, có thể để sót thư mục `ak-ak`. Không gì đọc tới nó nữa, nhưng hãy kiểm tra trước khi xóa: sao lưu thư mục, chuyển ra ngoài các skill hay file bạn tự tạo, và dừng lại nếu không chắc một file từ đâu ra.',
+      },
+      {
+        title: 'Thời hạn nhận bản cập nhật',
+        auto: 'Kit, CLI ak và app desktop đã cài vẫn dùng được mãi. Hết thời hạn thì bản cập nhật dừng ở bản mới nhất thời hạn bao phủ, và `ak update` không bao giờ đưa kit về bản cũ hơn.',
+        you: 'Xem thời hạn bằng `ak licenses`. Gia hạn từ link lệnh đó in ra nếu bạn muốn nhận bản phát hành sau thời hạn.',
+      },
+      {
+        title: 'Skill store: chỉ bật khi bạn chọn',
+        auto: 'Không có gì. Cách cài cũ vẫn là mặc định; `ak update` thường không bao giờ tự bật skill store.',
+        you: 'Tùy chọn: bật bằng `ak update --ssot` (xem phần bên dưới), tắt lại bằng `ak rollback --to v2`.',
+      },
+      {
+        title: 'Skill dùng chung giữa các kit',
+        auto: 'Khi hai kit cùng ship một skill, agent, rule, hook hay MCP, chúng nhường file cho nhau thay vì chặn update của nhau. File bạn đã sửa vẫn được giữ.',
+        you: 'Không cần làm gì. Đọc thông báo nếu một kit báo đã nhường lại một file.',
+      },
+      {
+        title: 'Quy tắc tên file trên Windows',
+        auto: 'AgentKit từ chối ghi tên mà Windows không đặt an toàn được: tên có dấu hai chấm, tên kết thúc bằng dấu chấm hay khoảng trắng, tên thiết bị như CON hay NUL.',
+        you: 'Chỉ khi một lệnh từ chối file: đổi tên file đó, hoặc gỡ alternate data stream trên file.',
+      },
+      {
+        title: 'Không còn lời mời GitHub',
+        auto: 'Với registry v3, kit chỉ đến từ registry AgentKit. Ai đang là collaborator trên repo vẫn giữ quyền truy cập.',
+        you: 'Cài và cập nhật kit bằng CLI ak, không cài từ bản clone GitHub.',
+      },
+    ]
+  : [
+      {
+        title: 'One skill name: ak-<slug>',
+        auto: 'Refreshed kits name every skill `ak-<slug>`. The ak CLI and saved preferences still accept the old `ak:<slug>` form.',
+        you: 'Type `/ak-cook` (Claude Code) or `$ak-cook` (Codex) instead of `/ak:cook`. The colon form no longer works in the runtime.',
+      },
+      {
+        title: 'ak-ak is merged into ak-agentkit',
+        auto: '`ak update --global` and `ak kit refresh <kit>` remove the old `ak-ak` files.',
+        you: 'For help running ak commands, use `/ak-agentkit`. A project-scope update, or a folder that also holds files AgentKit does not own, can leave an `ak-ak` folder behind. Nothing reads it, but check it before you delete it: back it up, move out any skills or files you made yourself, and stop if you are not sure where a file came from.',
+      },
+      {
+        title: 'License update window',
+        auto: 'Installed kits, the ak CLI and the desktop app keep working forever. When the window ends, updates stop at the newest release it covers, and `ak update` never moves a kit backwards.',
+        you: 'Check your window with `ak licenses`. Renew from the link it prints if you want releases published after the window ends.',
+      },
+      {
+        title: 'Skill store: only if you opt in',
+        auto: 'Nothing. The old install behavior stays the default; plain `ak update` never turns the skill store on.',
+        you: 'Optional: opt in with `ak update --ssot` (see below), undo it with `ak rollback --to v2`.',
+      },
+      {
+        title: 'Shared skills across kits',
+        auto: 'When two kits ship the same skill, agent, rule, hook or MCP entry, they hand the file to each other instead of blocking each other\'s updates. Files you edited stay preserved.',
+        you: 'Nothing. Read the notice if a kit reports that it handed a file over.',
+      },
+      {
+        title: 'Windows filename rules',
+        auto: 'AgentKit refuses to write a name Windows cannot name safely: a name with a colon, a name ending in a dot or space, or a device name such as CON or NUL.',
+        you: 'Only if a command refuses a file: rename it, or remove the alternate data stream on it.',
+      },
+      {
+        title: 'GitHub invites retired',
+        auto: 'With the v3 registry, kits come only from the AgentKit registry. Existing repository collaborators keep their access.',
+        you: 'Install and update kits with the ak CLI, not from a GitHub clone.',
+      },
+    ];
+
+const newInV3 = [
+  { href: '/guides/agentkit/skills/engineer/ak-atoz', label: '/ak-atoz', desc: isVi ? 'Đưa một yêu cầu đi từ A tới Z, chỉ hỏi xác nhận một lần' : 'Take a request from A to Z with one upfront confirmation' },
+  { href: '/guides/agentkit/skills/engineer/ak-vault', label: '/ak-vault', desc: isVi ? 'Quản lý secret mà không lộ giá trị' : 'Handle secrets without printing values' },
+  { href: '/guides/agentkit/skills/engineer/ak-dogfood', label: '/ak-dogfood', desc: isVi ? 'Biến lỗi và chỗ chậm của session thành cải tiến cho skill' : 'Turn a session\'s mistakes and slow paths into skill fixes' },
+  { href: '/guides/agentkit/cli-commands', label: isVi ? 'Lệnh CLI ak mới' : 'New ak CLI commands', desc: 'ak rollback, ak license, ak describe' },
+];
+---
+
+<div class="space-y-10 mt-6">
+  <AkPageHero
+    lang={currentLang}
+    accent="violet"
+    kicker={isVi ? 'AgentKit · v3' : 'AgentKit · v3'}
+    title={isVi ? 'Nâng lên AgentKit v3' : 'Upgrading to AgentKit v3'}
+    subtitle={isVi
+      ? 'v3 giờ là bản stable. Những gì đổi so với v2, những gì tự xảy ra, và những gì bạn cần làm.'
+      : 'v3 is now the stable release. What changes from v2, what happens on its own, and what you do.'}
+    badges={['Stable']}
+  />
+
+  <AkCallout variant="info" title={isVi ? 'v3 đến qua bản cập nhật thường' : 'v3 arrives through normal updates'}>
+    <ul class="list-disc space-y-1 pl-5">
+      <li>{isVi ? 'Trên kênh stable, ' : 'On the stable channel, '}<AkInlineCode text="ak self-update" />{isVi ? ' (và auto-update nếu đang bật) cài CLI ak v3; sau đó ' : ' (and auto-update, if it is on) installs the v3 ak CLI; '}<AkInlineCode text="ak update" />{isVi ? ' làm mới kit lên v3.' : ' then refreshes your kits to v3.'}</li>
+      <li>{isVi ? 'Từ đây mọi lệnh skill trên site này đều viết dạng ' : 'Every skill command on this site now uses the v3 form, '}<AkInlineCode text="/ak-<skill>" />{isVi ? ' của v3. Bạn còn ở v2 thì vẫn gõ ' : '. Still on v2? Keep typing '}<AkInlineCode text="/ak:<skill>" />{isVi ? ' cho tới khi làm mới kit.' : ' until you refresh your kits.'}</li>
+      <li>{isVi ? 'Muốn ở lại v2 thêm một thời gian thì tắt tự cập nhật trước: ' : 'Want to stay on v2 for now? Turn off automatic updates first: '}<AkInlineCode text="ak update --schedule off" />{isVi ? ' và ' : ' and '}<AkInlineCode text="ak self-update --disable-auto-update" />.</li>
+    </ul>
+  </AkCallout>
+
+  <AkSection
+    eyebrow={isVi ? 'Tổng quan' : 'At a glance'}
+    title={isVi ? 'Bảy thay đổi so với v2' : 'Seven changes from v2'}
+    desc={isVi
+      ? 'Mỗi thẻ ghi phần CLI ak tự lo và phần bạn cần làm. Thời hạn license và việc bỏ lời mời GitHub chỉ áp dụng khi registry AgentKit chạy bản v3, tách riêng với CLI.'
+      : 'Each card shows what the ak CLI handles and what you do. The license window and retired GitHub invites apply only once the AgentKit registry runs its v3 release, which ships separately from the CLI.'}
+  >
+    <div class="grid gap-3 md:grid-cols-2">
+      {changes.map((c) => (
+        <div class="rounded-2xl border border-slate-200/80 bg-white/80 p-4 text-sm leading-6 text-slate-600 dark:border-white/10 dark:bg-slate-950/55 dark:text-slate-300">
+          <p class="font-semibold text-slate-900 dark:text-white">{c.title}</p>
+          <p class="mt-2"><span class="font-medium text-slate-800 dark:text-slate-100">{isVi ? 'Tự xảy ra: ' : 'On its own: '}</span>{c.auto.split('`').map((part, i) => (i % 2 ? <AkInlineCode text={part} /> : part))}</p>
+          <p class="mt-1.5"><span class="font-medium text-violet-700 dark:text-violet-300">{isVi ? 'Bạn làm: ' : 'You do: '}</span>{c.you.split('`').map((part, i) => (i % 2 ? <AkInlineCode text={part} /> : part))}</p>
+        </div>
+      ))}
+    </div>
+  </AkSection>
+
+  <AkSection
+    eyebrow={isVi ? 'Các bước' : 'Steps'}
+    title={isVi ? 'Nâng lên v3' : 'Move to v3'}
+    desc={isVi
+      ? 'Nâng CLI ak, làm mới kit, rồi kiểm tra. Mỗi lần update kit đều chụp lại file trước khi ghi, nên ak backups list luôn có điểm khôi phục.'
+      : 'Upgrade the ak CLI, refresh your kits, then check. Every kit update snapshots the files it writes first, so ak backups list always has a restore point.'}
+  >
+    <AkCodeBlock
+      title="shell"
+      code={isVi
+        ? `# 1. Nâng CLI ak (thêm --include-desktop để nâng cả app desktop)
+ak self-update --channel stable --yes
+
+# 2. Tùy chọn: chụp checkpoint để sau này quay về v2 được
+ak backups checkpoint --pre-upgrade
+
+# 3. Làm mới kit trong project, rồi kit global nếu bạn có
+ak update /path/to/project --yes
+ak update --global --yes
+
+# 4. Kiểm tra
+ak versions
+ak licenses
+ak doctor --json`
+        : `# 1. Upgrade the ak CLI (add --include-desktop to upgrade the desktop app too)
+ak self-update --channel stable --yes
+
+# 2. Optional: take a checkpoint you can roll back to v2 from
+ak backups checkpoint --pre-upgrade
+
+# 3. Refresh kits in the project, then global kits if you have any
+ak update /path/to/project --yes
+ak update --global --yes
+
+# 4. Check the result
+ak versions
+ak licenses
+ak doctor --json`}
+    />
+    <p class="text-xs text-slate-500 dark:text-slate-400">
+      {isVi
+        ? 'Không có kit global nào thì ak update --global thoát với mã 2; bỏ qua lệnh đó. Cờ --channel stable chỉ áp dụng cho đúng lần chạy, kể cả khi trước đó bạn đã chuyển sang beta. Đổi kênh mặc định thì xem '
+        : 'With no global kits installed, ak update --global exits 2; skip it. --channel stable applies to that run only, even if you switched to beta earlier. To change the default channel, see '}<a href={translatePath('/guides/agentkit/updating')} class="font-medium underline underline-offset-2">{isVi ? 'Cập nhật CLI ak & Kits' : 'Update AgentKit CLI & Kits'}</a>.
+    </p>
+  </AkSection>
+
+  <AkSection
+    eyebrow={isVi ? 'Tùy chọn' : 'Optional'}
+    title={isVi ? 'Chuyển skill vào skill store' : 'Move skills into the skill store'}
+    desc={isVi
+      ? 'ak update --ssot chụp checkpoint rồi chuyển skill kit đã cài vào skill store của AgentKit. Skill bạn đã sửa hoặc không khớp danh sách được giữ nguyên ở cách cài cũ và được báo lại. Lệnh gọi skill vẫn chạy như trước.'
+      : 'ak update --ssot takes a checkpoint, then moves your installed kit skills into the AgentKit skill store. A skill you edited or that does not match its file list stays a legacy install and is reported. Skill commands keep working.'}
+  >
+    <AkCodeBlock
+      title="shell"
+      code={isVi
+        ? `# Xem trước — không ghi, không gọi mạng
+ak update --ssot --dry-run
+
+# Nâng cấp thật, kèm mọi project đã đăng ký
+ak update --ssot --yes --all-projects
+
+# Quay về trạng thái v2 đã chụp trước khi nâng cấp
+ak rollback --to v2 --dry-run
+ak rollback --to v2`
+        : `# Preview — no writes, no network
+ak update --ssot --dry-run
+
+# Apply it, including every registered project
+ak update --ssot --yes --all-projects
+
+# Return to the v2 state captured before the upgrade
+ak rollback --to v2 --dry-run
+ak rollback --to v2`}
+    />
+    <AkCallout variant="warn" title={isVi ? 'Rollback về v2 có giới hạn' : 'Rolling back to v2 has limits'}>
+      {isVi
+        ? 'Sau khi rollback, ak update, ak self-update và auto-update không tự lên lại v3 cho tới khi bạn chạy ak update --ssot lần nữa. Nếu bạn nâng từng phạm vi trong các lần chạy khác nhau, rollback từ chối checkpoint mới hơn: chọn checkpoint đầu tiên bằng ak rollback --to v2 --checkpoint <id> (xem ID bằng ak backups list). Máy chưa từng có trạng thái AgentKit trước đó thì không có gì để khôi phục. Nên nâng mọi phạm vi trong một lần với --all-projects.'
+        : 'After a rollback, ak update, ak self-update and auto-update stay off v3 until you run ak update --ssot again. If you upgraded scopes in separate runs, rollback refuses the newer checkpoint: name the first one with ak rollback --to v2 --checkpoint <id> (IDs from ak backups list). A machine with no earlier AgentKit state has nothing to restore. Upgrade every scope in one run with --all-projects when you can.'}
+    </AkCallout>
+  </AkSection>
+
+  <AkSection
+    eyebrow={isVi ? 'Quay lại' : 'Going back'}
+    title={isVi ? 'Quay về v2' : 'Roll back to v2'}
+    desc={isVi
+      ? 'Khi ak backups list có checkpoint trước nâng cấp (do ak update --ssot hoặc ak backups checkpoint --pre-upgrade tạo), một lệnh của CLI v3 đưa máy về v2. Không có checkpoint thì phải làm tay theo tài liệu AgentKit.'
+      : 'When ak backups list shows a pre-upgrade checkpoint (taken by ak update --ssot or ak backups checkpoint --pre-upgrade), one v3 CLI command takes the machine back to v2. Without a checkpoint, follow the manual steps in the AgentKit docs.'}
+  >
+    <AkCodeBlock
+      title="shell"
+      code={isVi
+        ? `# Xem trước — không thay đổi gì
+ak rollback --to v2 --dry-run
+
+# Khôi phục checkpoint và cài lại CLI ak v2 đã ghi trong đó
+ak rollback --to v2 --install-v2 --yes`
+        : `# Preview — nothing changes
+ak rollback --to v2 --dry-run
+
+# Restore the checkpoint and install the v2 ak CLI it recorded
+ak rollback --to v2 --install-v2 --yes`}
+    />
+    <AkCallout variant="warn" title={isVi ? 'Trước khi rollback' : 'Before you roll back'}>
+      {isVi
+        ? 'Gỡ kit chỉ có trên v3 bằng ak kit uninstall khi CLI v3 còn chạy. Từ lúc rollback xong tới khi cài xong v2, đừng chạy lệnh v3 nào khác. Muốn hủy rollback thì khôi phục checkpoint trước-rollback mà lệnh in ra bằng ak recover <id>.'
+        : 'Remove kits that exist only in v3 with ak kit uninstall while the v3 CLI still runs. Until v2 is installed, do not run other v3 commands. To undo the rollback, restore the pre-rollback checkpoint it printed with ak recover <id>.'}
+    </AkCallout>
+    <p class="text-xs text-slate-500 dark:text-slate-400">
+      {isVi ? 'Các bước làm tay và cách quay lại v3: ' : 'Manual steps and how to return to v3: '}<a href="https://docs.agentkit.best" class="font-medium underline underline-offset-2" target="_blank" rel="noopener noreferrer">{isVi ? 'tài liệu AgentKit, mục Rolling back to v2' : 'AgentKit docs, Rolling back to v2'}</a>.
+    </p>
+  </AkSection>
+
+  <AkNextLinks
+    lang={currentLang}
+    title={isVi ? 'Mới trong v3' : 'New in v3'}
+    links={newInV3}
+  />
+
+  <AkNextLinks
+    lang={currentLang}
+    title={isVi ? 'Liên quan' : 'Related'}
+    links={[
+      { href: '/guides/agentkit/updating', label: isVi ? 'Cập nhật CLI ak & Kits' : 'Update AgentKit CLI & Kits' },
+      { href: '/guides/agentkit/skills', label: isVi ? 'Bảng Skills' : 'Skills cheatsheet' },
+      { href: '/guides/agentkit/cli-commands', label: isVi ? 'Lệnh CLI ak' : 'ak CLI commands' },
+      { href: '/guides/agentkit/clean-reinstall', label: isVi ? 'Cài lại clean' : 'Clean reinstall' },
+    ]}
+  />
+</div>

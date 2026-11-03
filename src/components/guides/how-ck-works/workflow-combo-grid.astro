@@ -16,8 +16,8 @@ const isVi = currentLang === 'vi';
   <!-- Kit tabs for combo view -->
   <div class="flex justify-center gap-2 mb-6">
     <button
-      @click="switchKit('engineer')"
-      :class="activeKit === 'engineer'
+      x-on:click="switchKit('engineer')"
+      x-bind:class="activeKit === 'engineer'
         ? 'bg-blue-500 text-white'
         : 'bg-gray-100 dark:bg-white/5 text-gray-700 dark:text-white/70 hover:bg-gray-200 dark:hover:bg-white/10'"
       class="px-4 py-2 text-sm font-medium rounded-lg transition-colors"
@@ -25,8 +25,8 @@ const isVi = currentLang === 'vi';
       {isVi ? 'Bộ Engineer' : 'Engineer Kit'}
     </button>
     <button
-      @click="switchKit('marketer')"
-      :class="activeKit === 'marketer'
+      x-on:click="switchKit('marketer')"
+      x-bind:class="activeKit === 'marketer'
         ? 'bg-orange-500 text-white'
         : 'bg-gray-100 dark:bg-white/5 text-gray-700 dark:text-white/70 hover:bg-gray-200 dark:hover:bg-white/10'"
       class="px-4 py-2 text-sm font-medium rounded-lg transition-colors"
@@ -37,11 +37,11 @@ const isVi = currentLang === 'vi';
 
   <!-- Combo cards grid -->
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-    <template x-for="combo in filteredCombos" :key="combo.id">
+    <template x-for="combo in filteredCombos" x-bind:key="combo.id">
       <div
         class="group bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-xl p-5 cursor-pointer transition-all hover:shadow-lg dark:hover:shadow-none hover:border-gray-300 dark:hover:border-white/20"
-        :class="selectedCombo === combo.id ? 'ring-2 ring-blue-500 ring-offset-2 dark:ring-offset-gray-900' : ''"
-        @click="selectCombo(combo.id)"
+        x-bind:class="selectedCombo === combo.id ? 'ring-2 ring-blue-500 ring-offset-2 dark:ring-offset-gray-900' : ''"
+        x-on:click="selectCombo(combo.id)"
       >
         <!-- Header -->
         <div class="flex items-start gap-3 mb-3">
@@ -71,7 +71,7 @@ const isVi = currentLang === 'vi';
 
         <!-- Skill sequence badges -->
         <div class="flex flex-wrap gap-1.5">
-          <template x-for="(scenarioId, i) in combo.scenarios" :key="scenarioId">
+          <template x-for="(scenarioId, i) in combo.scenarios" x-bind:key="scenarioId">
             <span class="inline-flex items-center gap-1 px-2 py-0.5 text-xs rounded-full bg-gray-100 dark:bg-white/10 text-gray-700 dark:text-white/70 transition-colors group-hover:bg-gray-200 dark:group-hover:bg-white/15">
               <span class="w-4 h-4 flex items-center justify-center rounded-full bg-blue-500 text-[10px] font-medium text-white" x-text="i + 1"></span>
               <span x-text="'/ck:' + scenarioId"></span>

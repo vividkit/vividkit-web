@@ -19,13 +19,7 @@ interface Props {
 const { previous, next, lang } = Astro.props;
 const isVi = lang === 'vi';
 
-const label = {
-  previous: isVi ? 'Lệnh trước' : 'Previous command',
-  next: isVi ? 'Lệnh tiếp theo' : 'Next command',
-};
-
 const getTitle = (item: NavCommand) => isVi ? item.titleVi : item.titleEn;
-const getDesc = (item: NavCommand) => isVi ? item.descVi : item.descEn;
 ---
 
 <nav class="mt-8 grid gap-3 md:grid-cols-2" aria-label={isVi ? 'Điều hướng lệnh' : 'Command navigation'}>

@@ -12,10 +12,10 @@ const data: SkillInfographic = {
   },
   "hardGate": {
     "type": "warning",
-    "titleEn": "Provider, key, and quota boundary",
-    "titleVi": "Ranh giới provider, khóa và quota",
-    "contentEn": "Stitch generation requires STITCH_API_KEY, sends the prompt to Google Stitch, and depends on current provider quota and API availability; if quota is exhausted, stop generation or use an approved non-provider workflow instead of claiming a run happened.",
-    "contentVi": "Generation bằng Stitch cần STITCH_API_KEY, gửi prompt tới Google Stitch và phụ thuộc quota cùng khả dụng API hiện tại của provider; nếu hết quota, dừng generation hoặc dùng workflow không qua provider đã được duyệt thay vì nói rằng đã chạy."
+    "titleEn": "A generation request leaves the local workspace",
+    "titleVi": "Request sinh nội dung rời khỏi workspace trên máy",
+    "contentEn": "Stitch receives the prompt and any content included in it. Generation and export require network access; remote project creation changes provider state; package installation and export change local state. Confirm all four boundaries before the first request.",
+    "contentVi": "Stitch nhận prompt cùng mọi nội dung có trong đó. Việc sinh và export cần truy cập mạng; tạo project từ xa làm thay đổi trạng thái phía provider; cài package và export làm thay đổi trạng thái trên máy. Xác nhận cả bốn ranh giới này trước request đầu tiên."
   },
   "processFlow": [
     {

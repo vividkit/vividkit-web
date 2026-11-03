@@ -12,10 +12,10 @@ const data: SkillInfographic = {
   },
   hardGate: {
     type: 'warning',
-    titleEn: "Do not use for real Chrome profile state",
-    titleVi: "Không dùng khi cần profile Chrome thật",
-    contentEn: "The SKILL.md routes cookies, logged-in sessions, specific Google accounts, tenant workspaces, and deterministic multi-profile targeting to ak:chrome-profile instead.",
-    contentVi: "SKILL.md chuyển các việc cần cookie, session đã login, tài khoản Google cụ thể, workspace/tenant đang mở hoặc nhắm nhiều profile ổn định sang ak:chrome-profile.",
+    titleEn: "A browser action can be a real-world action",
+    titleVi: "Thao tác trên trình duyệt có thể là hành động thật",
+    contentEn: "Opening and inspecting a page is different from signing in, submitting a form, uploading data, sending a message, accepting terms, purchasing, or changing an account. Approve those mutations separately before they occur. The SKILL.md routes cookies, logged-in sessions, specific Google accounts, tenant workspaces, and deterministic multi-profile targeting to ak:chrome-profile instead.",
+    contentVi: "Mở và xem một trang khác với đăng nhập, gửi form, tải dữ liệu lên, gửi tin nhắn, chấp nhận điều khoản, mua hàng hay thay đổi tài khoản. Hãy duyệt riêng các thay đổi đó trước khi chúng xảy ra. SKILL.md chuyển các việc cần cookie, session đã đăng nhập, tài khoản Google cụ thể, workspace theo tenant hoặc nhắm nhiều profile một cách ổn định sang ak:chrome-profile.",
   },
   processFlow: [
     { number: 1, titleEn: "Classify need", titleVi: "Xác định nhu cầu", descEn: "Use this skill when a fresh or tool-managed browser is acceptable for testing, screenshots, form fills, scraping, QA, Electron, Slack, or cloud sessions.", descVi: "Dùng skill này khi có thể dùng browser mới hoặc do tool quản lý để test, chụp ảnh, điền form, scrape, QA, Electron, Slack hoặc cloud session." },

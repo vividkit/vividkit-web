@@ -12,10 +12,10 @@ const data: SkillInfographic = {
   },
   hardGate: {
     type: 'warning',
-    titleEn: 'Subfolder only',
-    titleVi: 'Chỉ dành cho thư mục con',
-    contentEn: 'Never edit root CLAUDE.md or root AGENTS.md, duplicate root instructions, invent constraints, write credentials, or create context outside the confirmed target.',
-    contentVi: 'Không sửa CLAUDE.md hoặc AGENTS.md ở gốc, không chép lại hướng dẫn gốc, không bịa ràng buộc, không ghi credential, không tạo ngữ cảnh ngoài thư mục đã xác nhận.',
+    titleEn: 'Local context becomes durable repository content',
+    titleVi: 'Context cục bộ trở thành nội dung lâu dài trong repository',
+    contentEn: 'Review every line before writing. A subfolder instruction file can be read by future agents and may enter repository history if committed. Do not persist secrets, customer data, private URLs, personal data, or unsupported claims. Never edit root CLAUDE.md or root AGENTS.md, duplicate root instructions, invent constraints, write credentials, or create context outside the confirmed target.',
+    contentVi: 'Hãy review từng dòng trước khi ghi. File hướng dẫn trong thư mục con có thể được các agent sau này đọc và có thể vào lịch sử repository nếu được commit. Không lưu secret, dữ liệu khách hàng, URL riêng tư, dữ liệu cá nhân hay tuyên bố không có căn cứ. Không bao giờ sửa CLAUDE.md hoặc AGENTS.md ở gốc, chép lại hướng dẫn gốc, bịa ràng buộc, ghi credential hay tạo context ngoài thư mục đích đã xác nhận.',
   },
   processFlow: [
     { number: 1, titleEn: 'Confirm target', titleVi: 'Xác nhận thư mục', descEn: 'Ensure the argument is a real subfolder, not the repository root or a general docs request.', descVi: 'Đảm bảo tham số là thư mục con thật, không phải gốc repo hoặc một yêu cầu tài liệu chung.' },

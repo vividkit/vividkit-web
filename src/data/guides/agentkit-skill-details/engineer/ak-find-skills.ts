@@ -26,6 +26,13 @@ const data: SkillInfographic = {
     taglineEn: "Discover and install Agent Skills when users ask for a capability that may already exist in the skills ecosystem.",
     taglineVi: "Tìm và cài Agent Skills khi người dùng cần một năng lực có thể đã tồn tại trong hệ sinh thái skills.",
   },
+  hardGate: {
+    type: 'warning',
+    titleEn: "External Skills are executable third-party content",
+    titleVi: "Skill bên ngoài là nội dung chạy được của bên thứ ba",
+    contentEn: "Review the package owner, repository, Skill instructions, scripts, requested tools, and data boundaries before installation. Search relevance is not a security or quality review.",
+    contentVi: "Xem lại chủ package, repository, hướng dẫn của Skill, script, các tool được yêu cầu và ranh giới dữ liệu trước khi cài. Kết quả tìm kiếm khớp không thay cho việc review bảo mật hay chất lượng.",
+  },
   processFlow: [
     { number: 1, titleEn: "Recognize Need", titleVi: "Nhận ra nhu cầu", descEn: "Trigger when the user asks how to do a specialized task, whether a skill exists, or how to extend capabilities.", descVi: "Kích hoạt khi người dùng hỏi cách làm tác vụ chuyên biệt, có skill nào không, hoặc cách mở rộng năng lực." },
     { number: 2, titleEn: "Route Installed Skills", titleVi: "Định tuyến skill đã cài", descEn: "If choosing between installed AgentKit skills, load domain-routing before using the external Skills CLI.", descVi: "Nếu đang chọn giữa các AgentKit skill đã cài, nạp domain-routing trước khi dùng Skills CLI bên ngoài." },

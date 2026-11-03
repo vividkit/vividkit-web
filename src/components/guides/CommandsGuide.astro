@@ -8,12 +8,6 @@ import CommandsSymbolsLegend from "./commands/commands-symbols-legend.astro";
 import CommandsCategoriesGrid from "./commands/commands-categories-grid.astro";
 import CommandsDocsNote from "./commands/commands-docs-note.astro";
 import CkSetupNotice from '@/components/guides/CkSetupNotice.astro';
-import {
-  engineerMigrationExtra,
-  marketingMigrationExtra,
-  marketingRenamedMkt,
-  marketingRenamedShared,
-} from "@/data/guides/commands-migration";
 
 interface Props {
   lang?: Language;
@@ -25,8 +19,6 @@ const t = useTranslations(currentLang);
 const translatePath = useTranslatedPath(currentLang);
 const isVi = currentLang === "vi";
 const tBridge = (en: string, vi: string) => isVi ? vi : en;
-const engineerExtraCount = engineerMigrationExtra.length;
-const marketingExtraCount = marketingMigrationExtra.length + marketingRenamedMkt.length + marketingRenamedShared.length;
 
 const quickNavItems = [
   {
@@ -189,7 +181,7 @@ const quickNavItems = [
     const inactiveClasses = "text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700";
     const activeMarketingClasses = "bg-purple-500 text-white shadow-sm";
 
-    function setVersion(version: "engineer" | "marketing") {
+    const setVersion = (version: "engineer" | "marketing") => {
       if (version === "engineer") {
         categoriesEngineer.classList.remove("hidden");
         categoriesMarketing.classList.add("hidden");
@@ -202,7 +194,7 @@ const quickNavItems = [
         btnEngineer.className = `version-btn px-3 py-1.5 rounded-md text-sm font-medium transition-all duration-200 ${inactiveClasses}`;
       }
       localStorage.setItem("commands-kit", version);
-    }
+    };
 
     // Restore saved preference (migrate old keys)
     const savedVersion = localStorage.getItem("commands-kit") || localStorage.getItem("commands-version");
@@ -226,7 +218,7 @@ const quickNavItems = [
       const activeMigTabMktClasses = "bg-purple-500 text-white shadow-sm";
       const inactiveMigTabClasses = "text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700";
 
-      function setMigrationTab(tab: "engineer" | "marketing") {
+      const setMigrationTab = (tab: "engineer" | "marketing") => {
         if (tab === "engineer") {
           migrationPanelEngineer.classList.remove("hidden");
           migrationPanelMarketing.classList.add("hidden");
@@ -238,7 +230,7 @@ const quickNavItems = [
           migrationTabMarketing.className = `migration-tab px-3 py-1.5 rounded-md text-xs font-medium transition-all duration-200 ${activeMigTabMktClasses}`;
           migrationTabEngineer.className = `migration-tab px-3 py-1.5 rounded-md text-xs font-medium transition-all duration-200 ${inactiveMigTabClasses}`;
         }
-      }
+      };
 
       migrationTabEngineer.addEventListener("click", () => setMigrationTab("engineer"));
       migrationTabMarketing.addEventListener("click", () => setMigrationTab("marketing"));
@@ -252,6 +244,7 @@ const quickNavItems = [
 
     if (migrationToggle && migrationRows && migrationIcon && migrationText) {
       let isExpanded = false;
+      const showAllLabel = migrationText.textContent;
 
       migrationToggle.addEventListener("click", () => {
         if (!isExpanded) {
@@ -266,7 +259,7 @@ const quickNavItems = [
           setTimeout(() => {
             migrationRows.style.display = "none";
             migrationIcon.style.transform = "";
-            migrationText.textContent = `Show all migrations (${engineerExtraCount} more)`;
+            migrationText.textContent = showAllLabel;
             const whatsNewSection = document.getElementById("whats-new-section");
             if (whatsNewSection) {
               whatsNewSection.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -287,6 +280,7 @@ const quickNavItems = [
 
     if (migrationMktToggle && migrationMktRows && migrationMktIcon && migrationMktText) {
       let isMktExpanded = false;
+      const showAllMktLabel = migrationMktText.textContent;
 
       migrationMktToggle.addEventListener("click", () => {
         if (!isMktExpanded) {
@@ -301,7 +295,7 @@ const quickNavItems = [
           setTimeout(() => {
             migrationMktRows.style.display = "none";
             migrationMktIcon.style.transform = "";
-            migrationMktText.textContent = `Show all migrations (${marketingExtraCount} more)`;
+            migrationMktText.textContent = showAllMktLabel;
             const whatsNewSection = document.getElementById("whats-new-section");
             if (whatsNewSection) {
               whatsNewSection.scrollIntoView({ behavior: "smooth", block: "start" });

@@ -3,6 +3,7 @@
  * AgentKit Workflows guide — user-facing recipes for chaining /ak: skills.
  * Data: src/data/guides/agentkit-workflows
  */
+import { akCmd, akInvocationText } from '@/data/guides/agentkit-invocation';
 import { getLangFromUrl, type Language } from '@/i18n';
 import {
   akEngineerFlagshipWorkflows,
@@ -69,10 +70,7 @@ function tOptionalModeNote(mode: { note: string; noteVi?: string }) {
   return isVi && mode.noteVi ? mode.noteVi : mode.note;
 }
 function getOptionalModes(s: AkWorkflowStep): Array<{ flag: string; note: string; noteVi?: string }> {
-  if (s.optionalModes?.length) return s.optionalModes;
-  if (!s.optionalFlags?.length) return [];
-  const note = isVi && s.optionalFlagsNoteVi ? s.optionalFlagsNoteVi : s.optionalFlagsNote;
-  return s.optionalFlags.map((flag) => ({ flag, note: note || '', noteVi: note || '' }));
+  return s.optionalModes ?? [];
 }
 
 function groupByCategory(list: AkWorkflow[]) {
@@ -121,12 +119,12 @@ const copy = {
     ? [
         { n: '1', t: 'Chọn workflow gần với việc bạn đang làm', d: 'Feature, bug, review, ship…' },
         { n: '2', t: 'Xem chuỗi skill gợi ý', d: 'Đây là tham khảo — được phép rút gọn hoặc thêm bước' },
-        { n: '3', t: 'Chạy từng lệnh /ak: theo thứ tự hợp lý', d: 'Claude Code / Cursor: /ak:… · Codex: $ak:…' },
+        { n: '3', t: akInvocationText('Chạy từng lệnh /ak: theo thứ tự hợp lý'), d: akInvocationText('Claude Code / Cursor: /ak:… · Codex: $ak:…') },
       ]
     : [
         { n: '1', t: 'Pick the workflow closest to your job', d: 'Feature, bug, review, ship…' },
         { n: '2', t: 'Read the suggested skill sequence', d: 'It is a reference — shorten or extend as needed' },
-        { n: '3', t: 'Run /ak: commands in a sensible order', d: 'Claude Code / Cursor: /ak:… · Codex: $ak:…' },
+        { n: '3', t: akInvocationText('Run /ak: commands in a sensible order'), d: akInvocationText('Claude Code / Cursor: /ak:… · Codex: $ak:…') },
       ],
   flagshipTitle: isVi ? 'Workflow thường dùng' : 'Common workflows',
   flagshipDesc: isVi
@@ -174,7 +172,7 @@ const nextLinks = [
   {
     href: '/guides/agentkit/skills',
     label: isVi ? 'Danh sách mọi skill' : 'Full skills list',
-    desc: isVi ? 'Từng /ak: skill kèm flag' : 'Every /ak: skill and its flags',
+    desc: isVi ? akInvocationText('Từng /ak: skill kèm flag') : akInvocationText('Every /ak: skill and its flags'),
   },
   {
     href: '/guides/agentkit/getting-started',
@@ -213,8 +211,8 @@ const softPill =
           ? 'Đang mở dần các workflow hay dùng. Các recipe khác sẽ hiện tiếp — xem rồi chỉnh cho phù hợp, không bắt buộc làm y hệt.'
           : 'Unlocking common workflows gradually. More recipes will follow — use them as a starting point and adapt as needed.'
         : isVi
-          ? 'Các chuỗi skill /ak: gợi ý theo việc bạn đang làm — feature, bug, review, ship… Xem rồi chỉnh cho phù hợp, không bắt buộc làm y hệt.'
-          : 'Suggested /ak: skill sequences for common jobs — features, bugs, review, ship… Use them as a starting point and adapt as needed.'
+          ? akInvocationText('Các chuỗi skill /ak: gợi ý theo việc bạn đang làm — feature, bug, review, ship… Xem rồi chỉnh cho phù hợp, không bắt buộc làm y hệt.')
+          : akInvocationText('Suggested /ak: skill sequences for common jobs — features, bugs, review, ship… Use them as a starting point and adapt as needed.')
     }
     badges={[]}
   >
@@ -303,7 +301,7 @@ const softPill =
           <p class="text-sm font-bold text-slate-900 dark:text-white">
             {isVi ? chrome.adviseVsAdvice.adviseLabelVi : chrome.adviseVsAdvice.adviseLabelEn}
           </p>
-          <code class:list={['mt-3', cmdChip]}>/ak:advise</code>
+          <code class:list={['mt-3', cmdChip]}>{akCmd('advise')}</code>
           <p class="mt-3 text-sm leading-relaxed text-slate-600 dark:text-slate-300">
             {isVi ? chrome.adviseVsAdvice.adviseBodyVi : chrome.adviseVsAdvice.adviseBodyEn}
           </p>
@@ -328,7 +326,7 @@ const softPill =
       </div>
     </AkSection>
 
-    <!-- /ak:advise vs --agent -->
+    <!-- advise vs --agent -->
     <AkCallout variant="info" title={isVi ? chrome.adviseAgent.titleVi : chrome.adviseAgent.titleEn}>
       <p class="mb-4">{isVi ? chrome.adviseAgent.bodyVi : chrome.adviseAgent.bodyEn}</p>
       <div class="grid gap-3 md:grid-cols-2">
@@ -364,7 +362,7 @@ const softPill =
     <AkCallout variant="tip" title={isVi ? chrome.router.titleVi : chrome.router.titleEn}>
       <p>{isVi ? chrome.router.bodyVi : chrome.router.bodyEn}</p>
       <p class="mt-3">
-        <code class={cmdChip}>/ak:agentkit "your task"</code>
+        <code class={cmdChip}>{akCmd('agentkit')} "your task"</code>
       </p>
     </AkCallout>
 

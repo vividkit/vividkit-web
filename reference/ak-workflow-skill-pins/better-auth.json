@@ -1,13 +1,13 @@
 {
   "slug": "better-auth",
-  "hash": "45271a5f47fc40340db4fb03c0fcf3cad3a0e85e5260e794c86bde64646d2167",
+  "hash": "45055e69c0f8bf05064dcc5519130761d3c713488e63a74526318d65eb5a60a3",
   "source": "kit",
   "path": "ak-cli@origin/main:kits/engineer/skills/ak-better-auth/SKILL.md",
-  "pinnedAt": "2026-10-02T21:25:37.467Z",
+  "pinnedAt": "2026-11-02T21:11:20.825Z",
   "snapshot": {
-    "name": "ak:better-auth",
-    "description": "Add authentication with Better Auth (TypeScript). Use for email/password, OAuth providers (Google, GitHub), 2FA/MFA, passkeys/WebAuthn, sessions, RBAC, rate limiting.",
-    "when_to_use": "Invoke for Better Auth setup, sessions, OAuth, MFA, or RBAC.",
+    "name": "ak-better-auth",
+    "description": "Add Better Auth (TypeScript): email/password, OAuth (Google, GitHub), 2FA/MFA, passkeys/WebAuthn, sessions, RBAC, rate limiting.",
+    "when_to_use": "Invoke when setting up or extending an app's authentication.",
     "argument_hint": "[auth-method or feature]",
     "version": null
   }

@@ -1,4 +1,5 @@
 ---
+import { akInvocationText } from '@/data/guides/agentkit-invocation';
 import { getLangFromUrl, useTranslatedPath, type Language } from '@/i18n';
 import AkPageHero from './AkPageHero.astro';
 import AkSection from './AkSection.astro';
@@ -118,8 +119,8 @@ const surfaces = isVi
           : 'The coding assistant runs the AI session with its own model, tools, and permissions.',
         tone: 'slate',
         points: isVi
-          ? ['Cú pháp tùy runtime (/ak:…, $ak:…)', 'Hook / event không giống nhau', 'Bạn review kết quả']
-          : ['Syntax varies (/ak:…, $ak:…)', 'Hooks / events differ by runtime', 'You review the result'],
+          ? [akInvocationText('Cú pháp tùy runtime (/ak:…, $ak:…)'), 'Hook / event không giống nhau', 'Bạn review kết quả']
+          : [akInvocationText('Syntax varies (/ak:…, $ak:…)'), 'Hooks / events differ by runtime', 'You review the result'],
       }}
     />
   </AkSection>
@@ -185,7 +186,7 @@ const surfaces = isVi
     links={[
       { href: '/guides/agentkit/how-it-works', label: isVi ? 'Cách AgentKit hoạt động' : 'How AgentKit works', desc: isVi ? 'Luồng registry → review' : 'Registry → review flow' },
       { href: '/guides/agentkit/building-blocks', label: isVi ? 'Kit, Skill, Agent, Hook' : 'Kits, Skills, Agents, Hooks', desc: isVi ? 'Chọn đúng khối xây dựng' : 'Pick the right building block' },
-      { href: '/guides/agentkit/skills', label: isVi ? 'Bảng Skills' : 'Skills cheatsheet', desc: isVi ? 'Mọi skill /ak: kèm flag' : 'Every /ak: skill with flags' },
+      { href: '/guides/agentkit/skills', label: isVi ? 'Bảng Skills' : 'Skills cheatsheet', desc: isVi ? akInvocationText('Mọi skill /ak: kèm flag') : akInvocationText('Every /ak: skill with flags') },
       { href: '/guides/agentkit/workflows', label: isVi ? 'Workflows — chuỗi skill' : 'Workflows — skill chains', desc: isVi ? 'Khi nào xâu plan → cook → ship' : 'When to chain plan → cook → ship' },
       { href: '/guides/agentkit/desktop-app', label: isVi ? 'Desktop App' : 'Desktop App', desc: isVi ? 'Quản lý visual local' : 'Visual local management' },
       { href: '/guides/agentkit/helper', label: isVi ? 'AgentKit Helper' : 'AgentKit Helper', desc: isVi ? 'TUI cộng đồng cài/cập nhật Kit' : 'Community TUI to install/update Kits' },

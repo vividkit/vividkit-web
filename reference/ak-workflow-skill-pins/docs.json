@@ -1,14 +1,14 @@
 {
   "slug": "docs",
-  "hash": "3f09c1caaa273b39c5c195f0fac1df818b5ee5f45a26d576aa85ad024336a2c0",
+  "hash": "3636b0403a588aa8c4f7956982ef7a5bd1b95c2c3f6880e753a6ddae3ae830d4",
   "source": "kit",
   "path": "ak-cli@origin/main:kits/core/skills/ak-docs/SKILL.md",
-  "pinnedAt": "2026-10-02T21:25:37.468Z",
+  "pinnedAt": "2026-11-02T21:11:20.826Z",
   "snapshot": {
-    "name": "ak:docs",
-    "description": "Analyze a codebase and create, refresh, summarize, or audit project documentation without imposing a fixed docs layout, with an opt-in classic layout via --preset classic, including authoring and optimizing the root CLAUDE.md/AGENTS.md agent context file, or distilling DO/DON'T rules for that file from git history, CI runs, and (with --source) current source-tree markers.",
-    "when_to_use": "Invoke to create, refresh, summarize, or audit project documentation; to author or optimize the root CLAUDE.md/AGENTS.md agent context file; or to distill DO/DON'T rules for that file from git history, CI runs, and optionally source-tree markers via --source.",
-    "argument_hint": "init|update|summarize|agent-context|agents|llms",
+    "name": "ak-docs",
+    "description": "Create, refresh, summarize or audit project docs and root CLAUDE.md/AGENTS.md, mining DO/DON'T rules from git/CI and --source markers.",
+    "when_to_use": "Invoke for docs upkeep; --preset classic fixes the layout and philosophy interviews need explicit opt-in.",
+    "argument_hint": "init|update|summarize|agent-context|agents|llms|philosophy",
     "version": null
   }
 }

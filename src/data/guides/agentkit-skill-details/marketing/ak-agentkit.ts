@@ -8,18 +8,18 @@ const data: SkillInfographic = {
     titleEn: '/ak:agentkit — Skill router and workflow chain selector',
     titleVi: '/ak:agentkit — Bộ định tuyến skill và chọn chuỗi workflow',
     taglineEn:
-      'Classifies ambiguous or multi-domain work, inventories installed capabilities, chooses the shortest correct skill chain, times subagent use, and applies risk-matched verification without replacing the routed skills.',
+      'Classifies ambiguous or multi-domain work, inventories installed capabilities, chooses the shortest correct skill chain, times subagent use, and applies risk-matched verification without replacing the routed skills. It also operates the ak CLI safely when the next action is an ak subcommand.',
     taglineVi:
-      'Phân loại việc mơ hồ hoặc nhiều miền, kiểm kê năng lực đã cài, chọn chuỗi skill ngắn nhất phù hợp, quyết định thời điểm dùng subagent và áp gate kiểm chứng theo rủi ro mà không thay thế skill được định tuyến.',
+      'Phân loại việc mơ hồ hoặc nhiều miền, kiểm kê năng lực đã cài, chọn chuỗi skill ngắn nhất phù hợp, quyết định thời điểm dùng subagent và áp gate kiểm chứng theo rủi ro mà không thay thế skill được định tuyến. Skill cũng vận hành CLI ak an toàn khi bước tiếp theo là một lệnh con của ak.',
   },
   hardGate: {
     type: 'warning',
-    titleEn: 'Route only to installed capabilities',
-    titleVi: 'Chỉ định tuyến tới năng lực đã cài',
+    titleEn: 'A route cannot grant new permission',
+    titleVi: 'Chọn tuyến không cấp thêm quyền',
     contentEn:
-      'Never route to a skill or agent you have not confirmed installed. If work is explicitly headless, cross-CLI, or multi-worktree orchestration, hand off to ak-orchestrate and stop.',
+      'Selecting a Skill, Agent, or automatic sequence does not authorize secret access, external calls, account changes, spending, publication, deployment, destructive operations, or mass-audience contact. High-risk links require independent review and your explicit confirmation before the irreversible step. Never route to a skill or agent you have not confirmed installed. Headless jobs across CLIs or worktrees and coordinated multi-session teams belong to separate Engineer capabilities when installed; otherwise report the gap.',
     contentVi:
-      'Không bao giờ định tuyến tới skill hoặc agent chưa xác nhận đã cài. Nếu công việc rõ ràng là orchestration headless, đa CLI hoặc nhiều worktree, chuyển sang ak-orchestrate rồi dừng.',
+      'Việc chọn một skill, agent hay chuỗi chạy tự động không cấp quyền truy cập secret, gọi dịch vụ bên ngoài, thay đổi tài khoản, chi tiền, xuất bản, deploy, thao tác phá hủy hay liên hệ hàng loạt tới audience. Các bước rủi ro cao trong chuỗi cần được review độc lập và cần bạn xác nhận rõ trước bước không thể hoàn tác. Không bao giờ định tuyến tới skill hoặc agent chưa xác nhận đã cài. Job headless qua nhiều CLI hoặc worktree và team nhiều session phối hợp thuộc về các năng lực Engineer riêng khi đã cài; nếu chưa có thì báo rõ khoảng trống.',
   },
   processFlow: [
     { number: 1, titleEn: 'Proportionality gate', titleVi: 'Gate vừa đủ', descEn: 'Skip ceremony for trivial, single-domain, pure conversation, or user-named skill cases; invoke the obvious owner directly.', descVi: 'Bỏ nghi thức cho việc nhỏ, một miền, chỉ trò chuyện hoặc người dùng đã gọi đúng skill; gọi thẳng chủ sở hữu rõ ràng.' },
@@ -29,7 +29,8 @@ const data: SkillInfographic = {
     { number: 5, titleEn: 'Time subagents', titleVi: 'Định thời subagent', descEn: 'Spawn subagents only when they add fresh context, specialist boundaries, or parallel wall-clock benefit; avoid splitting tiny edits.', descVi: 'Chỉ spawn subagent khi chúng thêm ngữ cảnh mới, ranh giới chuyên môn hoặc lợi ích song song; tránh tách việc sửa nhỏ.' },
     { number: 6, titleEn: 'Apply risk gates', titleVi: 'Áp gate theo rủi ro', descEn: 'Low risk uses executor checks, elevated risk adds verification and self-review, high risk adds independent review and user confirmation for irreversible steps.', descVi: 'Rủi ro thấp dùng check của skill thực thi, rủi ro vừa thêm kiểm chứng và tự review, rủi ro cao thêm reviewer độc lập và xác nhận người dùng cho bước không thể đảo ngược.' },
     { number: 7, titleEn: 'Recover links', titleVi: 'Khôi phục mắt xích', descEn: 'A failed link does not advance; fix, debug, or rescope it, and after two consecutive failures report the precise blocker instead of looping.', descVi: 'Mắt xích lỗi không được đi tiếp; sửa, debug hoặc thu hẹp nó, và sau hai lần lỗi liên tiếp thì báo blocker cụ thể thay vì lặp.' },
-    { number: 8, titleEn: 'Report route', titleVi: 'Báo tuyến đi', descEn: 'Finish with delivered outcome, links run, agents used, verification evidence, and any remaining capability gaps.', descVi: 'Kết thúc bằng kết quả đã giao, các mắt xích đã chạy, agent đã dùng, bằng chứng kiểm chứng và khoảng trống năng lực còn lại.' },
+    { number: 8, titleEn: 'Operate the ak CLI', titleVi: 'Vận hành CLI ak', descEn: 'When the next action is an ak subcommand or reading its --json output, classify the effect (read-only, mutating, or diagnostic), confirm project versus global scope before any change, inspect with read-only commands first, and treat ak <cmd> --help as the authority.', descVi: 'Khi bước tiếp theo là một lệnh con của ak hoặc đọc output --json của nó, phân loại tác động (chỉ đọc, có thay đổi, hay chẩn đoán), xác nhận phạm vi project hay toàn máy trước mọi thay đổi, kiểm tra bằng lệnh chỉ đọc trước, và lấy ak <cmd> --help làm căn cứ.' },
+    { number: 9, titleEn: 'Report route', titleVi: 'Báo tuyến đi', descEn: 'Finish with delivered outcome, links run, agents used, verification evidence, and any remaining capability gaps.', descVi: 'Kết thúc bằng kết quả đã giao, các mắt xích đã chạy, agent đã dùng, bằng chứng kiểm chứng và khoảng trống năng lực còn lại.' },
   ],
   corePrinciplesEn: [
     'This skill decides and dispatches; routed skills and agents own execution.',
@@ -50,6 +51,8 @@ const data: SkillInfographic = {
       commandVi: '/ak:agentkit "Workflow AgentKit nào nên xử lý việc di chuyển API công khai?"', whenEn: 'Use when the right skill or route is unclear but the task is not just a pure answer.', whenVi: 'Dùng khi chưa rõ skill hoặc tuyến nào đúng và việc không chỉ là một câu trả lời thuần túy.', expectedEn: 'The router explains the selected installed owner or names the missing capability.', expectedVi: 'Router giải thích chủ sở hữu đã cài được chọn hoặc nêu rõ năng lực còn thiếu.' },
     { labelEn: 'Workflow handoff', labelVi: 'Bàn giao workflow', command: '/ak:agentkit "Plan and execute a docs + frontend launch page refresh"',
       commandVi: '/ak:agentkit "Lập kế hoạch và thực hiện làm mới trang ra mắt docs + frontend"', whenEn: 'Use when multiple domains need sequencing and verification, not when a single skill is obvious.', whenVi: 'Dùng khi nhiều miền cần sắp thứ tự và kiểm chứng, không dùng khi một skill đã rõ ràng.', expectedEn: 'Produces the shortest fitting chain and avoids spawning agents where one skill is enough.', expectedVi: 'Tạo chuỗi ngắn nhất phù hợp và tránh spawn agent khi một skill là đủ.' },
+    { labelEn: 'Operate the ak CLI', labelVi: 'Vận hành CLI ak', command: '/ak:agentkit "ak doctor reports a problem with this project install; diagnose it and fix it safely"',
+      commandVi: '/ak:agentkit "ak doctor báo lỗi bản cài của project này; chẩn đoán và sửa an toàn"', whenEn: 'Use when the next action is running or interpreting an ak subcommand, such as doctor, update, or recover, rather than routing a marketing task.', whenVi: 'Dùng khi bước tiếp theo là chạy hoặc đọc kết quả một lệnh con của ak, như doctor, update hay recover, thay vì định tuyến một việc marketing.', expectedEn: 'Classifies each ak command as read-only, mutating, or diagnostic, runs read-only checks first, confirms project versus global scope, and asks before any mutation such as a recover or reinstall.', expectedVi: 'Phân loại từng lệnh ak là chỉ đọc, có thay đổi hay chẩn đoán, chạy kiểm tra chỉ đọc trước, xác nhận phạm vi project hay toàn máy, và hỏi trước mọi thao tác thay đổi như recover hay cài lại.' },
   ],
   guardrails: [
     { thoughtEn: 'A big-looking task needs every workflow link.', thoughtVi: 'Việc nhìn lớn thì cần đủ mọi mắt xích.', realityEn: 'Use the collapse rule; each link needs a real entry and exit reason.', realityVi: 'Dùng quy tắc rút gọn; mỗi mắt xích phải có lý do vào và ra thật.', accent: 'blue' },

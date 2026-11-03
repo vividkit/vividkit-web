@@ -49,6 +49,27 @@ type DevScenario =
   | 'rate_limited';
 
 type SeatBudget = { standard: number; premium: number; total: number };
+// Loose shape for raffle API payloads. A bare `any` field collapses to `{}` through Alpine's
+// InferInterceptors typing, so component fields use this record type instead.
+type ApiRecord = { [key: string]: any };
+interface RaffleSchedule {
+  phase?: string;
+  active?: boolean;
+  draw_at?: string;
+  ends_at?: string;
+  campaign_day?: string;
+  registration_open_at?: string;
+  registration_cutoff_at?: string;
+  reveal_interval_minutes?: number;
+  seat_budget?: SeatBudget;
+  remaining?: SeatBudget;
+  [key: string]: unknown;
+}
+interface RaffleWinner {
+  fulfillment_status?: string;
+  claim_deadline_at?: string;
+  [key: string]: unknown;
+}
 
 const emptyBudget: SeatBudget = { standard: 0, premium: 0, total: 0 };
 function isoFromNow(hours: number): string {
@@ -175,11 +196,11 @@ export function registerScheduledDrawState(activeAlpine: typeof Alpine) {
     authWindow: null as Window | null,
     turnstileWidgetId: null as string | null,
     turnstileRetryActions: {} as Record<string, boolean>,
-    schedule: null as any,
-    publicResults: [] as any[],
-    poolEntries: [] as any[],
-    privateWinner: null as any,
-    proof: null as any,
+    schedule: null as RaffleSchedule | null,
+    publicResults: [] as ApiRecord[],
+    poolEntries: [] as ApiRecord[],
+    privateWinner: null as RaffleWinner | null,
+    proof: null as ApiRecord | null,
     declineConfirmOpen: false,
     orderGuideOpen: false,
     orderRefInput: '',
@@ -257,15 +278,15 @@ export function registerScheduledDrawState(activeAlpine: typeof Alpine) {
     },
 
     scheduleText(field: string) {
-      return formatDateTime(this.schedule?.[field]);
+      return formatDateTime(this.schedule?.[field] as string | undefined);
     },
 
     scheduleTime(field: string) {
-      return formatTimeOnly(this.schedule?.[field]);
+      return formatTimeOnly(this.schedule?.[field] as string | undefined);
     },
 
     scheduleDate(field: string) {
-      return formatDateWithZone(this.schedule?.[field]);
+      return formatDateWithZone(this.schedule?.[field] as string | undefined);
     },
 
     async loadConfig() {
@@ -273,8 +294,9 @@ export function registerScheduledDrawState(activeAlpine: typeof Alpine) {
       try {
         const res = await fetch(`${this.API_BASE}/raffle/config`);
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
-        this.schedule = await res.json();
-        this.seatBudget = this.schedule.seat_budget || this.schedule.remaining || emptyBudget;
+        const schedule: RaffleSchedule = await res.json();
+        this.schedule = schedule;
+        this.seatBudget = schedule.seat_budget || schedule.remaining || emptyBudget;
         await this.loadPublicResults();
         await this.loadPoolEntries();
         this.syncLatestRevealCard();

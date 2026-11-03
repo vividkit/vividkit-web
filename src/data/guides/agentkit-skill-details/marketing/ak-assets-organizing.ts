@@ -12,10 +12,10 @@ const data: SkillInfographic = {
   },
   hardGate: {
     type: 'warning',
-    titleEn: "Avoid accidental overwrite",
-    titleVi: "Tránh ghi đè ngoài ý muốn",
-    contentEn: "The pre-output checklist requires checking whether the target folder or file already exists before writing assets.",
-    contentVi: "Checklist trước khi xuất yêu cầu kiểm tra thư mục hoặc file đích đã tồn tại chưa trước khi ghi asset.",
+    titleEn: "Organization changes project state",
+    titleVi: "Sắp xếp lại làm thay đổi trạng thái project",
+    contentEn: "A clean-looking tree can still break links, imports, embeds, scripts, Git history, or publishing pipelines. Approve a complete mapping and dependency update plan before moving existing files. The pre-output checklist requires checking whether the target folder or file already exists before writing assets.",
+    contentVi: "Một cây thư mục trông gọn gàng vẫn có thể làm hỏng link, import, embed, script, lịch sử Git hoặc pipeline xuất bản. Hãy duyệt một bảng ánh xạ đầy đủ cùng kế hoạch cập nhật phụ thuộc trước khi di chuyển file hiện có. Checklist trước khi xuất yêu cầu kiểm tra thư mục hoặc file đích đã tồn tại chưa trước khi ghi asset.",
   },
   processFlow: [
     { number: 1, titleEn: "Classify asset", titleVi: "Phân loại asset", descEn: "Determine whether the output is an article, storyboard, video, transcript, banner, design, infographic, logo, social post, report, copy, campaign, sales, SEO, funnel, lead, community, retention, attraction, or diagnostic asset.", descVi: "Xác định output là article, storyboard, video, transcript, banner, design, infographic, logo, social post, report, copy, campaign, sales, SEO, funnel, lead, community, retention, attraction hay diagnostic asset." },

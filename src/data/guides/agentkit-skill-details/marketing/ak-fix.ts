@@ -15,10 +15,10 @@ const data: SkillInfographic = {
   },
   hardGate: {
     type: 'critical',
-    titleEn: 'Scout and diagnose before fixing',
-    titleVi: 'Khảo sát và chẩn đoán trước khi sửa',
-    contentEn: 'Do not propose or implement fixes before completing scout and root-cause diagnosis. After 3 failed attempts, stop and question the architecture.',
-    contentVi: 'Không được đề xuất hoặc sửa trước khi khảo sát và xác định nguyên nhân gốc. Sau 3 lần sửa thất bại, phải dừng và xét lại kiến trúc.',
+    titleEn: 'A fix request authorizes only the scoped workspace correction',
+    titleVi: 'Yêu cầu fix chỉ cho phép sửa workspace trong đúng phạm vi',
+    contentEn: '`--auto` does not authorize secret access, live provider changes, campaign edits, publication, audience contact, spend, commit, push, pull request, deployment, destructive actions, breaking public contracts, or acceptance of a regression. Grant those permissions separately. Do not propose or implement fixes before completing scout and root-cause diagnosis. After 3 failed attempts, stop and question the architecture.',
+    contentVi: '`--auto` không cấp quyền truy cập secret, thay đổi provider đang chạy, sửa campaign, xuất bản, liên hệ audience, chi tiền, commit, push, pull request, deploy, thao tác phá hủy, làm vỡ public contract hay chấp nhận regression. Hãy cấp riêng các quyền đó. Không được đề xuất hoặc sửa trước khi hoàn tất khảo sát và chẩn đoán nguyên nhân gốc. Sau 3 lần sửa thất bại, hãy dừng lại và xem xét lại kiến trúc.',
   },
   processFlow: [
     { number: 1, titleEn: 'Frame intent', titleVi: 'Đóng khung ý định', descEn: 'Capture outcome, constraints, non-goals, and acceptance criteria before selecting a mode.', descVi: 'Ghi nhận kết quả mong muốn, ràng buộc, phần không làm và tiêu chí hoàn tất trước khi chọn chế độ.' },

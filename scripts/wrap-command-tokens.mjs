@@ -1,5 +1,5 @@
-/** Highlight /ak:…, $ak:…, --flags, and short flags only after whitespace/start. */
-export const LONG_TOKEN_RE = /(?:\/ak:[a-z0-9-]+|\$ak:[a-z0-9-]+|--[a-z0-9][a-z0-9-]*)/g;
+/** Highlight /ak:…, $ak:…, beta /ak-…, $ak-…, --flags, and short flags only after whitespace/start. */
+export const LONG_TOKEN_RE = /(?:\/ak:[a-z0-9-]+|\$ak:[a-z0-9-]+|(?<![A-Za-z0-9.])[/$]ak-[a-z0-9-]+|--[a-z0-9][a-z0-9-]*)/g;
 export const SHORT_FLAG_RE = /(^|[\s"'`])(-[a-z]{1,3})(?=[\s"'`|,)]|$)/g;
 
 const SHORT_CHIP = '$1<code class="token">$2</code>';
@@ -26,6 +26,10 @@ export function selfTestWrapCommandTokens() {
   if (prose.includes('<code class="token">-second</code>')) misses.push('hyphen-second');
   if (prose.includes('<code class="token">-page</code>')) misses.push('hyphen-page');
   if (!prose.includes('privacy-first')) misses.push('kept-privacy-first');
+  const beta = wrapCommandTokens('/ak-vault find $ak-vault see references/ak-cli-operation.md');
+  if (!beta.includes('<code class="token">/ak-vault</code>')) misses.push('beta-command');
+  if (!beta.includes('<code class="token">$ak-vault</code>')) misses.push('beta-codex-command');
+  if (beta.includes('<code class="token">/ak-cli-operation</code>')) misses.push('path-not-command');
   if (misses.length) throw new Error(`wrap-command-tokens regression: ${misses.join(', ')}`);
 }
 

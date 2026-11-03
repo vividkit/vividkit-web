@@ -1,4 +1,5 @@
 ---
+import { akInvocationText } from '@/data/guides/agentkit-invocation';
 import type { Language } from '@/i18n';
 import TerminalSnippet from '../TerminalSnippet.astro';
 import { renderInlineCode } from './inline-code';
@@ -9,7 +10,7 @@ interface Props {
 
 const { lang } = Astro.props;
 const isVi = lang === 'vi';
-const t = (en: string, vi: string) => isVi ? vi : en;
+const t = (en: string, vi: string) => akInvocationText(isVi ? vi : en);
 
 const installOptions = [
   {

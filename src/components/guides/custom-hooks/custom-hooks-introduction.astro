@@ -1,5 +1,5 @@
 ---
-import type { customHooksTranslations } from "@/data/guides/custom-hooks/custom-hooks-translations";
+import type { CustomHooksCopy } from "@/data/guides/custom-hooks/custom-hooks-translations";
 
 interface Stat {
   label: string;
@@ -7,7 +7,7 @@ interface Stat {
 }
 
 interface Props {
-  t: (typeof customHooksTranslations)["en"];
+  t: CustomHooksCopy;
   stats: Stat[];
 }
 

@@ -38,10 +38,10 @@ const data: SkillInfographic = {
   },
   "hardGate": {
     "type": "warning",
-    "titleEn": "Review packed output before sharing",
-    "titleVi": "Rà soát gói đầu ra trước khi chia sẻ",
-    "contentEn": "Repomix uses Secretlint checks, but the skill still requires manual review of the generated file, token summary, and warnings before you share code with another LLM or auditor.",
-    "contentVi": "Repomix dùng kiểm tra Secretlint, nhưng skill vẫn yêu cầu rà thủ công file đã tạo, tóm tắt token và cảnh báo trước khi chia sẻ code cho LLM hoặc người audit khác."
+    "titleEn": "A security scan is not a disclosure guarantee",
+    "titleVi": "Quét bảo mật không bảo đảm dữ liệu không bị lộ",
+    "contentEn": "Repomix can detect common secret patterns, but the output may still contain private code, personal data, proprietary identifiers, or credentials the scanner misses. Review the generated artifact before sharing it. The skill uses Secretlint checks and still requires a manual review of the generated file, token summary, and warnings before you share code with another LLM or auditor.",
+    "contentVi": "Repomix có thể phát hiện các mẫu secret phổ biến, nhưng output vẫn có thể chứa code riêng tư, dữ liệu cá nhân, định danh độc quyền hoặc credential mà công cụ quét bỏ sót. Hãy xem lại file được tạo trước khi chia sẻ. Skill dùng kiểm tra Secretlint và vẫn yêu cầu rà thủ công file đã tạo, tóm tắt token và cảnh báo trước khi bạn chia sẻ code cho LLM khác hoặc người audit."
   },
   "processFlow": [
     {

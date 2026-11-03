@@ -7,8 +7,8 @@ const data: SkillInfographic = {
   header: {
     titleEn: '/ak:logo-design — Logo intelligence and generation',
     titleVi: '/ak:logo-design — Tư vấn và tạo logo',
-    taglineEn: "Logo intelligence and generation workflow spanning 55+ styles, 30 palettes, 25 industry guides, Gemini Nano Banana prompts, and optional HTML preview galleries.",
-    taglineVi: "Quy trình tư vấn và tạo logo với hơn 55 style, 30 bảng màu, 25 guide ngành, prompt Gemini Nano Banana và gallery HTML preview tùy chọn."
+    taglineEn: "Logo intelligence and generation workflow spanning 55 styles, 55 color palettes, 55 industry guides, Gemini Nano Banana prompts, and optional HTML preview galleries.",
+    taglineVi: "Quy trình tư vấn và tạo logo với 55 style, 55 bảng màu, 55 guide ngành, prompt Gemini Nano Banana và gallery HTML preview tùy chọn."
   },
   processFlow: [
     {
@@ -48,10 +48,10 @@ const data: SkillInfographic = {
     },
     {
       number: 6,
-      titleEn: "Enforce background",
-      titleVi: "Giữ nền trắng",
-      descEn: "Generate every logo image with a white background as required by the skill.",
-      descVi: "Tạo mọi ảnh logo với nền trắng đúng yêu cầu skill."
+      titleEn: "Match background and format",
+      titleVi: "Đúng nền và định dạng",
+      descEn: "Use the background and output format you asked for. A white background can help the preview, but it never overrides a transparent-background request, and raster output is not vector artwork.",
+      descVi: "Dùng đúng nền và định dạng file bạn yêu cầu. Nền trắng có thể giúp phần xem trước, nhưng không bao giờ thay cho yêu cầu nền trong suốt, và ảnh raster không phải file vector."
     },
     {
       number: 7,
@@ -62,25 +62,25 @@ const data: SkillInfographic = {
     },
     {
       number: 8,
-      titleEn: "Ask preview",
-      titleVi: "Hỏi preview",
-      descEn: "After generation, ask whether to create an eye-catching HTML gallery for the generated variants.",
-      descVi: "Sau khi tạo xong, hỏi user có muốn tạo gallery HTML bắt mắt cho các biến thể không."
+      titleEn: "Inspect the files",
+      titleVi: "Kiểm tra file",
+      descEn: "Check spelling, silhouette, legibility at small sizes, color, background or transparency, and file format against the brief; fix defects and deliver the actual logo files.",
+      descVi: "Đối chiếu chính tả, hình dáng, độ dễ đọc ở cỡ nhỏ, màu, nền hoặc độ trong suốt và định dạng file với brief; sửa lỗi rồi giao đúng các file logo."
     },
     {
       number: 9,
-      titleEn: "Build gallery",
-      titleVi: "Làm gallery",
-      descEn: "If approved, route to /ui-ux-pro-max for a responsive brand-matched preview with downloads.",
-      descVi: "Nếu user đồng ý, chuyển sang /ui-ux-pro-max để làm preview responsive hợp brand, có nút tải."
+      titleEn: "Optional comparison page",
+      titleVi: "Trang so sánh tùy chọn",
+      descEn: "When you ask for it, or several variants need comparing, build an HTML page that shows them side by side with an available rendering skill. It is optional, not a question the run must stop on.",
+      descVi: "Khi bạn yêu cầu, hoặc khi cần so sánh nhiều biến thể, dựng một trang HTML đặt chúng cạnh nhau bằng skill dựng trang đang có. Bước này tùy chọn, không phải câu hỏi bắt buộc phải dừng lại để hỏi."
     }
   ],
   hardGate: {
     type: "warning",
-    titleEn: "White background + preview question",
-    titleVi: "Nền trắng + hỏi preview",
-    contentEn: "Always generate logo images with a white background. If scripts fail, fix the scripts directly. After generation, always ask whether the user wants an HTML preview page before creating it.",
-    contentVi: "Luôn tạo ảnh logo với nền trắng. Nếu script lỗi, sửa trực tiếp script. Sau khi tạo xong, luôn hỏi user có muốn trang HTML preview không trước khi tạo."
+    titleEn: "Generation is not trademark clearance",
+    titleVi: "Tạo được logo chưa phải đã kiểm tra nhãn hiệu",
+    contentEn: "A distinct-looking output may still conflict with an existing mark or contain protected material. Get qualified similarity, trademark, cultural, and jurisdictional review before adopting or registering a logo. Image generation proves neither vector quality nor trademark safety.",
+    contentVi: "Một logo trông khác biệt vẫn có thể trùng với nhãn hiệu đã có hoặc chứa nội dung được bảo hộ. Hãy nhờ người có chuyên môn kiểm tra độ giống, nhãn hiệu, yếu tố văn hóa và luật từng nước trước khi dùng hoặc đăng ký logo. Tạo ảnh không chứng minh file là vector, cũng không chứng minh an toàn về nhãn hiệu."
   },
   corePrinciplesEn: [
     "Start with a design brief, not random logo generation",
@@ -115,8 +115,8 @@ const data: SkillInfographic = {
       commandVi: '/ak:logo-design GreenBean cổ điển',
       whenEn: "A brand needs logo directions and generated variants.",
       whenVi: "Khi một brand cần hướng logo và các biến thể được tạo.",
-      expectedEn: "Builds a brief, selects suitable style/color/industry guidance, generates white-background logos, then asks about preview.",
-      expectedVi: "Tạo brief, chọn guide style/màu/ngành phù hợp, tạo logo nền trắng rồi hỏi về preview.",
+      expectedEn: "Builds a brief, selects suitable style, color, and industry guidance, generates vintage variants on the background you asked for, and inspects each file before delivery.",
+      expectedVi: "Tạo brief, chọn hướng style, màu và ngành phù hợp, sinh các biến thể vintage trên nền bạn yêu cầu, rồi kiểm tra từng file trước khi giao.",
       recommended: true
     },
     {
@@ -130,7 +130,7 @@ const data: SkillInfographic = {
       expectedVi: "Dùng search theo style, màu và ngành trước khi chọn prompt tạo ảnh."
     },
     { labelEn: 'Fintech wordmark', labelVi: 'Wordmark fintech', command: '/ak:logo-design wordmark for a calm fintech brand named Harbor',
-      commandVi: '/ak:logo-design wordmark cho thương hiệu fintech bình yên tên Harbor', whenEn: 'A new logo needs industry, audience, personality, and style before generation.', whenVi: 'Logo mới cần ngành, audience, cá tính và style trước khi sinh.', expectedEn: 'It sets the style direction and generation-ready logo options rendered on a white background for review.', expectedVi: 'Hướng style và các phương án logo sẵn sinh trên nền trắng.' }
+      commandVi: '/ak:logo-design wordmark cho thương hiệu fintech bình yên tên Harbor', whenEn: 'A new logo needs industry, audience, personality, and style before generation.', whenVi: 'Logo mới cần ngành, audience, cá tính và style trước khi sinh.', expectedEn: 'It sets the style direction for a calm fintech wordmark and delivers checked logo files in the requested background and format for review.', expectedVi: 'Chốt hướng style cho wordmark fintech điềm tĩnh và giao các file logo đã kiểm tra, đúng nền và định dạng bạn yêu cầu, để bạn xem lại.' }
   ],
   skillStack: [
     {
@@ -144,19 +144,15 @@ const data: SkillInfographic = {
     {
       name: "Gemini Nano Banana",
       type: "tool"
-    },
-    {
-      name: "/ui-ux-pro-max",
-      type: "skill"
     }
   ],
   reportOutput: {
     titleEn: "Logo design brief and image variants",
     titleVi: "Design brief logo và các biến thể ảnh",
-    patternEn: "Generated logo files plus optional HTML preview",
-    patternVi: "Các file logo đã tạo kèm HTML preview tùy chọn",
-    descEn: "Industry analysis • style rationale • palette choices • generated variants • preview decision",
-    descVi: "Phân tích ngành • lý do chọn style • lựa chọn bảng màu • biến thể đã tạo • quyết định preview"
+    patternEn: "Generated logo files plus optional HTML comparison page",
+    patternVi: "Các file logo đã tạo kèm trang HTML so sánh tùy chọn",
+    descEn: "Industry analysis • style rationale • palette choices • generated variants • file checks",
+    descVi: "Phân tích ngành • lý do chọn style • lựa chọn bảng màu • biến thể đã tạo • kết quả kiểm tra file"
   }
 };
 

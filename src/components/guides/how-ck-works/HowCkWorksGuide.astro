@@ -807,7 +807,7 @@ const getCommandNavItem = (id: string) => {
 
     {/* Quick Ref content */}
     <div class="rounded-xl border border-blue-200 dark:border-blue-500/20 bg-blue-50/50 dark:bg-blue-500/5 p-6">
-      {quickRefScenarioIds.map((scenarioId, index) => {
+      {quickRefScenarioIds.map((scenarioId) => {
         const navGroup = quickRefScenarioGroups.find(group => group.includes(scenarioId)) || quickRefScenarioIds;
         const groupIndex = navGroup.indexOf(scenarioId);
         const previousId = navGroup[(groupIndex - 1 + navGroup.length) % navGroup.length];

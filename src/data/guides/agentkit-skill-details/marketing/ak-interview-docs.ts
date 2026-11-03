@@ -70,10 +70,10 @@ const data: SkillInfographic = {
   ],
   hardGate: {
     type: "critical",
-    titleEn: "User answers are the source of truth",
-    titleVi: "Câu trả lời của user là nguồn sự thật",
-    contentEn: "This skill does not invent content, prioritize unordered user lists, derive docs from source code, or record unapproved architectural decisions.",
-    contentVi: "Skill này không bịa nội dung, không tự xếp hạng danh sách chưa có thứ tự, không suy tài liệu từ source code và không ghi quyết định kiến trúc chưa được duyệt."
+    titleEn: "An interview records decisions; it does not make them",
+    titleVi: "Phỏng vấn chỉ ghi lại quyết định, không tự đưa ra quyết định",
+    contentEn: "The Skill must not turn an unordered list into a ranking, make an architectural decision, invent a testimonial or claim, or approve publication. Ask before assigning priority or sequence, and record only decisions the user explicitly makes. It also does not invent content or derive docs from source code.",
+    contentVi: "Skill không được biến một danh sách không thứ tự thành bảng xếp hạng, tự ra quyết định kiến trúc, bịa lời chứng thực hay tuyên bố, hoặc duyệt xuất bản. Hãy hỏi trước khi gán mức ưu tiên hay thứ tự, và chỉ ghi lại những quyết định người dùng nêu rõ. Skill cũng không bịa nội dung hay suy ra tài liệu từ source code."
   },
   corePrinciplesEn: [
     "The document should preserve the user’s knowledge, taste, and decisions.",

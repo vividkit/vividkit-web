@@ -12,10 +12,10 @@ const data: SkillInfographic = {
   },
   hardGate: {
     type: 'warning',
-    titleEn: 'Status only; fetch only on request',
-    titleVi: 'Chỉ báo trạng thái; chỉ fetch khi được yêu cầu',
-    contentEn: 'This skill reports status and handoff evidence only. It does not implement, edit, commit, checkout, merge, push, fetch, or mutate the checkout unless the user explicitly asks to refresh remotes.',
-    contentVi: 'Skill này chỉ báo cáo trạng thái và bằng chứng bàn giao. Không triển khai, sửa file, commit, checkout, merge, push, fetch hoặc thay đổi checkout, trừ khi người dùng yêu cầu làm mới remote.',
+    titleEn: 'A handoff is a local snapshot',
+    titleVi: 'Bản handoff chỉ là ảnh chụp trạng thái trên máy',
+    contentEn: 'Without `--fetch`, remote branches mean locally cached remote-tracking refs. The report cannot show un-fetched commits, server-only state, unregistered worktrees, or work that was never recorded in Git, plans, or roadmap files. This skill reports status and handoff evidence only. It does not implement, edit, commit, checkout, merge, push, fetch, or mutate the checkout unless the user explicitly asks to refresh remotes.',
+    contentVi: 'Không có `--fetch`, remote branch ở đây là các remote-tracking ref đã lưu sẵn trên máy. Báo cáo không thể thấy commit chưa fetch, trạng thái chỉ có trên server, worktree chưa đăng ký, hay công việc chưa từng được ghi vào Git, plan hoặc file roadmap. Skill này chỉ báo cáo trạng thái và bằng chứng bàn giao. Nó không triển khai, sửa file, commit, checkout, merge, push, fetch hay thay đổi checkout, trừ khi người dùng yêu cầu rõ việc làm mới remote.',
   },
   invocation: {
     syntax: '/ak:watzup [branch|worktree|status]',

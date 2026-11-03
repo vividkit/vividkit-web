@@ -10,6 +10,13 @@ const data: SkillInfographic = {
     taglineEn: "Creates Corporate Identity Program briefs and mockups across 50+ deliverables, 20 styles, and 20 industries using Gemini Nano Banana image generation.",
     taglineVi: "Tạo brief và mockup Corporate Identity Program cho hơn 50 hạng mục, 20 phong cách và 20 ngành bằng Gemini Nano Banana.",
   },
+  hardGate: {
+    type: 'warning',
+    titleEn: 'A mockup request can cross a provider boundary',
+    titleVi: 'Yêu cầu mockup có thể gửi dữ liệu ra nhà cung cấp bên ngoài',
+    contentEn: 'Image generation needs a current Gemini API key and the packaged Python dependencies. It sends the prompt and, when supplied, the logo image to that provider. Provider availability, terms, model behavior, network access, and cost can change. Approve that call separately from approving the CIP brief.',
+    contentVi: 'Tạo ảnh cần Gemini API key còn hiệu lực và các thư viện Python đi kèm. Bước này gửi nội dung prompt và, nếu có, ảnh logo tới nhà cung cấp đó. Tình trạng dịch vụ, điều khoản, hành vi model, kết nối mạng và chi phí đều có thể thay đổi. Hãy duyệt lần gọi này riêng, tách khỏi việc duyệt brief CIP.',
+  },
   processFlow: [
     { number: 1, titleEn: "Identify brand scope", titleVi: "Xác định phạm vi brand", descEn: "Read the requested brand, industry, deliverables, style direction, and whether a real logo exists.", descVi: "Đọc brand, ngành, hạng mục cần làm, hướng phong cách và việc đã có logo thật hay chưa." },
     { number: 2, titleEn: "Start with CIP brief", titleVi: "Bắt đầu bằng brief CIP", descEn: "Use the CIP brief search to return industry analysis, style recommendations, and priority deliverables.", descVi: "Dùng tìm kiếm brief CIP để lấy phân tích ngành, gợi ý phong cách và các hạng mục ưu tiên." },

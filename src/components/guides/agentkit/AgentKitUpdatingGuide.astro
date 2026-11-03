@@ -216,7 +216,7 @@ const wizardSteps = isVi
               { kind: 'cmd' as const, text: 'ak kit refresh engineer --yes' },
             ],
           },
-        ] as const
+        ] as { q: string; parts: { kind: 'cmd' | 'sep' | 'or' | 'note'; text: string }[]; hint?: string }[]
       ).map((item) => (
         <div class="rounded-2xl border border-slate-200/80 bg-white/80 p-4 dark:border-slate-700 dark:bg-slate-900/50">
           <div class="text-sm font-semibold text-slate-900 dark:text-white">{item.q}</div>
@@ -567,11 +567,17 @@ ak recover <id> --allow-root /absolute/project
     </p>
   </AkSection>
 
+  <AkCallout variant="info" title={isVi ? 'Từ v2 lên v3' : 'From v2 to v3'}>
+    {isVi
+      ? 'v3 giờ là bản stable, nên update trên kênh stable sẽ đưa bạn từ v2 lên v3: lệnh skill đổi sang dạng gạch ngang, ak-ak gộp vào ak-agentkit, có thời hạn nhận bản cập nhật và skill store tùy chọn. Cách quay về v2 cũng ở trang '
+      : 'v3 is now the stable release, so updating on the stable channel moves you from v2 to v3: skill commands switch to the dash form, ak-ak merges into ak-agentkit, and it adds a license update window and an opt-in skill store. How to roll back to v2 is on '}<a href={translatePath('/guides/agentkit/upgrading-to-v3')} class="font-semibold underline underline-offset-2">{isVi ? 'Nâng lên v3' : 'Upgrading to v3'}</a>.
+  </AkCallout>
+
 
   <AkCallout variant="info" title={isVi ? 'Mã thoát (ak update)' : 'Exit codes (ak update)'}>
     {isVi
-      ? '0 = xong ổn · 1 = lỗi khi chạy / một phần fail · 2 = flag sai · 3 = chỉ xem trước (chưa --yes / chưa confirm) — an toàn, chưa ghi file.'
-      : '0 = ok · 1 = runtime error / partial failure · 2 = invalid flags · 3 = preview only (no --yes / no confirm) — safe, no files written.'}
+      ? '0 = xong ổn · 1 = lỗi khi chạy / một phần fail · 2 = flag sai, hoặc không có kit nào để cập nhật ở phạm vi đó · 3 = chỉ xem trước (chưa --yes / chưa confirm) — an toàn, chưa ghi file · 15 = hết thời hạn cập nhật: registry từ chối bản kit nằm ngoài thời hạn license; bản đã cài vẫn chạy bình thường, lỗi JSON nêu bản mới nhất bạn được nhận và link gia hạn. ak update không ghim phiên bản thì lên bản mới nhất còn trong thời hạn (hoặc bỏ qua kit nếu bạn đã có bản đó) và vẫn thoát 0; chỉ khi chỉ định --version ngoài thời hạn mới gặp mã 15. Với --ssot còn có 4 (máy không chạy được skill store, hoặc thao tác AgentKit khác đang giữ khóa), 6 (preflight chặn trước khi ghi, thiếu chỗ cho checkpoint hoặc xung đột khi chuyển) và 7 (gặp link hoặc đường dẫn không tin cậy trong thư mục skill).'
+      : '0 = ok · 1 = runtime error / partial failure · 2 = invalid flags, or nothing to update in that scope · 3 = preview only (no --yes / no confirm) — safe, no files written · 15 = outside your update window: the registry refused a kit release your license window does not cover; installed versions keep working, and the JSON error names the newest version you can get plus the renewal link. An unpinned ak update moves to the newest covered release (or skips the kit if you already have it) and still exits 0; you hit 15 only with an explicit --version outside the window. With --ssot there is also 4 (the machine cannot run the skill store, or another AgentKit operation holds the lock), 6 (a preflight blocker stopped it before any write, the checkpoint did not fit, or the migration hit a conflict) and 7 (a link or untrusted path inside a skills root).'}
   </AkCallout>
 
   <AkCallout variant="warn" title={isVi ? 'Cập nhật ≠ cài lại clean' : 'Update ≠ clean reinstall'}>
@@ -606,6 +612,7 @@ ak recover <id> --allow-root /absolute/project
     lang={currentLang}
     title={isVi ? 'Liên quan' : 'Related'}
     links={[
+      { href: '/guides/agentkit/upgrading-to-v3', label: isVi ? 'Nâng lên v3' : 'Upgrading to v3' },
       { href: '/guides/agentkit/configuration', label: isVi ? 'config.yaml (updates.*)' : 'config.yaml (updates.*)' },
       { href: '/guides/agentkit/helper', label: 'AgentKit Helper', desc: isVi ? 'Menu từng bước: hỏi rồi chạy lệnh CLI ak giúp bạn' : 'Step-by-step menu: asks, then runs the ak CLI for you' },
       { href: '/guides/agentkit/clean-reinstall', label: isVi ? 'Cài lại clean' : 'Clean reinstall' },

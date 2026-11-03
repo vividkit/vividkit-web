@@ -1,6 +1,5 @@
 ---
 // Workflows Guide - Engineer Kit section: workflow cards grouped by category
-import { useTranslations } from '@/i18n/utils';
 import { getLangFromUrl, type Language } from '@/i18n';
 import WorkflowsWorkflowCard from './workflows-workflow-card.astro';
 
@@ -11,7 +10,6 @@ interface Props {
 
 const { workflows, lang } = Astro.props;
 const currentLang = lang || getLangFromUrl(Astro.url);
-const t = useTranslations(currentLang);
 
 // Group workflows by category
 const categories = workflows.reduce((acc: Record<string, any[]>, workflow) => {

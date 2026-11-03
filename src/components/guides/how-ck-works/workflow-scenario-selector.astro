@@ -4,7 +4,7 @@
 // so the main workflow content (Quick Ref + Pipeline) stays close to the fold.
 // Uses Alpine.js x-data from parent HowCkWorksGuide component
 import { getLangFromUrl, type Language } from '@/i18n';
-import { workflowScenarios, hasInfographic, getPhaseCount } from '@/data/guides/how-ck-works';
+import { workflowScenarios, getPhaseCount } from '@/data/guides/how-ck-works';
 
 // Pre-compute phase counts for scenarios with infographics (for badge display)
 const phaseCounts: Record<string, number> = {};

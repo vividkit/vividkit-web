@@ -15,10 +15,10 @@ const data: SkillInfographic = {
   },
   hardGate: {
     type: 'warning',
-    titleEn: 'RESOLVE MODE BEFORE GENERATING',
-    titleVi: 'XÁC ĐỊNH MODE TRƯỚC KHI TẠO',
-    contentEn: 'Argument resolution is ordered: --stop exits, --html sets output mode, generation flags choose generation, HTML-only review flags imply HTML, explicit paths use view mode, and unresolved references require clarification. --html --ascii is unsupported.',
-    contentVi: 'Thứ tự resolve argument: --stop thoát, --html đặt output mode, generation flag chọn chế độ tạo, review flag HTML-only tự bật HTML, path rõ ràng vào view mode và reference không resolve được phải hỏi lại. --html --ascii không được hỗ trợ.',
+    titleEn: 'Viewer mode can expose local content on the network',
+    titleVi: 'Chế độ viewer có thể làm lộ nội dung trên máy ra mạng',
+    contentEn: 'The source view workflow starts an unauthenticated HTTP server with `--host 0.0.0.0`, making its URL reachable through local network interfaces. The server restricts file routes to configured directories, but anyone who can reach the process may request permitted content. Do not serve folders or files containing secrets, customer data, private plans, or personal data. Argument resolution is ordered: --stop exits, --html sets output mode, generation flags choose generation, HTML-only review flags imply HTML, explicit paths use view mode, and unresolved references require clarification. --html --ascii is unsupported.',
+    contentVi: 'Workflow xem nguồn khởi động một HTTP server không cần xác thực với `--host 0.0.0.0`, khiến URL của nó truy cập được qua các giao diện mạng nội bộ. Server giới hạn route file trong các thư mục đã cấu hình, nhưng bất kỳ ai truy cập được process đều có thể yêu cầu nội dung được phép. Không serve thư mục hoặc file chứa secret, dữ liệu khách hàng, plan riêng tư hay dữ liệu cá nhân. Thứ tự xử lý argument: --stop thoát, --html đặt chế độ output, flag tạo nội dung chọn chế độ tạo, flag review chỉ dành cho HTML tự bật HTML, path cụ thể dùng view mode, và reference không xác định được thì phải hỏi lại. --html --ascii không được hỗ trợ.',
   },
   processFlow: [
     { number: 1, titleEn: 'Choose Operation', titleVi: 'Chọn thao tác', descEn: 'With no arguments, ask the user to choose view, explain, slides, diagram, ascii, diff, plan-review, recap, or stop.', descVi: 'Nếu không có argument, hỏi người dùng chọn view, explain, slides, diagram, ascii, diff, plan-review, recap hoặc stop.' },
@@ -55,6 +55,8 @@ const data: SkillInfographic = {
   outputFlags: [
     { flag: '--html', titleEn: 'Self-contained HTML', titleVi: 'HTML độc lập', descEn: 'Switch generation output to a single inline HTML file that opens directly in a browser.', descVi: 'Chuyển output tạo mới sang một file HTML inline, mở trực tiếp trong browser.', exampleCommand: '/ak:preview --html --diagram "Landing page funnel"',
           exampleCommandVi: '/ak:preview --html --diagram "Phễu trang đích"' },
+    { flag: '--ak-render', titleEn: 'AK Render HTML', titleVi: 'HTML qua AK Render', descEn: 'Opt-in route that implies --html and compiles --explain, --diff, --plan-review, or --recap HTML from a page spec with AK Render; --slides and --diagram keep the default route. A project with an .ak-render/ folder selects it automatically.', descVi: 'Route tùy chọn bật thêm, tự bật --html và compile HTML của --explain, --diff, --plan-review hoặc --recap từ page spec bằng AK Render; --slides và --diagram vẫn đi route mặc định. Project có thư mục .ak-render/ sẽ tự chọn route này.', exampleCommand: '/ak:preview --html --explain "How our referral funnel works" --ak-render',
+          exampleCommandVi: '/ak:preview --html --explain "Cách phễu giới thiệu của chúng ta hoạt động" --ak-render' },
     { flag: '--no-editorial-visuals', titleEn: 'Disable editorial engines', titleVi: 'Tắt engine editorial', descEn: 'Disable both additive HTML editorial visual engines and use fallback rendering.', descVi: 'Tắt cả hai engine editorial visual bổ sung cho HTML và dùng renderer fallback.', exampleCommand: '/ak:preview --html --diagram "Launch flow" --no-editorial-visuals',
           exampleCommandVi: '/ak:preview --html --diagram "Luồng ra mắt" --no-editorial-visuals' },
     { flag: '--no-antv', titleEn: 'Disable AntV Infographic', titleVi: 'Tắt AntV Infographic', descEn: 'Disable only the AntV Infographic layer while leaving other eligible visual engines available.', descVi: 'Chỉ tắt lớp AntV Infographic trong khi vẫn cho phép engine visual phù hợp khác.', exampleCommand: '/ak:preview --html --recap "last week" --no-antv',

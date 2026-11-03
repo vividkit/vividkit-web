@@ -12,10 +12,10 @@ const data: SkillInfographic = {
   },
   hardGate: {
     type: "critical",
-    titleEn: "Real brands require real asset protocol",
-    titleVi: "Brand thật bắt buộc dùng quy trình asset thật",
-    contentEn: "When a task names a real brand or product, the skill requires loading the brand asset protocol before generating. A missing logo is a stop-and-ask, never a fabrication.",
-    contentVi: "Khi task nêu brand hoặc sản phẩm thật, skill bắt buộc tải brand asset protocol trước khi tạo. Không tìm được logo thì dừng hỏi, không được bịa.",
+    titleEn: "Routing does not authorize every production tool",
+    titleVi: "Định tuyến không cấp quyền cho mọi công cụ sản xuất",
+    contentEn: "Some routes can call image providers, browse for references, load hosted fonts or libraries, or capture HTML in a browser. These actions can send inputs outside the project, use credentials, incur cost, or depend on current provider behavior. Approve each effect separately. When a task names a real brand or product, the skill requires loading the brand asset protocol before generating. A missing logo is a stop-and-ask, never a fabrication.",
+    contentVi: "Một số route có thể gọi provider tạo ảnh, duyệt web tìm tham khảo, tải font hoặc thư viện host bên ngoài, hay chụp HTML trong trình duyệt. Các thao tác này có thể gửi dữ liệu đầu vào ra ngoài project, dùng credential, phát sinh chi phí hoặc phụ thuộc vào hành vi hiện tại của provider. Hãy duyệt riêng từng tác động. Khi task nêu tên một brand hoặc sản phẩm thật, skill bắt buộc tải brand asset protocol trước khi tạo. Thiếu logo thì phải dừng lại hỏi, không bao giờ được bịa.",
   },
   processFlow: [
     { number: 1, titleEn: "Declare design read", titleVi: "Tuyên bố cách đọc brief", descEn: "State: Reading this as deliverable, audience, and aesthetic direction; ask exactly one clarifying question only if genuinely ambiguous.", descVi: "Nêu: đang đọc brief như hạng mục, audience và hướng thẩm mỹ nào; chỉ hỏi đúng một câu nếu thật sự mơ hồ." },

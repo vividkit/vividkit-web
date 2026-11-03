@@ -100,10 +100,10 @@ const data: SkillInfographic = {
   },
   "hardGate": {
     "type": "critical",
-    "titleEn": "Project-management before content work",
-    "titleVi": "Project-management trước khi làm nội dung",
-    "contentEn": "Resolve show-off preferences, invoke project-management, create the dated plan directory, and register the checklist before analyzing or producing content. If planning is blocked, resolve it first.",
-    "contentVi": "Phải resolve preference của show-off, gọi project-management, tạo thư mục plan theo ngày và đăng ký checklist trước khi phân tích hoặc tạo nội dung. Nếu bước plan bị chặn, xử lý chặn đó trước."
+    "titleEn": "A stored default is not publication approval",
+    "titleVi": "Mặc định đã lưu không phải sự cho phép công bố",
+    "contentEn": "`publishing: true` is a workflow preference, not proof that a new public destination, audience, credentials, or cost is approved. Confirm the exact publication action before `agentwiki` or ReviewWeb is used. Resolve show-off preferences, invoke `ak-project-management`, create the dated plan directory, and register the checklist before analyzing or producing content. If planning is blocked, resolve it first.",
+    "contentVi": "`publishing: true` là một tùy chọn workflow, không phải bằng chứng rằng nơi công bố công khai mới, đối tượng xem, credential hay chi phí đã được duyệt. Xác nhận đúng hành động công bố trước khi dùng `agentwiki` hoặc ReviewWeb. Đọc tùy chọn của show-off, gọi `ak-project-management`, tạo thư mục plan theo ngày và đăng ký checklist trước khi phân tích hoặc tạo nội dung. Nếu bước lập plan bị chặn, xử lý chỗ chặn đó trước."
   },
   "processFlow": [
     {

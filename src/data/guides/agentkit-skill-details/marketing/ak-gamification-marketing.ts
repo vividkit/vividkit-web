@@ -10,6 +10,13 @@ const data: SkillInfographic = {
     taglineEn: 'Designs gamified campaigns with points, badges, leaderboards, streaks, challenges, rewards, psychology alignment, templates, and KPIs.',
     taglineVi: 'Thiết kế chiến dịch gamification bằng điểm, badge, leaderboard, streak, challenge, reward, căn chỉnh tâm lý, template và KPI.',
   },
+  hardGate: {
+    type: 'warning',
+    titleEn: 'Do not optimize compulsion',
+    titleVi: 'Không tối ưu theo hướng gây nghiện, ép buộc',
+    contentEn: 'Loss aversion, variable rewards, scarcity, streaks, and leaderboards can create pressure or exclusion. Do not use them to obscure odds, punish rest, threaten earned value, coerce contact sharing, target vulnerable people, or make basic access depend on participation. Legal and policy review may be required.',
+    contentVi: 'Sợ mất mát, phần thưởng ngẫu nhiên, khan hiếm, streak và leaderboard có thể tạo áp lực hoặc khiến người dùng bị loại ra ngoài. Không dùng chúng để che giấu tỉ lệ trúng, phạt người nghỉ, đe dọa giá trị người dùng đã kiếm được, ép chia sẻ danh bạ, nhắm vào người dễ bị tổn thương, hoặc bắt phải tham gia mới được dùng tính năng cơ bản. Có thể cần rà soát pháp lý và chính sách.',
+  },
   processFlow: [
     { number: 1, titleEn: 'Identify goal', titleVi: 'Xác định mục tiêu', descEn: 'Map acquisition, retention, engagement, conversion, or onboarding to the decision tree.', descVi: 'Ghép acquisition, retention, engagement, conversion hoặc onboarding với decision tree.' },
     { number: 2, titleEn: 'Select mechanics', titleVi: 'Chọn cơ chế game', descEn: 'Choose from points, badges, leaderboards, levels, streaks, challenges, quests, unlockables, rewards, and progress bars.', descVi: 'Chọn giữa điểm, badge, leaderboard, level, streak, challenge, quest, unlockable, reward và progress bar.' },

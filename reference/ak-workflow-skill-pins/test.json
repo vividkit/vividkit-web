@@ -1,12 +1,12 @@
 {
   "slug": "test",
-  "hash": "a6e93b00bc9d2036030dae362c35eb47674b5e615105695b098839f1ec24490f",
+  "hash": "49725d98b65e8d7e4ef55d59de05e840da882d660ea55f063f94bd02fb7a9042",
   "source": "kit",
   "path": "ak-cli@origin/main:kits/core/skills/ak-test/SKILL.md",
-  "pinnedAt": "2026-10-02T21:25:37.472Z",
+  "pinnedAt": "2026-11-02T21:11:20.828Z",
   "snapshot": {
-    "name": "ak:test",
-    "description": "Run unit, integration, e2e, and UI tests. Use for test execution, coverage analysis, build verification, visual regression, and QA reports.",
+    "name": "ak-test",
+    "description": "Run unit, integration, e2e and UI tests with coverage analysis, build verification, visual regression and QA reports.",
     "when_to_use": "Invoke for running or designing validation suites.",
     "argument_hint": "[context] OR ui [url] OR create|optimize|audit [scope] [--advice] [--ultra] [--interview]",
     "version": null

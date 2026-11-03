@@ -12,10 +12,10 @@ const data: SkillInfographic = {
   },
   "hardGate": {
     "type": "warning",
-    "titleEn": "Recap is not implementation or deployment",
-    "titleVi": "Tóm tắt không phải triển khai hay deploy",
-    "contentEn": "Do not mutate files, claim deployment, fabricate verification, expose secrets, or replace a live status check with narrative.",
-    "contentVi": "Không sửa file, không tuyên bố đã deploy, không bịa verification, không lộ bí mật và không thay thế kiểm tra trạng thái thật bằng lời kể."
+    "titleEn": "Implemented does not automatically mean deployed",
+    "titleVi": "Đã implement không tự động có nghĩa là đã deploy",
+    "contentEn": "Source changes are not presented as shipped, deployed, or currently running unless artifact or runtime evidence proves that state. Historical session context does not replace a fresh status check. Do not mutate files, fabricate verification, or expose secrets.",
+    "contentVi": "Thay đổi trong source không được trình bày là đã ship, đã deploy hay đang chạy, trừ khi có bằng chứng từ artifact hoặc runtime chứng minh trạng thái đó. Ngữ cảnh từ các session trước không thay thế được một lần kiểm tra trạng thái mới. Không sửa file, không bịa kết quả kiểm chứng và không làm lộ secret."
   },
   "processFlow": [
     {

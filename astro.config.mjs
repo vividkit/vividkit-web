@@ -40,6 +40,11 @@ export default defineConfig({
     '/guides/resume': '/guides/session-recovery',
     '/vi/guides/resume': '/vi/guides/session-recovery',
     '/guides/mobile-coding': '/guides/remote-control',
-    '/vi/guides/mobile-coding': '/vi/guides/remote-control'
+    '/vi/guides/mobile-coding': '/vi/guides/remote-control',
+    // ak-ak merged into ak-agentkit in AgentKit v3.0.0.
+    '/guides/agentkit/skills/engineer/ak-ak': '/guides/agentkit/skills/engineer/ak-agentkit',
+    '/vi/guides/agentkit/skills/engineer/ak-ak': '/vi/guides/agentkit/skills/engineer/ak-agentkit',
+    '/guides/agentkit/skills/marketing/ak-ak': '/guides/agentkit/skills/marketing/ak-agentkit',
+    '/vi/guides/agentkit/skills/marketing/ak-ak': '/vi/guides/agentkit/skills/marketing/ak-agentkit'
   }
 });

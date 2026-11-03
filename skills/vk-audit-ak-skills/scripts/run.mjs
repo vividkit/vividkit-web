@@ -7,7 +7,7 @@ import { fileURLToPath } from 'node:url';
 const SKILL_DIR = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 
 function parseArgs(argv) {
-  const out = { cmd: 'check', repo: '', kitRoot: '', akDocs: '', kit: 'all', skipInventory: false };
+  const out = { cmd: 'check', repo: '', kitRoot: '', akDocs: '', kit: 'all', skipInventory: false, verbose: false };
 
   const rest = [];
   for (let i = 0; i < argv.length; i++) {
@@ -17,6 +17,7 @@ function parseArgs(argv) {
     else if (a === '--ak-docs') out.akDocs = argv[++i] || '';
     else if (a === '--kit') out.kit = argv[++i] || 'all';
     else if (a === '--skip-inventory') out.skipInventory = true;
+    else if (a === '--verbose') out.verbose = true;
 
     else if (a === '--help' || a === '-h') out.cmd = 'help';
     else if (!a.startsWith('-') && rest.length === 0) rest.push(a);
@@ -72,6 +73,7 @@ function main(argv) {
   --ak-docs <ak-docs>
   --kit engineer|marketing|all
   --skip-inventory
+  --verbose          list every beta-delta page and per-skill inventory line
 `);
 
     process.exit(0);
@@ -95,16 +97,18 @@ function main(argv) {
     args.kit,
   ];
   if (args.akDocs) claims.push('--ak-docs', args.akDocs);
+  const verbose = args.verbose ? ['--verbose'] : [];
+  claims.push(...verbose);
 
   const steps = [];
   if (!args.skipInventory) {
-    steps.push(['scripts/check-ak-kit-skill-inventory.mjs', '--kit-root', args.kitRoot]);
+    steps.push(['scripts/check-ak-kit-skill-inventory.mjs', '--kit-root', args.kitRoot, ...verbose]);
   }
   steps.push(
     ['scripts/check-ak-skill-detail-principles.mjs', '--self-test'],
     ['scripts/check-ak-skill-detail-principles.mjs'],
     ['scripts/check-ak-skill-details.mjs', '--self-test'],
-    ['scripts/check-ak-skill-details.mjs', '--kit-root', args.kitRoot],
+    ['scripts/check-ak-skill-details.mjs', '--kit-root', args.kitRoot, ...verbose],
     ['scripts/check-ak-skill-detail-claims.mjs', '--self-test'],
     claims,
   );

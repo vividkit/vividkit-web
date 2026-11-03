@@ -12,10 +12,10 @@ const data: SkillInfographic = {
   },
   hardGate: {
     type: 'warning',
-    titleEn: 'DELEGATE ONLY WHEN POLICY ALLOWS',
-    titleVi: 'CHỈ DELEGATE KHI POLICY CHO PHÉP',
-    contentEn: 'Do not spawn subagents merely because Scout mentions Explore. If the user request or runtime policy does not permit delegation, scout in the main agent. In --ultra mode, hard-stop if five read-only candidates cannot be dispatched; do not degrade to a main-agent run.',
-    contentVi: 'Không spawn subagent chỉ vì Scout nhắc Explore. Nếu yêu cầu người dùng hoặc runtime policy không cho phép delegation, scout trong main agent. Với --ultra, hard-stop nếu không dispatch được năm candidate read-only; không degrade về chạy một mình.',
+    titleEn: 'Scouting is read-only authority',
+    titleVi: 'Scout chỉ có quyền đọc',
+    contentEn: 'Permission to search a repository does not authorize edits, generated output, dependency installation, network access, sending private files to a provider, subagent delegation, commits, or publication. Approve ordinary delegation and the `ext` route separately; `--ultra` authorizes only its required read-only fan-out. External prompts must remain bounded and read-only. Delegate only when the user request or runtime policy permits it (not merely because Scout mentions Explore), and in --ultra mode hard-stop if five read-only candidates cannot be dispatched instead of degrading to a main-agent run.',
+    contentVi: 'Được phép tìm kiếm trong repository không có nghĩa là được sửa file, tạo output, cài dependency, truy cập mạng, gửi file riêng tư cho provider, giao việc cho subagent, commit hay xuất bản. Hãy duyệt riêng việc giao subagent thông thường và route `ext`; `--ultra` chỉ cho phép phần chạy song song chỉ đọc bắt buộc của chế độ này. Prompt gửi ra bên ngoài phải giữ đúng phạm vi và chỉ đọc. Chỉ giao cho subagent khi yêu cầu của người dùng hoặc runtime policy cho phép (không chỉ vì Scout nhắc tới Explore), và ở chế độ --ultra, hãy dừng hẳn nếu không dispatch được năm candidate chỉ đọc thay vì lùi về chạy trong main agent.',
   },
   processFlow: [
     { number: 1, titleEn: 'Analyze Target', titleVi: 'Phân tích mục tiêu', descEn: 'Parse the prompt for search targets, directories, patterns, file types, and expected code relationships.', descVi: 'Đọc prompt để xác định mục tiêu search, thư mục, pattern, loại file và quan hệ code cần tìm.' },

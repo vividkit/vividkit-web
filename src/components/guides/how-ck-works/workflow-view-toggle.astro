@@ -19,8 +19,8 @@ const SHOW_COMBOS_TAB = false;
   <div class="inline-flex rounded-xl bg-gray-100 dark:bg-white/5 p-1 border border-gray-200 dark:border-white/10">
     <!-- Individual Skills -->
     <button
-      @click="viewType = 'individual'; selectedCombo = null"
-      :class="viewType === 'individual'
+      x-on:click="viewType = 'individual'; selectedCombo = null"
+      x-bind:class="viewType === 'individual'
         ? 'bg-white dark:bg-white/10 text-gray-900 dark:text-white shadow-sm border border-gray-200 dark:border-white/20'
         : 'text-gray-600 dark:text-white/60 hover:text-gray-900 dark:hover:text-white border border-transparent'"
       class="px-4 py-2 text-sm font-medium rounded-lg transition-all flex items-center gap-2"
@@ -35,8 +35,8 @@ const SHOW_COMBOS_TAB = false;
     {/* Workflow Combos - temporarily hidden for redesign */}
     {SHOW_COMBOS_TAB && (
       <button
-        @click="viewType = 'combos'"
-        :class="viewType === 'combos'
+        x-on:click="viewType = 'combos'"
+        x-bind:class="viewType === 'combos'
           ? 'bg-white dark:bg-white/10 text-gray-900 dark:text-white shadow-sm border border-gray-200 dark:border-white/20'
           : 'text-gray-600 dark:text-white/60 hover:text-gray-900 dark:hover:text-white border border-transparent'"
         class="px-4 py-2 text-sm font-medium rounded-lg transition-all flex items-center gap-2"

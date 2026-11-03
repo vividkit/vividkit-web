@@ -12,10 +12,10 @@ const data: SkillInfographic = {
   },
   hardGate: {
     type: "warning",
-    titleEn: "SUBFOLDER ONLY",
-    titleVi: "CHỈ DÀNH CHO SUBFOLDER",
-    contentEn: "Never edit root CLAUDE.md or root AGENTS.md. Confirm a subfolder target, do not create context for static/reference folders, and do not invent constraints or write credentials.",
-    contentVi: "Không sửa root CLAUDE.md hoặc root AGENTS.md. Phải xác nhận target là subfolder, không tạo context cho thư mục tĩnh/tham chiếu, không bịa ràng buộc hoặc ghi credential.",
+    titleEn: "The outline requires your approval",
+    titleVi: "Dàn ý cần bạn phê duyệt",
+    contentEn: "Inspection does not authorize a write. Confirm the target and proposed outline before the Skill creates or replaces local instruction paths. Never edit root `CLAUDE.md` or root `AGENTS.md`. Target only a subfolder, do not create context for static or reference folders, and do not invent constraints or write credentials.",
+    contentVi: "Việc kiểm tra không cho phép ghi file. Xác nhận target và dàn ý đề xuất trước khi Skill tạo hoặc thay thế các file chỉ dẫn local. Không bao giờ sửa `CLAUDE.md` hay `AGENTS.md` ở thư mục gốc. Chỉ nhắm vào một subfolder, không tạo context cho thư mục tĩnh hoặc thư mục tham chiếu, không bịa ràng buộc và không ghi credential.",
   },
   processFlow: [
     { number: 1, titleEn: "Confirm Target", titleVi: "Xác nhận thư mục", descEn: "Ensure the argument is a subfolder target, not the project root or a general docs request.", descVi: "Đảm bảo argument là subfolder, không phải root dự án hoặc yêu cầu docs chung." },

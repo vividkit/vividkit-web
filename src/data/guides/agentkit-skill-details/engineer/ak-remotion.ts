@@ -29,6 +29,13 @@ const data: SkillInfographic = {
     "taglineEn": "Use Remotion's React video rules for compositions, sequencing, animation curves, assets, captions, effects, data-driven charts, and render metadata.",
     "taglineVi": "Dùng bộ quy tắc Remotion cho video React: composition, sequencing, đường cong animation, asset, caption, effect, chart theo dữ liệu và metadata render."
   },
+  "hardGate": {
+    "type": "warning",
+    "titleEn": "Preview approval is not render approval",
+    "titleVi": "Duyệt bản xem trước chưa phải duyệt render",
+    "contentEn": "A final render can use substantial CPU, memory, disk, network, and time, and may fetch remote assets or call a transcription provider. Confirm the output path, resource budget, external data handling, and provider cost separately.",
+    "contentVi": "Render bản cuối có thể tốn nhiều CPU, bộ nhớ, ổ đĩa, mạng và thời gian, và có thể tải asset từ xa hoặc gọi nhà cung cấp transcription. Hãy xác nhận riêng đường dẫn output, ngân sách tài nguyên, cách xử lý dữ liệu bên ngoài và chi phí nhà cung cấp."
+  },
   "processFlow": [
     {
       "number": 1,

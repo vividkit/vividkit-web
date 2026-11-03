@@ -12,10 +12,10 @@ const data: SkillInfographic = {
   },
   hardGate: {
     type: "info",
-    titleEn: "Start with the creative brief",
-    titleVi: "Bắt đầu bằng creative brief",
-    contentEn: "The skill explicitly says to always start with the creative brief search so style, platform, voiceover, music, effects, and anti-pattern recommendations are reasoned together.",
-    contentVi: "Skill yêu cầu luôn bắt đầu bằng creative brief để phong cách, nền tảng, voiceover, nhạc, hiệu ứng và anti-pattern được đề xuất cùng một lượt có lý do.",
+    titleEn: "A recommendation is not clearance",
+    titleVi: "Gợi ý không phải là giấy phép",
+    contentEn: "Style, platform, voiceover, and music suggestions are draft direction; they do not grant rights to a track, voice, likeness, font, image, trademark, or platform placement, and they do not authorize generation or publication. The skill explicitly says to always start with the creative brief search so style, platform, voiceover, music, effects, and anti-pattern recommendations are reasoned together.",
+    contentVi: "Gợi ý về phong cách, nền tảng, voiceover và nhạc chỉ là định hướng nháp; chúng không cho quyền dùng bản nhạc, giọng nói, hình ảnh người thật, font, hình ảnh, nhãn hiệu hay vị trí đăng trên nền tảng, và không cho phép tự tạo nội dung hay đăng tải. Skill yêu cầu luôn bắt đầu bằng creative brief để phong cách, nền tảng, voiceover, nhạc, hiệu ứng và anti-pattern được đề xuất cùng một lượt có lý do.",
   },
   processFlow: [
     { number: 1, titleEn: "Analyze request", titleVi: "Phân tích yêu cầu", descEn: "Extract campaign type, audience, industry, and platform from the user request.", descVi: "Tách loại campaign, audience, ngành và nền tảng từ yêu cầu người dùng." },

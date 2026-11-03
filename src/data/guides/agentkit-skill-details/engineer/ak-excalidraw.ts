@@ -10,6 +10,13 @@ const data: SkillInfographic = {
     taglineEn: "Create editable Excalidraw architecture, data-flow, workflow, and codebase maps through live MCP canvas or file-based rendering.",
     taglineVi: "Tạo sơ đồ Excalidraw chỉnh sửa được cho kiến trúc, luồng dữ liệu, workflow và bản đồ codebase qua MCP canvas live hoặc render bằng file.",
   },
+  hardGate: {
+    type: 'warning',
+    titleEn: "Rendering can cross local and network boundaries",
+    titleVi: "Render có thể vượt ranh giới máy local và mạng",
+    contentEn: "Clearing a live canvas removes its current scene. Docker, npm, uv, Playwright, and Chromium setup change the local environment. The bundled file renderer also loads Excalidraw code from esm.sh at render time, so file mode is not network-free unless that dependency is made local and the run proves offline rendering.",
+    contentVi: "Xóa canvas live sẽ mất scene hiện tại. Cài Docker, npm, uv, Playwright và Chromium sẽ thay đổi môi trường máy local. Bộ render file kèm theo còn tải code Excalidraw từ esm.sh lúc render, nên chế độ file không phải là không cần mạng, trừ khi dependency đó đã có sẵn trên máy và lần chạy chứng minh render được offline.",
+  },
   processFlow: [
     { number: 1, titleEn: "Detect Backend", titleVi: "Nhận diện backend", descEn: "Test MCP canvas first with the Excalidraw guide; fall back to .excalidraw JSON plus Playwright rendering when MCP is unavailable.", descVi: "Thử MCP canvas trước bằng guide Excalidraw; nếu không có thì fallback sang JSON .excalidraw và render bằng Playwright." },
     { number: 2, titleEn: "Assess Depth", titleVi: "Đánh giá độ sâu", descEn: "Decide simple conceptual versus comprehensive technical; for technical diagrams, research real specs, events, APIs, and evidence first.", descVi: "Quyết định dạng conceptual đơn giản hay kỹ thuật toàn diện; với sơ đồ kỹ thuật, nghiên cứu spec, event, API và bằng chứng thật trước." },

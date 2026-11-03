@@ -14,6 +14,7 @@ Shared renderer:
 
 ## Invocation
 
+- Separator: since AgentKit v3.0.0 (stable) runtimes register `/ak-<slug>` and `$ak-<slug>`. Pages render through `src/data/guides/agentkit-invocation.ts` with `AK_STABLE_SKILL_SEPARATOR = '-'`, which rewrites the older colon form (`/ak:cook`) to the dash form, and the checkers accept either form. Keep the form an existing file already uses; write new files in the dash form. In components, use `akCmd()` / `akCmdPattern()` for generated commands and `akInvocationText()` / `withAkInvocation()` for authored copy that mentions `/ak:`.
 - Flags only from kit `argument-hint` plus ak-docs Option/Mode tables
 - `[task]` in brackets is optional unless docs say required
 - Subcommands from `OR [a|b|c]` hints or `## /ak:skill name` headings
@@ -32,6 +33,19 @@ Shared renderer:
 
 Map ak-docs `<Callout>` titles into `hardGate`. Do not invent a generic
 "keeps the command inside its intended workflow boundary" line.
+
+- `titleEn` is a titled Callout's `title` verbatim (straight quotes).
+  `check-ak-skill-detail-ak-docs.mjs` fails a page whose same-kit docs have a
+  titled Callout and whose hardGate is missing or uses another title.
+- `contentEn` starts with that Callout body. Keep distinct SKILL.md stop/never
+  rules after it. The renderer splits on `.` / `!` / `?` / `;` and shows only
+  the first 5 pieces, so stay within 5.
+- `titleVi` / `contentVi` are plain Vietnamese with the same pieces in the same
+  order. Do not copy code-switched ak-docs VI wording.
+- A marketing page that spreads the engineer page needs its own `hardGate` when
+  the marketing docs Callout differs from the engineer one.
+- With several Callouts, pick the one closest to the page's main risk. Untitled
+  Callouts are not checked.
 
 Renderer shows **every** `corePrinciples*` string as `Rule NN` / `Nguyên tắc NN`
 plus the string as body. Do not slice. Do not pair principles with `expertiseAreas`.

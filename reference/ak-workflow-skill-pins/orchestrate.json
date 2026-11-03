@@ -1,14 +1,14 @@
 {
   "slug": "orchestrate",
-  "hash": "3379576205b7adf34c6a391ddd3b30160d28b989ca7ba8de36033d50ffd04b8f",
+  "hash": "2b25ca23fbcd3ef3b959dfca3f1bb9e904e55e563f4ca700e7ef671adf5b9edd",
   "source": "kit",
   "path": "ak-cli@origin/main:kits/engineer/skills/ak-orchestrate/SKILL.md",
-  "pinnedAt": "2026-10-02T21:25:37.468Z",
+  "pinnedAt": "2026-11-02T21:11:20.827Z",
   "snapshot": {
-    "name": "ak:orchestrate",
-    "description": "Coordinate staged or parallel jobs across live-verified coding-agent runtimes, Pi coding-agent sessions, and in-session subagents, using capability- and risk-based routing, worktree-isolated writes, resumable state, capture, safety gates, and independent arbiter review. Onboards a missing Pi runtime (install, profile, authentication, AgentKit projection) as a visible setup step when a job or the user asks for Pi.",
-    "when_to_use": "Invoke when work should be split across multiple headless runtimes, Pi sessions, or in-session subagents, routed by task capability and risk, isolated where needed, and reviewed before handoff; also when Pi must be installed and set up before it can take orchestrated jobs.",
-    "argument_hint": "<job-spec.yaml | task description | --resume <run-dir>> [--yes] [--internal]",
+    "name": "ak-orchestrate",
+    "description": "Run staged or parallel jobs as resumable sessions of this runtime, or opted-in live-verified runtimes and Pi, with worktrees, fallback, safety gates, a final arbiter.",
+    "when_to_use": "Invoke to route split work by capability, risk and quota, or to onboard Pi.",
+    "argument_hint": "<job-spec.yaml | task description | --resume <run-dir>> [--yes] [--cross-runtime] [--internal (deprecated)]",
     "version": null
   }
 }

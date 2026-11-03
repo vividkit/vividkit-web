@@ -12,10 +12,10 @@ const data: SkillInfographic = {
   },
   "hardGate": {
     "type": "critical",
-    "titleEn": "Mask credentials and stop on failed guards",
-    "titleVi": "Che credential và dừng khi guard fail",
-    "contentEn": "Never emit raw secrets in findings or logs. In `--fix`, stop early if verification fails instead of continuing through more fixes.",
-    "contentVi": "Không bao giờ in secret thô trong finding hoặc log. Trong `--fix`, nếu guard kiểm chứng fail thì dừng sớm thay vì tiếp tục sửa lỗi khác."
+    "titleEn": "An audit can expose sensitive evidence",
+    "titleVi": "Audit có thể làm lộ bằng chứng nhạy cảm",
+    "contentEn": "Keep the scope away from unrelated secret stores. Findings must replace token, password, connection-string, and private-key values with an opaque marker such as `<REDACTED_PASSWORD>` before they are logged or returned. Keep only a public issuer prefix such as `AKIA`, `ghp_`, `sk_`, `sk-`, or `xox` when it aids triage. Never emit raw lengths or trailing characters. Name environment variables and redact the entire `user:password@` segment in connection strings.",
+    "contentVi": "Giữ phạm vi audit tránh xa các kho secret không liên quan. Finding phải thay giá trị token, password, connection string và private key bằng một marker che như `<REDACTED_PASSWORD>` trước khi ghi log hoặc trả về. Chỉ giữ prefix công khai của bên phát hành như `AKIA`, `ghp_`, `sk_`, `sk-` hoặc `xox` khi nó giúp phân loại. Không bao giờ in độ dài thô hay các ký tự cuối. Gọi biến môi trường bằng tên và che toàn bộ đoạn `user:password@` trong connection string."
   },
   "processFlow": [
     {

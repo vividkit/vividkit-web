@@ -26,6 +26,13 @@ const data: SkillInfographic = {
     "taglineEn": "Apply Vercel Engineering React and Next.js performance patterns across component optimization, rendering performance, bundle analysis, and data fetching.",
     "taglineVi": "Áp dụng các mẫu tối ưu hiệu năng React và Next.js của Vercel Engineering cho component, render, phân tích bundle và data fetching."
   },
+  "hardGate": {
+    "type": "warning",
+    "titleEn": "A faster example can change behavior",
+    "titleVi": "Ví dụ chạy nhanh hơn có thể đổi hành vi",
+    "contentEn": "Parallelizing work, moving code across server/client boundaries, adding caches, deferring side effects, or injecting pre-hydration scripts can change ordering, freshness, error handling, CSP, privacy, and recovery behavior. Approve the change in behavior, not only the expected speedup.",
+    "contentVi": "Chạy song song, chuyển code qua lại giữa server và client, thêm cache, hoãn side effect hoặc chèn script trước hydration có thể đổi thứ tự chạy, độ mới của dữ liệu, cách xử lý lỗi, CSP, quyền riêng tư và cách phục hồi. Hãy duyệt chính thay đổi về hành vi, không chỉ mức tăng tốc kỳ vọng.",
+  },
   "processFlow": [
     {
       "number": 1,

@@ -12,10 +12,10 @@ const data: SkillInfographic = {
   },
   "hardGate": {
     "type": "critical",
-    "titleEn": "Live team surface or abort",
-    "titleVi": "Không có team surface thì dừng",
-    "contentEn": "Before starting, discover the live collaboration surface for team creation, shared work, delegation, messages, waits, approvals, shutdown, and cleanup. If any required capability is absent or fails, report the observed error instead of substituting ordinary subagents.",
-    "contentVi": "Trước khi bắt đầu, phải khám phá surface cộng tác đang hoạt động cho tạo team, shared work, delegation, nhắn tin, wait, approval, shutdown và cleanup. Nếu thiếu hoặc lỗi capability bắt buộc, hãy báo lỗi quan sát được thay vì thay bằng subagent thường."
+    "titleEn": "ak-team requires a live team lifecycle",
+    "titleVi": "ak-team cần vòng đời team chạy thật",
+    "contentEn": "Claude Code and Cursor invoke this Skill as `/ak-team`; Codex invokes it as `$ak-team`. Execution requires live team creation, shared work, messaging, waiting, shutdown, and cleanup. If any required capability is unavailable, the workflow hard-stops instead of silently substituting ordinary subagents. Before starting, discover the live collaboration surface, and report the observed error if a required capability is absent or fails.",
+    "contentVi": "Claude Code và Cursor gọi Skill này bằng `/ak-team`; Codex gọi bằng `$ak-team`. Việc chạy cần tạo team thật, chia việc chung, nhắn tin, chờ, tắt và dọn dẹp. Nếu thiếu bất kỳ khả năng bắt buộc nào, workflow dừng cứng thay vì âm thầm dùng subagent thường để thay thế. Trước khi bắt đầu, hãy dò các khả năng cộng tác đang có thật, và báo đúng lỗi quan sát được nếu một khả năng bắt buộc bị thiếu hoặc lỗi."
   },
   "processFlow": [
     {

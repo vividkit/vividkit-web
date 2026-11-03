@@ -91,7 +91,7 @@ const currentLang = lang || getLangFromUrl(Astro.url);
     const inactiveClasses = "text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700";
     const activeMarketingClasses = "bg-purple-500 text-white shadow-sm";
 
-    function setKit(kit: "engineer" | "marketing") {
+    const setKit = (kit: "engineer" | "marketing") => {
       if (kit === "engineer") {
         engineerContent.classList.remove("hidden");
         marketingContent.classList.add("hidden");
@@ -110,7 +110,7 @@ const currentLang = lang || getLangFromUrl(Astro.url);
 
       // Save preference
       localStorage.setItem("flowchart-kit", kit);
-    }
+    };
 
     // Load saved preference
     const savedKit = localStorage.getItem("flowchart-kit") as "engineer" | "marketing" | null;

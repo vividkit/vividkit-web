@@ -1,13 +1,13 @@
 {
   "slug": "ui-ux-pro-max",
-  "hash": "71874460d818002e31120682903368c78c6585f40c1fa058601cd28f949d169b",
+  "hash": "cdea0431fa5ff2fc625671544ee5903c2ee379466762be49de5eec9decc0a4e7",
   "source": "kit",
   "path": "ak-cli@origin/main:kits/core/skills/ak-ui-ux-pro-max/SKILL.md",
-  "pinnedAt": "2026-10-02T21:25:37.473Z",
+  "pinnedAt": "2026-11-02T21:11:20.829Z",
   "snapshot": {
-    "name": "ak:ui-ux-pro-max",
-    "description": "UI/UX design intelligence for web and mobile: style selection, color systems, typography, layout, accessibility, interaction states, responsive behavior, forms, charts, design systems, and code review across React, Next.js, Vue, Svelte, SwiftUI, React Native, Flutter, Tailwind, shadcn/ui, and HTML/CSS.",
-    "when_to_use": "Invoke for UX strategy, design systems, accessibility, or a UI/UX guideline review of existing interface code.",
+    "name": "ak-ui-ux-pro-max",
+    "description": "Guide web and mobile UI/UX design systems across React, Next.js, Vue, Svelte, SwiftUI, React Native, Flutter, Tailwind, shadcn/ui and HTML/CSS.",
+    "when_to_use": "Invoke for color, typography, accessibility or UI guideline reviews.",
     "argument_hint": "[component|page|design-system] [--style <style>] [--framework <fw>]",
     "version": null
   }

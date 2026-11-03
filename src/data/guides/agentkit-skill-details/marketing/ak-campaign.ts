@@ -10,6 +10,13 @@ const data: SkillInfographic = {
     taglineEn: "Plans, launches, checks, analyzes, and emails marketing campaigns across channels, budgets, timelines, funnels, and performance reports.",
     taglineVi: "Lên kế hoạch, triển khai, theo dõi, phân tích và quản lý email cho chiến dịch marketing đa kênh, gồm ngân sách, timeline, funnel và báo cáo hiệu suất.",
   },
+  hardGate: {
+    type: 'warning',
+    titleEn: "A plan is not authority to launch",
+    titleVi: "Có kế hoạch chưa có nghĩa là được phép chạy",
+    contentEn: "Campaign checklists may include funding accounts, configuring audiences, activating campaigns, changing bids, sending email, or publishing assets. Treat each as a separate external change. Require the correct account, credential scope, approved budget, policy review, data-handling approval, and a named human go/no-go decision before running it.",
+    contentVi: "Checklist chiến dịch có thể gồm nạp tiền tài khoản, cấu hình tệp khán giả, bật chiến dịch, đổi giá thầu, gửi email hoặc đăng asset. Coi mỗi việc là một thay đổi riêng ra bên ngoài. Trước khi chạy, cần đúng tài khoản, đúng phạm vi credential, ngân sách đã duyệt, đã review chính sách, đã duyệt cách xử lý dữ liệu và có một người cụ thể quyết định chạy hay không.",
+  },
   processFlow: [
     { number: 1, titleEn: "Parse request", titleVi: "Đọc yêu cầu", descEn: "Extract the campaign action and name from the first arguments.", descVi: "Tách hành động chiến dịch và tên chiến dịch từ các tham số đầu tiên." },
     { number: 2, titleEn: "Choose route", titleVi: "Chọn tuyến xử lý", descEn: "Route to create, status, analyze, or email; load the matching reference when present.", descVi: "Đi theo nhánh create, status, analyze hoặc email; tải tài liệu tham chiếu tương ứng nếu có." },

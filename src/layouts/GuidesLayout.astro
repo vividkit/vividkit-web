@@ -3,6 +3,7 @@ import MainLayout from '@/layouts/MainLayout.astro';
 import Header from '@/components/layout/Header.astro';
 import Footer from '@/components/layout/Footer.astro';
 import TabNavigation from '@/components/guides/TabNavigation.astro';
+import ClaudeKitLegacyBanner from '@/components/guides/ClaudeKitLegacyBanner.astro';
 import type { GuideActiveTab } from '@/types/guides';
 import { getLangFromUrl, type Language } from '@/i18n';
 
@@ -24,6 +25,9 @@ const isInsideClaudeKitArticle = [
   'inside-claudekit-guard-rails',
 ].includes(activeTab);
 const showSidebar = !isInsideClaudeKitArticle;
+// ClaudeKit guides with no upstream sync; they get a "no longer updated" banner.
+const FROZEN_CLAUDEKIT_TABS = ['commands', 'how-ck-works', 'workflows', 'hooks', 'cli', 'cli-commands', 'migrate', 'flowchart'];
+const isFrozenClaudeKitGuide = FROZEN_CLAUDEKIT_TABS.includes(activeTab);
 const isWideSidebarGuide = activeTab === 'codex-app';
 
 const agentkitCanonicalMap: Record<string, string> = {
@@ -40,6 +44,7 @@ const agentkitCanonicalMap: Record<string, string> = {
   'agentkit-workflows': '/guides/agentkit/workflows',
   'agentkit-statusline': '/guides/agentkit/statusline',
   'agentkit-updating': '/guides/agentkit/updating',
+  'agentkit-upgrading-v3': '/guides/agentkit/upgrading-to-v3',
   'agentkit-clean-reinstall': '/guides/agentkit/clean-reinstall',
   'agentkit-troubleshooting': '/guides/agentkit/troubleshooting',
   'agentkit-clean-cutover-from-claudekit': '/guides/agentkit/clean-cutover-from-claudekit',
@@ -72,6 +77,7 @@ const resolvedCanonical =
       )}
 
       <main class:list={[showSidebar ? 'flex-1 min-w-0' : 'min-w-0']}>
+        {isFrozenClaudeKitGuide && <ClaudeKitLegacyBanner lang={currentLang} />}
         <slot />
       </main>
     </div>
