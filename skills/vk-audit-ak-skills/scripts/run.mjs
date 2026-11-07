@@ -111,6 +111,8 @@ function main(argv) {
     ['scripts/check-ak-skill-details.mjs', '--kit-root', args.kitRoot, ...verbose],
     ['scripts/check-ak-skill-detail-claims.mjs', '--self-test'],
     claims,
+    // Network: compares the modernEngineer guide list with the live catalog (exit 2 when unreachable).
+    ['scripts/check-ak-modernengineer-guides.mjs'],
   );
   if (args.akDocs) {
     steps.push(['scripts/check-ak-skill-detail-ak-docs.mjs', '--self-test']);
