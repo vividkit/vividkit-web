@@ -22,6 +22,9 @@ const kitLabel = kit === 'marketing'
   ? (isVi ? 'Marketing Kit' : 'Marketing Kit')
   : (isVi ? 'Engineer Kit' : 'Engineer Kit');
 const isBeta = isAkSkillBeta(kit, data.id);
+// Each skill has a full guide in the modernEngineer "agentkit-skills" series,
+// published under the skill's folder name (data.id) in both languages.
+const modernEngineerHref = `https://modernengineer.dev/${isVi ? 'vi' : 'en'}/library/${data.id}`;
 
 const relatedSeen = new Set<string>();
 const relatedLinks = (data.skillStack || [])
@@ -74,6 +77,31 @@ const jumpItems = listAkSkillJumpItems().map((item) => ({
   )}
 
   <InfographicGenericCommandQuickRef data={data} lang={currentLang} plainHeadline />
+
+  <a
+    href={modernEngineerHref}
+    target="_blank"
+    rel="noopener"
+    data-modernengineer-guide
+    class="group flex items-start justify-between gap-4 rounded-2xl border border-teal-200 bg-teal-50/70 px-5 py-4 transition-all hover:-translate-y-0.5 hover:border-teal-300 hover:shadow-md hover:shadow-teal-500/10 dark:border-teal-800/50 dark:bg-teal-950/30 dark:hover:border-teal-500/40"
+  >
+    <span>
+      <span class="block text-sm font-semibold text-slate-900 group-hover:text-teal-700 dark:text-white dark:group-hover:text-teal-300">
+        {isVi ? `Hướng dẫn đầy đủ về ${data.command} trên modernEngineer` : `Full ${data.command} guide on modernEngineer`}
+      </span>
+      <span class="mt-1 block text-xs leading-relaxed text-slate-600 dark:text-slate-300">
+        {isVi
+          ? 'Khi nào nên dùng, prompt mẫu, các cờ và lịch sử thay đổi theo từng bản ak.'
+          : 'When to use it, sample prompts, flags, and what changed in each ak release.'}
+      </span>
+      <span class="mt-1 block text-xs leading-relaxed text-slate-500 dark:text-slate-400">
+        {isVi
+          ? 'Bài dành cho thành viên. Chưa đăng ký vẫn đọc được phần mở đầu.'
+          : 'For members. Without a subscription you can still read the opening.'}
+      </span>
+    </span>
+    <span class="mt-0.5 text-teal-600 transition-transform group-hover:translate-x-0.5 dark:text-teal-400" aria-hidden="true">↗</span>
+  </a>
 
   {relatedLinks.length > 0 && (
     <AkNextLinks
