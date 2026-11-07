@@ -15,8 +15,10 @@
  * Exit codes:
  *   0  data file matches the live catalog
  *   1  data file differs from the live catalog (run --write)
- *   2  catalog unreachable or its answer failed validation (empty, incomplete,
- *      wrong locale or route), or an unknown argument. Nothing is written.
+ *   2  catalog unreachable (network error, timeout, 5xx/429 after retries). Transient: re-run later.
+ *   3  catalog answer failed validation (empty, incomplete, wrong locale or route, 4xx),
+ *      an unknown argument, or a local error. Needs a person to look.
+ * Exit 2 and 3 never write anything.
  * Local skills without a published guide are reported but never fail: their card stays hidden.
  */
 import { readFileSync, readdirSync, writeFileSync } from 'node:fs';
@@ -33,7 +35,10 @@ const PAGE_SIZE = 100;
 const REQUEST_TIMEOUT_MS = 10_000;
 const ATTEMPTS = 4;
 
+/** Not retried: a 4xx answer means the API contract changed, not a blip. */
 class FatalHttpError extends Error {}
+/** Still failing after every retry: network error, timeout or 5xx/429. Transient. */
+class NetworkError extends Error {}
 
 /** GET JSON, retrying network errors, timeouts, bad JSON and 5xx/429 with a short backoff. */
 async function getJson(url) {
@@ -44,12 +49,13 @@ async function getJson(url) {
       await res.body?.cancel();
       const retryable = res.status === 429 || res.status >= 500;
       if (!retryable) throw new FatalHttpError(`GET ${url} -> HTTP ${res.status}`);
-      if (i >= ATTEMPTS) throw new FatalHttpError(`GET ${url} -> HTTP ${res.status} after ${ATTEMPTS} attempts`);
+      if (i >= ATTEMPTS) throw new NetworkError(`GET ${url} -> HTTP ${res.status} after ${ATTEMPTS} attempts`);
     } catch (err) {
-      if (err instanceof FatalHttpError) throw err;
+      if (err instanceof FatalHttpError || err instanceof NetworkError) throw err;
       if (i >= ATTEMPTS) {
         const cause = err.cause?.code || err.cause?.message;
-        throw new Error(`GET ${url} -> ${err.message}${cause ? ` (${cause})` : ''}`);
+        if (err instanceof SyntaxError) throw new Error(`GET ${url} -> response is not JSON`);
+        throw new NetworkError(`GET ${url} -> ${err.message}${cause ? ` (${cause})` : ''}`);
       }
     }
     await new Promise((r) => setTimeout(r, 500 * 2 ** (i - 1)));
@@ -162,10 +168,11 @@ function readFileOrEmpty(path) {
 }
 
 async function main(argv) {
-  const unknown = argv.filter((a) => a !== '--write');
+  // pnpm forwards a bare `--` (pnpm audit:ak-modernengineer -- --write), so accept it.
+  const unknown = argv.filter((a) => a !== '--write' && a !== '--');
   if (unknown.length) {
     process.stderr.write(`Unknown argument: ${unknown.join(' ')}\nUsage: check-ak-modernengineer-guides.mjs [--write]\n`);
-    process.exit(2);
+    process.exit(3);
   }
   const write = argv.includes('--write');
 
@@ -173,8 +180,11 @@ async function main(argv) {
   try {
     for (const locale of LOCALES) live[locale] = await fetchSeriesSlugs(locale);
   } catch (err) {
-    process.stderr.write(`modernEngineer catalog unreachable or invalid: ${err.message}\nNothing was written.\n`);
-    process.exit(2);
+    const transient = err instanceof NetworkError;
+    process.stderr.write(
+      `modernEngineer catalog ${transient ? 'unreachable' : 'answer failed validation'}: ${err.message}\nNothing was written.\n`,
+    );
+    process.exit(transient ? 2 : 3);
   }
 
   const local = readLocalSkillSlugs();
@@ -210,4 +220,8 @@ async function main(argv) {
   process.exit(1);
 }
 
-main(process.argv.slice(2));
+main(process.argv.slice(2)).catch((err) => {
+  // Local I/O or other unexpected errors: not "stale" (1) and not a network blip (2).
+  process.stderr.write(`check-ak-modernengineer-guides failed: ${err.stack || err.message}\n`);
+  process.exit(3);
+});

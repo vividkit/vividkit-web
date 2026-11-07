@@ -138,12 +138,19 @@ function main(argv) {
     const parsed = parseDirty(`${result.stdout}\n${result.stderr}`);
     dirty.push(...parsed.dirty);
     missing.push(...parsed.missing);
-    logs.push({ step: step.join(' '), code: result.code, dirty: parsed.dirty, missing: parsed.missing });
+    // Exit 2 from the modernEngineer step is a network blip, which says nothing
+    // about the repo, so it warns instead of failing (exit 2 would read as "no
+    // owner" upstream). Its exit 3 (catalog contract changed) still fails.
+    const skipped = step === MODERNENGINEER_STEP && result.code === 2;
+    logs.push({
+      step: skipped ? `${step.join(' ')} (skipped: catalog unreachable)` : step.join(' '),
+      code: result.code,
+      dirty: parsed.dirty,
+      missing: parsed.missing,
+    });
     process.stdout.write(`checker ${step[0].split('/').pop()} exit ${result.code}\n`);
-    // An unreachable or invalid modernEngineer catalog says nothing about the
-    // repo, so it warns instead of failing (exit 2 would read as "no owner" upstream).
-    if (step === MODERNENGINEER_STEP && result.code === 2) {
-      process.stdout.write('modernengineer: skipped (catalog unreachable or invalid), not counted as a failure\n');
+    if (skipped) {
+      process.stdout.write('modernengineer: skipped (catalog unreachable), not counted as a failure; re-run later, investigate if it persists\n');
       continue;
     }
     if (result.code !== 0) failed = result.code;
