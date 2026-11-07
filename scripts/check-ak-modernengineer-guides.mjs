@@ -47,7 +47,7 @@ async function getJson(url) {
       const res = await fetch(url, { signal: AbortSignal.timeout(REQUEST_TIMEOUT_MS) });
       if (res.ok) return await res.json();
       await res.body?.cancel();
-      const retryable = res.status === 429 || res.status >= 500;
+      const retryable = res.status === 408 || res.status === 429 || res.status >= 500;
       if (!retryable) throw new FatalHttpError(`GET ${url} -> HTTP ${res.status}`);
       if (i >= ATTEMPTS) throw new NetworkError(`GET ${url} -> HTTP ${res.status} after ${ATTEMPTS} attempts`);
     } catch (err) {
