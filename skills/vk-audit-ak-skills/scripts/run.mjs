@@ -5,6 +5,7 @@ import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const SKILL_DIR = resolve(dirname(fileURLToPath(import.meta.url)), '..');
+const MODERNENGINEER_STEP = ['scripts/check-ak-modernengineer-guides.mjs'];
 
 function parseArgs(argv) {
   const out = { cmd: 'check', repo: '', kitRoot: '', akDocs: '', kit: 'all', skipInventory: false, verbose: false };
@@ -111,8 +112,8 @@ function main(argv) {
     ['scripts/check-ak-skill-details.mjs', '--kit-root', args.kitRoot, ...verbose],
     ['scripts/check-ak-skill-detail-claims.mjs', '--self-test'],
     claims,
-    // Network: compares the modernEngineer guide list with the live catalog (exit 2 when unreachable).
-    ['scripts/check-ak-modernengineer-guides.mjs'],
+    // Network: compares the modernEngineer guide list with the live catalog.
+    MODERNENGINEER_STEP,
   );
   if (args.akDocs) {
     steps.push(['scripts/check-ak-skill-detail-ak-docs.mjs', '--self-test']);
@@ -139,6 +140,12 @@ function main(argv) {
     missing.push(...parsed.missing);
     logs.push({ step: step.join(' '), code: result.code, dirty: parsed.dirty, missing: parsed.missing });
     process.stdout.write(`checker ${step[0].split('/').pop()} exit ${result.code}\n`);
+    // An unreachable or invalid modernEngineer catalog says nothing about the
+    // repo, so it warns instead of failing (exit 2 would read as "no owner" upstream).
+    if (step === MODERNENGINEER_STEP && result.code === 2) {
+      process.stdout.write('modernengineer: skipped (catalog unreachable or invalid), not counted as a failure\n');
+      continue;
+    }
     if (result.code !== 0) failed = result.code;
   }
 

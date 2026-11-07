@@ -12,8 +12,12 @@
  *   node scripts/check-ak-modernengineer-guides.mjs           # check (default)
  *   node scripts/check-ak-modernengineer-guides.mjs --write   # rewrite the data file from the live catalog
  *
- * Exit codes: 0 in sync, 1 data file differs from the live catalog, 2 catalog unreachable or bad input.
- * Local skills without a published guide are reported but do not fail: their card stays hidden.
+ * Exit codes:
+ *   0  data file matches the live catalog
+ *   1  data file differs from the live catalog (run --write)
+ *   2  catalog unreachable or its answer failed validation (empty, incomplete,
+ *      wrong locale or route), or an unknown argument. Nothing is written.
+ * Local skills without a published guide are reported but never fail: their card stays hidden.
  */
 import { readFileSync, readdirSync, writeFileSync } from 'node:fs';
 import { join, resolve, dirname } from 'node:path';
@@ -26,68 +30,100 @@ const API = 'https://modernengineer.dev/api/catalog';
 const SERIES = 'agentkit-skills';
 const LOCALES = ['en', 'vi'];
 const PAGE_SIZE = 100;
+const REQUEST_TIMEOUT_MS = 10_000;
+const ATTEMPTS = 4;
 
-/** GET JSON, retrying transient network errors and 5xx/429 with a short backoff. */
-async function getJson(url, attempts = 4) {
+class FatalHttpError extends Error {}
+
+/** GET JSON, retrying network errors, timeouts, bad JSON and 5xx/429 with a short backoff. */
+async function getJson(url) {
   for (let i = 1; ; i++) {
     try {
-      const res = await fetch(url, { signal: AbortSignal.timeout(30_000) });
+      const res = await fetch(url, { signal: AbortSignal.timeout(REQUEST_TIMEOUT_MS) });
       if (res.ok) return await res.json();
+      await res.body?.cancel();
       const retryable = res.status === 429 || res.status >= 500;
-      if (!retryable || i >= attempts) throw new Error(`GET ${url} -> HTTP ${res.status}`);
+      if (!retryable) throw new FatalHttpError(`GET ${url} -> HTTP ${res.status}`);
+      if (i >= ATTEMPTS) throw new FatalHttpError(`GET ${url} -> HTTP ${res.status} after ${ATTEMPTS} attempts`);
     } catch (err) {
-      if (err.message?.startsWith('GET ') || i >= attempts) {
+      if (err instanceof FatalHttpError) throw err;
+      if (i >= ATTEMPTS) {
         const cause = err.cause?.code || err.cause?.message;
-        throw new Error(cause ? `${err.message} (${cause})` : err.message);
+        throw new Error(`GET ${url} -> ${err.message}${cause ? ` (${cause})` : ''}`);
       }
     }
     await new Promise((r) => setTimeout(r, 500 * 2 ** (i - 1)));
   }
 }
 
-/** Fetch every slug in the series for one locale, following nextOffset. */
-async function fetchSeriesSlugs(locale) {
-  const slugs = [];
+/** One full paged read of a locale; validates every item and the total. */
+async function readSeriesOnce(locale) {
+  const slugs = new Set();
   let offset = 0;
+  let total = null;
   for (let guard = 0; guard < 50; guard++) {
     const url = `${API}?locale=${locale}&series=${SERIES}&limit=${PAGE_SIZE}&offset=${offset}`;
     const body = await getJson(url);
-    if (!Array.isArray(body.items)) throw new Error(`GET ${url} -> no items array`);
-    for (const item of body.items) {
-      if (typeof item.slug === 'string' && item.slug) slugs.push(item.slug);
+    if (!body || !Array.isArray(body.items) || typeof body.total !== 'number') {
+      throw new Error(`GET ${url} -> unexpected response shape`);
     }
-    if (typeof body.nextOffset !== 'number') return [...new Set(slugs)].sort();
+    total = body.total;
+    for (const item of body.items) {
+      const slug = item?.slug;
+      if (typeof slug !== 'string' || !slug) throw new Error(`${locale}: item without slug`);
+      // The page links to /<locale>/library/<slug>; refuse anything that would not resolve there.
+      if (item.locale !== locale) throw new Error(`${locale}: ${slug} came back as locale ${item.locale}`);
+      if (item.route !== `/${locale}/library/${slug}`) throw new Error(`${locale}: ${slug} has route ${item.route}`);
+      slugs.add(slug);
+    }
+    if (typeof body.nextOffset !== 'number') return { slugs: [...slugs].sort(), total };
     offset = body.nextOffset;
   }
-  throw new Error(`catalog paging for ${locale} did not finish`);
+  throw new Error(`${locale}: catalog paging did not finish`);
 }
 
-/** Slugs of the skill detail pages, read from each data file's `id`. */
+/**
+ * Every slug in the series for one locale. An empty series or a count that
+ * differs from `total` (catalog changed mid-read) is retried once, then refused,
+ * so a bad answer can never be written over a good list.
+ */
+async function fetchSeriesSlugs(locale) {
+  let last;
+  for (let attempt = 1; attempt <= 2; attempt++) {
+    const { slugs, total } = await readSeriesOnce(locale);
+    if (slugs.length > 0 && slugs.length === total) return slugs;
+    last = `${locale}: catalog returned ${slugs.length} slugs for total ${total}`;
+  }
+  throw new Error(last);
+}
+
+/**
+ * Slugs of the skill detail pages. The file name is the slug; a top-level
+ * literal id must match it. Marketing files that spread the engineer file of
+ * the same name inherit its id. Only used for advisory output.
+ */
 function readLocalSkillSlugs() {
   const slugs = new Set();
+  const warnings = [];
   for (const kit of ['engineer', 'marketing']) {
     for (const name of readdirSync(join(DETAILS_DIR, kit))) {
       if (!name.endsWith('.ts')) continue;
-      // The file name is the skill slug. Files that spread another kit's data
-      // inherit its id; a literal id (bare or quoted key) must match the name.
       const slug = name.slice(0, -3);
       const src = readFileSync(join(DETAILS_DIR, kit, name), 'utf8');
-      const m = src.match(/^\s*['"]?id['"]?:\s*['"]([^'"]+)['"]/m);
-      if (m && m[1] !== slug) throw new Error(`${kit}/${name}: id '${m[1]}' does not match file name`);
+      const m = src.match(/^ {2}['"]?id['"]?:\s*['"]([^'"]+)['"]/m);
+      if (m && m[1] !== slug) warnings.push(`${kit}/${name}: id '${m[1]}' does not match file name`);
       slugs.add(slug);
     }
   }
-  return [...slugs].sort();
+  return { slugs: [...slugs].sort(), warnings };
 }
 
-/** Parse the per-locale slug arrays back out of the generated data file. */
-function readDataFile() {
-  const src = readFileSync(DATA_FILE, 'utf8');
+/** Best-effort read of the stored lists, only to explain a difference. */
+function readStoredLists(src) {
   const out = {};
   for (const locale of LOCALES) {
     const block = src.match(new RegExp(`^\\s*${locale}:\\s*\\[([\\s\\S]*?)\\]`, 'm'));
-    if (!block) throw new Error(`${DATA_FILE}: no ${locale} list`);
-    out[locale] = [...block[1].matchAll(/'([^']+)'/g)].map((m) => m[1]);
+    out[locale] = block ? [...block[1].matchAll(/'([^']+)'/g)].map((m) => m[1]) : [];
   }
   return out;
 }
@@ -117,58 +153,61 @@ export function getAkModernEngineerGuideHref(locale: AkModernEngineerLocale, slu
 
 const diff = (a, b) => a.filter((x) => !b.includes(x));
 
+function readFileOrEmpty(path) {
+  try {
+    return readFileSync(path, 'utf8');
+  } catch {
+    return '';
+  }
+}
+
 async function main(argv) {
+  const unknown = argv.filter((a) => a !== '--write');
+  if (unknown.length) {
+    process.stderr.write(`Unknown argument: ${unknown.join(' ')}\nUsage: check-ak-modernengineer-guides.mjs [--write]\n`);
+    process.exit(2);
+  }
   const write = argv.includes('--write');
+
   const live = {};
   try {
     for (const locale of LOCALES) live[locale] = await fetchSeriesSlugs(locale);
   } catch (err) {
-    process.stderr.write(`modernEngineer catalog unreachable: ${err.message}\n`);
+    process.stderr.write(`modernEngineer catalog unreachable or invalid: ${err.message}\nNothing was written.\n`);
     process.exit(2);
   }
 
-  let local;
-  try {
-    local = readLocalSkillSlugs();
-  } catch (err) {
-    process.stderr.write(`${err.message}\n`);
-    process.exit(2);
-  }
+  const local = readLocalSkillSlugs();
+  for (const w of local.warnings) process.stdout.write(`  warning ${w}\n`);
   for (const locale of LOCALES) {
-    const missing = diff(local, live[locale]);
-    process.stdout.write(`${locale}: catalog=${live[locale].length} local=${local.length} without-guide=${missing.length}\n`);
+    const missing = diff(local.slugs, live[locale]);
+    process.stdout.write(`${locale}: catalog=${live[locale].length} local=${local.slugs.length} without-guide=${missing.length}\n`);
     for (const slug of missing) process.stdout.write(`  no-guide ${locale} ${slug} (card hidden)\n`);
   }
 
+  const expected = renderDataFile(live);
   if (write) {
-    writeFileSync(DATA_FILE, renderDataFile(live));
+    writeFileSync(DATA_FILE, expected);
     process.stdout.write(`wrote ${DATA_FILE.replace(`${ROOT}/`, '')}\n`);
-    process.exit(0);
+    return;
   }
 
-  let stored;
-  try {
-    stored = readDataFile();
-  } catch (err) {
-    process.stderr.write(`${err.message}\n`);
-    process.exit(2);
+  const current = readFileOrEmpty(DATA_FILE);
+  if (current === expected) {
+    process.stdout.write('modernEngineer guide list in sync\n');
+    return;
   }
-  let stale = false;
+  const stored = readStoredLists(current);
   for (const locale of LOCALES) {
     for (const slug of diff(live[locale], stored[locale])) {
-      stale = true;
       process.stdout.write(`  stale ${locale} ${slug}: published but not in data file\n`);
     }
     for (const slug of diff(stored[locale], live[locale])) {
-      stale = true;
       process.stdout.write(`  stale ${locale} ${slug}: in data file but no longer published (404 link)\n`);
     }
   }
-  if (stale) {
-    process.stderr.write('Data file out of date. Run: node scripts/check-ak-modernengineer-guides.mjs --write\n');
-    process.exit(1);
-  }
-  process.stdout.write('modernEngineer guide list in sync\n');
+  process.stderr.write('Data file differs from the generated output. Run: node scripts/check-ak-modernengineer-guides.mjs --write\n');
+  process.exit(1);
 }
 
 main(process.argv.slice(2));
