@@ -118,13 +118,14 @@ Runner — the subcommand is bare (`check` / `report` / `update`); `--check` is 
 node skills/vk-audit-ak-skills/scripts/run.mjs check --kit-root <ak-cli> [--ak-docs <ak-docs>] [--kit engineer|marketing|all] [--repo <vividkit>]
 ```
 
-Runs every step below (each checker's `--self-test` first) without stopping on failure, then exits with the last non-zero code. Does not write `src/` or locks.
+Runs every step below (each checker's `--self-test` first, where it has one) without stopping on failure, then exits with the last non-zero code. Does not write `src/` or locks.
 
 1. `scripts/check-ak-kit-skill-inventory.mjs --kit-root <ak-cli>`
 2. `scripts/check-ak-skill-detail-principles.mjs`
 3. `scripts/check-ak-skill-details.mjs --kit-root <ak-cli>`
 4. `scripts/check-ak-skill-detail-claims.mjs --kit-root <ak-cli> [--ak-docs] --kit <kit>`
-5. With `--ak-docs`: `scripts/check-ak-skill-detail-ak-docs.mjs --ak-docs <ak-docs> --kit <kit> --kit-root <ak-cli>` (missing documented options fail; `en/vi drift` lines are advisory)
+5. `scripts/check-ak-modernengineer-guides.mjs` (needs network): compares `src/data/guides/agentkit-modernengineer-guides.ts` with the live modernEngineer `agentkit-skills` catalog. `stale` lines fail (exit 1); `no-guide` and `warning` lines are advisory, since a detail page hides its modernEngineer card until that guide is published. Exit 2 means the catalog was unreachable (network, timeout, 408/429/5xx after retries): the runner prints `modernengineer: skipped` instead of failing; re-run later. Exit 3 means the catalog answer failed validation (empty, incomplete, wrong locale or route, 4xx), a bad argument, or a local error: it fails the run, and if the URL scheme changed the links on the site may already be broken. Neither writes anything; never hand-edit the list to work around them.
+6. With `--ak-docs`: `scripts/check-ak-skill-detail-ak-docs.mjs --ak-docs <ak-docs> --kit <kit> --kit-root <ak-cli>` (missing documented options fail; `en/vi drift` lines are advisory)
 
 `--skip-inventory` skips step 1. The umbrella `/vk:audit-ak-guides` passes it because it runs inventory itself.
 
@@ -169,6 +170,11 @@ Full table: `reference/ak-docs-skills-meta/README.md`.
 | `description != kit SKILL.md` | Copy the kit `description` into the cheatsheet EN `description` verbatim and rewrite `descriptionVi` in natural Vietnamese (stable channel unless `isBeta`) |
 
 `--write-lock` only after the cheatsheet/pages match the report.
+
+| modernEngineer line | Do |
+| --- | --- |
+| `stale` | `node scripts/check-ak-modernengineer-guides.mjs --write` (or `pnpm audit:ak-modernengineer -- --write`), then `pnpm run build` |
+| `no-guide` | Nothing in VividKit; the card appears after the guide is published and the list is refreshed |
 
 ## Trigger examples
 

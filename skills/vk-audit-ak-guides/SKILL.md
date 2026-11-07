@@ -69,7 +69,7 @@ AK_CLI="$AK_CLI" pnpm run audit:ak-guides
 ## Reading a red result
 
 - `uncovered` also appears when an owner checker exits 2 (missing script, missing `--kit-root`, bad argument). Read that checker's stderr in the dump below the table before concluding a page has no owner.
-- `owned-fail` on `/skills` or `/skills/[kit]/[skill]`: run `/vk:audit-ak-skills --report` and act on its inventory table. The lock is written there, after the user reviews the drift — never from this umbrella.
+- `owned-fail` on `/skills` or `/skills/[kit]/[skill]`: run `/vk:audit-ak-skills --report` and act on its inventory table, or on the `check-ak-modernengineer-guides` lines when that step exited 3 (see its step 5). The lock is written there, after the user reviews the drift — never from this umbrella.
 - `owned-fail` on `/workflows`: run `/vk:audit-ak-workflows --report`; `--sync` only after review.
 - `owned-fail` on any other page: fix the page or its registry entry per `vk:audit-ak-pages`, then re-run.
 

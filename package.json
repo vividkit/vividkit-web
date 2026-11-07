@@ -12,7 +12,8 @@
     "audit:ak-workflows": "node skills/vk-audit-ak-workflows/scripts/detect-workflow-skill-drift.cjs --check",
     "audit:ak-kit-inventory": "node scripts/check-ak-kit-skill-inventory.mjs",
     "audit:ak-guides": "node skills/vk-audit-ak-guides/scripts/run.mjs check",
-    "audit:ak-pages": "node scripts/check-ak-guide-pages.mjs"
+    "audit:ak-pages": "node scripts/check-ak-guide-pages.mjs",
+    "audit:ak-modernengineer": "node scripts/check-ak-modernengineer-guides.mjs"
   },
   "dependencies": {
     "@astrojs/react": "5.0.7",
