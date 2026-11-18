@@ -12,6 +12,8 @@
  *    Roots listed in agentkit-cli-beta-commands.ts are not reported.
  * 5) Beta-only command list (agentkit-cli-beta-commands.ts) must resolve on the beta
  *    tree and must not exist on stable yet (promoted commands move to the cheatsheet).
+ * 6) Coverage: every visible stable root (`ak <cmd>` without `Hidden: true`) must have a
+ *    cheatsheet entry, unless UNLISTED_ROOTS names it with a reason.
  *    Does not claim migrate/safety copy.
  */
 import { existsSync, readdirSync, readFileSync, statSync } from 'node:fs';
@@ -25,6 +27,15 @@ const OWNED_ELSEWHERE = new Set([
   '/guides/agentkit/skills',
   '/guides/agentkit/skills/[kit]/[skill]',
   '/guides/agentkit/workflows',
+]);
+
+/**
+ * Visible stable roots the CLI cheatsheet leaves out on purpose, each with the reason.
+ * Hidden commands (`Hidden: true` on the cobra literal) are skipped without being listed here.
+ */
+const UNLISTED_ROOTS = new Map([
+  ['help', 'cobra built-in'],
+  ['completion', 'cobra built-in shell completion'],
 ]);
 
 /** identity → backing files relative to repo root */
@@ -312,17 +323,19 @@ function parseCompositeUse(src, i) {
   if (brace < 0) return null;
   let depth = 0;
   let use = null;
+  let hidden = false;
   for (let j = brace; j < src.length; j++) {
     if (src[j] === '"' || src[j] === '`') { j = skipString(src, j); continue; }
     if (src[j] === '{') depth++;
     else if (src[j] === '}') {
       depth--;
-      if (depth === 0) return { use, end: j + 1 };
+      if (depth === 0) return { use, hidden, end: j + 1 };
     }
     if (depth !== 1) continue;
     const slice = src.slice(j);
     let m;
-    if ((m = /^Use\s*:\s*"([^"]+)"/.exec(slice))) use = { lit: m[1] };
+    if (/^Hidden\s*:\s*true\b/.test(slice)) hidden = true;
+    else if ((m = /^Use\s*:\s*"([^"]+)"/.exec(slice))) use = { lit: m[1] };
     else if ((m = /^Use\s*:\s*string\s*\(\s*([A-Za-z0-9_]+)\s*\)/.exec(slice))) use = { param: m[1] };
     else if ((m = /^Use\s*:\s*([A-Za-z0-9_]+)/.exec(slice)) && m[1] !== 'string') use = { param: m[1] };
   }
@@ -423,7 +436,7 @@ function loadStringConsts(kitRoot, ref) {
  * { use, key }; a bare string whose builder is unknown has key null and falls back to name lookup.
  */
 function buildCobraTree(kitRoot, ref) {
-  const empty = { roots: new Set(), edgeCount: 0, walk: () => ({ nodes: null, brokenAt: 0 }), childNames: () => new Set() };
+  const empty = { roots: new Set(), hiddenRoots: new Set(), edgeCount: 0, walk: () => ({ nodes: null, brokenAt: 0 }), childNames: () => new Set() };
   let listing = '';
   try {
     listing = git(kitRoot, ['ls-tree', '-r', '--name-only', ref, 'apps/cli/internal/commands', 'apps/cli/internal/cmdtree']);
@@ -444,6 +457,8 @@ function buildCobraTree(kitRoot, ref) {
   const nodeKey = (n) => n.key || `name:${asCmd(n.use)}`;
   const useOf = new Map();
   const edges = new Map();
+  /** Node keys whose cobra literal sets `Hidden: true`. */
+  const hiddenKeys = new Set();
   function addEdge(parent, child) {
     const p = asCmd(parent.use);
     const c = asCmd(child.use);
@@ -481,12 +496,15 @@ function buildCobraTree(kitRoot, ref) {
     if (text.startsWith('&cobra.Command')) {
       const parsed = parseCompositeUse(text, 0);
       if (!parsed || !parsed.use) return [];
-      if (parsed.use.lit) return [built(caller, parsed.use.lit)];
-      if (parsed.use.param && caller) {
+      let node = null;
+      if (parsed.use.lit) node = built(caller, parsed.use.lit);
+      else if (parsed.use.param && caller) {
         const idx = caller.paramNames.indexOf(parsed.use.param);
-        if (idx >= 0 && lits[idx] && lits[idx].use) return [built(caller, lits[idx].use)];
+        if (idx >= 0 && lits[idx] && lits[idx].use) node = built(caller, lits[idx].use);
       }
-      return [];
+      if (!node) return [];
+      if (parsed.hidden) hiddenKeys.add(nodeKey(node));
+      return [node];
     }
     const call = parseCall(text, 0);
     if (!call) return [];
@@ -554,6 +572,10 @@ function buildCobraTree(kitRoot, ref) {
   };
   const rootKeys = kidsOf(keysByName.get('ak') || []);
   const roots = new Set([...rootKeys].map((k) => useOf.get(k)));
+  // A root name counts as hidden only when every node registered under that name is hidden.
+  const hiddenRoots = new Set(
+    [...roots].filter((name) => [...rootKeys].filter((k) => useOf.get(k) === name).every((k) => hiddenKeys.has(k))),
+  );
   /** Follow `ak <parts...>` by path; brokenAt is the first part that is not a child of the one before. */
   function walk(parts) {
     let nodes = new Set([...rootKeys].filter((k) => useOf.get(k) === parts[0]));
@@ -567,7 +589,7 @@ function buildCobraTree(kitRoot, ref) {
   }
   const childNames = (nodes) => new Set([...kidsOf(nodes || [])].map((k) => useOf.get(k)));
   const edgeCount = [...edges.values()].reduce((n, set) => n + set.size, 0);
-  return { roots, edgeCount, walk, childNames };
+  return { roots, hiddenRoots, edgeCount, walk, childNames };
 }
 
 function cartesian(lists) {
@@ -689,6 +711,14 @@ function main(argv) {
           problems.push(`cheatsheet unknown-subcommand ak ${entry.name} ${sub} (not a child of ${parts.join(' ')})`);
         }
       }
+    }
+  }
+
+  if (tree.roots.size) {
+    const listedRoots = new Set(cheatsheetEntries(repo).map((e) => commandParts(e.name)[0]));
+    for (const root of [...tree.roots].sort()) {
+      if (listedRoots.has(root) || tree.hiddenRoots.has(root) || UNLISTED_ROOTS.has(root)) continue;
+      problems.push(`cheatsheet missing-root ak ${root} (visible on ${opts.stableRef}; add an entry or list it in UNLISTED_ROOTS)`);
     }
   }
 
