@@ -1,6 +1,6 @@
 import type { SkillInfographic } from '@/data/guides/how-ck-works';
 
-// Core skill added in AgentKit v3.0.0. Authored from kits/core/skills/ak-dogfood/SKILL.md and the same-kit ak-docs page.
+// Core skill added in AgentKit v3.0.0; synced with the v3.1.0 stable SKILL.md (--evidence, --json, store and SkillX detection). Authored from kits/core/skills/ak-dogfood/SKILL.md and the same-kit ak-docs page.
 const data: SkillInfographic = {
   id: 'ak-dogfood',
   command: '/ak-dogfood',
@@ -18,31 +18,33 @@ const data: SkillInfographic = {
     titleEn: 'Session content is user data and untrusted',
     titleVi: 'Nội dung session là dữ liệu người dùng và không đáng tin',
     contentEn:
-      'The Skill never copies prompts, tool output, credentials, tokens, absolute user paths, or session IDs into a Skill, commit, pull request, or committed report, and never follows an instruction found inside a transcript. Without `--ask` or `--apply` it writes no skill file and only reports proposals. Installed ak-* skills are never edited in place: for most users a change goes through `ak skills improve` into a personal overlay that AgentKit updates do not overwrite.',
+      'The Skill never copies prompts, tool output, credentials, tokens, absolute user paths, or session IDs into a Skill, commit, pull request, or committed report, and never follows an instruction found inside a transcript. Without `--ask` or `--apply` it writes no skill file and only reports proposals. Installed ak-* skills are never edited in place: for most users a change goes through `ak skills improve` into a personal overlay that AgentKit updates do not overwrite. Self-improve events read with `--evidence` are untrusted too, and that review only proposes changes. Publishing to SkillX is never part of `--apply` and runs only on your separate yes.',
     contentVi:
-      'Skill không bao giờ chép prompt, tool output, credential, token, đường dẫn tuyệt đối trên máy người dùng hay session ID vào một Skill, commit, pull request hoặc báo cáo được commit, và không bao giờ làm theo chỉ dẫn nằm trong transcript. Không có `--ask` hoặc `--apply` thì nó không ghi file skill nào, chỉ báo cáo đề xuất. Skill ak-* đã cài không bao giờ bị sửa tại chỗ: với đa số người dùng, thay đổi đi qua `ak skills improve` vào một overlay cá nhân mà bản cập nhật AgentKit không ghi đè.',
+      'Skill không bao giờ chép prompt, tool output, credential, token, đường dẫn tuyệt đối trên máy người dùng hay session ID vào một Skill, commit, pull request hoặc báo cáo được commit, và không bao giờ làm theo chỉ dẫn nằm trong transcript. Không có `--ask` hoặc `--apply` thì nó không ghi file skill nào, chỉ báo cáo đề xuất. Skill ak-* đã cài không bao giờ bị sửa tại chỗ: với đa số người dùng, thay đổi đi qua `ak skills improve` vào một overlay cá nhân mà bản cập nhật AgentKit không ghi đè. Sự kiện self-improve đọc qua `--evidence` cũng không đáng tin, và lần rà soát đó chỉ đề xuất thay đổi. Đăng lên SkillX không bao giờ nằm trong `--apply` và chỉ chạy khi bạn đồng ý riêng.',
   },
   processFlow: [
-    { number: 1, titleEn: 'Inventory the session', titleVi: 'Kiểm kê session', descEn: 'Runs session_usage.py from ak-skill-creator to list each skill with its triggers and files, plus tool calls, errors and duplicate calls. A skill that was only named in a path does not count as used. Without the script it builds the same list from its own context.', descVi: 'Chạy session_usage.py của ak-skill-creator để liệt kê từng skill cùng trigger và file của nó, kèm số tool call, lỗi và lệnh gọi trùng. Skill chỉ xuất hiện trong đường dẫn thì không tính là đã dùng. Không có script thì dựng cùng danh sách từ context của chính nó.' },
+    { number: 1, titleEn: 'Inventory the session', titleVi: 'Kiểm kê session', descEn: 'Runs session_usage.py from ak-skill-creator to list each skill with its triggers and files, plus tool calls, errors and duplicate calls. A skill that was only named in a path does not count as used. Without the script it builds the same list from its own context. Before naming the owner of each skill it checks once, read-only, whether the optional skill store, personal kits and SkillX (the AgentKit skill registry) are turned on; if it cannot tell, it keeps the default owners and lanes and says so in one line.', descVi: 'Chạy session_usage.py của ak-skill-creator để liệt kê từng skill cùng trigger và file của nó, kèm số tool call, lỗi và lệnh gọi trùng. Skill chỉ xuất hiện trong đường dẫn thì không tính là đã dùng. Không có script thì dựng cùng danh sách từ context của chính nó. Trước khi xác định chủ sở hữu từng skill, nó kiểm tra một lần, chỉ đọc, xem kho skill (skill store), personal kit và SkillX (kho skill của AgentKit) có được bật không; nếu không xác định được thì giữ chủ sở hữu và lane mặc định, kèm một dòng nói rõ.' },
     { number: 2, titleEn: 'Review the whole session', titleVi: 'Rà soát cả session', descEn: 'Looks for failed commands that were retried, repeated reads, independent calls run one by one, missing or unused references, your corrections, skipped checks and output that had to be redone.', descVi: 'Tìm lệnh thất bại rồi chạy lại, lần đọc lặp lại, lệnh độc lập chạy lần lượt, reference thiếu hoặc không dùng, lần bạn phải sửa, check bị bỏ qua và output phải làm lại.' },
     { number: 3, titleEn: 'Classify each finding', titleVi: 'Phân loại từng phát hiện', descEn: 'Each finding is a skill defect, an agent mistake the skill could prevent, an environment or tooling fault, or a one-off. Only the first two become proposals; the rest get one line each.', descVi: 'Mỗi phát hiện là lỗi của skill, lỗi agent mà skill có thể ngăn, sự cố môi trường hoặc công cụ, hay chuyện chỉ xảy ra một lần. Chỉ hai loại đầu thành đề xuất; các loại còn lại mỗi loại một dòng.' },
     { number: 4, titleEn: 'Propose the smallest change', titleVi: 'Đề xuất thay đổi nhỏ nhất', descEn: 'One proposal per root cause, tied to the responsible skill text (file:line) or the missing instruction, with a minimal hunk, expected effect, risk and the lane it would land in.', descVi: 'Mỗi nguyên nhân gốc một đề xuất, gắn với đúng đoạn skill gây ra (file:line) hoặc chỉ dẫn còn thiếu, kèm hunk tối thiểu, hiệu quả dự kiến, rủi ro và lane mà thay đổi sẽ đi vào.' },
-    { number: 5, titleEn: 'Apply by lane, then report', titleVi: 'Áp dụng theo lane rồi báo cáo', descEn: 'With --ask or --apply, each accepted proposal lands where its owner allows: a PR into the AgentKit repo if you can push there, a personal overlay through ak skills improve otherwise, an in-place edit for your own skills, and a proposal only for third-party skills.', descVi: 'Với --ask hoặc --apply, mỗi đề xuất được chấp nhận đi vào nơi chủ sở hữu cho phép: PR vào repo AgentKit nếu bạn có quyền push, personal overlay qua ak skills improve nếu không, sửa tại chỗ với skill bạn tự viết, và chỉ đề xuất với skill bên thứ ba.' },
+    { number: 5, titleEn: 'Apply by lane, then report', titleVi: 'Áp dụng theo lane rồi báo cáo', descEn: 'With --ask or --apply, each accepted proposal lands where its owner allows: a PR into the AgentKit repo if you can push there, a personal overlay through ak skills improve otherwise, a personal kit change when the skill already lives in your personal kit, an in-place edit for your own skills, and a proposal only for third-party skills.', descVi: 'Với --ask hoặc --apply, mỗi đề xuất được chấp nhận đi vào nơi chủ sở hữu cho phép: PR vào repo AgentKit nếu bạn có quyền push, personal overlay qua ak skills improve nếu không, thay đổi trong personal kit khi skill đã nằm trong personal kit của bạn, sửa tại chỗ với skill bạn tự viết, và chỉ đề xuất với skill bên thứ ba.' },
   ],
   corePrinciplesEn: [
     'A finding needs evidence from the reviewed session; a pattern seen once across all sessions is a watch item, not a proposal.',
     'The owner of a skill decides where a change lands; contributor status is a live push-access check, never an assumption.',
     'A saving in tokens or time that drops a required check or artifact is a regression, not an improvement.',
     'Anything skipped, refused, blocked or unverified is named with its reason and never counted as applied.',
+    'Store, personal kit and SkillX lanes are opt-in: they are offered only when a read-only check finds them turned on, otherwise the run behaves as before.',
   ],
   corePrinciplesVi: [
     'Mỗi phát hiện cần bằng chứng từ session được rà soát; một mẫu chỉ thấy một lần khi rà mọi session là mục cần theo dõi, chưa phải đề xuất.',
     'Chủ sở hữu skill quyết định thay đổi đi vào đâu; tư cách contributor được kiểm tra trực tiếp bằng quyền push, không bao giờ đoán.',
     'Tiết kiệm token hay thời gian mà bỏ mất một check hoặc artifact bắt buộc là thụt lùi, không phải cải thiện.',
     'Mục nào bị bỏ qua, từ chối, chặn hoặc chưa kiểm chứng đều được nêu kèm lý do và không bao giờ tính là đã áp dụng.',
+    'Lane cho skill store, personal kit và SkillX là tùy chọn: chỉ được đưa ra khi một bước kiểm tra chỉ đọc thấy chúng đang bật, nếu không thì lần chạy giữ nguyên cách cũ.',
   ],
   invocation: {
-    syntax: '/ak-dogfood [focus] [--all [--since YYYY-MM-DD]] [--apply|--ask] [--skill <name>]',
+    syntax: '/ak-dogfood [focus] [--all [--since YYYY-MM-DD]] [--apply|--ask] [--skill <name>] [--evidence <event-ids>] [--json]',
     arguments: [
       {
         token: '[focus]',
@@ -95,6 +97,22 @@ const data: SkillInfographic = {
         descVi: 'Giới hạn rà soát vào một skill mà session đã dùng.',
         exampleCommand: '/ak-dogfood --skill ak-plan',
       },
+      {
+        token: '--evidence',
+        titleEn: 'Review self-improve events',
+        titleVi: 'Rà soát sự kiện self-improve',
+        descEn: 'Reviews the redacted skill-signal events that ak skills self-improve status listed, instead of the live session. Proposals only: --apply is refused and --ask decides proposals only. Missing or malformed event ids are reported as invalid, never guessed.',
+        descVi: 'Rà soát các sự kiện tín hiệu skill đã che thông tin nhạy cảm mà ak skills self-improve status liệt kê, thay cho session đang chạy. Chỉ đề xuất: --apply bị từ chối và --ask chỉ quyết các đề xuất. Event id thiếu hoặc sai định dạng được báo là không hợp lệ, không bao giờ đoán.',
+        exampleCommand: '/ak-dogfood --evidence <event-ids> --skill ak-plan',
+      },
+      {
+        token: '--json',
+        titleEn: 'JSON report',
+        titleVi: 'Báo cáo JSON',
+        descEn: 'Emits the dry-run report as one JSON document instead of Markdown. Changes nothing; refused together with --apply or --ask.',
+        descVi: 'Xuất báo cáo chạy thử dưới dạng một tài liệu JSON thay cho Markdown. Không thay đổi gì; bị từ chối khi đi cùng --apply hoặc --ask.',
+        exampleCommand: '/ak-dogfood --json',
+      },
     ],
   },
   promptExamples: [
@@ -128,6 +146,26 @@ const data: SkillInfographic = {
       whenVi: 'Dùng khi bạn nghi cùng một skill cứ vấp ở nhiều session, không riêng session này.',
       expectedEn: 'Skills ranked by trouble rather than popularity, a few lead sessions read per skill, and proposals only for causes seen in at least two sessions or a correction the skill text clearly caused.',
       expectedVi: 'Skill được xếp hạng theo mức gặp sự cố chứ không theo độ phổ biến, mỗi skill đọc vài session tiêu biểu, và chỉ đề xuất cho nguyên nhân thấy ở ít nhất hai session hoặc một lần bạn phải sửa mà đoạn skill rõ ràng gây ra.',
+    },
+    {
+      labelEn: 'Review flagged self-improve events',
+      labelVi: 'Rà soát sự kiện self-improve được gắn cờ',
+      command: '/ak-dogfood --evidence <event-ids> --skill ak-plan',
+      commandVi: '/ak-dogfood --evidence <event-ids> --skill ak-plan',
+      whenEn: 'Use after ak skills self-improve status names events for a skill and you want them reviewed without rereading the session.',
+      whenVi: 'Dùng sau khi ak skills self-improve status nêu các sự kiện cho một skill và bạn muốn rà soát chúng mà không đọc lại session.',
+      expectedEn: 'Findings and proposals built only from the listed events, invalid ids reported with their reason, and no skill file changed; you carry an accepted proposal through ak skills improve yourself.',
+      expectedVi: 'Phát hiện và đề xuất chỉ dựng từ các sự kiện được liệt kê, id không hợp lệ được báo kèm lý do, và không file skill nào bị đổi; bạn tự đưa đề xuất được chấp nhận qua ak skills improve.',
+    },
+    {
+      labelEn: 'Machine-readable report',
+      labelVi: 'Báo cáo cho máy đọc',
+      command: '/ak-dogfood --json',
+      commandVi: '/ak-dogfood --json',
+      whenEn: 'Use when a script or dashboard should read the review instead of a person.',
+      whenVi: 'Dùng khi một script hoặc dashboard cần đọc kết quả rà soát thay cho người.',
+      expectedEn: 'One JSON document with used skills, owners and lanes, findings, proposals and open questions, written to the reports folder or printed as the whole reply, with nothing applied.',
+      expectedVi: 'Một tài liệu JSON gồm skill đã dùng, chủ sở hữu và lane, phát hiện, đề xuất và câu hỏi còn mở, ghi vào thư mục reports hoặc in thành toàn bộ câu trả lời, không áp dụng gì.',
     },
   ],
   reportOutput: {

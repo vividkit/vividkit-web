@@ -79,13 +79,15 @@ const data: SkillInfographic = {
     "Thumbnail text is tiny: 1–3 words, 25 characters max, rendered directly into the image.",
     "CTR depends on clarity at small sizes, emotional faces when possible, strong contrast, and a simple 3-element composition.",
     "Design is niche + style specific; do research before generation.",
-    "Do not fake YouTube UI elements like duration timestamps or play buttons."
+    "Do not fake YouTube UI elements like duration timestamps or play buttons.",
+    "Article covers rendered from a fixed site template are not thumbnails; they belong to /ak:seo article cover."
   ],
   corePrinciplesVi: [
     "Text thumbnail phải cực ngắn: 1–3 từ, tối đa 25 ký tự, được render trực tiếp vào ảnh.",
     "CTR phụ thuộc vào độ rõ ở kích thước nhỏ, khuôn mặt có cảm xúc khi phù hợp, tương phản mạnh và bố cục đơn giản tối đa 3 yếu tố.",
     "Thiết kế phụ thuộc niche + style; phải nghiên cứu trước khi generate.",
-    "Không fake thành phần UI của YouTube như timestamp duration hoặc nút play."
+    "Không fake thành phần UI của YouTube như timestamp duration hoặc nút play.",
+    "Ảnh bìa bài viết dựng từ template cố định của site không phải thumbnail; việc đó thuộc /ak:seo article cover."
   ],
   expertiseAreasEn: [
     "CTR-oriented art direction",

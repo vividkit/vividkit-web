@@ -41,8 +41,8 @@ const data: SkillInfographic = {
       "number": 1,
       "titleEn": "Choose Remotion fit",
       "titleVi": "Chọn đúng Remotion",
-      "descEn": "Use this when the video is authored as React components; prefer ak-hyperframes for plain HTML/CSS timed by data attributes.",
-      "descVi": "Dùng khi video được viết bằng React component; ưu tiên ak-hyperframes nếu video là HTML/CSS thuần với thời gian trong data attribute."
+      "descEn": "Use this when the video is authored as React components; prefer ak-hyperframes for plain HTML/CSS timed by data attributes. Compressing a finished render for the web, or checking how a site serves its videos, belongs to ak-media-processing when it is installed: this skill renders, it does not own delivery encoding.",
+      "descVi": "Dùng khi video được viết bằng React component; ưu tiên ak-hyperframes nếu video là HTML/CSS thuần với thời gian trong data attribute. Việc nén bản render hoàn chỉnh cho web, hay kiểm tra cách site phục vụ video, thuộc về ak-media-processing khi skill đó đã được cài: skill này chỉ render, không lo phần mã hóa để phát hành."
     },
     {
       "number": 2,

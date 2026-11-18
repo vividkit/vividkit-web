@@ -138,8 +138,8 @@ const data: SkillInfographic = {
             "exampleCommand": "/ak:test optimize CI suite --interview"
           }
         ],
-        "outcomeEn": "A faster or cheaper suite with unchanged safety guarantees, change list, and evidence for any CI workflow edits.",
-        "outcomeVi": "Suite nhanh hơn hoặc rẻ hơn với bảo đảm an toàn không đổi, danh sách thay đổi và bằng chứng cho mọi sửa workflow CI.",
+        "outcomeEn": "A faster or cheaper suite with unchanged safety guarantees, change list, and evidence for any CI workflow edits. Each claimed saving carries an explain-the-number verdict; an inconclusive result is not reported as a gain.",
+        "outcomeVi": "Suite nhanh hơn hoặc rẻ hơn với bảo đảm an toàn không đổi, danh sách thay đổi và bằng chứng cho mọi sửa workflow CI. Mỗi mức tiết kiệm được nêu đều kèm kết luận explain-the-number; kết quả chưa kết luận được thì không được báo là cải thiện.",
         "exampleCommand": "/ak:test optimize \"Reduce pull-request CI time\" --advice"
       },
       {
@@ -223,10 +223,10 @@ const data: SkillInfographic = {
     },
     {
       "number": 4,
-      "titleEn": "Run early checks",
-      "titleVi": "Chạy kiểm tra sớm",
-      "descEn": "Run typecheck or analyze commands first when they catch syntax and static errors before slower suites.",
-      "descVi": "Chạy typecheck hoặc analyze trước khi chúng bắt lỗi cú pháp/tĩnh nhanh hơn các suite chậm."
+      "titleEn": "Start with the smallest check",
+      "titleVi": "Bắt đầu từ check nhỏ nhất",
+      "descEn": "Start with the smallest check that can establish the affected contract, using the repository's own commands and configured runners, then broaden to affected callers and mandatory gates.",
+      "descVi": "Bắt đầu từ check nhỏ nhất đủ để xác lập hợp đồng hành vi bị ảnh hưởng, dùng đúng lệnh và runner repo đã cấu hình, rồi mở rộng sang phần gọi liên quan và các gate bắt buộc."
     },
     {
       "number": 5,
@@ -253,21 +253,23 @@ const data: SkillInfographic = {
       "number": 8,
       "titleEn": "Report QA result",
       "titleVi": "Báo kết quả QA",
-      "descEn": "Produce a structured report with results, coverage, failed tests, performance/build status, recommendations, and team-mode completion state when relevant.",
-      "descVi": "Tạo báo cáo có cấu trúc gồm kết quả, coverage, test lỗi, trạng thái hiệu năng/build, khuyến nghị và trạng thái hoàn tất team-mode khi liên quan."
+      "descEn": "Lead with the outcome and its limits: a short inline summary for a small run, or a compact evidence report with each contract, check, observed result, gap, mandatory gate, failure, coverage, cost, and cleanup when the scope needs it. Every measured speedup, regression, latency gate, or saving first goes through the seven-question explain-the-number check and gets one verdict (faster, slower, no measurable difference, or inconclusive) with its named limiter.",
+      "descVi": "Mở đầu bằng kết quả và giới hạn của nó: tóm tắt ngắn ngay trong phản hồi cho lần chạy nhỏ, hoặc báo cáo bằng chứng gọn gồm từng hợp đồng hành vi, check, kết quả quan sát, khoảng trống, gate bắt buộc, lỗi, coverage, chi phí và việc dọn dẹp khi phạm vi cần. Mọi con số đo được về tăng tốc, suy giảm, ngưỡng độ trễ hay tiết kiệm phải qua bảy câu hỏi kiểm tra explain-the-number trước, rồi nhận đúng một kết luận (nhanh hơn, chậm hơn, không khác biệt đo được, hoặc chưa kết luận được) kèm yếu tố giới hạn đã nêu tên."
     }
   ],
   "corePrinciplesEn": [
-    "Test behavior, not plumbing",
-    "Critical paths need happy-path and error coverage",
-    "Tests must be deterministic, isolated, and reproducible",
-    "UI QA includes screenshots, responsive checks, accessibility, forms, and console errors"
+    "Test what your system owns, scoped by risk, at the lowest reliable layer",
+    "Never game the green build: no weakened assertions, skipped failures, or coverage tricks",
+    "Reuse earlier results only when source, inputs, configuration, and environment still match",
+    "A shorter suite or prompt is not proof of better delivery; measure time and cost before claiming a gain",
+    "A measured number becomes a conclusion only after the explain-the-number check, and inconclusive is never a pass"
   ],
   "corePrinciplesVi": [
-    "Test hành vi, không test phần dây nối vô nghĩa",
-    "Luồng quan trọng cần cả happy path và lỗi",
-    "Test phải deterministic, độc lập và chạy lại được",
-    "QA UI gồm screenshot, responsive, accessibility, form và console error"
+    "Test phần hệ thống của bạn sở hữu, khoanh phạm vi theo rủi ro, ở lớp thấp nhất còn đáng tin",
+    "Không bao giờ làm build xanh giả: không nới assertion, không skip lỗi, không lách coverage",
+    "Chỉ dùng lại kết quả cũ khi source, input, cấu hình và môi trường vẫn khớp",
+    "Suite hay prompt ngắn hơn không chứng minh giao việc tốt hơn; phải đo thời gian và chi phí trước khi nói là cải thiện",
+    "Một con số đo được chỉ thành kết luận sau khi qua kiểm tra explain-the-number, và chưa kết luận được thì không bao giờ tính là đạt"
   ],
   "expertiseAreasEn": [
     "unit and integration",
@@ -295,8 +297,8 @@ const data: SkillInfographic = {
       "commandVi": "/ak:test luồng thanh toán checkout",
       "whenEn": "Use after implementation or a bug fix when a validation suite should run for a concrete scope.",
       "whenVi": "Dùng sau khi triển khai hoặc sửa lỗi khi cần chạy suite kiểm thử cho một phạm vi cụ thể.",
-      "expectedEn": "Identifies the relevant scope, runs early typecheck/analyze commands when useful, executes the matching project suites, treats failures as blockers, and returns a structured QA summary.",
-      "expectedVi": "Xác định phạm vi liên quan, chạy typecheck/analyze sớm khi hữu ích, chạy suite phù hợp của dự án, xem test lỗi là blocker và trả báo cáo QA có cấu trúc.",
+      "expectedEn": "Identifies the affected contract and risk, starts with the smallest useful check, runs the matching project suites and mandatory gates, investigates every failure, and returns a short report that leads with the outcome and its limits.",
+      "expectedVi": "Xác định hợp đồng hành vi và rủi ro bị ảnh hưởng, bắt đầu từ check nhỏ nhất hữu ích, chạy suite phù hợp của dự án cùng các gate bắt buộc, điều tra mọi lỗi và trả báo cáo ngắn mở đầu bằng kết quả cùng giới hạn của nó.",
       "recommended": true
     },
     {

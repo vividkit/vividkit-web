@@ -1,6 +1,6 @@
 import type { SkillInfographic } from '@/data/guides/how-ck-works';
 
-// Core skill: authored from the stable SKILL.md, its references and the same-kit ak-docs page.
+// Core skill: authored from the stable SKILL.md (v3.1.0 adds one-approval guidance for multi-step jobs), its references and the same-kit ak-docs page.
 const data: SkillInfographic = {
   id: 'ak-vault',
   command: '/ak-vault',
@@ -27,7 +27,8 @@ const data: SkillInfographic = {
     { number: 2, titleEn: 'Settle project and environment', titleVi: 'Chốt project và môi trường', descEn: 'Infers the environment from the file name or deploy target, the project from the repository, and the provider from the variable prefix. When project or environment is still unclear it asks one question before writing; a non-interactive run stops and names the missing fields.', descVi: 'Suy ra môi trường từ tên file hoặc đích deploy, project từ repository, và provider từ tiền tố của biến. Khi project hoặc môi trường vẫn chưa rõ, nó hỏi một câu trước khi ghi; lượt chạy không tương tác thì dừng lại và nêu đúng các trường còn thiếu.' },
     { number: 3, titleEn: 'Check before writing', titleVi: 'Kiểm tra trước khi ghi', descEn: 'Searches existing refs first. For a candidate ref it reads the hint (public prefix and last 4 characters) and runs ak secrets compare, which answers match or differs and prints neither value. An existing ref is rotated or annotated instead of re-created.', descVi: 'Tìm các ref đã có trước. Với ref có khả năng trùng, nó đọc hint (tiền tố công khai và 4 ký tự cuối) và chạy ak secrets compare, lệnh chỉ trả lời match hoặc differs và không in giá trị nào. Ref đã có thì được rotate hoặc annotate thay vì tạo lại.' },
     { number: 4, titleEn: 'Store, import and sync', titleVi: 'Lưu, import và đồng bộ', descEn: 'Stores one value through a non-echoing script, or previews and imports whole dotenv files with import-env (the source file is never edited or deleted), then checks the cloud vault state with ak secrets sync status before saying anything about sync.', descVi: 'Lưu một giá trị qua script không in ra, hoặc xem trước rồi import cả file dotenv bằng import-env (file nguồn không bao giờ bị sửa hay xóa), sau đó kiểm tra trạng thái vault trên cloud bằng ak secrets sync status trước khi nói gì về việc đồng bộ.' },
-    { number: 5, titleEn: 'Use and rotate', titleVi: 'Dùng và xoay vòng', descEn: 'Commands use ${secret:NAME}, which supported runtimes resolve just before a shell command or fetch URL runs. Rotation goes: rotate at the provider, store the new value, sync, then revoke the old credential, reporting each step without the value.', descVi: 'Lệnh dùng ${secret:NAME}, được các runtime hỗ trợ thay bằng giá trị ngay trước khi lệnh shell hoặc URL fetch chạy. Xoay vòng theo thứ tự: đổi ở provider, lưu giá trị mới, đồng bộ, rồi thu hồi credential cũ, báo kết quả từng bước mà không kèm giá trị.' },
+    { number: 5, titleEn: 'One approval for a multi-step job', titleVi: 'Một lần duyệt cho việc nhiều bước', descEn: 'When a job uses secrets in several steps, such as an upload followed by API calls, it lists every ref with the program and variable each step needs and files all the requests before the first step, once each. It then asks you to run ak secrets approve in your own terminal, not through the agent, and answer allow 24h rather than allow once, so later steps do not block again. A ref that only accepts allow once needs a fresh approval per run, and it says so.', descVi: 'Khi một việc dùng secret qua nhiều bước, ví dụ upload rồi gọi vài API, nó liệt kê mọi ref cùng chương trình và biến mà từng bước cần, rồi gửi tất cả yêu cầu trước bước đầu tiên, mỗi yêu cầu một lần. Sau đó nó nhờ bạn chạy ak secrets approve trong terminal của chính bạn, không qua agent, và chọn allow 24h thay vì allow once, để các bước sau không bị chặn lại. Ref chỉ chấp nhận allow once thì mỗi lần chạy cần một lần duyệt mới, và nó nói rõ điều đó.' },
+    { number: 6, titleEn: 'Use and rotate', titleVi: 'Dùng và xoay vòng', descEn: 'Commands use ${secret:NAME}, which supported runtimes resolve just before a shell command or fetch URL runs. Rotation goes: rotate at the provider, store the new value, sync, then revoke the old credential, reporting each step without the value.', descVi: 'Lệnh dùng ${secret:NAME}, được các runtime hỗ trợ thay bằng giá trị ngay trước khi lệnh shell hoặc URL fetch chạy. Xoay vòng theo thứ tự: đổi ở provider, lưu giá trị mới, đồng bộ, rồi thu hồi credential cũ, báo kết quả từng bước mà không kèm giá trị.' },
   ],
   corePrinciplesEn: [
     'The ak secrets vault is recommended, not required; your recorded choice of dotenv files or another manager is followed.',
@@ -95,6 +96,16 @@ const data: SkillInfographic = {
       whenVi: 'Dùng khi một key đã bị lộ hoặc tới hạn xoay vòng.',
       expectedEn: 'The order to follow (rotate at the provider, store the new value, sync, revoke the old one), the revoke and audit commands you run yourself, and each step reported without the value.',
       expectedVi: 'Thứ tự cần làm (đổi ở provider, lưu giá trị mới, đồng bộ, thu hồi key cũ), các lệnh revoke và audit để bạn tự chạy, và kết quả từng bước được báo mà không kèm giá trị.',
+    },
+    {
+      labelEn: 'Run a multi-step job with one approval',
+      labelVi: 'Chạy việc nhiều bước với một lần duyệt',
+      command: '/ak-vault use R2_ACCESS_KEY_ID',
+      commandVi: '/ak-vault use R2_ACCESS_KEY_ID',
+      whenEn: 'Use when an upload or deploy script needs several secrets across several commands and you do not want to approve every step.',
+      whenVi: 'Dùng khi một script upload hoặc deploy cần nhiều secret qua nhiều lệnh và bạn không muốn duyệt từng bước.',
+      expectedEn: 'A list of every ref with the program and variable it is used in, all requests filed up front, and the exact ak secrets approve command for you to run in your own terminal with allow 24h.',
+      expectedVi: 'Danh sách mọi ref cùng chương trình và biến dùng nó, tất cả yêu cầu được gửi trước, và đúng câu lệnh ak secrets approve để bạn tự chạy trong terminal của mình với allow 24h.',
     },
   ],
   reportOutput: {

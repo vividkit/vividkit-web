@@ -7,8 +7,8 @@ const data: SkillInfographic = {
   header: {
     titleEn: '/ak:copywriting — Conversion copywriting formulas',
     titleVi: '/ak:copywriting — Công thức copy chuyển đổi',
-    taglineEn: 'Conversion copywriting formulas, headline templates, email patterns, landing-page structures, CTA optimization, and writing-style extraction.',
-    taglineVi: 'Công thức copy chuyển đổi, mẫu headline, pattern email, cấu trúc landing page, tối ưu CTA và trích xuất phong cách viết.',
+    taglineEn: 'Conversion copywriting formulas, headline templates, email patterns, landing-page structures, CTA optimization, a CRO checklist, and writing-style extraction. Long-form website articles belong to the Marketing kit\'s SEO skill.',
+    taglineVi: 'Công thức copy chuyển đổi, mẫu headline, pattern email, cấu trúc landing page, tối ưu CTA, checklist CRO (tối ưu tỷ lệ chuyển đổi) và trích xuất phong cách viết. Bài viết dài cho website thuộc về skill SEO của Marketing kit.',
   },
   hardGate: {
     type: 'warning',
@@ -20,13 +20,13 @@ const data: SkillInfographic = {
       'Không biến số mẫu, cam kết, sự khẩn cấp, testimonial hoặc ngôn ngữ vượt trội trong template thành claim thật. Mỗi phát biểu sự thật cần có bằng chứng đã duyệt, và copy chịu quản lý hoặc ràng buộc hợp đồng vẫn cần review phù hợp của con người.',
   },
   processFlow: [
-    { number: 1, titleEn: 'Classify copy', titleVi: 'Phân loại copy', descEn: 'Identify whether the user needs headlines, subject lines, landing page copy, emails, social posts, product descriptions, CTAs, A/B variants, or style transfer.', descVi: 'Xác định người dùng cần headline, subject line, landing page, email, bài social, mô tả sản phẩm, CTA, biến thể A/B hay chuyển phong cách viết.' },
+    { number: 1, titleEn: 'Classify copy', titleVi: 'Phân loại copy', descEn: 'Identify whether the user needs headlines, subject lines, landing page copy, emails, social posts, product descriptions, CTAs, A/B variants, or style transfer. For a page that needs both search and conversion work, search structure (title, meta, headings, schema) goes to the Marketing kit\'s SEO skill and the headline, CTA and persuasion copy stay here.', descVi: 'Xác định người dùng cần headline, subject line, landing page, email, bài social, mô tả sản phẩm, CTA, biến thể A/B hay chuyển phong cách viết. Với trang cần cả tìm kiếm lẫn chuyển đổi, phần cấu trúc cho tìm kiếm (title, meta, heading, schema) chuyển sang skill SEO của Marketing kit, còn headline, CTA và copy thuyết phục ở lại đây.' },
     { number: 2, titleEn: 'Load style evidence', titleVi: 'Nạp bằng chứng phong cách', descEn: 'Load the bundled writing-styles reference or run extract-writing-styles.py on approved assets in supported formats, noting when document or media extraction needs GEMINI_API_KEY.', descVi: 'Nạp tài liệu writing-styles hoặc chạy extract-writing-styles.py trên asset đã được duyệt ở định dạng hỗ trợ, ghi rõ khi trích xuất tài liệu/media cần GEMINI_API_KEY.' },
     { number: 3, titleEn: 'Choose formula', titleVi: 'Chọn công thức', descEn: 'Map the job to a documented structure such as AIDA, PAS, BAB, 4Ps, 4Us, or FAB.', descVi: 'Gắn nhiệm vụ với cấu trúc đã ghi như AIDA, PAS, BAB, 4Ps, 4Us hoặc FAB.' },
     { number: 4, titleEn: 'Draft core message', titleVi: 'Soạn thông điệp chính', descEn: 'Lead with the benefit, match awareness level, make the promise specific, and avoid unsupported claims.', descVi: 'Mở bằng lợi ích, khớp mức nhận thức của khách hàng, làm lời hứa thật cụ thể và tránh tuyên bố thiếu bằng chứng.' },
     { number: 5, titleEn: 'Build channel shape', titleVi: 'Định dạng theo kênh', descEn: 'Apply the right structure: subject-line angles for email, promise→how→CTA→social proof for landing pages, and platform-specific social copy.', descVi: 'Áp dụng cấu trúc đúng kênh: góc subject line cho email, promise→how→CTA→social proof cho landing page, và copy theo từng nền tảng social.' },
     { number: 6, titleEn: 'Optimize CTA', titleVi: 'Tối ưu CTA', descEn: 'Use one clear action per piece, benefit-led wording, and CTA patterns such as "Start [verb]ing", "Get [benefit]", or "Yes, I want [benefit]".', descVi: 'Dùng một hành động rõ cho mỗi nội dung, câu chữ dẫn bằng lợi ích và mẫu CTA như "Start [verb]ing", "Get [benefit]" hoặc "Yes, I want [benefit]".' },
-    { number: 7, titleEn: 'Polish and organize', titleVi: 'Chỉnh và sắp xếp', descEn: 'Read the copy aloud, remove awkward phrasing, test headline alternatives first, and invoke engineer project-organization to organize outputs.', descVi: 'Đọc thành tiếng, bỏ câu gượng, ưu tiên thử các headline trước và gọi engineer project-organization để sắp xếp đầu ra.' },
+    { number: 7, titleEn: 'Polish and deliver', titleVi: 'Chỉnh và giao kết quả', descEn: 'Read the copy aloud, remove awkward phrasing, test headline alternatives first, check copy and page against the 25-point CRO checklist, and deliver in the requested format or path using the project\'s existing output conventions (no Engineer-only organization skill is needed).', descVi: 'Đọc thành tiếng, bỏ câu gượng, ưu tiên thử các headline trước, đối chiếu copy và trang với checklist CRO 25 mục, và giao kết quả đúng định dạng hoặc đường dẫn được yêu cầu theo quy ước output sẵn có của project (không cần skill tổ chức riêng của Engineer kit).' },
   ],
   corePrinciplesEn: ['Lead with benefit, not feature.', 'One CTA per piece.', 'Specificity beats vague claims.', 'Match copy to awareness level.', 'If it sounds awkward aloud, rewrite it.'],
   corePrinciplesVi: ['Dẫn bằng lợi ích, không phải tính năng.', 'Mỗi nội dung chỉ có một CTA.', 'Cụ thể luôn tốt hơn tuyên bố mơ hồ.', 'Copy phải khớp mức nhận thức của khách hàng.', 'Đọc lên thấy gượng thì viết lại.'],
@@ -51,7 +51,7 @@ const data: SkillInfographic = {
     { labelEn: 'Style transfer', labelVi: 'Chuyển phong cách', command: '/ak:copywriting product description using assets/writing-styles/founder-voice.md as the approved style sample',
       commandVi: '/ak:copywriting mô tả sản phẩm sử dụng assets/writing-styles/founder-voice.md làm mẫu phong cách được phê duyệt', whenEn: 'User-approved writing assets should shape tone, cadence, vocabulary, and sentence patterns for conversion copy.', whenVi: 'Khi asset viết đã được duyệt cần định hướng tone, nhịp câu, từ vựng và mẫu câu cho copy chuyển đổi.', expectedEn: 'A product description that applies observed style dimensions from the approved sample while preserving formula choice, factual boundaries, and CTA clarity.', expectedVi: 'Mô tả sản phẩm áp dụng các chiều phong cách quan sát được từ mẫu đã duyệt, đồng thời giữ công thức, ranh giới facts và CTA rõ ràng.' },
   ],
-  skillStack: [{ name: 'references/writing-styles.md', type: 'tool' }, { name: 'scripts/extract-writing-styles.py', type: 'tool' }, { name: 'engineer project-organization', type: 'skill' }],
+  skillStack: [{ name: 'references/writing-styles.md', type: 'tool' }, { name: 'scripts/extract-writing-styles.py', type: 'tool' }, { name: 'references/cro-checklist.md', type: 'tool' }],
 };
 
 export default data;

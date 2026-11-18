@@ -30,12 +30,12 @@ const data: SkillInfographic = {
   corePrinciplesEn: [
     "Choose the workflow by action: analyze, content, seo, alternatives, or list.",
     "Combine research, positioning, SEO, and sales enablement instead of producing shallow competitor summaries.",
-    "Turn competitor facts into practical outputs: reports, battlecards, and alternative/vs pages.",
+    "Turn competitor facts into practical outputs: reports, battlecards, and alternative/vs pages; a comparison article written for search goes to /ak:seo article write, with this skill supplying the competitor research and positioning.",
   ],
   corePrinciplesVi: [
     "Chọn workflow theo hành động: analyze, content, seo, alternatives hoặc list.",
     "Kết hợp nghiên cứu, định vị, SEO và hỗ trợ sales thay vì chỉ tóm tắt đối thủ hời hợt.",
-    "Biến dữ kiện đối thủ thành đầu ra dùng được: report, battlecard và trang alternative/vs.",
+    "Biến dữ kiện đối thủ thành đầu ra dùng được: report, battlecard và trang alternative/vs; bài so sánh viết để lên tìm kiếm chuyển sang /ak:seo article write, còn skill này cung cấp phần nghiên cứu đối thủ và định vị.",
   ],
   expertiseAreasEn: ["Website analysis", "Content gaps", "SEO comparison", "Alternative pages", "Vs pages", "Battlecards", "Competitor tracking"],
   expertiseAreasVi: ["Phân tích website", "Khoảng trống nội dung", "So sánh SEO", "Trang alternative", "Trang vs", "Battlecard", "Theo dõi đối thủ"],
