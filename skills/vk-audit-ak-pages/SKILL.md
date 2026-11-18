@@ -42,6 +42,12 @@ not fetch. Does not write `src/`.
 
 Exit 0 clean, 1 drift, 2 usage.
 
+Coverage runs both ways. Every cheatsheet name must resolve in the cobra tree, and
+every visible stable root (`ak <cmd>` whose cobra literal is not `Hidden: true`)
+must have a cheatsheet entry. `cheatsheet missing-root ak <cmd>` means a new stable
+command: add an entry, or add it to `UNLISTED_ROOTS` in the script with the reason
+it stays off the page.
+
 Also prints `beta-cli-delta` (advisory, never gates): commands that `--beta-ref`
 (default `origin/dev`) adds or removes vs stable, per cheatsheet command, with
 `betaNote present|no betaNote`. Act on `no betaNote` by adding a `betaNote` /
