@@ -480,6 +480,12 @@ ak kit init engineer --beta --yes`}
           ? 'Trên CLI ak bản beta mới, --beta / --channel chỉ chọn kênh cho đúng lệnh đang chạy, không còn ghi kit.channel hay updates.channel trong ~/.agentkit/config.yaml. Kit vừa cài vẫn nhớ kênh của chính nó, nên ak update cho kit đó vẫn đi đúng kênh. Nhưng ak self-update và các lần cài kit mới không gắn cờ sẽ theo config (rỗng = stable). Muốn beta là mặc định thì đặt riêng updates.channel (CLI) và kit.channel (kit) trong config. Stable hiện tại vẫn giữ hành vi ở đoạn trên.'
           : 'On the newest beta ak CLI, --beta / --channel pick the channel for that one command only and no longer write kit.channel or updates.channel in ~/.agentkit/config.yaml. An installed kit still remembers its own channel, so ak update for that kit stays on it. But ak self-update and new kit installs without the flag follow config (empty = stable). To make beta the default, set updates.channel (CLI) and kit.channel (kits) separately in config. Current stable keeps the behavior described above.'}
       </AkCallout>
+      {/* Source: ak-cli #3161 (origin/dev, v3.2.0-beta.10). Drop once it reaches stable. */}
+      <AkCallout variant="info" title={isVi ? 'Beta: clone một project đã commit bản cài Claude Code' : 'Beta: cloning a project with a committed Claude Code install'}>
+        {isVi
+          ? 'Khi clone một repo đã commit sẵn thư mục .claude do AgentKit cài, máy mới không có file theo dõi quyền sở hữu (file này bị gitignore). Trên CLI ak bản beta, chạy ak kit init <kit> --yes trong bản clone sẽ nhận các file giống hệt bản kit làm file của AgentKit mà không ghi lại chúng; sau đó ak update hoạt động bình thường. File khác với bản kit vẫn được giữ nguyên, và nếu file hook bị sửa thì lệnh dừng mà không thay đổi gì. Bản stable hiện tại từ chối trường hợp này.'
+          : 'A clone of a repo that commits an AgentKit-installed .claude folder lacks the ownership records (they are gitignored). On the beta ak CLI, running ak kit init <kit> --yes in the clone adopts files identical to the kit as AgentKit-owned without rewriting them, and ak update then works as usual. Files that differ from the kit are kept, and a changed hook file stops the command with no change. Current stable refuses this case.'}
+      </AkCallout>
     </div>
   </AkSection>
 

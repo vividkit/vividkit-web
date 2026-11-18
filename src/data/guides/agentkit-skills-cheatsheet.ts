@@ -2125,16 +2125,39 @@ export interface AkBetaPreviewItem {
 
 /**
  * Engineer Beta Preview: beta-only skills (origin/dev minus origin/main) plus core skills with
- * notable beta-only changes. Drop entries once the change reaches stable. Empty while stable and beta
- * ship the same skills. Commands use the runtime name ak-<slug>.
+ * notable beta-only changes. Drop entries once the change reaches stable. Commands use the runtime
+ * name ak-<slug>. Source: kits/core/skills/ak-test/SKILL.md argument-hint, origin/dev (v3.2.0-beta.10)
+ * vs origin/main (v3.1.0).
  */
-export const akEngineerBetaPreview: AkBetaPreviewItem[] = [];
+export const akEngineerBetaPreview: AkBetaPreviewItem[] = [
+  {
+    id: "ak-test",
+    command: "/ak:test",
+    commandCodex: "$ak:test",
+    description: "New `update` mode: maps the tests a behavior or contract change affects and changes an assertion only where the accepted contract changed. `run` and `exec` are explicit names for the default test run, and `review` is another name for `audit`. `--report` (with `audit`, `review` or `optimize`) only writes findings or the proposed plan as a report and changes no test, CI workflow or config.",
+    descriptionVi: "Thêm chế độ `update`: tìm các test bị ảnh hưởng khi hành vi hoặc contract thay đổi, và chỉ sửa assertion ở đúng chỗ contract đã được chấp nhận thay đổi. `run` và `exec` là tên gọi rõ ràng cho lần chạy test mặc định, còn `review` là tên khác của `audit`. `--report` (đi với `audit`, `review` hoặc `optimize`) chỉ ghi phát hiện hoặc kế hoạch đề xuất thành báo cáo, không sửa test, workflow CI hay cấu hình nào.",
+    badge: "enhanced",
+    args: ["run", "exec", "update", "review"],
+    flags: ["--report"],
+  },
+];
 
 /**
  * Marketing Beta Preview. Marketing inherits core, so it reuses the engineer "enhanced" entries
  * for skills the marketing kit also ships. Add marketing-only beta skills, beta-only core skills and upgrades here explicitly.
  */
-export const akMarketingBetaPreview: AkBetaPreviewItem[] = [];
+export const akMarketingBetaPreview: AkBetaPreviewItem[] = [
+  {
+    id: "ak-test",
+    command: "/ak:test",
+    commandCodex: "$ak:test",
+    description: "New `update` mode: maps the tests a behavior or contract change affects and changes an assertion only where the accepted contract changed. `run` and `exec` are explicit names for the default test run, and `review` is another name for `audit`. `--report` (with `audit`, `review` or `optimize`) only writes findings or the proposed plan as a report and changes no test, CI workflow or config.",
+    descriptionVi: "Thêm chế độ `update`: tìm các test bị ảnh hưởng khi hành vi hoặc contract thay đổi, và chỉ sửa assertion ở đúng chỗ contract đã được chấp nhận thay đổi. `run` và `exec` là tên gọi rõ ràng cho lần chạy test mặc định, còn `review` là tên khác của `audit`. `--report` (đi với `audit`, `review` hoặc `optimize`) chỉ ghi phát hiện hoặc kế hoạch đề xuất thành báo cáo, không sửa test, workflow CI hay cấu hình nào.",
+    badge: "enhanced",
+    args: ["run", "exec", "update", "review"],
+    flags: ["--report"],
+  },
+];
 
 export const akEngineerSkillCount = akEngineerSkills.length;
 export const akMarketingSkillCount = akMarketingSkills.length;
