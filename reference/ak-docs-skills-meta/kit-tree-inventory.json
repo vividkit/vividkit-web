@@ -4,8 +4,8 @@
   "kitRootHint": "../../contrib/agentkit/ak-cli",
   "stableRef": "origin/main",
   "betaRef": "origin/dev",
-  "stableCommit": "9fe4699777a954987bb859bf839dacab1aff14ec",
-  "betaCommit": "093e3e981e85b39806540f8d9d778a487af85012",
+  "stableCommit": "b424d659edb64c15dbd2150a3ed2d34bdcab0e91",
+  "betaCommit": "716c7669fdd3d9f1cb9c0816e3077b2923df10f4",
   "stableVersion": "0.0.0",
   "betaVersion": "0.0.0",
   "kits": {
@@ -283,7 +283,6 @@
         "ak-social",
         "ak-storage",
         "ak-video",
-        "ak-write",
         "ak-youtube",
         "ak-youtube-thumbnail-design"
       ],
@@ -331,7 +330,6 @@
         "ak-social",
         "ak-storage",
         "ak-video",
-        "ak-write",
         "ak-youtube",
         "ak-youtube-thumbnail-design"
       ],
@@ -642,7 +640,6 @@
         "ak-video",
         "ak-watzup",
         "ak-worktree",
-        "ak-write",
         "ak-youtube",
         "ak-youtube-thumbnail-design"
       ],
@@ -728,7 +725,6 @@
         "ak-video",
         "ak-watzup",
         "ak-worktree",
-        "ak-write",
         "ak-youtube",
         "ak-youtube-thumbnail-design"
       ],
@@ -781,11 +777,11 @@
         ]
       },
       "stable": {
-        "tree": "aed92bf7a1e3b5b16496b7af8e720b5759ddad34",
-        "skillMd": "73d789385f2159cac401a2cd4964c0bc35dedf7d"
+        "tree": "79865bf85765a9a30bb6624061d7813a71e7d95e",
+        "skillMd": "d60523f234f4a37499b75dfb92c15a276b474adb"
       },
       "beta": {
-        "tree": "1349aac56ffcecc694cd03fc88157ee25d45e837",
+        "tree": "d220ce3f74ccddea30b41bbce8592cb15595bb02",
         "skillMd": "d60523f234f4a37499b75dfb92c15a276b474adb"
       }
     },
@@ -859,8 +855,8 @@
         ]
       },
       "stable": {
-        "tree": "1bc038e2d1a0eca74e33766e521436156bffcedb",
-        "skillMd": "d27c4e29bf698804cde42f1945b5d2b3a094e54c"
+        "tree": "ead3b7e7b27047c562db9298b63be9ca45e8d3d6",
+        "skillMd": "e6dca673f279ed719b9d23e400da57dc791b7aff"
       },
       "beta": {
         "tree": "ead3b7e7b27047c562db9298b63be9ca45e8d3d6",
@@ -937,12 +933,12 @@
         ]
       },
       "stable": {
-        "tree": "75cc15cc372e14e39a9a7a28c2901c7a6f863bdb",
-        "skillMd": "c8322fb379a54cb65b4c6a200694520211814d88"
-      },
-      "beta": {
         "tree": "1219506487933796efd8ad5cb9993cc9421b26dc",
         "skillMd": "d0c3643b547e0d16e13ffd99cda197dddbade1e2"
+      },
+      "beta": {
+        "tree": "0a13c15a8ae555861d329cb6b7366ac8578197fc",
+        "skillMd": "8ae59a2f276248e38319073605b7f3a6e3f3a731"
       }
     },
     "core/ak-copywriting": {
@@ -963,12 +959,12 @@
         ]
       },
       "stable": {
-        "tree": "21aac19d56d8326a77486bedc00241c114cedc38",
-        "skillMd": "66761a0c17d939d0f85e858bb66308dab2aff091"
+        "tree": "db784a64ebba316541e2630267511c6577a38876",
+        "skillMd": "4d3b88b2eec36c2f150df393132e573ec084a6b8"
       },
       "beta": {
-        "tree": "21aac19d56d8326a77486bedc00241c114cedc38",
-        "skillMd": "66761a0c17d939d0f85e858bb66308dab2aff091"
+        "tree": "db784a64ebba316541e2630267511c6577a38876",
+        "skillMd": "4d3b88b2eec36c2f150df393132e573ec084a6b8"
       }
     },
     "core/ak-debug": {
@@ -989,12 +985,12 @@
         ]
       },
       "stable": {
-        "tree": "f240fdfbd2e0cec3e9cf90388b1f554e7fd92344",
-        "skillMd": "f81fa2b3cff118584aaf6fb823a2ce0799c7efb7"
+        "tree": "19b0888cf097b0fca9135822082402e9de296495",
+        "skillMd": "438f1686782a5998d8f3177432618a50e42cbe62"
       },
       "beta": {
-        "tree": "94a8383b0ce3ef786c60a3850cb9aad60d9b931a",
-        "skillMd": "18e5c5fa5904e10cc4a67c5ec0dfbc3f60e376f1"
+        "tree": "19b0888cf097b0fca9135822082402e9de296495",
+        "skillMd": "438f1686782a5998d8f3177432618a50e42cbe62"
       }
     },
     "core/ak-design": {
@@ -1019,8 +1015,8 @@
         "skillMd": "74a351ff1853cc3f4f68b247b132938a4460fdcb"
       },
       "beta": {
-        "tree": "c799199014260a979364117fd4c71ff2765c04e9",
-        "skillMd": "74a351ff1853cc3f4f68b247b132938a4460fdcb"
+        "tree": "0dac30a6d37b73350ec03003d15611b2c235d045",
+        "skillMd": "fee5e60fbc33a9e71d7fbc60a10030770fd28841"
       }
     },
     "core/ak-docs": {
@@ -1045,7 +1041,7 @@
         "skillMd": "b17ba88d690e6c0ee95f03aa3a1a6e4c04310b40"
       },
       "beta": {
-        "tree": "4a5c4742c38e48f0651a0a4838952e9ea7ba84cb",
+        "tree": "e179d6bfda7c8867857f4bcf496d04e03cc20349",
         "skillMd": "b17ba88d690e6c0ee95f03aa3a1a6e4c04310b40"
       }
     },
@@ -1093,12 +1089,12 @@
         ]
       },
       "stable": {
-        "tree": "f750f01d6c4623d861a6e5a84930e40562fceaa9",
-        "skillMd": "0ce6832b03c5ec1c1e90c0dc36460bd860c6e89e"
+        "tree": "5df38875ab009c9391f7affed7d57cbb85b7a7c2",
+        "skillMd": "f0ef36f0967b98a39317ea1bc3101b70e286ba2c"
       },
       "beta": {
-        "tree": "f750f01d6c4623d861a6e5a84930e40562fceaa9",
-        "skillMd": "0ce6832b03c5ec1c1e90c0dc36460bd860c6e89e"
+        "tree": "308a788dbada38bc25da242ae70cc4df905bdd19",
+        "skillMd": "14280f2c769b2d84a116be9fa065b899bba2ac53"
       }
     },
     "core/ak-enhance-ux-ax": {
@@ -1171,12 +1167,12 @@
         ]
       },
       "stable": {
-        "tree": "fe1c30af8eeef1ba2da79e382b5c3684f6f33725",
-        "skillMd": "ff25b8537dc105e3a313ac8574c30289b98cbeee"
-      },
-      "beta": {
         "tree": "b8214b377b860d4e73928c8226301620ad4df5dd",
         "skillMd": "06835779367f6d0bc507c6822c0cf53e0c0ead56"
+      },
+      "beta": {
+        "tree": "c833852bbe05799fd75f593889d33ab417f86af9",
+        "skillMd": "6446cdebd85e4842662b459c894162583d845677"
       }
     },
     "core/ak-folder-context": {
@@ -1253,8 +1249,8 @@
         "skillMd": "fb21fc9a8a22712a96419cbad6e5b29961203c4e"
       },
       "beta": {
-        "tree": "c8deb553fbd5718f1b58b05b223f3cffa23cfa28",
-        "skillMd": "fb21fc9a8a22712a96419cbad6e5b29961203c4e"
+        "tree": "2d3babce0821ec9a32e1e0a7e03c024253018a4a",
+        "skillMd": "514f80d73fe93d8ef17ddb883533c19039a6c87d"
       }
     },
     "core/ak-google-adk-python": {
@@ -1379,8 +1375,8 @@
         ]
       },
       "stable": {
-        "tree": "32e03a568215e1a712f6bbff8822c005bc26b9cf",
-        "skillMd": "9c8a3f7dc773b59dcceb81a5b10301713d83f8f2"
+        "tree": "2b81c1986c782146583b756c873befeb84661d9b",
+        "skillMd": "5bd4a799a870e9cffb882a1fdc6b127651cf6502"
       },
       "beta": {
         "tree": "2b81c1986c782146583b756c873befeb84661d9b",
@@ -1431,12 +1427,12 @@
         ]
       },
       "stable": {
-        "tree": "f9d63cdc961d25121d85860e37426fc9f98b506c",
-        "skillMd": "80c9f281b99ef09ea78560065ebeb68c675691d1"
-      },
-      "beta": {
         "tree": "0f328325f4fe42425adf8d328eef2204518d30a0",
         "skillMd": "3f699b74cdeffd5b85e15e166d53ff94a9ba0248"
+      },
+      "beta": {
+        "tree": "93b456bbbbdad72559df220cf74b0636a11e8bff",
+        "skillMd": "8db9ec143b9bd3f847dc2ac193da2737f4886b82"
       }
     },
     "core/ak-preview": {
@@ -1457,12 +1453,12 @@
         ]
       },
       "stable": {
-        "tree": "8c4aee1cb95eb6538016dd673355cfc6cc83cbd7",
+        "tree": "bb9d13dd49b95c3b2d0cd913c40f14d7952ac546",
         "skillMd": "c589147381146cb102630df924c2adcd732ea0e5"
       },
       "beta": {
-        "tree": "8c4aee1cb95eb6538016dd673355cfc6cc83cbd7",
-        "skillMd": "c589147381146cb102630df924c2adcd732ea0e5"
+        "tree": "c8ad61423bf6ffe6e41abdece149bf4b3c60b98b",
+        "skillMd": "f15ffb3934c975c2cd98d56cb4ba19cd68da4fe7"
       }
     },
     "core/ak-remotion": {
@@ -1483,12 +1479,12 @@
         ]
       },
       "stable": {
-        "tree": "75d62af946d9ef060b3e964f44f55401c4c018bd",
-        "skillMd": "abdf2a164590140817b778fcb888cb9584000680"
+        "tree": "628647f542d82d72135ea8afad3b92ce60c1cb08",
+        "skillMd": "f4b7aa5a5e646549313abb4d5288fc7a969f89c5"
       },
       "beta": {
-        "tree": "75d62af946d9ef060b3e964f44f55401c4c018bd",
-        "skillMd": "abdf2a164590140817b778fcb888cb9584000680"
+        "tree": "628647f542d82d72135ea8afad3b92ce60c1cb08",
+        "skillMd": "f4b7aa5a5e646549313abb4d5288fc7a969f89c5"
       }
     },
     "core/ak-research-prompt": {
@@ -1561,12 +1557,12 @@
         ]
       },
       "stable": {
-        "tree": "ef63f12e8a153334adda137fb93a8ffb8238e870",
-        "skillMd": "b723bbcd168b6cf15889db21db185623d3c02916"
+        "tree": "ccea0d4472a27566ef9c8d73cc92675b4919e616",
+        "skillMd": "e1d6f403047ea30807de7b510da8f54f9b8e4fb4"
       },
       "beta": {
-        "tree": "ef63f12e8a153334adda137fb93a8ffb8238e870",
-        "skillMd": "b723bbcd168b6cf15889db21db185623d3c02916"
+        "tree": "f630a4e04f6c580bc82cc970790d4d459edc3196",
+        "skillMd": "ca6e69c9304a51f0b986f297712facf4c5c0fb2c"
       }
     },
     "core/ak-sowat": {
@@ -1643,8 +1639,8 @@
         "skillMd": "472160173123b57fc0b13f61e04a6fb847df7673"
       },
       "beta": {
-        "tree": "6ed63dcbdd2d5a121cdffaf956025068da4bb411",
-        "skillMd": "472160173123b57fc0b13f61e04a6fb847df7673"
+        "tree": "286e0bd22df7a8131b2ff62931a3465a6c17ee48",
+        "skillMd": "3250df20eb073cf144e4c29b0ddcf4d64224a384"
       }
     },
     "core/ak-test": {
@@ -1665,12 +1661,12 @@
         ]
       },
       "stable": {
-        "tree": "6b03fa01a80cce5ab062343e19cf6b9a9c145e60",
-        "skillMd": "d01a6536de03ca49e40790611891b453d3d1f815"
+        "tree": "bbbbb4ec463d6184f4a2cd88a9db2004f020a85d",
+        "skillMd": "e1b5a7261562ce99b768ea11eb32709280212e3f"
       },
       "beta": {
-        "tree": "8e1656d71407e784f96453bbc1b18780b4a99617",
-        "skillMd": "682831d612aaf3175d105b9ea98c6d38a925a566"
+        "tree": "0d277cf6256a49704d24fcd7bfb62d23ffe4bf85",
+        "skillMd": "cb9c8b213e1c9f6df1ed4da31c82e7a4a1fcb480"
       }
     },
     "core/ak-ui-ux-pro-max": {
@@ -1695,8 +1691,8 @@
         "skillMd": "d3d4ed4e4e1d987b2178df317f91888efbce4087"
       },
       "beta": {
-        "tree": "cb2c1e5074c85a7c02f345d3dd04636e2fb173f7",
-        "skillMd": "d3d4ed4e4e1d987b2178df317f91888efbce4087"
+        "tree": "c210ade227a13d685b9d3d35656d55f522c94bb8",
+        "skillMd": "c5032a403ae402818dd46466a152c5e7810b06df"
       }
     },
     "core/ak-vault": {
@@ -1717,12 +1713,12 @@
         ]
       },
       "stable": {
-        "tree": "7f429c1073b57874441d73c6f7e1b4bd71e6766a",
-        "skillMd": "5ad5ffca836ed1e9ef22e7d99072776073c8aa49"
+        "tree": "12f8337d518110d4302863cc39a64c8d67f1e362",
+        "skillMd": "06c477f49a1b452c65606f7b98527c5e126592fc"
       },
       "beta": {
-        "tree": "746857c782730aa428487cb99b511153d7f2857c",
-        "skillMd": "5ad5ffca836ed1e9ef22e7d99072776073c8aa49"
+        "tree": "12f8337d518110d4302863cc39a64c8d67f1e362",
+        "skillMd": "06c477f49a1b452c65606f7b98527c5e126592fc"
       }
     },
     "core/ak-watzup": {
@@ -1747,7 +1743,7 @@
         "skillMd": "a4cff7fbb821f65d73c3a2b45a662edd2cd2eacb"
       },
       "beta": {
-        "tree": "786aef364548f793bc92b6111699d1a73589063d",
+        "tree": "24ba04ce96d711fd7da849b6dbbeed76a2a1ac41",
         "skillMd": "a4cff7fbb821f65d73c3a2b45a662edd2cd2eacb"
       }
     },
@@ -1773,7 +1769,7 @@
         "skillMd": "0b1379150225f9eca68b074e1d54efdfb422a2be"
       },
       "beta": {
-        "tree": "c048469fd6acf117a93ef0b348d501bebad5d50a",
+        "tree": "c04274a297ead1674064b019ee9ca2914fff81f2",
         "skillMd": "0b1379150225f9eca68b074e1d54efdfb422a2be"
       }
     },
@@ -1845,8 +1841,8 @@
         "skillMd": "ba4593adf7c745c24d9875996a144bd416f86c51"
       },
       "beta": {
-        "tree": "98a7e816fc4fc5ce2aea620ae2b4133d2a3ec067",
-        "skillMd": "ba4593adf7c745c24d9875996a144bd416f86c51"
+        "tree": "9a0648cbcc89dd5cdeeef3ffe2bccadba9c5f4d1",
+        "skillMd": "10edff60c44ae2e2bbe370cfbbe5700c690684c4"
       }
     },
     "engineer/ak-atoz": {
@@ -1965,8 +1961,8 @@
         "skillMd": "66c40dd0e604ac0a567d2a5a3cbeb98adcb060ec"
       },
       "beta": {
-        "tree": "335bfbfb891e1cf9664eb162a3bcf928532189fd",
-        "skillMd": "66c40dd0e604ac0a567d2a5a3cbeb98adcb060ec"
+        "tree": "34b9d3572716f6feebb9ec4457ba22139162805a",
+        "skillMd": "b53531d4def66e530befa415bdaaee0a1b1a9e16"
       }
     },
     "engineer/ak-chrome-profile": {
@@ -1989,8 +1985,8 @@
         "skillMd": "7f7d2ed980ae6b9b5aef093f40348adb1103b302"
       },
       "beta": {
-        "tree": "8f94acc7d0930a42ef19a1cb1ade8d0b5d2df5e2",
-        "skillMd": "7f7d2ed980ae6b9b5aef093f40348adb1103b302"
+        "tree": "0208029fc7ddbacd8314b5ccae154b2ad19d53f3",
+        "skillMd": "3d9999ea35e1d594160f6513f2ce4a5d56a1756f"
       }
     },
     "engineer/ak-code-review": {
@@ -2009,8 +2005,8 @@
         ]
       },
       "stable": {
-        "tree": "da8016c707095ac2f4228dc42b4e7998408e6410",
-        "skillMd": "6a1641cfe2ee5970e3dbb578028ca25495eac332"
+        "tree": "763cb47555a65e67371e11acc2d4684ad84e16fb",
+        "skillMd": "f68fcd4c7d61eb429152c4abcf50f8109fea4f64"
       },
       "beta": {
         "tree": "763cb47555a65e67371e11acc2d4684ad84e16fb",
@@ -2061,8 +2057,8 @@
         "skillMd": "8a1573ea5dbf49589a86bb65425f5d0b0200bbc5"
       },
       "beta": {
-        "tree": "5245ad3f8bb4289dd9a185d0ec951b9d7b5b5aa6",
-        "skillMd": "8a1573ea5dbf49589a86bb65425f5d0b0200bbc5"
+        "tree": "8d3f4c8452b2a1f157128caaf52f589e3b634e3c",
+        "skillMd": "66ef73c8c6b62257f4454b8958217cac76f161ab"
       }
     },
     "engineer/ak-cti-expert": {
@@ -2085,8 +2081,8 @@
         "skillMd": "88fa34d4d76b3be214fb1ad6d7147ed0dad87a13"
       },
       "beta": {
-        "tree": "4de0de821d86abf57a6181374ce5018b800320c7",
-        "skillMd": "88fa34d4d76b3be214fb1ad6d7147ed0dad87a13"
+        "tree": "60152a8af8c4333777d8f52afb778eb3d1ed3d7b",
+        "skillMd": "8476c5f329db0176935de10b641a8548105aa3e6"
       }
     },
     "engineer/ak-databases": {
@@ -2109,8 +2105,8 @@
         "skillMd": "9a7497a6b997ee5522ce6262931792238c71928d"
       },
       "beta": {
-        "tree": "d7494077bc7121d16c0e91a17b7f2c6040a67b01",
-        "skillMd": "9a7497a6b997ee5522ce6262931792238c71928d"
+        "tree": "c6723a5a98c0b4d3f8c0e87d02c7254219eff538",
+        "skillMd": "08891f25c42f843354c53c76517f0e771a385dea"
       }
     },
     "engineer/ak-deep-swe": {
@@ -2153,8 +2149,8 @@
         ]
       },
       "stable": {
-        "tree": "8e75f055abce5758f7b7d6110a6d231869c33649",
-        "skillMd": "953244b24292b715ead1fd333082b86190b4839c"
+        "tree": "51c37bd394364a654994a13ba9b076fd25f163ec",
+        "skillMd": "6fd4c6bdaa6e387aed33c79b22ae89179a654105"
       },
       "beta": {
         "tree": "51c37bd394364a654994a13ba9b076fd25f163ec",
@@ -2205,8 +2201,8 @@
         "skillMd": "5141c960c0c794b09290294a9df9e6acf14953b7"
       },
       "beta": {
-        "tree": "37365562035f4bedb02b4f2f73226ea1540d689d",
-        "skillMd": "5141c960c0c794b09290294a9df9e6acf14953b7"
+        "tree": "b137c38e8a74cc70e44a17691c737f43e4fcb06f",
+        "skillMd": "73f146c9cf32133aac30197befa49e72983ef045"
       }
     },
     "engineer/ak-document-skills": {
@@ -2229,7 +2225,7 @@
         "skillMd": "74bab8fe27940ac57416a9f97b50b03192a298e9"
       },
       "beta": {
-        "tree": "f620c97a84324aceddf808c3872e4b689515e698",
+        "tree": "fb1712587a3951bbb33ba2dcfabeb7701070d139",
         "skillMd": "74bab8fe27940ac57416a9f97b50b03192a298e9"
       }
     },
@@ -2489,12 +2485,12 @@
         ]
       },
       "stable": {
-        "tree": "22449a53fce07dbb7ac80e0d59d7f585d8474885",
-        "skillMd": "853d0daccefa39faba97db54577ad8d8b3a25dba"
+        "tree": "fe71fdadc3c75fd4fd238472b242d409aad54fac",
+        "skillMd": "38195cf3956e946bd74309f849fb9542ac1e52c4"
       },
       "beta": {
-        "tree": "22449a53fce07dbb7ac80e0d59d7f585d8474885",
-        "skillMd": "853d0daccefa39faba97db54577ad8d8b3a25dba"
+        "tree": "fbf59ba0a836209d07b9001ada715d86e2031394",
+        "skillMd": "38195cf3956e946bd74309f849fb9542ac1e52c4"
       }
     },
     "engineer/ak-loop": {
@@ -2517,8 +2513,8 @@
         "skillMd": "9b05c86e35e0e639245071e88e225f95721b8522"
       },
       "beta": {
-        "tree": "a50e33ab299bc3005c53a468cb4a53c0342b08a3",
-        "skillMd": "9b05c86e35e0e639245071e88e225f95721b8522"
+        "tree": "927ac0ad99718ac5f7f6b6662bc785cf576ddc70",
+        "skillMd": "e7cbfc6a4820b9147175b373635b605d88ad91bb"
       }
     },
     "engineer/ak-markdown-novel-viewer": {
@@ -2541,8 +2537,8 @@
         "skillMd": "ddf6bbd7ba2326da1740c3711f62873245900bd8"
       },
       "beta": {
-        "tree": "185e02dedd7e85dad1813a2e56ff84c6c932fc07",
-        "skillMd": "ddf6bbd7ba2326da1740c3711f62873245900bd8"
+        "tree": "e90e464bbd76d749a10f90e5d93ee4519e327769",
+        "skillMd": "b0a5a8236feda8d1b1c0c470d8e56771866c081a"
       }
     },
     "engineer/ak-mcp-builder": {
@@ -2585,12 +2581,12 @@
         ]
       },
       "stable": {
-        "tree": "be5a2b019c889e3939b8487388c15e61560f36da",
-        "skillMd": "1dc08f09b147da0e428315ba4eb327fef68a0e48"
+        "tree": "edf9603ca298b8bcf7491f557c497c57ebbf8662",
+        "skillMd": "2b46cb67023b5b640f22d7d382c0920b1da6312a"
       },
       "beta": {
-        "tree": "be5a2b019c889e3939b8487388c15e61560f36da",
-        "skillMd": "1dc08f09b147da0e428315ba4eb327fef68a0e48"
+        "tree": "edf9603ca298b8bcf7491f557c497c57ebbf8662",
+        "skillMd": "2b46cb67023b5b640f22d7d382c0920b1da6312a"
       }
     },
     "engineer/ak-mintlify": {
@@ -2661,8 +2657,8 @@
         "skillMd": "050b313d1c870a5053e522dc450e5a1fa571e7b0"
       },
       "beta": {
-        "tree": "4740939468207889bdf2574482856e7f2ea6110e",
-        "skillMd": "050b313d1c870a5053e522dc450e5a1fa571e7b0"
+        "tree": "bcc9a511520cbc30e9cb73246af604a27bfcf73a",
+        "skillMd": "c4517ab3cbfe2c1c7cf79f6deff1e2aa16523ad1"
       }
     },
     "engineer/ak-page-builder": {
@@ -2733,7 +2729,7 @@
         "skillMd": "33c56137fb3329b04e938de01d441cffee027c0e"
       },
       "beta": {
-        "tree": "fe0c6536a714374ce9d51b06bea2d37054fb0f11",
+        "tree": "a3d0ecbe32608303b42d3a9364835bafafb8f547",
         "skillMd": "33c56137fb3329b04e938de01d441cffee027c0e"
       }
     },
@@ -2945,11 +2941,11 @@
         ]
       },
       "stable": {
-        "tree": "a8f14ec225f9a317bef330e9093e1c6b891bd939",
-        "skillMd": "097064abc64fd6471f5e194c1cb4a54a1dfaecb3"
+        "tree": "c2d3026f9d38803c74d996079241f8acc470925b",
+        "skillMd": "e4f647d3c2d6b3e3d5c8f872e597748a100fb846"
       },
       "beta": {
-        "tree": "c2d3026f9d38803c74d996079241f8acc470925b",
+        "tree": "5925c8f692aa0007000bc10eb83a1cbf1fa2edca",
         "skillMd": "e4f647d3c2d6b3e3d5c8f872e597748a100fb846"
       }
     },
@@ -3041,12 +3037,12 @@
         ]
       },
       "stable": {
-        "tree": "380543048ad88538558df470caedcea7eb96c449",
-        "skillMd": "44135a6059a8471272edf8d03aaa68ad70c700a9"
-      },
-      "beta": {
         "tree": "d7743a9f228ea95bc113eb632f5200363b0d865c",
         "skillMd": "b24e256b8edd1ea9567531f5879b9cd1b33abf8a"
+      },
+      "beta": {
+        "tree": "aad603633d5c3435a4edca66eec8b70b1399e9a5",
+        "skillMd": "4dc3335690ae2ba237188807e88aea71c6a99c3f"
       }
     },
     "engineer/ak-shopify": {
@@ -3165,8 +3161,8 @@
         "skillMd": "26981019eaa5d027ce164facfcf9247627392f78"
       },
       "beta": {
-        "tree": "ac534147cde2a8109355a2b1285fc23aafbc1aa0",
-        "skillMd": "26981019eaa5d027ce164facfcf9247627392f78"
+        "tree": "2ea75762a19b3469febc4417002ca432f166dfa6",
+        "skillMd": "d4523ca2a9b5853d7d597bedebd795286f54491a"
       }
     },
     "engineer/ak-threejs": {
@@ -3189,8 +3185,8 @@
         "skillMd": "eddc5a0e2895b513ced0434034b144d9ee73c27a"
       },
       "beta": {
-        "tree": "d7a59f209782f40115f8b1757c3b27d79ee07160",
-        "skillMd": "eddc5a0e2895b513ced0434034b144d9ee73c27a"
+        "tree": "f565ef8598e7af89253d449727ab94c05ea78a79",
+        "skillMd": "5d95638b4a9267c712a9d5d5e5d496e16caba209"
       }
     },
     "engineer/ak-ui-styling": {
@@ -3213,7 +3209,7 @@
         "skillMd": "f22e93d643e56afeb4adc6b2208ba028fafcf940"
       },
       "beta": {
-        "tree": "d2b79e8ffe4ef5ecc4beaa5f3282437336adc2cf",
+        "tree": "7d533bfd4ab1746f49dc1d2e414e7971986d8f21",
         "skillMd": "f22e93d643e56afeb4adc6b2208ba028fafcf940"
       }
     },
@@ -3233,12 +3229,12 @@
         ]
       },
       "stable": {
-        "tree": "0b40c8fdcc782de7568effb249a4dd10359ef8dc",
-        "skillMd": "b2d707bb2c5eb075876fefed61f805977b0bb28c"
-      },
-      "beta": {
         "tree": "b06697f30c690c02974930704922ccaf5ecafe8b",
         "skillMd": "cc8a21b779c1712e796ea0872036ec21ab50a924"
+      },
+      "beta": {
+        "tree": "1ec1df60e41ffcc5aa2d5a21b13722e4544814d6",
+        "skillMd": "6674aa02ef9787f8b1a32331df0760e4b64598bb"
       }
     },
     "engineer/ak-web-frameworks": {
@@ -3257,12 +3253,12 @@
         ]
       },
       "stable": {
-        "tree": "c10ac82d1f6b224ad489ea9afc6bcce91e105131",
-        "skillMd": "94b4f2a7703ee4d019b9b315ac7fa592533c430d"
+        "tree": "5fee9f3ca49033a6ff7e157b9556dedcf15fb001",
+        "skillMd": "89284cd25c31d87c1638c76a1668acb171d67ca6"
       },
       "beta": {
-        "tree": "c10ac82d1f6b224ad489ea9afc6bcce91e105131",
-        "skillMd": "94b4f2a7703ee4d019b9b315ac7fa592533c430d"
+        "tree": "5fee9f3ca49033a6ff7e157b9556dedcf15fb001",
+        "skillMd": "89284cd25c31d87c1638c76a1668acb171d67ca6"
       }
     },
     "engineer/ak-web-testing": {
@@ -3309,8 +3305,8 @@
         "skillMd": "91723a415b17ad16966d2a4dee32811a4bf3eade"
       },
       "beta": {
-        "tree": "b27ea03feb9b2365a345f6766cdebfd7183891f7",
-        "skillMd": "91723a415b17ad16966d2a4dee32811a4bf3eade"
+        "tree": "7c2034260dadacabe5bf60ebe60dadd663b7990f",
+        "skillMd": "e7dd33467a6470b5a369fe6a5e807784f9ec6b0d"
       }
     },
     "engineer/ak-xia": {
@@ -3381,8 +3377,8 @@
         "skillMd": "0ff07416ca8e06826e5e46483598ff5f6489221e"
       },
       "beta": {
-        "tree": "ff86fa88090ef088ba1c162bb9d33720bcfc466b",
-        "skillMd": "0ff07416ca8e06826e5e46483598ff5f6489221e"
+        "tree": "5c7b6339dae5934dfe59ae29849fb5963bad9bf2",
+        "skillMd": "afa77e467085125ca161a7dcb4204b61c6357540"
       }
     },
     "marketing/ak-affiliate-marketing": {
@@ -3473,12 +3469,12 @@
         ]
       },
       "stable": {
-        "tree": "b617a8710a5cb6ca11fb7aa7b02cb6524a40babe",
-        "skillMd": "1cc9503a78422f605e979905b88a184d37c4e6e1"
+        "tree": "859467e0a33722a2f07a74b5b530d214aa7e3504",
+        "skillMd": "b525128d9cc4f19daea62a1dc2f2841655584f2e"
       },
       "beta": {
-        "tree": "b617a8710a5cb6ca11fb7aa7b02cb6524a40babe",
-        "skillMd": "1cc9503a78422f605e979905b88a184d37c4e6e1"
+        "tree": "1a67031f7abcbc2713bdcce2760212cdee0d8c15",
+        "skillMd": "db3c855d00f1a6ab5fd17e6802d5e7b594a72325"
       }
     },
     "marketing/ak-brand": {
@@ -3549,8 +3545,8 @@
         "skillMd": "1928da4ba8382c8a455625fafb1fade1b5c2cd37"
       },
       "beta": {
-        "tree": "2fa1ff72a8934019d5c489eb72954a384fb98d52",
-        "skillMd": "1928da4ba8382c8a455625fafb1fade1b5c2cd37"
+        "tree": "0cbdbaebf5bfbdff09652f189eaf53e103c4fe8e",
+        "skillMd": "9619307e3b76825fbd936494ec77d882f38d0522"
       }
     },
     "marketing/ak-competitor": {
@@ -3569,12 +3565,12 @@
         ]
       },
       "stable": {
-        "tree": "030b9aeab9d917bf658eefba8e5f9c5dc42fdb3f",
-        "skillMd": "669e4164f072619cf1d5ddf2c8b9cdfab9009b1a"
+        "tree": "e52ee499357161b009e5b9c2daef09e07cec77b5",
+        "skillMd": "751323533692a4697af02138f5c34fa6fddd34f9"
       },
       "beta": {
-        "tree": "030b9aeab9d917bf658eefba8e5f9c5dc42fdb3f",
-        "skillMd": "669e4164f072619cf1d5ddf2c8b9cdfab9009b1a"
+        "tree": "e52ee499357161b009e5b9c2daef09e07cec77b5",
+        "skillMd": "751323533692a4697af02138f5c34fa6fddd34f9"
       }
     },
     "marketing/ak-content-hub": {
@@ -3617,12 +3613,12 @@
         ]
       },
       "stable": {
-        "tree": "4b5109a7e0852c66b4bd98a8728f3b2f359bbb86",
-        "skillMd": "b65898feb052ad0e17beff0d5913d24c8d9d787e"
+        "tree": "b308d0e47152bed1676f62996858c787986d32f1",
+        "skillMd": "04170fb14b6fdb91e9683611c14bad88dbb4f11d"
       },
       "beta": {
-        "tree": "4b5109a7e0852c66b4bd98a8728f3b2f359bbb86",
-        "skillMd": "b65898feb052ad0e17beff0d5913d24c8d9d787e"
+        "tree": "b308d0e47152bed1676f62996858c787986d32f1",
+        "skillMd": "04170fb14b6fdb91e9683611c14bad88dbb4f11d"
       }
     },
     "marketing/ak-creativity": {
@@ -3645,8 +3641,8 @@
         "skillMd": "deee1d9084eb1554489f67254f842eb37bc473f7"
       },
       "beta": {
-        "tree": "e6a472e615738d80176e67b8189c46875ec69c83",
-        "skillMd": "deee1d9084eb1554489f67254f842eb37bc473f7"
+        "tree": "e67d48db52e22bd8c8273b33d20191815915b699",
+        "skillMd": "0f661e057b69093365ed18d24574b2f8118b6fca"
       }
     },
     "marketing/ak-design-system": {
@@ -3693,8 +3689,8 @@
         "skillMd": "58b2f4679e1972ecbe574716020233617db0d382"
       },
       "beta": {
-        "tree": "cf1ca983c182b7d755d7a7e0ee68f82f29df16a7",
-        "skillMd": "58b2f4679e1972ecbe574716020233617db0d382"
+        "tree": "63bd4120354a8ac0dbcdc33ad1918ad7a868ba6f",
+        "skillMd": "db2200809729f8beea556e1e4227a838701d2804"
       }
     },
     "marketing/ak-email": {
@@ -3741,8 +3737,8 @@
         "skillMd": "b2edb394625dd2c859c68b16565dc5bdf0942ec7"
       },
       "beta": {
-        "tree": "213f989204052e36e8be9e90a31ca1ccf8a506f9",
-        "skillMd": "b2edb394625dd2c859c68b16565dc5bdf0942ec7"
+        "tree": "1a1f31fc02db07ac32b0170b07cf1789ae810380",
+        "skillMd": "5ba7a8f4e9673c2f1174b5b5dcaa9ea35ccc1c74"
       }
     },
     "marketing/ak-form-cro": {
@@ -3833,12 +3829,12 @@
         ]
       },
       "stable": {
-        "tree": "eb6a12b27ff1362cc8f52ef0af17c0cf67c120b3",
-        "skillMd": "6ab2b41033076dee5ebf4b2e25f06e36add375c2"
+        "tree": "891669a2d082cfb13c37451e903d8aaa3d9cefc4",
+        "skillMd": "185372717b8a5b8aefee580aa5940e92bcaee4e8"
       },
       "beta": {
-        "tree": "eb6a12b27ff1362cc8f52ef0af17c0cf67c120b3",
-        "skillMd": "6ab2b41033076dee5ebf4b2e25f06e36add375c2"
+        "tree": "891669a2d082cfb13c37451e903d8aaa3d9cefc4",
+        "skillMd": "185372717b8a5b8aefee580aa5940e92bcaee4e8"
       }
     },
     "marketing/ak-launch-strategy": {
@@ -3885,8 +3881,8 @@
         "skillMd": "93ea69d15560024bb50005823c9a314fd93ccec6"
       },
       "beta": {
-        "tree": "091090b440b6f71a1330f45b8e3ffa0be2867959",
-        "skillMd": "93ea69d15560024bb50005823c9a314fd93ccec6"
+        "tree": "e75a025e4db56e45c2fede3f9b56403254f0b943",
+        "skillMd": "be77816fbd729d4b4f8bbd059da6df94b444e78c"
       }
     },
     "marketing/ak-marketing-dashboard": {
@@ -4073,12 +4069,12 @@
         ]
       },
       "stable": {
-        "tree": "9212b99adab517752e3b94c64094a1c0214cd772",
-        "skillMd": "f28107e75b6e873d0e655fd625b76ed7346c61f8"
+        "tree": "b1abf8561c7dc9aa1475716d69cfb702397ac184",
+        "skillMd": "96baa22b66c257232726f1956388ef5de6565157"
       },
       "beta": {
-        "tree": "9212b99adab517752e3b94c64094a1c0214cd772",
-        "skillMd": "f28107e75b6e873d0e655fd625b76ed7346c61f8"
+        "tree": "dedc4f0c7258b870bbc0083683ab962c0134fddc",
+        "skillMd": "01b5010b9b6caa5a74560fbaf9988912e972f002"
       }
     },
     "marketing/ak-onboarding-cro": {
@@ -4145,12 +4141,12 @@
         ]
       },
       "stable": {
-        "tree": "a307db567d6527dfdadcea2e4a1b741dbbcf6cc4",
-        "skillMd": "b44af7810ab012daf140733048cdaf83466f827b"
+        "tree": "5aa0e9adc247e99d60df3bc2c5439c101b85784b",
+        "skillMd": "caa52bf46cc56a2b1230953ed4d976cb77fa80e4"
       },
       "beta": {
-        "tree": "a307db567d6527dfdadcea2e4a1b741dbbcf6cc4",
-        "skillMd": "b44af7810ab012daf140733048cdaf83466f827b"
+        "tree": "5aa0e9adc247e99d60df3bc2c5439c101b85784b",
+        "skillMd": "caa52bf46cc56a2b1230953ed4d976cb77fa80e4"
       }
     },
     "marketing/ak-pricing-strategy": {
@@ -4217,12 +4213,12 @@
         ]
       },
       "stable": {
-        "tree": "d4f345890529f6ea79e2f8025103f4f17bd757f8",
-        "skillMd": "4e6cd225c3dcc3894bea660930fb9a0b0ba7d1f7"
+        "tree": "7609c7afd1fd375e6d0ff7cf053daf4bdaa5e813",
+        "skillMd": "1f798616192c4b51d2093f6d595160a60056ad67"
       },
       "beta": {
-        "tree": "d4f345890529f6ea79e2f8025103f4f17bd757f8",
-        "skillMd": "4e6cd225c3dcc3894bea660930fb9a0b0ba7d1f7"
+        "tree": "7609c7afd1fd375e6d0ff7cf053daf4bdaa5e813",
+        "skillMd": "1f798616192c4b51d2093f6d595160a60056ad67"
       }
     },
     "marketing/ak-slides": {
@@ -4269,8 +4265,8 @@
         "skillMd": "cd633e08f37e60ba12d1b17812668d86cdc1cec6"
       },
       "beta": {
-        "tree": "90b1d96bcaf789236e4f157bd5ea53295f4092a1",
-        "skillMd": "cd633e08f37e60ba12d1b17812668d86cdc1cec6"
+        "tree": "26a8e9c6dc1c2f1b1633fd1eeeb935f7649e51af",
+        "skillMd": "ed8880f93c9b46f461e4c386ad2b154cfcbc1e72"
       }
     },
     "marketing/ak-storage": {
@@ -4321,30 +4317,6 @@
         "skillMd": "d9cc74fe203375ba0bcae0c80c2a593473b3c0cb"
       }
     },
-    "marketing/ak-write": {
-      "id": "ak-write",
-      "sourceKit": "marketing",
-      "gitPath": {
-        "stable": "kits/marketing/skills/ak-write",
-        "beta": "kits/marketing/skills/ak-write"
-      },
-      "surfaces": {
-        "stable": [
-          "marketing"
-        ],
-        "beta": [
-          "marketing"
-        ]
-      },
-      "stable": {
-        "tree": "a6015798bfd5dc48c4aff6d7bddfb556c6754c75",
-        "skillMd": "61f6008e2e3800e07d15015d4107d3536107f2ed"
-      },
-      "beta": {
-        "tree": "a6015798bfd5dc48c4aff6d7bddfb556c6754c75",
-        "skillMd": "61f6008e2e3800e07d15015d4107d3536107f2ed"
-      }
-    },
     "marketing/ak-youtube": {
       "id": "ak-youtube",
       "sourceKit": "marketing",
@@ -4361,12 +4333,12 @@
         ]
       },
       "stable": {
-        "tree": "6f8268b7b104d442eb57a47fa7266c393d7677fc",
-        "skillMd": "b9f0ed9e60657c2ea5783cde6e61f90d26ae78a8"
+        "tree": "6e0842cb36333723b5c2b47f419e9c667a84adb3",
+        "skillMd": "aca760b857bf10089df888d14543c734add6380f"
       },
       "beta": {
-        "tree": "6f8268b7b104d442eb57a47fa7266c393d7677fc",
-        "skillMd": "b9f0ed9e60657c2ea5783cde6e61f90d26ae78a8"
+        "tree": "6e0842cb36333723b5c2b47f419e9c667a84adb3",
+        "skillMd": "aca760b857bf10089df888d14543c734add6380f"
       }
     },
     "marketing/ak-youtube-thumbnail-design": {
@@ -4385,12 +4357,12 @@
         ]
       },
       "stable": {
-        "tree": "426e4c2b9263547c1feab8aaee5e8182d64ca7fb",
-        "skillMd": "6340bdbafeeb73bbfeeaddc03a5ce4cce40a0b3d"
+        "tree": "191a9924112cc097cad9cbc303c74ccf60646b89",
+        "skillMd": "9fcac25a58b637fc4c34e8455cc9e232b793c8aa"
       },
       "beta": {
-        "tree": "426e4c2b9263547c1feab8aaee5e8182d64ca7fb",
-        "skillMd": "6340bdbafeeb73bbfeeaddc03a5ce4cce40a0b3d"
+        "tree": "213c293a632c8014ec30f6ac32dfab25e4f9e3d0",
+        "skillMd": "2e958a5cf0213f360c63ca17a9015884108825d3"
       }
     }
   }

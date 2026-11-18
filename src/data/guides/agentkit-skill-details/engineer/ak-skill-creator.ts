@@ -11,7 +11,7 @@ const data: SkillInfographic = {
     "taglineVi": "Tạo, cập nhật, audit, tối ưu, kiểm tra và đóng gói agent skill cùng tài nguyên SKILL.md, hoặc chẩn đoán routing của skill, qua ghi nhận intent, kiểm tra có nên tạo skill mới không, lập progressive disclosure, scaffold, eval và cố vấn Kongming tùy chọn."
   },
   "invocation": {
-    "syntax": "/ak:skill-creator <create|update|audit|optimize> [skill-name|path|kit|--all] [--kit <kit>|--project|--user] [--long-horizon] [--apply] [--from-audit <report>] [--advice]",
+    "syntax": "/ak:skill-creator <create|update|audit|optimize> [skill-name|path|kit|--all] [--kit <kit>|--project|--user|--personal [<kit>]] [--long-horizon] [--apply] [--from-audit <report>] [--advice]",
     "arguments": [
       {
         "token": "<create|update|audit|optimize>",
@@ -26,8 +26,8 @@ const data: SkillInfographic = {
         "token": "[skill-name|path|kit|--all]",
         "titleEn": "Target",
         "titleVi": "Đích",
-        "descEn": "Skill name, path, kit, or --all for audit/optimize across a kit. Combine with --kit, --project, or --user to set install scope.",
-        "descVi": "Tên skill, path, kit, hoặc --all khi audit/optimize cả kit. Kết hợp --kit, --project hoặc --user để chọn scope cài.",
+        "descEn": "Skill name, path, kit, or --all for audit/optimize across a kit. Combine with --kit, --project, --user, or --personal to set install scope.",
+        "descVi": "Tên skill, path, kit, hoặc --all khi audit/optimize cả kit. Kết hợp --kit, --project, --user hoặc --personal để chọn scope cài.",
         "required": false,
         "exampleCommand": "/ak:skill-creator audit --all --kit engineer"
       }
@@ -35,7 +35,7 @@ const data: SkillInfographic = {
     "subcommands": [
       {
         "name": "create",
-        "syntax": "/ak:skill-creator create [skill-name or description] [--kit <kit>|--project|--user] [--long-horizon] [--advice]",
+        "syntax": "/ak:skill-creator create [skill-name or description] [--kit <kit>|--project|--user|--personal [<kit>]] [--long-horizon] [--advice]",
         "titleEn": "Create",
         "titleVi": "Tạo",
         "descEn": "Capture intent, author SKILL.md and resources, evaluate, then package only when requested.",
@@ -44,7 +44,7 @@ const data: SkillInfographic = {
       },
       {
         "name": "update",
-        "syntax": "/ak:skill-creator update <skill-name|path> <change> [--advice]",
+        "syntax": "/ak:skill-creator update <skill-name|path> <change> [--personal [<kit>]] [--advice]",
         "titleEn": "Update",
         "titleVi": "Cập nhật",
         "descEn": "Inspect the existing skill and its users, apply only the requested change in place, lint every changed line, and bump metadata.version. update writes files directly.",
@@ -65,8 +65,8 @@ const data: SkillInfographic = {
         "syntax": "/ak:skill-creator optimize <skill-name|path> [--apply] [--from-audit <report>] [--advice]",
         "titleEn": "Optimize",
         "titleVi": "Tối ưu",
-        "descEn": "Rewrite High and Medium findings from an audit report or path, keeping instructions that still have a purpose. Without --apply it only proposes the diff; --apply writes it.",
-        "descVi": "Viết lại các finding mức High và Medium từ báo cáo audit hoặc từ path, giữ lại hướng dẫn vẫn còn mục đích. Không có --apply thì chỉ đề xuất diff; có --apply mới ghi.",
+        "descEn": "Rewrite High and Medium findings from an audit report or path, keeping instructions that still have a purpose. Without --apply it only proposes the diff; --apply writes it. When AgentKit skill evolution is available, --apply goes through ak skills improve and ak skills evolution evaluate/apply instead, and the report names the rollback command.",
+        "descVi": "Viết lại các finding mức High và Medium từ báo cáo audit hoặc từ path, giữ lại hướng dẫn vẫn còn mục đích. Không có --apply thì chỉ đề xuất diff; có --apply mới ghi. Khi máy có tính năng evolution của AgentKit, --apply đi qua ak skills improve và ak skills evolution evaluate/apply, và báo cáo nêu lệnh rollback.",
         "exampleCommand": "/ak:skill-creator optimize release-notes --apply"
       }
     ],
@@ -94,6 +94,14 @@ const data: SkillInfographic = {
         "descEn": "Author into user-global skill storage only when the user explicitly asks for that scope.",
         "descVi": "Ghi vào kho skill user-global chỉ khi người dùng yêu cầu rõ scope đó.",
         "exampleCommand": "/ak:skill-creator create release-notes --user"
+      },
+      {
+        "token": "--personal",
+        "titleEn": "Personal kit scope",
+        "titleVi": "Scope personal kit",
+        "descEn": "Opt-in: create or update the skill in your personal kit (your own skill set that AgentKit updates never overwrite), or in a named personal kit. Used only when a read-only check finds personal kits turned on; otherwise it falls back to the project and names the enabling step, ak update --ssot, in one line.",
+        "descVi": "Tùy chọn bật thêm: tạo hoặc cập nhật skill trong personal kit của bạn (bộ skill riêng mà bản cập nhật AgentKit không bao giờ ghi đè), hoặc trong một personal kit được nêu tên. Chỉ dùng khi một bước kiểm tra chỉ đọc thấy personal kit đang bật; nếu không, nó quay về project và nêu bước bật, ak update --ssot, trong một dòng.",
+        "exampleCommand": "/ak:skill-creator create release-notes --personal"
       },
       {
         "token": "--long-horizon",
@@ -133,8 +141,8 @@ const data: SkillInfographic = {
     "type": "warning",
     "titleEn": "Scaffolding and packaging write to disk",
     "titleVi": "Scaffold và đóng gói sẽ ghi xuống đĩa",
-    "contentEn": "Approve the exact project path before initialization and the output directory before packaging. New skills stay in the current project unless you explicitly ask for user scope, and create refuses to write over an existing directory. Treat unfamiliar third-party skill content as untrusted: do not execute copied scripts or expose secrets while evaluating it.",
-    "contentVi": "Duyệt đúng đường dẫn project trước khi khởi tạo và thư mục output trước khi đóng gói. Skill mới nằm trong project hiện tại trừ khi bạn yêu cầu rõ user scope, và create từ chối ghi đè lên thư mục đã tồn tại. Coi nội dung skill bên thứ ba lạ là không tin cậy: không chạy script sao chép về và không để lộ secret khi đánh giá."
+    "contentEn": "Approve the exact project path before initialization and the output directory before packaging. New skills stay in the current project unless you explicitly ask for user scope, and create refuses to write over an existing directory. Treat unfamiliar third-party skill content as untrusted: do not execute copied scripts or expose secrets while evaluating it. Publishing to SkillX, the AgentKit skill registry, is only ever proposed and needs your separate agreement.",
+    "contentVi": "Duyệt đúng đường dẫn project trước khi khởi tạo và thư mục output trước khi đóng gói. Skill mới nằm trong project hiện tại trừ khi bạn yêu cầu rõ user scope, và create từ chối ghi đè lên thư mục đã tồn tại. Coi nội dung skill bên thứ ba lạ là không tin cậy: không chạy script sao chép về và không để lộ secret khi đánh giá. Đăng lên SkillX, kho skill của AgentKit, chỉ được đề xuất và cần bạn đồng ý riêng."
   },
   "processFlow": [
     {
@@ -205,13 +213,15 @@ const data: SkillInfographic = {
     "Skills are practical instructions, not documentation",
     "Metadata triggers first; details load progressively",
     "Validation and evals drive iteration",
-    "Keep SKILL.md below 300 lines and references focused"
+    "Keep SKILL.md below 300 lines and references focused",
+    "Personal kit, evolution and SkillX lanes are opt-in and offered only when detected"
   ],
   "corePrinciplesVi": [
     "Skill là hướng dẫn thực hành, không phải tài liệu mô tả",
     "Metadata kích hoạt trước; chi tiết được nạp dần",
     "Validation và eval quyết định vòng lặp cải tiến",
-    "Giữ SKILL.md dưới 300 dòng và reference thật tập trung"
+    "Giữ SKILL.md dưới 300 dòng và reference thật tập trung",
+    "Lane personal kit, evolution và SkillX là tùy chọn, chỉ được đưa ra khi phát hiện đang bật"
   ],
   "expertiseAreasEn": [
     "skill anatomy",
@@ -266,6 +276,15 @@ const data: SkillInfographic = {
       "whenVi": "Bạn đã xem báo cáo audit và muốn viết lại các finding mức High và Medium vào skill.",
       "expectedEn": "Rewrites only the diagnosed findings, keeps constraints that still have a purpose, compares original and candidate output, and writes the diff because --apply is set.",
       "expectedVi": "Chỉ viết lại các finding đã chẩn đoán, giữ ràng buộc vẫn còn mục đích, so output bản gốc với bản ứng viên và ghi diff vì có --apply."
+    },
+    {
+      "labelEn": "Create in your personal kit",
+      "labelVi": "Tạo trong personal kit của bạn",
+      "command": "/ak:skill-creator create release-notes --personal",
+      "whenEn": "You turned on personal kits and want a skill that follows you across projects and survives AgentKit updates.",
+      "whenVi": "Bạn đã bật personal kit và muốn một skill đi theo bạn qua mọi project, không mất khi cập nhật AgentKit.",
+      "expectedEn": "Authors and validates the skill in a scratch folder, adds it to your personal kit as @local/release-notes and projects it into the runtime; if personal kits are off, it creates a project skill and names ak update --ssot in one line.",
+      "expectedVi": "Soạn và kiểm tra skill trong một thư mục nháp, thêm vào personal kit của bạn dưới tên @local/release-notes rồi đưa vào runtime; nếu personal kit đang tắt, nó tạo skill trong project và nêu ak update --ssot trong một dòng."
     },
     {
       "labelEn": "Advised authoring",

@@ -138,6 +138,15 @@ statuslineLayout:
         tone: 'slate',
       }}
     />
+    {/* Source: ak-cli #3169, #3394, #3425 (origin/dev, v3.2.0-beta.10). Drop the Beta pill once this reaches stable. */}
+    <p class="mt-3 text-xs leading-relaxed text-slate-500 dark:text-slate-400">
+      <span class="mr-1 rounded-full bg-purple-100 px-1.5 py-0.5 text-[10px] font-bold uppercase text-purple-700 dark:bg-purple-900/30 dark:text-purple-300">Beta</span>
+      <Fragment
+        set:html={isVi
+          ? `Với bản cài trong project, CLI ak bản beta ghi ${akCode('statusLine')} theo đường dẫn tương đối với project (${akCode('${CLAUDE_PROJECT_DIR}')}) thay vì đường dẫn tuyệt đối, nên file settings đã commit chạy giống nhau trên mọi máy clone. Khi ${akCode('ak update')} gặp file statusline mang tên AgentKit mà ak chưa ghi nhận: nội dung giống hệt thì ak nhận làm của mình; nội dung khác thì ak dừng trước khi ghi bất kỳ file nào và in lệnh khôi phục.`
+          : `For project installs, the beta ak CLI writes ${akCode('statusLine')} with a project-relative path (${akCode('${CLAUDE_PROJECT_DIR}')}) instead of an absolute one, so committed settings work the same on every clone. When ${akCode('ak update')} finds an AgentKit-named statusline file it has no record of: identical content is adopted; different content stops the update before any file is written, with a recovery command.`}
+      />
+    </p>
   </AkSection>
 
   <AkSection

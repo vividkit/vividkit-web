@@ -266,8 +266,8 @@ export const akEngineerSkills: AkSkillEntry[] = withAkInvocation([
     id: "ak-copywriting",
     command: "/ak:copywriting",
     commandCodex: "$ak:copywriting",
-    description: "Write conversion copy with headline templates, email patterns, landing page structures, CTA optimization and style extraction.",
-    descriptionVi: "Viết copy chuyển đổi với mẫu tiêu đề, mẫu email, cấu trúc landing page, tối ưu CTA và tách phong cách viết.",
+    description: "Write conversion copy with headline templates, email patterns, landing page structures, CTA optimization, a CRO checklist and style extraction. Not for long-form website articles; those belong to the Marketing kit's SEO skill.",
+    descriptionVi: "Viết copy chuyển đổi với mẫu tiêu đề, mẫu email, cấu trúc landing page, tối ưu CTA, checklist CRO và tách phong cách viết. Không dùng cho bài viết dài trên website; việc đó thuộc skill SEO của kit Marketing.",
     category: "docsContent",
     argumentHint: "[copy-type] [context]",
     args: ["[copy-type]", "[context]"],
@@ -394,9 +394,9 @@ export const akEngineerSkills: AkSkillEntry[] = withAkInvocation([
     descriptionVi: "Rà soát session này để tìm các skill đã dùng, học từ lỗi và chỗ chậm của nó, rồi cải thiện chính các skill đó bằng đề xuất cụ thể; mặc định chỉ chạy thử, --apply để áp dụng, --ask để bạn quyết từng đề xuất. Lịch sử dùng của một skill là việc của ak-skill-creator; rà soát theo git history là việc của ak-retro.",
     category: "utilities",
     isNew: true,
-    argumentHint: "[focus] [--all [--since YYYY-MM-DD]] [--apply|--ask] [--skill <name>]",
+    argumentHint: "[focus] [--all [--since YYYY-MM-DD]] [--apply|--ask] [--skill <name>] [--evidence <event-ids>] [--json]",
     args: ["[focus]"],
-    flags: ["--all", "--apply", "--ask", "--since", "--skill"],
+    flags: ["--all", "--apply", "--ask", "--evidence", "--json", "--since", "--skill"],
   },
   {
     id: "ak-enhance-ux-ax",
@@ -970,9 +970,9 @@ export const akEngineerSkills: AkSkillEntry[] = withAkInvocation([
     description: "Create, update, audit, validate and package agent skills and their SKILL.md resources, or diagnose skill routing; not for implementing CLI or MCP servers.",
     descriptionVi: "Tạo, cập nhật, audit, kiểm tra và đóng gói skill agent cùng tài nguyên SKILL.md của chúng, hoặc chẩn đoán routing của skill; không dùng để viết CLI hay MCP server.",
     category: "utilities",
-    argumentHint: "<create|update|audit|optimize> [skill-name|path|kit|--all] [--kit <kit>|--project|--user] [--long-horizon] [--apply] [--from-audit <report>] [--advice]",
+    argumentHint: "<create|update|audit|optimize> [skill-name|path|kit|--all] [--kit <kit>|--project|--user|--personal [<kit>]] [--long-horizon] [--apply] [--from-audit <report>] [--advice]",
     args: ["[skill-name|path|kit|--all]"],
-    flags: ["--advice", "--all", "--apply", "--from-audit", "--kit", "--long-horizon", "--project", "--user"],
+    flags: ["--advice", "--all", "--apply", "--from-audit", "--kit", "--long-horizon", "--personal", "--project", "--user"],
   },
   {
     id: "ak-sowat",
@@ -1363,8 +1363,8 @@ export const akMarketingSkills: AkSkillEntry[] = withAkInvocation([
     id: "ak-content-marketing",
     command: "/ak:content-marketing",
     commandCodex: "$ak:content-marketing",
-    description: "Plan content strategy: editorial calendars, content pillars, topic clusters, blog planning, editorial workflows and content audits.",
-    descriptionVi: "Lên chiến lược nội dung: lịch biên tập, trụ cột nội dung, cụm chủ đề, kế hoạch blog, quy trình biên tập và rà soát nội dung.",
+    description: "Plan multi-channel content strategy: editorial calendars, content pillars, repurposing workflows and content inventory. Not for keyword clustering, the keyword-map article queue or drafting and reviewing articles (ak-seo).",
+    descriptionVi: "Lên chiến lược nội dung đa kênh: lịch biên tập, trụ cột nội dung, quy trình tái sử dụng nội dung và kiểm kê nội dung. Không dùng để gom cụm từ khoá, lập hàng đợi bài viết theo keyword map hay viết và review bài (việc của ak-seo).",
     category: "contentCopy",
     argumentHint: "[content-type] [topic]",
     args: ["[content-type]", "[topic]"],
@@ -1384,8 +1384,8 @@ export const akMarketingSkills: AkSkillEntry[] = withAkInvocation([
     id: "ak-copywriting",
     command: "/ak:copywriting",
     commandCodex: "$ak:copywriting",
-    description: "Write conversion copy with headline templates, email patterns, landing page structures, CTA optimization and style extraction.",
-    descriptionVi: "Viết copy chuyển đổi với mẫu tiêu đề, mẫu email, cấu trúc landing page, tối ưu CTA và tách phong cách viết.",
+    description: "Write conversion copy with headline templates, email patterns, landing page structures, CTA optimization, a CRO checklist and style extraction. Not for long-form website articles; those belong to the Marketing kit's SEO skill.",
+    descriptionVi: "Viết copy chuyển đổi với mẫu tiêu đề, mẫu email, cấu trúc landing page, tối ưu CTA, checklist CRO và tách phong cách viết. Không dùng cho bài viết dài trên website; việc đó thuộc skill SEO của kit Marketing.",
     category: "contentCopy",
     argumentHint: "[copy-type] [context]",
     args: ["[copy-type]", "[context]"],
@@ -1470,9 +1470,9 @@ export const akMarketingSkills: AkSkillEntry[] = withAkInvocation([
     descriptionVi: "Rà soát session này để tìm các skill đã dùng, học từ lỗi và chỗ chậm của nó, rồi cải thiện chính các skill đó bằng đề xuất cụ thể; mặc định chỉ chạy thử, --apply để áp dụng, --ask để bạn quyết từng đề xuất. Lịch sử dùng của một skill là việc của ak-skill-creator; rà soát theo git history là việc của ak-retro.",
     category: "utilities",
     isNew: true,
-    argumentHint: "[focus] [--all [--since YYYY-MM-DD]] [--apply|--ask] [--skill <name>]",
+    argumentHint: "[focus] [--all [--since YYYY-MM-DD]] [--apply|--ask] [--skill <name>] [--evidence <event-ids>] [--json]",
     args: ["[focus]"],
-    flags: ["--all", "--apply", "--ask", "--since", "--skill"],
+    flags: ["--all", "--apply", "--ask", "--evidence", "--json", "--since", "--skill"],
   },
   {
     id: "ak-enhance-ux-ax",
@@ -1758,12 +1758,12 @@ export const akMarketingSkills: AkSkillEntry[] = withAkInvocation([
     id: "ak-motion-video",
     command: "/ak:motion-video",
     commandCodex: "$ak:motion-video",
-    description: "Produce beat-synced 1080p motion-graphic videos in HyperFrames (HTML + GSAP) with AI voice-over, Vietnamese karaoke captions, SFX and music in ~70 styles (Apple-like, Vox-like collage, Swiss, Nike-like).",
-    descriptionVi: "Làm video motion graphic 1080p khớp beat bằng HyperFrames (HTML + GSAP), có voice-over AI, phụ đề karaoke tiếng Việt, SFX và nhạc, theo khoảng 70 style (kiểu Apple, collage kiểu Vox, Swiss, kiểu Nike).",
+    description: "Produce beat-synced 1080p motion-graphic videos in HyperFrames (HTML + GSAP) with AI voice-over, Vietnamese karaoke captions, SFX and music, or silent web-embed explainers, in ~70 styles (Apple-like, Vox-like collage, Swiss, Nike-like).",
+    descriptionVi: "Làm video motion graphic 1080p khớp beat bằng HyperFrames (HTML + GSAP), có voice-over AI, phụ đề karaoke tiếng Việt, SFX và nhạc, hoặc video giải thích không tiếng để nhúng vào web, theo khoảng 70 style (kiểu Apple, collage kiểu Vox, Swiss, kiểu Nike).",
     category: "videoMedia",
-    argumentHint: "[brief or project] [--poor]",
+    argumentHint: "[brief or project] [--poor] [--silent]",
     args: ["[brief or project]"],
-    flags: ["--poor"],
+    flags: ["--poor", "--silent"],
   },
   {
     id: "ak-onboarding-cro",
@@ -1875,11 +1875,11 @@ export const akMarketingSkills: AkSkillEntry[] = withAkInvocation([
     id: "ak-seo",
     command: "/ak:seo",
     commandCodex: "$ak:seo",
-    description: "Run SEO and GEO audits, ReviewWeb.site API keyword research, on-page, technical and programmatic SEO, JSON-LD, Google Search Console, Core Web Vitals and llms.txt.",
-    descriptionVi: "Audit SEO và GEO, nghiên cứu từ khoá qua ReviewWeb.site API, SEO on-page, kỹ thuật và theo chương trình, JSON-LD, Google Search Console, Core Web Vitals và llms.txt.",
+    description: "Run SEO for sites and articles: technical, on-page, GEO, schema and programmatic audits, Search Console, Core Web Vitals, keyword research, clustering and search intent, a keyword-map article queue, and an article pipeline from brief to draft, review, cover and WordPress draft. Not for conversion copy (ak-copywriting) or content calendars (ak-content-marketing). Vietnamese-first; English drafts get fact, structure and SEO rules but no punctuation/terminology lint.",
+    descriptionVi: "Làm SEO cho website và bài viết: audit kỹ thuật, on-page, GEO, schema và SEO theo chương trình, Search Console, Core Web Vitals, nghiên cứu từ khoá, gom cụm và phân tích ý định tìm kiếm, hàng đợi bài viết theo keyword map, và quy trình viết bài từ brief đến bản nháp, review, ảnh bìa và bản nháp WordPress. Không dùng cho copy chuyển đổi (ak-copywriting) hay lịch nội dung (ak-content-marketing). Ưu tiên tiếng Việt; bản nháp tiếng Anh vẫn được kiểm tra dữ kiện, cấu trúc và quy tắc SEO nhưng không soát dấu câu và thuật ngữ.",
     category: "seoAnalytics",
-    argumentHint: "[audit|geo|keywords|pseo|optimize|schema] [target]",
-    subcommands: ["audit", "geo", "keywords", "pseo", "optimize", "schema"],
+    argumentHint: "[audit|geo|pseo|schema|optimize] | keywords [research|clean|cluster|intent|plan|next] | article [setup|write|review|visuals|cover|publish] [target]",
+    subcommands: ["audit", "geo", "pseo", "schema", "optimize", "keywords", "article"],
     args: ["[target]"],
   },
   {
@@ -1889,9 +1889,9 @@ export const akMarketingSkills: AkSkillEntry[] = withAkInvocation([
     description: "Create, update, audit, validate and package agent skills and their SKILL.md resources, or diagnose skill routing; not for implementing CLI or MCP servers.",
     descriptionVi: "Tạo, cập nhật, audit, kiểm tra và đóng gói skill agent cùng tài nguyên SKILL.md của chúng, hoặc chẩn đoán routing của skill; không dùng để viết CLI hay MCP server.",
     category: "utilities",
-    argumentHint: "<create|update|audit|optimize> [skill-name|path|kit|--all] [--kit <kit>|--project|--user] [--long-horizon] [--apply] [--from-audit <report>] [--advice]",
+    argumentHint: "<create|update|audit|optimize> [skill-name|path|kit|--all] [--kit <kit>|--project|--user|--personal [<kit>]] [--long-horizon] [--apply] [--from-audit <report>] [--advice]",
     args: ["[skill-name|path|kit|--all]"],
-    flags: ["--advice", "--all", "--apply", "--from-audit", "--kit", "--long-horizon", "--project", "--user"],
+    flags: ["--advice", "--all", "--apply", "--from-audit", "--kit", "--long-horizon", "--personal", "--project", "--user"],
   },
   {
     id: "ak-slides",
@@ -2024,23 +2024,11 @@ export const akMarketingSkills: AkSkillEntry[] = withAkInvocation([
     args: ["[feature-description]", "[project]", "[feature]"],
   },
   {
-    id: "ak-write",
-    command: "/ak:write",
-    commandCodex: "$ak:write",
-    description: "Draft and enhance marketing content as the authoring front door: blog posts, copy, CTA/CRO revisions and publication-ready pieces.",
-    descriptionVi: "Soạn và nâng cấp nội dung marketing, là cửa vào chung cho việc viết: blog, copy, chỉnh CTA/CRO và nội dung sẵn sàng xuất bản.",
-    category: "essentials",
-    step: 5,
-    argumentHint: "[audit|blog|blog-youtube|cro|enhance|fast|good|publish] [args]",
-    subcommands: ["audit", "blog", "blog-youtube", "cro", "enhance", "fast", "good", "publish", "formula"],
-    args: ["[args]"],
-  },
-  {
     id: "ak-youtube",
     command: "/ak:youtube",
     commandCodex: "$ak:youtube",
-    description: "Convert YouTube videos into blog posts, infographics and social content via the VidCap.xyz API: captions, transcripts, summaries and comment analysis.",
-    descriptionVi: "Chuyển video YouTube thành bài blog, infographic và nội dung mạng xã hội qua API VidCap.xyz: caption, transcript, tóm tắt và phân tích comment.",
+    description: "Convert YouTube videos into blog sources, infographics and social content via the VidCap.xyz API: captions, transcripts, summaries and comment analysis.",
+    descriptionVi: "Chuyển video YouTube thành tư liệu cho bài blog, infographic và nội dung mạng xã hội qua API VidCap.xyz: caption, transcript, tóm tắt và phân tích comment.",
     category: "videoMedia",
     argumentHint: "[blog|infographic|social] [youtube-url]",
     subcommands: ["blog", "infographic", "social"],
@@ -2137,16 +2125,39 @@ export interface AkBetaPreviewItem {
 
 /**
  * Engineer Beta Preview: beta-only skills (origin/dev minus origin/main) plus core skills with
- * notable beta-only changes. Drop entries once the change reaches stable. Empty while stable and beta
- * ship the same skills (v3.0.0). Commands use the runtime name ak-<slug>.
+ * notable beta-only changes. Drop entries once the change reaches stable. Commands use the runtime
+ * name ak-<slug>. Source: kits/core/skills/ak-test/SKILL.md argument-hint, origin/dev (v3.2.0-beta.10)
+ * vs origin/main (v3.1.0).
  */
-export const akEngineerBetaPreview: AkBetaPreviewItem[] = [];
+export const akEngineerBetaPreview: AkBetaPreviewItem[] = [
+  {
+    id: "ak-test",
+    command: "/ak:test",
+    commandCodex: "$ak:test",
+    description: "New `update` mode: maps the tests a behavior or contract change affects and changes an assertion only where the accepted contract changed. `run` and `exec` are explicit names for the default test run, and `review` is another name for `audit`. `--report` (with `audit`, `review` or `optimize`) only writes findings or the proposed plan as a report and changes no test, CI workflow or config.",
+    descriptionVi: "Thêm chế độ `update`: tìm các test bị ảnh hưởng khi hành vi hoặc contract thay đổi, và chỉ sửa assertion ở đúng chỗ contract đã được chấp nhận thay đổi. `run` và `exec` là tên gọi rõ ràng cho lần chạy test mặc định, còn `review` là tên khác của `audit`. `--report` (đi với `audit`, `review` hoặc `optimize`) chỉ ghi phát hiện hoặc kế hoạch đề xuất thành báo cáo, không sửa test, workflow CI hay cấu hình nào.",
+    badge: "enhanced",
+    args: ["run", "exec", "update", "review"],
+    flags: ["--report"],
+  },
+];
 
 /**
  * Marketing Beta Preview. Marketing inherits core, so it reuses the engineer "enhanced" entries
  * for skills the marketing kit also ships. Add marketing-only beta skills, beta-only core skills and upgrades here explicitly.
  */
-export const akMarketingBetaPreview: AkBetaPreviewItem[] = [];
+export const akMarketingBetaPreview: AkBetaPreviewItem[] = [
+  {
+    id: "ak-test",
+    command: "/ak:test",
+    commandCodex: "$ak:test",
+    description: "New `update` mode: maps the tests a behavior or contract change affects and changes an assertion only where the accepted contract changed. `run` and `exec` are explicit names for the default test run, and `review` is another name for `audit`. `--report` (with `audit`, `review` or `optimize`) only writes findings or the proposed plan as a report and changes no test, CI workflow or config.",
+    descriptionVi: "Thêm chế độ `update`: tìm các test bị ảnh hưởng khi hành vi hoặc contract thay đổi, và chỉ sửa assertion ở đúng chỗ contract đã được chấp nhận thay đổi. `run` và `exec` là tên gọi rõ ràng cho lần chạy test mặc định, còn `review` là tên khác của `audit`. `--report` (đi với `audit`, `review` hoặc `optimize`) chỉ ghi phát hiện hoặc kế hoạch đề xuất thành báo cáo, không sửa test, workflow CI hay cấu hình nào.",
+    badge: "enhanced",
+    args: ["run", "exec", "update", "review"],
+    flags: ["--report"],
+  },
+];
 
 export const akEngineerSkillCount = akEngineerSkills.length;
 export const akMarketingSkillCount = akMarketingSkills.length;

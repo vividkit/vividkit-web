@@ -29,13 +29,13 @@ const data: SkillInfographic = {
     { number: 9, titleEn: "Present and iterate", titleVi: "Trình bày và lặp", descEn: "Show exported options side by side with style, rationale, file path, dimensions, and iterate from user feedback until approved.", descVi: "Trình bày các phương án đã xuất cạnh nhau kèm style, lý do thiết kế, đường dẫn, kích thước và lặp theo feedback đến khi được duyệt." },
   ],
   corePrinciplesEn: [
-    "Banner work is bounded to social, ads, website heroes, print banners, and campaign creative assets.",
+    "Banner work is bounded to social, ads, website heroes, print banners, and campaign creative assets; article covers rendered from a fixed site template belong to /ak:seo article cover.",
     "Platform dimensions and safe zones drive layout before visual polish.",
     "Generated visuals should usually contain no text; text and CTA are overlaid in HTML/CSS.",
     "Every option needs a clear art direction and exported asset path, not just a concept.",
   ],
   corePrinciplesVi: [
-    "Việc banner chỉ nằm trong social, ads, website hero, print banner và creative asset cho campaign.",
+    "Việc banner chỉ nằm trong social, ads, website hero, print banner và creative asset cho campaign; ảnh bìa bài viết dựng từ template cố định của site thuộc /ak:seo article cover.",
     "Kích thước nền tảng và safe zone quyết định layout trước khi polish visual.",
     "Visual tạo bằng AI thường không nên có chữ; chữ và CTA được overlay bằng HTML/CSS.",
     "Mỗi phương án cần art direction rõ và đường dẫn asset đã xuất, không chỉ là concept.",

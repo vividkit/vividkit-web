@@ -45,6 +45,9 @@ export default defineConfig({
     '/guides/agentkit/skills/engineer/ak-ak': '/guides/agentkit/skills/engineer/ak-agentkit',
     '/vi/guides/agentkit/skills/engineer/ak-ak': '/vi/guides/agentkit/skills/engineer/ak-agentkit',
     '/guides/agentkit/skills/marketing/ak-ak': '/guides/agentkit/skills/marketing/ak-agentkit',
-    '/vi/guides/agentkit/skills/marketing/ak-ak': '/vi/guides/agentkit/skills/marketing/ak-agentkit'
+    '/vi/guides/agentkit/skills/marketing/ak-ak': '/vi/guides/agentkit/skills/marketing/ak-agentkit',
+    // ak-write retired in AgentKit v3.1.0; article writing moved into ak-seo.
+    '/guides/agentkit/skills/marketing/ak-write': '/guides/agentkit/skills/marketing/ak-seo',
+    '/vi/guides/agentkit/skills/marketing/ak-write': '/vi/guides/agentkit/skills/marketing/ak-seo'
   }
 });

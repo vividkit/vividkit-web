@@ -50,8 +50,8 @@ const data: SkillInfographic = {
       "number": 5,
       "titleEn": "Summarize verdict",
       "titleVi": "Kết luận review",
-      "descEn": "Return summary, risk level, severity-grouped findings, and verdict: Approve, Request changes, or Comment.",
-      "descVi": "Trả summary, mức rủi ro, findings theo severity và verdict: Approve, Request changes hoặc Comment."
+      "descEn": "Return summary, risk level, severity-grouped findings (pure style nits are skipped), and verdict: Approve, Request changes, or Comment.",
+      "descVi": "Trả summary, mức rủi ro, findings theo severity (bỏ qua các góp ý thuần về style) và verdict: Approve, Request changes hoặc Comment."
     },
     {
       "number": 6,

@@ -64,8 +64,8 @@ const data: SkillInfographic = {
       "number": 8,
       "titleEn": "Respect scope",
       "titleVi": "Tôn trọng scope",
-      "descEn": "Framework routing that serves the files, sitemaps, robots.txt, social metadata, and page actions belong to the site's framework skill (for Next.js, the SEO/GEO reference in ak:web-frameworks).",
-      "descVi": "Routing của framework để phục vụ các file, sitemap, robots.txt, social metadata và nút thao tác trên trang thuộc về skill framework của site (với Next.js là phần SEO/GEO trong ak:web-frameworks)."
+      "descEn": "Framework routing that serves the files, sitemaps, robots.txt, social metadata, and page actions belong to the site's framework skill (for Next.js, the SEO/GEO reference in ak:web-frameworks). SEO and GEO audits belong to the Marketing kit's SEO skill when it is installed; this skill generates the files.",
+      "descVi": "Routing của framework để phục vụ các file, sitemap, robots.txt, social metadata và nút thao tác trên trang thuộc về skill framework của site (với Next.js là phần SEO/GEO trong ak:web-frameworks). Việc audit SEO và GEO thuộc về skill SEO của Marketing kit khi skill đó đã được cài; skill này chỉ tạo các file."
     },
     {
       "number": 9,

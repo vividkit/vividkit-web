@@ -36,8 +36,8 @@ const data: SkillInfographic = {
       "number": 3,
       "titleEn": "Persist with CLI",
       "titleVi": "Lưu bằng CLI",
-      "descEn": "Use ak journal create with title, summary, and stdin so no interactive editor is required.",
-      "descVi": "Dùng ak journal create với title, summary và stdin để không cần editor tương tác."
+      "descEn": "Use ak journal create with title, summary, and stdin so no interactive editor is required. If the shell cannot take a heredoc (some Windows shells and tool runners), write the body to a file first and pass it with --stdin < file; the result is the same.",
+      "descVi": "Dùng ak journal create với title, summary và stdin để không cần editor tương tác. Nếu shell không nhận heredoc (một số shell Windows và công cụ chạy lệnh), ghi body ra file trước rồi truyền bằng --stdin < file; kết quả vẫn như nhau."
     },
     {
       "number": 4,

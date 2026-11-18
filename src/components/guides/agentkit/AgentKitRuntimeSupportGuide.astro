@@ -230,6 +230,14 @@ const runtimes = isVi
           ? 'Đừng suy ra parity install/update/invocation chỉ vì skill hiện trong agent. Kiểm tra install summary và hành vi thật trên runtime của bạn.'
           : 'Do not infer install/update/invocation parity just because a skill appears in the agent. Check the install summary and real behavior on your runtime.'}
       </p>
+
+      {/* Source: ak-cli docs/conformance/runtime-support-matrix.md, origin/dev (v3.2.0-beta.10) vs origin/main (v3.1.0). Drop once OpenCode reaches stable. */}
+      <p class="mt-2 text-xs leading-relaxed text-slate-500 dark:text-slate-400">
+        <span class="mr-1 rounded-full bg-purple-100 px-1.5 py-0.5 text-[10px] font-bold uppercase text-purple-700 dark:bg-purple-900/30 dark:text-purple-300">Beta</span>
+        {isVi
+          ? 'CLI ak bản beta có thêm adapter OpenCode thử nghiệm: cài vào project sẽ ghi thư mục .opencode/ và một phần kit trong AGENTS.md, cài global sẽ ghi vào ~/.config/opencode. Adapter này chưa được kiểm chứng đầy đủ, và bản stable chưa cài được vào OpenCode.'
+          : 'The beta ak CLI adds an experimental OpenCode adapter: a project install writes .opencode/ plus a kit section in AGENTS.md, and a global install writes ~/.config/opencode. It is not certified yet, and the stable CLI cannot install into OpenCode.'}
+      </p>
     </article>
   </AkSection>
 

@@ -14,23 +14,23 @@ const data: SkillInfographic = {
     "type": "critical",
     "titleEn": "Uncommitted changes are included automatically",
     "titleVi": "Thay đổi chưa commit sẽ tự động bị gộp vào",
-    "contentEn": "`ak-ship` intentionally stages with `git add -A`. Clean or isolate the worktree before running it. An unrelated untracked file can otherwise be committed and pushed with the release. Abort or ask when on the target branch, or on unresolved conflicts, failing tests, critical review issues, major/minor version bumps, unknown modes or flags, downstream merge/CI uncertainty, private-repo social posting without explicit private opt-in, and any need to bypass branch protection or force-push.",
-    "contentVi": "`ak-ship` cố ý stage bằng `git add -A`. Hãy dọn sạch hoặc tách riêng worktree trước khi chạy. Nếu không, một file untracked không liên quan có thể bị commit và push cùng bản release. Dừng hoặc hỏi lại khi đang ở branch đích, có conflict chưa xử lý, test fail, review có lỗi nghiêm trọng, cần tăng version major/minor, mode hoặc flag không rõ, trạng thái merge/CI phía sau chưa chắc chắn, đăng mạng xã hội cho repo private mà chưa có xác nhận rõ ràng, hoặc bất kỳ việc nào cần bỏ qua branch protection hay force-push."
+    "contentEn": "`ak-ship` intentionally stages with `git add -A`. Clean or isolate the worktree before running it. An unrelated untracked file can otherwise be committed and pushed with the release. Abort or ask when on the target branch, or on unresolved conflicts, test failures it cannot repair within scope, critical findings that need a scope or product decision, major/minor version bumps, unknown modes or flags, downstream merge/CI uncertainty, private-repo social posting without explicit private opt-in, and any need to bypass branch protection or force-push.",
+    "contentVi": "`ak-ship` cố ý stage bằng `git add -A`. Hãy dọn sạch hoặc tách riêng worktree trước khi chạy. Nếu không, một file untracked không liên quan có thể bị commit và push cùng bản release. Dừng hoặc hỏi lại khi đang ở branch đích, có conflict chưa xử lý, test fail mà không sửa được trong phạm vi, phát hiện nghiêm trọng cần quyết định về phạm vi hoặc sản phẩm, cần tăng version major/minor, mode hoặc flag không rõ, trạng thái merge/CI phía sau chưa chắc chắn, đăng mạng xã hội cho repo private mà chưa có xác nhận rõ ràng, hoặc bất kỳ việc nào cần bỏ qua branch protection hay force-push."
   },
   "processFlow": [
     {
       "number": 1,
       "titleEn": "Pre-flight and mode",
       "titleVi": "Tiền kiểm và mode",
-      "descEn": "Check the branch, normalize official/stable/main or beta/dev/next, let --both supersede mode tokens, inspect status/diff, and include uncommitted work.",
-      "descVi": "Kiểm tra nhánh, chuẩn hóa official/stable/main hoặc beta/dev/next, để --both ưu tiên hơn token mode, xem status/diff và đưa cả thay đổi chưa commit vào phạm vi."
+      "descEn": "Check the branch, normalize official/stable/main or beta/dev/next, let --both supersede mode tokens, inspect status/diff, and record which uncommitted changes belong to this ship.",
+      "descVi": "Kiểm tra nhánh, chuẩn hóa official/stable/main hoặc beta/dev/next, để --both ưu tiên hơn token mode, xem status/diff và ghi nhận thay đổi chưa commit nào thuộc lượt ship này."
     },
     {
       "number": 2,
       "titleEn": "Link issues",
       "titleVi": "Liên kết issue",
-      "descEn": "Find or create related GitHub issues in one batch, then carry the linked issues into the structured PR body.",
-      "descVi": "Tìm hoặc tạo issue GitHub liên quan bằng một lượt gọn, rồi đưa các issue đã liên kết vào PR body có cấu trúc."
+      "descEn": "Find related open GitHub issues from branch and commit keywords, or create one when none exists, then carry the linked issues into the structured PR body.",
+      "descVi": "Tìm issue GitHub đang mở liên quan theo từ khóa của nhánh và commit, hoặc tạo issue mới khi chưa có, rồi đưa các issue đã liên kết vào PR body có cấu trúc."
     },
     {
       "number": 3,
@@ -43,15 +43,15 @@ const data: SkillInfographic = {
       "number": 4,
       "titleEn": "Run tests",
       "titleVi": "Chạy test",
-      "descEn": "Auto-detect the test runner, delegate execution, and stop on failures unless the user explicitly passed --skip-tests.",
-      "descVi": "Tự nhận diện test runner, giao chạy test, và dừng khi có lỗi trừ khi người dùng đã truyền rõ --skip-tests."
+      "descEn": "Auto-detect the test runner and run it unless --skip-tests applies. On failure, repair branch-caused defects within scope and rerun; stop publication with exact evidence when a failure is outside that authority.",
+      "descVi": "Tự nhận diện test runner và chạy test trừ khi dùng --skip-tests. Khi fail, sửa lỗi do nhánh gây ra trong phạm vi rồi chạy lại; dừng phát hành kèm bằng chứng cụ thể khi lỗi nằm ngoài quyền sửa."
     },
     {
       "number": 5,
       "titleEn": "Review",
       "titleVi": "Review",
-      "descEn": "Run the two-pass pre-landing review, treating critical issues as blockers while informational findings remain evidence.",
-      "descVi": "Chạy review trước khi tạo PR theo hai lượt, coi vấn đề nghiêm trọng là blocker còn phát hiện thông tin là bằng chứng."
+      "descEn": "Send the diff to a fresh-context code-reviewer subagent that has not seen the conversation for a two-pass review. Repair in-scope critical findings and rerun affected tests; informational findings go into the PR body.",
+      "descVi": "Gửi diff cho subagent code-reviewer có ngữ cảnh mới, chưa thấy cuộc hội thoại, để review hai lượt. Sửa phát hiện nghiêm trọng trong phạm vi rồi chạy lại test liên quan; phát hiện mang tính thông tin được ghi vào PR body."
     },
     {
       "number": 6,
@@ -83,14 +83,16 @@ const data: SkillInfographic = {
     }
   ],
   "corePrinciplesEn": [
-    "Auto-detect project conventions instead of asking early",
-    "Never skip tests unless the user passed --skip-tests",
+    "Routine choices (patch bump, changelog, commit message) are decided automatically; it asks only for scope decisions or major/minor bumps",
+    "Tests gate the ship; skip them only with same-revision evidence, and never publish on red results",
+    "Local review goes to a fresh-context reviewer that has not seen the conversation",
     "Regular push only; never force-push or bypass branch protection",
     "Prefer honest Not run/Unavailable evidence over invented PR narrative"
   ],
   "corePrinciplesVi": [
-    "Tự nhận diện quy ước dự án thay vì hỏi sớm",
-    "Không bỏ test trừ khi người dùng truyền --skip-tests",
+    "Các việc thường lệ (tăng patch, changelog, commit message) được tự quyết; chỉ hỏi khi cần quyết định phạm vi hoặc tăng major/minor",
+    "Test là cổng chặn của lượt ship; chỉ bỏ khi đã có bằng chứng trên cùng revision, và không phát hành khi kết quả còn đỏ",
+    "Review cục bộ giao cho reviewer có ngữ cảnh mới, chưa thấy cuộc hội thoại",
     "Chỉ push bình thường; không force-push hoặc vượt branch protection",
     "Ghi trung thực Not run/Unavailable thay vì bịa câu chuyện trong PR"
   ],
@@ -188,8 +190,8 @@ const data: SkillInfographic = {
         "token": "--skip-tests",
         "titleEn": "Skip tests",
         "titleVi": "Bỏ test",
-        "descEn": "Omits the test gate only when equivalent evidence already exists; the PR must record that skip evidence honestly.",
-        "descVi": "Bỏ gate test chỉ khi đã có bằng chứng tương đương; PR phải ghi trung thực bằng chứng cho việc bỏ qua.",
+        "descEn": "Omits the test step only when tests already passed on this same revision; the PR must record that skip evidence honestly.",
+        "descVi": "Chỉ bỏ bước test khi test đã pass trên chính revision này; PR phải ghi trung thực bằng chứng cho việc bỏ qua.",
         "exampleCommand": "/ak:ship --skip-tests"
       },
       {
@@ -279,8 +281,8 @@ const data: SkillInfographic = {
       "flag": "--skip-tests",
       "titleEn": "Skip tests",
       "titleVi": "Bỏ test",
-      "descEn": "Skips the test step only when the user explicitly accepts that risk.",
-      "descVi": "Chỉ bỏ bước test khi người dùng chủ động chấp nhận rủi ro đó.",
+      "descEn": "Skips the test step when tests already passed on this revision.",
+      "descVi": "Bỏ bước test khi test đã pass trên revision này.",
       "exampleCommand": "/ak:ship --skip-tests"
     },
     {
